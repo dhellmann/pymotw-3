@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>asynchat &#8211; Asynchronous protocol handler - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Interprocess Communication and Networking" href="../ipc.html" />
+    <link rel="next" title="asyncore – Asynchronous I/O handler" href="../asyncore/index.html" />
+    <link rel="prev" title="Interprocess Communication and Networking" href="../ipc.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">asynchat &#8211; Asynchronous protocol handler</a><ul>
+<li><a class="reference internal" href="#message-terminators">Message Terminators</a></li>
+<li><a class="reference internal" href="#server-and-handler">Server and Handler</a></li>
+<li><a class="reference internal" href="#client">Client</a></li>
+<li><a class="reference internal" href="#putting-it-all-together">Putting It All Together</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../ipc.html" title="previous chapter"><strong>Previous:</strong> Interprocess Communication and Networking</a><br/>
+          <a href="../asyncore/index.html" title="next chapter"><strong>Next:</strong> asyncore &#8211; Asynchronous I/O handler</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/asynchat/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../asyncore/index.html" title="asyncore – Asynchronous I/O handler"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ipc.html" title="Interprocess Communication and Networking"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../ipc.html" accesskey="U">Interprocess Communication and Networking</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-asynchat">
+<span id="asynchat-asynchronous-protocol-handler"></span><h1>asynchat &#8211; Asynchronous protocol handler<a class="headerlink" href="#module-asynchat" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Asynchronous network communication protocol handler</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-asynchat" title="asynchat: Asynchronous protocol handler"><tt class="xref py py-mod docutils literal"><span class="pre">asynchat</span></tt></a> module builds on <a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a> to make it easier
+to implement protocols based on passing messages back and forth
+between server and client. The <tt class="xref py py-class docutils literal"><span class="pre">async_chat</span></tt> class is an
+<tt class="xref py py-class docutils literal"><span class="pre">asyncore.dispatcher</span></tt> subclass that receives data and looks for
+a message terminator. Your subclass only needs to specify what to do
+when data comes in and how to respond once the terminator is
+found. Outgoing data is queued for transmission via FIFO objects
+managed by <tt class="xref py py-class docutils literal"><span class="pre">async_chat</span></tt>.</p>
+<div class="section" id="message-terminators">
+<h2>Message Terminators<a class="headerlink" href="#message-terminators" title="Permalink to this headline">¶</a></h2>
+<p>Incoming messages are broken up based on <em>terminators</em>, controlled for
+each instance via <tt class="xref py py-func docutils literal"><span class="pre">set_terminator()</span></tt>. There are three possible
+configurations:</p>
+<ol class="arabic simple">
+<li>If a string argument is passed to <tt class="xref py py-func docutils literal"><span class="pre">set_terminator()</span></tt>, the
+message is considered complete when that string appears in the
+input data.</li>
+<li>If a numeric argument is passed, the message is considered complete
+when that many bytes have been read.</li>
+<li>If <tt class="docutils literal"><span class="pre">None</span></tt> is passed, message termination is not managed by
+<tt class="xref py py-class docutils literal"><span class="pre">async_chat</span></tt>.</li>
+</ol>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">EchoServer</span></tt> example below uses both a simple string
+terminator and a message length terminator, depending on the context
+of the incoming data. The HTTP request handler example in the standard
+library documentation offers another example of how to change the
+terminator based on the context to differentiate between HTTP headers
+and the HTTP POST request body.</p>
+</div>
+<div class="section" id="server-and-handler">
+<h2>Server and Handler<a class="headerlink" href="#server-and-handler" title="Permalink to this headline">¶</a></h2>
+<p>To make it easier to understand how <a class="reference internal" href="#module-asynchat" title="asynchat: Asynchronous protocol handler"><tt class="xref py py-mod docutils literal"><span class="pre">asynchat</span></tt></a> is different from
+<a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a>, the examples here duplicate the functionality of the
+<tt class="xref py py-class docutils literal"><span class="pre">EchoServer</span></tt> example from the <a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a> discussion. The
+same pieces are needed: a server object to accept connections, handler
+objects to deal with communication with each client, and client
+objects to initiate the conversation.</p>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">EchoServer</span></tt> needed to work with <a class="reference internal" href="#module-asynchat" title="asynchat: Asynchronous protocol handler"><tt class="xref py py-mod docutils literal"><span class="pre">asynchat</span></tt></a> is
+essentially the same as the one created for the <a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a>
+example, with fewer <a class="reference internal" href="../logging/index.html#module-logging" title="logging: Report status, error, and informational messages."><tt class="xref py py-mod docutils literal"><span class="pre">logging</span></tt></a> calls because they are less
+interesting this time around:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncore</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="kn">from</span> <span class="nn">asynchat_echo_handler</span> <span class="kn">import</span> <span class="n">EchoHandler</span>
+
+<span class="k">class</span> <span class="nc">EchoServer</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Receives connections and establishes handlers for each client.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">handle_accept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Called when a client connects to our socket</span>
+        <span class="n">client_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="n">EchoHandler</span><span class="p">(</span><span class="n">sock</span><span class="o">=</span><span class="n">client_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c"># We only want to deal with one client at a time,</span>
+        <span class="c"># so close as soon as we set up the handler.</span>
+        <span class="c"># Normally you would not do this and the server</span>
+        <span class="c"># would run forever or until it received instructions</span>
+        <span class="c"># to stop.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_close</span><span class="p">()</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">EchoHandler</span></tt> is based on <tt class="docutils literal"><span class="pre">asynchat.async_chat</span></tt> instead
+of the <tt class="xref py py-class docutils literal"><span class="pre">asyncore.dispatcher</span></tt> this time around. It operates at a
+slightly higher level of abstraction, so reading and writing are
+handled automatically. The buffer needs to know four things:</p>
+<ul class="simple">
+<li>what to do with incoming data (by overriding
+<tt class="xref py py-func docutils literal"><span class="pre">handle_incoming_data()</span></tt>)</li>
+<li>how to recognize the end of an incoming message (via
+<tt class="xref py py-func docutils literal"><span class="pre">set_terminator()</span></tt>)</li>
+<li>what to do when a complete message is received (in
+<tt class="xref py py-func docutils literal"><span class="pre">found_terminator()</span></tt>)</li>
+<li>what data to send (using <tt class="xref py py-func docutils literal"><span class="pre">push()</span></tt>)</li>
+</ul>
+<p>The example application has two operating modes. It is either waiting
+for a command of the form <tt class="docutils literal"><span class="pre">ECHO</span> <span class="pre">length\n</span></tt>, or waiting for the data
+to be echoed. The mode is toggled back and forth by setting an
+instance variable <em>process_data</em> to the method to be invoked when the
+terminator is found and then changing the terminator as appropriate.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asynchat</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="k">class</span> <span class="nc">EchoHandler</span><span class="p">(</span><span class="n">asynchat</span><span class="o">.</span><span class="n">async_chat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles echoing messages from a single client.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Artificially reduce buffer sizes to illustrate</span>
+    <span class="c"># sending and receiving partial messages.</span>
+    <span class="n">ac_in_buffer_size</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="n">ac_out_buffer_size</span> <span class="o">=</span> <span class="mi">64</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;EchoHandler&#39;</span><span class="p">)</span>
+        <span class="n">asynchat</span><span class="o">.</span><span class="n">async_chat</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">)</span>
+        <span class="c"># Start looking for the ECHO command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_terminator</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read an incoming message from the client and put it into our outgoing queue.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;collect_incoming_data() -&gt; (</span><span class="si">%d</span><span class="s"> bytes)</span><span class="se">\n</span><span class="s">&quot;&quot;&quot;</span><span class="si">%s</span><span class="s">&quot;&quot;&quot;&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">found_terminator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The end of a command or message has been seen.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;found_terminator()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_data</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">_process_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>        
+        <span class="sd">&quot;&quot;&quot;We have the full ECHO command&quot;&quot;&quot;</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;_process_command() &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+        <span class="n">command_verb</span><span class="p">,</span> <span class="n">command_arg</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">expected_data_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">command_arg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_terminator</span><span class="p">(</span><span class="n">expected_data_len</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">def</span> <span class="nf">_process_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;We have read the entire message to be sent back to the client&quot;&quot;&quot;</span>
+        <span class="n">to_echo</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;_process_message() echoing</span><span class="se">\n</span><span class="s">&quot;&quot;&quot;</span><span class="si">%s</span><span class="s">&quot;&quot;&quot;&#39;</span><span class="p">,</span> <span class="n">to_echo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">to_echo</span><span class="p">)</span>
+        <span class="c"># Disconnect after sending the entire response</span>
+        <span class="c"># since we only want to do one thing at a time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close_when_done</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once the complete command is found, the handler switches to
+message-processing mode and waits for the complete set of text to be
+received. When all of the data is available, it is pushed onto the
+outgoing channel and set up the handler to be closed once the data is
+sent.</p>
+</div>
+<div class="section" id="client">
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<p>The client works in much the same way as the handler. As with the
+<a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a> implementation, the message to be sent is an argument
+to the client&#8217;s constructor. When the socket connection is
+established, <tt class="xref py py-func docutils literal"><span class="pre">handle_connect()</span></tt> is called so the client can send
+the command and message data.</p>
+<p>The command is pushed directly, but a special &#8220;producer&#8221; class is used
+for the message text. The producer is polled for chunks of data to
+send out over the network. When the producer returns an empty string,
+it is assumed to be empty and writing stops.</p>
+<p>The client expects just the message data in response, so it sets an
+integer terminator and collects data in a list until the entire
+message has been received.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asynchat</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+
+<span class="k">class</span> <span class="nc">EchoClient</span><span class="p">(</span><span class="n">asynchat</span><span class="o">.</span><span class="n">async_chat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sends messages to the server and receives responses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Artificially reduce buffer sizes to illustrate</span>
+    <span class="c"># sending and receiving partial messages.</span>
+    <span class="n">ac_in_buffer_size</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="n">ac_out_buffer_size</span> <span class="o">=</span> <span class="mi">64</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;EchoClient&#39;</span><span class="p">)</span>
+        <span class="n">asynchat</span><span class="o">.</span><span class="n">async_chat</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;connecting to </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">handle_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_connect()&#39;</span><span class="p">)</span>
+        <span class="c"># Send the command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;ECHO </span><span class="si">%d</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">))</span>
+        <span class="c"># Send the data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_with_producer</span><span class="p">(</span><span class="n">EchoProducer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_out_buffer_size</span><span class="p">))</span>
+        <span class="c"># We expect the data to come back as-is, </span>
+        <span class="c"># so set a length-based terminator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_terminator</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read an incoming message from the client and put it into our outgoing queue.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;collect_incoming_data() -&gt; (</span><span class="si">%d</span><span class="s">)</span><span class="se">\n</span><span class="s">&quot;&quot;&quot;</span><span class="si">%s</span><span class="s">&quot;&quot;&quot;&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">found_terminator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;found_terminator()&#39;</span><span class="p">)</span>
+        <span class="n">received_message</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">received_message</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;RECEIVED COPY OF MESSAGE&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;ERROR IN TRANSMISSION&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;EXPECTED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;RECEIVED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">received_message</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">EchoProducer</span><span class="p">(</span><span class="n">asynchat</span><span class="o">.</span><span class="n">simple_producer</span><span class="p">):</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;EchoProducer&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">more</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">asynchat</span><span class="o">.</span><span class="n">simple_producer</span><span class="o">.</span><span class="n">more</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;more() -&gt; (</span><span class="si">%s</span><span class="s"> bytes)</span><span class="se">\n</span><span class="s">&quot;&quot;&quot;</span><span class="si">%s</span><span class="s">&quot;&quot;&quot;&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">),</span> <span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="putting-it-all-together">
+<h2>Putting It All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
+<p>The main program for this example sets up the client and server in the
+same <a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a> main loop.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncore</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="kn">from</span> <span class="nn">asynchat_echo_server</span> <span class="kn">import</span> <span class="n">EchoServer</span>
+<span class="kn">from</span> <span class="nn">asynchat_echo_client</span> <span class="kn">import</span> <span class="n">EchoClient</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(name)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># let the kernel give us a port</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">EchoServer</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">address</span> <span class="c"># find out what port we were given</span>
+
+<span class="n">message_data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">EchoClient</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message_data</span><span class="p">)</span>
+
+<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Normally you would have them in separate processes, but this makes it
+easier to show the combined output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python asynchat_echo_main.py
+
+EchoClient: connecting to (&#39;127.0.0.1&#39;, 56193)
+EchoClient: handle_connect()
+EchoProducer: more() -&gt; (64 bytes)
+&quot;&quot;&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+&quot;&quot;&quot;
+EchoHandler: collect_incoming_data() -&gt; (8 bytes)
+&quot;&quot;&quot;ECHO 166&quot;&quot;&quot;
+EchoHandler: found_terminator()
+EchoHandler: _process_command() &quot;ECHO 166&quot;
+EchoHandler: collect_incoming_data() -&gt; (55 bytes)
+&quot;&quot;&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing eli&quot;&quot;&quot;
+EchoProducer: more() -&gt; (64 bytes)
+&quot;&quot;&quot;egestas, enim et consectetuer ullamcorper, lectus ligula rutrum &quot;&quot;&quot;
+EchoHandler: collect_incoming_data() -&gt; (64 bytes)
+&quot;&quot;&quot;t. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligul&quot;&quot;&quot;
+EchoProducer: more() -&gt; (38 bytes)
+&quot;&quot;&quot;leo, a
+elementum elit tortor eu quam.
+&quot;&quot;&quot;
+EchoHandler: collect_incoming_data() -&gt; (47 bytes)
+&quot;&quot;&quot;a rutrum leo, a
+elementum elit tortor eu quam.
+&quot;&quot;&quot;
+EchoHandler: found_terminator()
+EchoHandler: _process_message() echoing
+&quot;&quot;&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam.
+&quot;&quot;&quot;
+EchoProducer: more() -&gt; (0 bytes)
+&quot;&quot;&quot;&quot;&quot;&quot;
+EchoClient: collect_incoming_data() -&gt; (64)
+&quot;&quot;&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+&quot;&quot;&quot;
+EchoClient: collect_incoming_data() -&gt; (64)
+&quot;&quot;&quot;egestas, enim et consectetuer ullamcorper, lectus ligula rutrum &quot;&quot;&quot;
+EchoClient: collect_incoming_data() -&gt; (38)
+&quot;&quot;&quot;leo, a
+elementum elit tortor eu quam.
+&quot;&quot;&quot;
+EchoClient: found_terminator()
+EchoClient: RECEIVED COPY OF MESSAGE
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/asynchat.html">asynchat</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../asyncore/index.html#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a></dt>
+<dd>The asyncore module implements an lower-level asynchronous I/O
+event loop.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../asyncore/index.html" title="asyncore – Asynchronous I/O handler"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ipc.html" title="Interprocess Communication and Networking"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../ipc.html" >Interprocess Communication and Networking</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

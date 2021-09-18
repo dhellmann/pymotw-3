@@ -1,0 +1,926 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>subprocess &#8211; Work with additional processes - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Interprocess Communication and Networking" href="../ipc.html" />
+    <link rel="next" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="prev" title="signal – Receive notification of asynchronous system events" href="../signal/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">subprocess &#8211; Work with additional processes</a><ul>
+<li><a class="reference internal" href="#running-external-command">Running External Command</a><ul>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li><a class="reference internal" href="#capturing-output">Capturing Output</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-pipes-directly">Working with Pipes Directly</a><ul>
+<li><a class="reference internal" href="#popen">popen</a></li>
+<li><a class="reference internal" href="#popen2">popen2</a></li>
+<li><a class="reference internal" href="#popen3">popen3</a></li>
+<li><a class="reference internal" href="#popen4">popen4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connecting-segments-of-a-pipe">Connecting Segments of a Pipe</a></li>
+<li><a class="reference internal" href="#interacting-with-another-command">Interacting with Another Command</a></li>
+<li><a class="reference internal" href="#signaling-between-processes">Signaling Between Processes</a><ul>
+<li><a class="reference internal" href="#process-groups-sessions">Process Groups / Sessions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../signal/index.html" title="previous chapter"><strong>Previous:</strong> signal &#8211; Receive notification of asynchronous system events</a><br/>
+          <a href="../internet_protocols.html" title="next chapter"><strong>Next:</strong> Internet Protocols and Support</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/subprocess/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../internet_protocols.html" title="Internet Protocols and Support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../signal/index.html" title="signal – Receive notification of asynchronous system events"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../ipc.html" accesskey="U">Interprocess Communication and Networking</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-subprocess">
+<span id="subprocess-work-with-additional-processes"></span><h1>subprocess &#8211; Work with additional processes<a class="headerlink" href="#module-subprocess" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Spawn and communicate with additional processes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a> module provides a consistent interface to
+creating and working with additional processes. It offers a
+higher-level interface than some of the other available modules, and
+is intended to replace functions such as <tt class="xref py py-func docutils literal"><span class="pre">os.system()</span></tt>,
+<tt class="xref py py-func docutils literal"><span class="pre">os.spawn*()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">os.popen*()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">popen2.*()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">commands.*()</span></tt>. To make it easier to compare <a class="reference internal" href="#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a>
+with those other modules, many of the examples here re-create the ones
+used for <a class="reference internal" href="../os/index.html#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> and <tt class="xref py py-mod docutils literal"><span class="pre">popen</span></tt>.</p>
+<p>The <a class="reference internal" href="#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a> module defines one class, <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> and a
+few wrapper functions that use that class. The constructor for
+<tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> takes arguments to set up the new process so the parent
+can communicate with it via pipes.  It provides all of the
+functionality of the other modules and functions it replaces, and
+more. The API is consistent for all uses, and many of the extra steps
+of overhead needed (such as closing extra file descriptors and
+ensuring the pipes are closed) are &#8220;built in&#8221; instead of being handled
+by the application code separately.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The API is roughly the same, but the underlying implementation is
+slightly different between Unix and Windows. All of the examples
+shown here were tested on Mac OS X. Behavior on a non-Unix OS will
+vary.</p>
+</div>
+<div class="section" id="running-external-command">
+<h2>Running External Command<a class="headerlink" href="#running-external-command" title="Permalink to this headline">¶</a></h2>
+<p>To run an external command without interacting with it, such as one
+would do with <a class="reference internal" href="../os/index.html#os-system"><em>os.system()</em></a>, Use the <tt class="xref py py-func docutils literal"><span class="pre">call()</span></tt>
+function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="c"># Simple command</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&#39;ls&#39;</span><span class="p">,</span> <span class="s">&#39;-1&#39;</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The command line arguments are passed as a list of strings, which
+avoids the need for escaping quotes or other special characters that
+might be interpreted by the shell.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_os_system.py
+
+__init__.py
+index.rst
+interaction.py
+repeater.py
+signal_child.py
+signal_parent.py
+subprocess_check_call.py
+subprocess_check_output.py
+subprocess_check_output_error.py
+subprocess_check_output_error_trap_output.py
+subprocess_os_system.py
+subprocess_pipes.py
+subprocess_popen2.py
+subprocess_popen3.py
+subprocess_popen4.py
+subprocess_popen_read.py
+subprocess_popen_write.py
+subprocess_shell_variables.py
+subprocess_signal_parent_shell.py
+subprocess_signal_setsid.py
+</pre></div>
+</div>
+<p>Setting the <em>shell</em> argument to a true value causes <a class="reference internal" href="#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a>
+to spawn an intermediate shell process, and tell it to run the
+command.  The default is to run the command directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="c"># Command with shell expansion</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&#39;echo $HOME&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using an intermediate shell means that variables, glob patterns, and
+other special shell features in the command string are processed
+before the command is run.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_shell_variables.py
+
+/Users/dhellmann
+</pre></div>
+</div>
+<div class="section" id="error-handling">
+<h3>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h3>
+<p>The return value from <tt class="xref py py-func docutils literal"><span class="pre">call()</span></tt> is the exit code of the program.
+The caller is responsible for interpreting it to detect errors.  The
+<tt class="xref py py-func docutils literal"><span class="pre">check_call()</span></tt> function works like <tt class="xref py py-func docutils literal"><span class="pre">call()</span></tt> except that the
+exit code is checked, and if it indicates an error happened then a
+<tt class="xref py py-class docutils literal"><span class="pre">CalledProcessError</span></tt> exception is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="s">&#39;false&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The <strong class="command">false</strong> command always exits with a non-zero status code,
+which <tt class="xref py py-func docutils literal"><span class="pre">check_call()</span></tt> interprets as an error.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_check_call.py
+
+Traceback (most recent call last):
+  File &quot;subprocess_check_call.py&quot;, line 11, in &lt;module&gt;
+    subprocess.check_call([&#39;false&#39;])
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.
+7/subprocess.py&quot;, line 511, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command &#39;[&#39;false&#39;]&#39; returned non-zero e
+xit status 1
+</pre></div>
+</div>
+</div>
+<div class="section" id="capturing-output">
+<h3>Capturing Output<a class="headerlink" href="#capturing-output" title="Permalink to this headline">¶</a></h3>
+<p>The standard input and output channels for the process started by
+<tt class="xref py py-func docutils literal"><span class="pre">call()</span></tt> are bound to the parent&#8217;s input and output.  That means
+the calling programm cannot capture the output of the command.  Use
+<tt class="xref py py-func docutils literal"><span class="pre">check_output()</span></tt> to capture the output for later processing.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;ls&#39;</span><span class="p">,</span> <span class="s">&#39;-1&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s">&#39;Have </span><span class="si">%d</span><span class="s"> bytes in output&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span>
+
+                                  
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-1</span></tt> command runs successfully, so the text it prints to
+standard output is captured and returned.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_check_output.py
+
+Have 462 bytes in output
+__init__.py
+index.rst
+interaction.py
+repeater.py
+signal_child.py
+signal_parent.py
+subprocess_check_call.py
+subprocess_check_output.py
+subprocess_check_output_error.py
+subprocess_check_output_error_trap_output.py
+subprocess_os_system.py
+subprocess_pipes.py
+subprocess_popen2.py
+subprocess_popen3.py
+subprocess_popen4.py
+subprocess_popen_read.py
+subprocess_popen_write.py
+subprocess_shell_variables.py
+subprocess_signal_parent_shell.py
+subprocess_signal_setsid.py
+</pre></div>
+</div>
+<p>This script runs a series of commands in a subshell.  Messages are
+sent to standard output and standard error before the commands exit
+with an error code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
+    <span class="s">&#39;echo to stdout; echo to stderr 1&gt;&amp;2; exit 1&#39;</span><span class="p">,</span>
+    <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Have </span><span class="si">%d</span><span class="s"> bytes in output&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span>
+
+                                  
+</pre></div>
+</div>
+<p>The message to standard error is printed to the console, but the
+message to standard output is hidden.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_check_output_error.py
+
+to stderr
+Traceback (most recent call last):
+  File &quot;subprocess_check_output_error.py&quot;, line 14, in &lt;module&gt;
+    shell=True,
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.
+7/subprocess.py&quot;, line 544, in check_output
+    raise CalledProcessError(retcode, cmd, output=output)
+subprocess.CalledProcessError: Command &#39;echo to stdout; echo to stderr
+ 1&gt;&amp;2; exit 1&#39; returned non-zero exit status 1
+</pre></div>
+</div>
+<p>To prevent error messages from commands run through
+<tt class="xref py py-func docutils literal"><span class="pre">check_output()</span></tt> from being written to the console, set the
+<em>stderr</em> parameter to the constant <tt class="xref py py-const docutils literal"><span class="pre">STDOUT</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span>
+    <span class="s">&#39;echo to stdout; echo to stderr 1&gt;&amp;2; exit 1&#39;</span><span class="p">,</span>
+    <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Have </span><span class="si">%d</span><span class="s"> bytes in output&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span>
+
+                                  
+</pre></div>
+</div>
+<p>Now the error and standard output channels are merged together so if
+the command prints error messages, they are captured and not sent to
+the console.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_check_output_error_trap_output.py
+
+Traceback (most recent call last):
+  File &quot;subprocess_check_output_error_trap_output.py&quot;, line 15, in &lt;mo
+dule&gt;
+    stderr=subprocess.STDOUT,
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.
+7/subprocess.py&quot;, line 544, in check_output
+    raise CalledProcessError(retcode, cmd, output=output)
+subprocess.CalledProcessError: Command &#39;echo to stdout; echo to stderr
+ 1&gt;&amp;2; exit 1&#39; returned non-zero exit status 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-pipes-directly">
+<h2>Working with Pipes Directly<a class="headerlink" href="#working-with-pipes-directly" title="Permalink to this headline">¶</a></h2>
+<p>By passing different arguments for <em>stdin</em>, <em>stdout</em>, and <em>stderr</em> it
+is possible to mimic the variations of <tt class="xref py py-func docutils literal"><span class="pre">os.popen()</span></tt>.</p>
+<div class="section" id="popen">
+<h3>popen<a class="headerlink" href="#popen" title="Permalink to this headline">¶</a></h3>
+<p>To run a process and read all of its output, set the <em>stdout</em> value to
+<tt class="xref py py-const docutils literal"><span class="pre">PIPE</span></tt> and call <tt class="xref py py-func docutils literal"><span class="pre">communicate()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">read:&#39;</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;echo&#39;</span><span class="p">,</span> <span class="s">&#39;&quot;to stdout&quot;&#39;</span><span class="p">],</span> 
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="n">stdout_value</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">stdout:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is similar to the way <tt class="xref py py-func docutils literal"><span class="pre">popen()</span></tt> works, except that the
+reading is managed internally by the <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_popen_read.py
+
+
+read:
+        stdout: &#39;&quot;to stdout&quot;\n&#39;
+</pre></div>
+</div>
+<p>To set up a pipe to allow the calling program to write data to it, set
+<em>stdin</em> to <tt class="xref py py-const docutils literal"><span class="pre">PIPE</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">write:&#39;</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">],</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">stdin: to stdin</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To send data to the standard input channel of the process one time,
+pass the data to <tt class="xref py py-func docutils literal"><span class="pre">communicate()</span></tt>.  This is similar to using
+<tt class="xref py py-func docutils literal"><span class="pre">popen()</span></tt> with mode <tt class="docutils literal"><span class="pre">'w'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u subprocess_popen_write.py
+
+
+write:
+        stdin: to stdin
+</pre></div>
+</div>
+</div>
+<div class="section" id="popen2">
+<h3>popen2<a class="headerlink" href="#popen2" title="Permalink to this headline">¶</a></h3>
+<p>To set up the <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance for reading and writing, use a
+combination of the previous techniques.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">popen2:&#39;</span>
+
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">],</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="n">stdout_value</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="s">&#39;through stdin to stdout&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">pass through:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This sets up the pipe to mimic <tt class="xref py py-func docutils literal"><span class="pre">popen2()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u subprocess_popen2.py
+
+
+popen2:
+        pass through: &#39;through stdin to stdout&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="popen3">
+<h3>popen3<a class="headerlink" href="#popen3" title="Permalink to this headline">¶</a></h3>
+<p>It is also possible watch both of the streams for stdout and stderr,
+as with <tt class="xref py py-func docutils literal"><span class="pre">popen3()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">popen3:&#39;</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&#39;cat -; echo &quot;to stderr&quot; 1&gt;&amp;2&#39;</span><span class="p">,</span>
+                        <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="n">stdout_value</span><span class="p">,</span> <span class="n">stderr_value</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="s">&#39;through stdin to stdout&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">pass through:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">stderr      :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stderr_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Reading from stderr works the same as with stdout.  Passing
+<tt class="xref py py-const docutils literal"><span class="pre">PIPE</span></tt> tells <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> to attach to the channel, and
+<tt class="xref py py-func docutils literal"><span class="pre">communicate()</span></tt> reads all of the data from it before returning.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u subprocess_popen3.py
+
+
+popen3:
+        pass through: &#39;through stdin to stdout&#39;
+        stderr      : &#39;to stderr\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="popen4">
+<h3>popen4<a class="headerlink" href="#popen4" title="Permalink to this headline">¶</a></h3>
+<p>To direct the error output from the process to its standard output
+channel, use <tt class="xref py py-const docutils literal"><span class="pre">STDOUT</span></tt> for <em>stderr</em> instead of <tt class="xref py py-const docutils literal"><span class="pre">PIPE</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">popen4:&#39;</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&#39;cat -; echo &quot;to stderr&quot; 1&gt;&amp;2&#39;</span><span class="p">,</span>
+                        <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="n">stdout_value</span><span class="p">,</span> <span class="n">stderr_value</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="s">&#39;through stdin to stdout</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">combined output:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">stderr value   :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stderr_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Combining the output in this way is similar to how <tt class="xref py py-func docutils literal"><span class="pre">popen4()</span></tt>
+works.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u subprocess_popen4.py
+
+
+popen4:
+        combined output: &#39;through stdin to stdout\nto stderr\n&#39;
+        stderr value   : None
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="connecting-segments-of-a-pipe">
+<h2>Connecting Segments of a Pipe<a class="headerlink" href="#connecting-segments-of-a-pipe" title="Permalink to this headline">¶</a></h2>
+<p>Multiple commands can be connected into a <em>pipeline</em>, similar to the
+way the Unix shell works, by creating separate <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt>
+instances and chaining their inputs and outputs together.  The
+<tt class="xref py py-attr docutils literal"><span class="pre">stdout</span></tt> attribute of one <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance is used as the
+<em>stdin</em> argument for the next in the pipeline, instead of the constant
+<tt class="xref py py-const docutils literal"><span class="pre">PIPE</span></tt>.  The output is read from the <tt class="xref py py-attr docutils literal"><span class="pre">stdout</span></tt> handle for
+the final command in the pipeline.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">cat</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;index.rst&#39;</span><span class="p">],</span> 
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+<span class="n">grep</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;grep&#39;</span><span class="p">,</span> <span class="s">&#39;.. include::&#39;</span><span class="p">],</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">cat</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+<span class="n">cut</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;cut&#39;</span><span class="p">,</span> <span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;-d:&#39;</span><span class="p">],</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">grep</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+<span class="n">end_of_pipe</span> <span class="o">=</span> <span class="n">cut</span><span class="o">.</span><span class="n">stdout</span>
+
+<span class="k">print</span> <span class="s">&#39;Included files:&#39;</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">end_of_pipe</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example reproduces the command line <tt class="docutils literal"><span class="pre">cat</span> <span class="pre">index.rst</span> <span class="pre">|</span> <span class="pre">grep</span>
+<span class="pre">&quot;..</span> <span class="pre">include&quot;</span> <span class="pre">|</span> <span class="pre">cut</span> <span class="pre">-f</span> <span class="pre">3</span> <span class="pre">-d:</span></tt>, which reads the reStructuredText source
+file for this section and finds all of the lines that include other
+files, then prints only the filenames.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u subprocess_pipes.py
+
+Included files:
+        subprocess_os_system.py
+        subprocess_shell_variables.py
+        subprocess_check_call.py
+        subprocess_check_output.py
+        subprocess_check_output_error.py
+        subprocess_check_output_error_trap_output.py
+        subprocess_popen_read.py
+        subprocess_popen_write.py
+        subprocess_popen2.py
+        subprocess_popen3.py
+        subprocess_popen4.py
+        subprocess_pipes.py
+        repeater.py
+        interaction.py
+        signal_child.py
+        signal_parent.py
+        subprocess_signal_parent_shell.py
+        subprocess_signal_setsid.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="interacting-with-another-command">
+<h2>Interacting with Another Command<a class="headerlink" href="#interacting-with-another-command" title="Permalink to this headline">¶</a></h2>
+<p>All of the above examples assume a limited amount of interaction. The
+<tt class="xref py py-func docutils literal"><span class="pre">communicate()</span></tt> method reads all of the output and waits for
+child process to exit before returning. It is also possible to write
+to and read from the individual pipe handles used by the
+<tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance. A simple echo program that reads from
+standard input and writes to standard output illustrates this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;repeater.py: starting</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">next_line</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">next_line</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">next_line</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;repeater.py: exiting</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The script, <tt class="docutils literal"><span class="pre">repeater.py</span></tt>, writes to stderr when it starts and
+stops. That information can be used to show the lifetime of the child
+process.</p>
+<p>The next interaction example uses the stdin and stdout file handles
+owned by the <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance in different ways. In the first
+example, a sequence of 10 numbers are written to stdin of the process,
+and after each write the next line of output is read back. In the
+second example, the same 10 numbers are written but the output is read
+all at once using <tt class="xref py py-func docutils literal"><span class="pre">communicate()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">print</span> <span class="s">&#39;One line at a time:&#39;</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&#39;python repeater.py&#39;</span><span class="p">,</span> 
+                        <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%d</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="n">remainder</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">remainder</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;All output at once:&#39;</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&#39;python repeater.py&#39;</span><span class="p">,</span> 
+                        <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%d</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">output</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">&quot;repeater.py:</span> <span class="pre">exiting&quot;</span></tt> lines come at different points in the
+output for each loop style.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u interaction.py
+
+One line at a time:
+repeater.py: starting
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+repeater.py: exiting
+
+
+All output at once:
+repeater.py: starting
+repeater.py: exiting
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></div>
+</div>
+</div>
+<div class="section" id="signaling-between-processes">
+<h2>Signaling Between Processes<a class="headerlink" href="#signaling-between-processes" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../os/index.html#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> examples include a demonstration of <a class="reference internal" href="../os/index.html#creating-processes-with-os-fork"><em>signaling
+between processes using os.fork() and os.kill()</em></a>. Since each <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance
+provides a <em>pid</em> attribute with the process id of the child process,
+it is possible to do something similar with <a class="reference internal" href="#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a>. For
+example, using this script for the child process to be executed by the
+parent process</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+<span class="n">received</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">signal_usr1</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="s">&quot;Callback invoked when a signal is received&quot;</span>
+    <span class="k">global</span> <span class="n">received</span>
+    <span class="n">received</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">print</span> <span class="s">&#39;CHILD </span><span class="si">%6s</span><span class="s">: Received USR1&#39;</span> <span class="o">%</span> <span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;CHILD </span><span class="si">%6s</span><span class="s">: Setting up signal handler&#39;</span> <span class="o">%</span> <span class="n">pid</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">,</span> <span class="n">signal_usr1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;CHILD </span><span class="si">%6s</span><span class="s">: Pausing to wait for signal&#39;</span> <span class="o">%</span> <span class="n">pid</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">received</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;CHILD </span><span class="si">%6s</span><span class="s">: Never received signal&#39;</span> <span class="o">%</span> <span class="n">pid</span>
+</pre></div>
+</div>
+<p>combined with this parent process</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="s">&#39;signal_child.py&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s">&#39;PARENT      : Pausing before sending signal...&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARENT      : Signaling child&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>the output is:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python signal_parent.py
+
+PARENT      : Pausing before sending signal...
+CHILD  14756: Setting up signal handler
+CHILD  14756: Pausing to wait for signal
+PARENT      : Signaling child
+CHILD  14756: Received USR1
+</pre></div>
+</div>
+<div class="section" id="process-groups-sessions">
+<span id="subprocess-process-groups"></span><h3>Process Groups / Sessions<a class="headerlink" href="#process-groups-sessions" title="Permalink to this headline">¶</a></h3>
+<p>Because of the way the process tree works under Unix, if the process
+created by <tt class="xref py py-mod docutils literal"><span class="pre">Popen</span></tt> spawns sub-processes, those children will not
+receive any signals sent to the parent.  That means, for example, it
+will be difficult to cause them to terminate by sending
+<tt class="xref py py-const docutils literal"><span class="pre">SIGINT</span></tt> or <tt class="xref py py-const docutils literal"><span class="pre">SIGTERM</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">script</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;#!/bin/sh</span>
+<span class="s">echo &quot;Shell script in process $$&quot;</span>
+<span class="s">set -x</span>
+<span class="s">python signal_child.py</span>
+<span class="s">&#39;&#39;&#39;</span>
+<span class="n">script_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="n">script_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+<span class="n">script_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;sh&#39;</span><span class="p">,</span> <span class="n">script_file</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">close_fds</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARENT      : Pausing before sending signal to child </span><span class="si">%s</span><span class="s">...&#39;</span> <span class="o">%</span> <span class="n">proc</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARENT      : Signaling child </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">proc</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The pid used to send the signal does not match the pid of the child of
+the shell script waiting for the signal because in this example, there
+are three separate processes interacting:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">subprocess_signal_parent_shell.py</span></tt></li>
+<li>The Unix shell process running the script created by the main python
+program.</li>
+<li><tt class="docutils literal"><span class="pre">signal_child.py</span></tt></li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_signal_parent_shell.py
+
+PARENT      : Pausing before sending signal to child 14759...
+Shell script in process 14759
++ python signal_child.py
+CHILD  14760: Setting up signal handler
+CHILD  14760: Pausing to wait for signal
+PARENT      : Signaling child 14759
+CHILD  14760: Never received signal
+</pre></div>
+</div>
+<p>The solution to this problem is to use a <em>process group</em> to associate
+the children so they can be signaled together.  The process group is
+created with <tt class="xref py py-func docutils literal"><span class="pre">os.setsid()</span></tt>, setting the &#8220;session id&#8221; to the
+process id of the current process.  All child processes inherit the
+session id, and since it should only be set set in the shell created
+by <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> and its descendants, <tt class="xref py py-func docutils literal"><span class="pre">os.setsid()</span></tt> should not be
+called in the parent process.  Instead, the function is passed to
+<tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> as the <em>preexec_fn</em> argument so it is run after the
+<tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt> inside the new process, before it uses <tt class="xref py py-func docutils literal"><span class="pre">exec()</span></tt> to
+run the shell.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">script</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;#!/bin/sh</span>
+<span class="s">echo &quot;Shell script in process $$&quot;</span>
+<span class="s">set -x</span>
+<span class="s">python signal_child.py</span>
+<span class="s">&#39;&#39;&#39;</span>
+<span class="n">script_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="n">script_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+<span class="n">script_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">&#39;sh&#39;</span><span class="p">,</span> <span class="n">script_file</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> 
+                        <span class="n">close_fds</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                        <span class="n">preexec_fn</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">setsid</span><span class="p">,</span>
+                        <span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARENT      : Pausing before sending signal to child </span><span class="si">%s</span><span class="s">...&#39;</span> <span class="o">%</span> <span class="n">proc</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARENT      : Signaling process group </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">proc</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">killpg</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The sequence of events is:</p>
+<ol class="arabic simple">
+<li>The parent program instantiates <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt>.</li>
+<li>The <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance forks a new process.</li>
+<li>The new process runs <tt class="xref py py-func docutils literal"><span class="pre">os.setsid()</span></tt>.</li>
+<li>The new process runs <tt class="xref py py-func docutils literal"><span class="pre">exec()</span></tt> to start the shell.</li>
+<li>The shell runs the shell script.</li>
+<li>The shell script forks again and that process execs Python.</li>
+<li>Python runs <tt class="docutils literal"><span class="pre">signal_child.py</span></tt>.</li>
+<li>The parent program signals the process group using the pid of the shell.</li>
+<li>The shell and Python processes receive the signal.  The shell
+ignores it.  Python invokes the signal handler.</li>
+</ol>
+<p>To signal the entire process group, use <tt class="xref py py-func docutils literal"><span class="pre">os.killpg()</span></tt> with the pid
+value from the <tt class="xref py py-class docutils literal"><span class="pre">Popen</span></tt> instance.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python subprocess_signal_setsid.py
+
+PARENT      : Pausing before sending signal to child 14763...
+Shell script in process 14763
++ python signal_child.py
+CHILD  14764: Setting up signal handler
+CHILD  14764: Pausing to wait for signal
+PARENT      : Signaling process group 14763
+CHILD  14764: Received USR1
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/subprocess.html">subprocess</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../os/index.html#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a></dt>
+<dd>Although many are deprecated, the functions for working with processes
+found in the os module are still widely used in existing code.</dd>
+<dt><a class="reference external" href="http://www.frostbytes.com/~jimf/papers/signals/signals.html">UNIX SIgnals and Process Groups</a></dt>
+<dd>A good description of UNIX signaling and how process groups work.</dd>
+<dt><a class="reference external" href="http://www.amazon.com/Programming-Environment-Addison-Wesley-Professional-Computing/dp/0201433079/ref=pd_bbs_3/002-2842372-4768037?ie=UTF8&amp;s=books&amp;amp;qid=1182098757&amp;sr=8-3">Advanced Programming in the UNIX(R) Environment</a></dt>
+<dd>Covers working with multiple processes, such as handling signals, closing duplicated
+file descriptors, etc.</dd>
+<dt><a class="reference internal" href="../pipes/index.html#module-pipes" title="pipes: Unix shell command pipeline templates"><tt class="xref py py-mod docutils literal"><span class="pre">pipes</span></tt></a></dt>
+<dd>Unix shell command pipeline templates in the standard library.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../internet_protocols.html" title="Internet Protocols and Support"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../signal/index.html" title="signal – Receive notification of asynchronous system events"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../ipc.html" >Interprocess Communication and Networking</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

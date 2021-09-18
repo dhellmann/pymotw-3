@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>urllib &#8211; simple interface for network resource access - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="urllib2 – Library for opening URLs." href="../urllib2/index.html" />
+    <link rel="prev" title="SocketServer – Creating network servers." href="../SocketServer/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">urllib &#8211; simple interface for network resource access</a><ul>
+<li><a class="reference internal" href="#http-get">HTTP GET</a></li>
+<li><a class="reference internal" href="#encoding-arguments">Encoding Arguments</a></li>
+<li><a class="reference internal" href="#http-post">HTTP POST</a></li>
+<li><a class="reference internal" href="#paths-vs-urls">Paths vs. URLs</a></li>
+<li><a class="reference internal" href="#simple-retrieval-with-cache">Simple Retrieval with Cache</a></li>
+<li><a class="reference internal" href="#urlopener">URLopener</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../SocketServer/index.html" title="previous chapter"><strong>Previous:</strong> SocketServer &#8211; Creating network servers.</a><br/>
+          <a href="../urllib2/index.html" title="next chapter"><strong>Next:</strong> urllib2 &#8211; Library for opening URLs.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/urllib/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../urllib2/index.html" title="urllib2 – Library for opening URLs."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../SocketServer/index.html" title="SocketServer – Creating network servers."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-urllib">
+<span id="urllib-simple-interface-for-network-resource-access"></span><h1>urllib &#8211; simple interface for network resource access<a class="headerlink" href="#module-urllib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Accessing remote resources that don&#8217;t need authentication, cookies, etc.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> module provides a simple interface for network
+resource access. Although <a class="reference internal" href="#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> can be used with gopher and
+ftp, these examples all use http.</p>
+<div class="section" id="http-get">
+<h2>HTTP GET<a class="headerlink" href="#http-get" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The test server for these examples is in BaseHTTPServer_GET.py, from the
+PyMOTW examples for <a class="reference internal" href="../BaseHTTPServer/index.html#module-BaseHTTPServer" title="BaseHTTPServer: Provides base classes for implementing web servers."><tt class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></tt></a>. Start the server in one
+terminal window, then run these examples in another.</p>
+</div>
+<p>An HTTP GET operation is the simplest use of urllib. Simply pass the
+URL to <tt class="xref py py-func docutils literal"><span class="pre">urlopen()</span></tt> to get a &#8220;file-like&#8221; handle to the remote
+data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://localhost:8080/&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;RESPONSE:&#39;</span><span class="p">,</span> <span class="n">response</span>
+<span class="k">print</span> <span class="s">&#39;URL     :&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;DATE    :&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="p">[</span><span class="s">&#39;date&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;HEADERS :&#39;</span>
+<span class="k">print</span> <span class="s">&#39;---------&#39;</span>
+<span class="k">print</span> <span class="n">headers</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;LENGTH  :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;DATA    :&#39;</span>
+<span class="k">print</span> <span class="s">&#39;---------&#39;</span>
+<span class="k">print</span> <span class="n">data</span>
+</pre></div>
+</div>
+<p>The example server takes the incoming values and formats a plain text
+response to send back. The return value from <tt class="xref py py-func docutils literal"><span class="pre">urlopen()</span></tt> gives
+access to the headers from the HTTP server through the <tt class="xref py py-func docutils literal"><span class="pre">info()</span></tt>
+method, and the data for the remote resource via methods like
+<tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">readlines()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_urlopen.py
+RESPONSE: &lt;addinfourl at 10180248 whose fp = &lt;socket._fileobject object at 0x935c30&gt;&gt;
+URL     : http://localhost:8080/
+DATE    : Sun, 30 Mar 2008 16:27:10 GMT
+HEADERS :
+---------
+Server: BaseHTTP/0.3 Python/2.5.1
+Date: Sun, 30 Mar 2008 16:27:10 GMT
+
+LENGTH  : 221
+DATA    :
+---------
+CLIENT VALUES:
+client_address=(&#39;127.0.0.1&#39;, 54354) (localhost)
+command=GET
+path=/
+real path=/
+query=
+request_version=HTTP/1.0
+
+SERVER VALUES:
+server_version=BaseHTTP/0.3
+sys_version=Python/2.5.1
+protocol_version=HTTP/1.0
+</pre></div>
+</div>
+<p>The file-like object is also iterable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://localhost:8080/&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Since the lines are returned with newlines and carriage returns intact, this
+example strips them before printing the output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_urlopen_iterator.py
+CLIENT VALUES:
+client_address=(&#39;127.0.0.1&#39;, 54380) (localhost)
+command=GET
+path=/
+real path=/
+query=
+request_version=HTTP/1.0
+
+SERVER VALUES:
+server_version=BaseHTTP/0.3
+sys_version=Python/2.5.1
+protocol_version=HTTP/1.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="encoding-arguments">
+<span id="urllib-urlencode"></span><h2>Encoding Arguments<a class="headerlink" href="#encoding-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Arguments can be passed to the server by encoding them and appending them to
+the URL.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">query_args</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;q&#39;</span><span class="p">:</span><span class="s">&#39;query string&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">:</span><span class="s">&#39;bar&#39;</span> <span class="p">}</span>
+<span class="n">encoded_args</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query_args</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Encoded:&#39;</span><span class="p">,</span> <span class="n">encoded_args</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://localhost:8080/?&#39;</span> <span class="o">+</span> <span class="n">encoded_args</span>
+<span class="k">print</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice that the query, in the list of client values, contains the encoded
+query arguments.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_urlencode.py
+Encoded: q=query+string&amp;foo=bar
+CLIENT VALUES:
+client_address=(&#39;127.0.0.1&#39;, 54415) (localhost)
+command=GET
+path=/?q=query+string&amp;foo=bar
+real path=/
+query=q=query+string&amp;foo=bar
+request_version=HTTP/1.0
+
+SERVER VALUES:
+server_version=BaseHTTP/0.3
+sys_version=Python/2.5.1
+protocol_version=HTTP/1.0
+</pre></div>
+</div>
+<p>To pass a sequence of values using separate occurrences of the
+variable in the query string, set <em>doseq</em> to True when calling
+<tt class="xref py py-func docutils literal"><span class="pre">urlencode()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">query_args</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;foo&#39;</span><span class="p">:[</span><span class="s">&#39;foo1&#39;</span><span class="p">,</span> <span class="s">&#39;foo2&#39;</span><span class="p">]</span> <span class="p">}</span>
+<span class="k">print</span> <span class="s">&#39;Single  :&#39;</span><span class="p">,</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query_args</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Sequence:&#39;</span><span class="p">,</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query_args</span><span class="p">,</span> <span class="n">doseq</span><span class="o">=</span><span class="bp">True</span>  <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_urlencode_doseq.py
+Single  : foo=%5B%27foo1%27%2C+%27foo2%27%5D
+Sequence: foo=foo1&amp;foo=foo2
+</pre></div>
+</div>
+<p>To decode the query string, see the <tt class="xref py py-class docutils literal"><span class="pre">FieldStorage</span></tt> class from
+the <tt class="xref py py-mod docutils literal"><span class="pre">cgi</span></tt> module.</p>
+<p>Special characters within the query arguments that might cause parse
+problems with the URL on the server side are &#8220;quoted&#8221; when passed to
+<tt class="xref py py-func docutils literal"><span class="pre">urlencode()</span></tt>. To quote them locally to make safe versions of
+the strings, you can use the <tt class="xref py py-func docutils literal"><span class="pre">quote()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">quote_plus()</span></tt>
+functions directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://localhost:8080/~dhellmann/&#39;</span>
+<span class="k">print</span> <span class="s">&#39;urlencode() :&#39;</span><span class="p">,</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;url&#39;</span><span class="p">:</span><span class="n">url</span><span class="p">})</span>
+<span class="k">print</span> <span class="s">&#39;quote()     :&#39;</span><span class="p">,</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;quote_plus():&#39;</span><span class="p">,</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that <tt class="xref py py-func docutils literal"><span class="pre">quote_plus()</span></tt> is more aggressive about the
+characters it replaces.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_quote.py
+
+urlencode() : url=http%3A%2F%2Flocalhost%3A8080%2F%7Edhellmann%2F
+quote()     : http%3A//localhost%3A8080/%7Edhellmann/
+quote_plus(): http%3A%2F%2Flocalhost%3A8080%2F%7Edhellmann%2F
+</pre></div>
+</div>
+<p>To reverse the quote operations, use <tt class="xref py py-func docutils literal"><span class="pre">unquote()</span></tt> or
+<tt class="xref py py-func docutils literal"><span class="pre">unquote_plus()</span></tt>, as appropriate.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="k">print</span> <span class="n">urllib</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="s">&#39;http%3A//localhost%3A8080/</span><span class="si">%7E</span><span class="s">dhellmann/&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">urllib</span><span class="o">.</span><span class="n">unquote_plus</span><span class="p">(</span><span class="s">&#39;http%3A</span><span class="si">%2F%2F</span><span class="s">localhost%3A8080</span><span class="si">%2F%7E</span><span class="s">dhellmann</span><span class="si">%2F</span><span class="s">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_unquote.py
+
+http://localhost:8080/~dhellmann/
+http://localhost:8080/~dhellmann/
+</pre></div>
+</div>
+</div>
+<div class="section" id="http-post">
+<h2>HTTP POST<a class="headerlink" href="#http-post" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The test server for these examples is in BaseHTTPServer_POST.py, from the
+PyMOTW examples for the <a class="reference internal" href="../BaseHTTPServer/index.html#module-BaseHTTPServer" title="BaseHTTPServer: Provides base classes for implementing web servers."><tt class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></tt></a>. Start the server in one
+terminal window, then run these examples in another.</p>
+</div>
+<p>To POST data to the remote server, instead of using GET, pass the
+encoded query arguments as data to <tt class="xref py py-func docutils literal"><span class="pre">urlopen()</span></tt> instead of
+appending them to the URL.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">query_args</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;q&#39;</span><span class="p">:</span><span class="s">&#39;query string&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">:</span><span class="s">&#39;bar&#39;</span> <span class="p">}</span>
+<span class="n">encoded_args</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query_args</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://localhost:8080/&#39;</span>
+<span class="k">print</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">encoded_args</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_urlopen_post.py
+Client: (&#39;127.0.0.1&#39;, 54545)
+Path: /
+Form data:
+    q=query string
+    foo=bar
+</pre></div>
+</div>
+<p>You can send any byte-string as data, in case the server expects
+something other than url-encoded form arguments in the posted data.</p>
+</div>
+<div class="section" id="paths-vs-urls">
+<h2>Paths vs. URLs<a class="headerlink" href="#paths-vs-urls" title="Permalink to this headline">¶</a></h2>
+<p>Some operating systems use different values for separating the
+components of paths in local files than URLs. To make your code
+portable, you should use the functions <tt class="xref py py-func docutils literal"><span class="pre">pathname2url()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">url2pathname()</span></tt> to convert back and forth. Since I am working
+on a Mac, I have to explicitly import the Windows versions of the
+functions. Using the versions of the functions exported by
+<a class="reference internal" href="#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> gives you the correct defaults for your platform, so you
+do not need to do this.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">pathname2url</span><span class="p">,</span> <span class="n">url2pathname</span>
+
+<span class="k">print</span> <span class="s">&#39;== Default ==&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;/a/b/c&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">path</span>
+<span class="k">print</span> <span class="s">&#39;URL     :&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Path    :&#39;</span><span class="p">,</span> <span class="n">url2pathname</span><span class="p">(</span><span class="s">&#39;/d/e/f&#39;</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="kn">from</span> <span class="nn">nturl2path</span> <span class="kn">import</span> <span class="n">pathname2url</span><span class="p">,</span> <span class="n">url2pathname</span>
+
+<span class="k">print</span> <span class="s">&#39;== Windows, without drive letter ==&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">path</span>
+<span class="k">print</span> <span class="s">&#39;URL     :&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Path    :&#39;</span><span class="p">,</span> <span class="n">url2pathname</span><span class="p">(</span><span class="s">&#39;/d/e/f&#39;</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;== Windows, with drive letter ==&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;C:</span><span class="se">\\</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">path</span>
+<span class="k">print</span> <span class="s">&#39;URL     :&#39;</span><span class="p">,</span> <span class="n">pathname2url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Path    :&#39;</span><span class="p">,</span> <span class="n">url2pathname</span><span class="p">(</span><span class="s">&#39;/d/e/f&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are two Windows examples, with and without the drive letter at the
+prefix of the path.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_pathnames.py
+
+== Default ==
+Original: /a/b/c
+URL     : /a/b/c
+Path    : /d/e/f
+
+== Windows, without drive letter ==
+Original: \a\b\c
+URL     : /a/b/c
+Path    : \d\e\f
+
+== Windows, with drive letter ==
+Original: C:\\a\b\c
+URL     : ///C:/a/b/c
+Path    : \d\e\f
+</pre></div>
+</div>
+</div>
+<div class="section" id="simple-retrieval-with-cache">
+<h2>Simple Retrieval with Cache<a class="headerlink" href="#simple-retrieval-with-cache" title="Permalink to this headline">¶</a></h2>
+<p>Retrieving data is a common operation, and <a class="reference internal" href="#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> includes the
+<tt class="xref py py-func docutils literal"><span class="pre">urlretrieve()</span></tt> function so you don&#8217;t have to write your
+own. <tt class="xref py py-func docutils literal"><span class="pre">urlretrieve()</span></tt> takes arguments for the URL, a temporary
+file to hold the data, a function to report on download progress, and
+data to pass if the URL refers to a form where data should be
+POSTed. If no filename is given, <tt class="xref py py-func docutils literal"><span class="pre">urlretrieve()</span></tt> creates a
+temporary file. You can delete the file yourself, or treat the file as
+a cache and use <tt class="xref py py-func docutils literal"><span class="pre">urlcleanup()</span></tt> to remove it.</p>
+<p>This example uses GET to retrieve some data from a web server:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">reporthook</span><span class="p">(</span><span class="n">blocks_read</span><span class="p">,</span> <span class="n">block_size</span><span class="p">,</span> <span class="n">total_size</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">blocks_read</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Connection opened&#39;</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">total_size</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c"># Unknown size</span>
+        <span class="k">print</span> <span class="s">&#39;Read </span><span class="si">%d</span><span class="s"> blocks&#39;</span> <span class="o">%</span> <span class="n">blocks_read</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">amount_read</span> <span class="o">=</span> <span class="n">blocks_read</span> <span class="o">*</span> <span class="n">block_size</span>
+        <span class="k">print</span> <span class="s">&#39;Read </span><span class="si">%d</span><span class="s"> blocks, or </span><span class="si">%d</span><span class="s">/</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">blocks_read</span><span class="p">,</span> <span class="n">amount_read</span><span class="p">,</span> <span class="n">total_size</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">filename</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s">&#39;http://blog.doughellmann.com/&#39;</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">reporthook</span><span class="p">)</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;File:&#39;</span><span class="p">,</span> <span class="n">filename</span>
+    <span class="k">print</span> <span class="s">&#39;Headers:&#39;</span>
+    <span class="k">print</span> <span class="n">msg</span>
+    <span class="k">print</span> <span class="s">&#39;File exists before cleanup:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">urllib</span><span class="o">.</span><span class="n">urlcleanup</span><span class="p">()</span>
+
+    <span class="k">print</span> <span class="s">&#39;File still exists:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since the server does not return a <tt class="docutils literal"><span class="pre">Content-length</span></tt> header,
+<tt class="xref py py-func docutils literal"><span class="pre">urlretrieve()</span></tt> does not know how big the data should be, and
+passes -1 as the <em>total_size</em> argument to <tt class="xref py py-func docutils literal"><span class="pre">reporthook()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urllib_urlretrieve.py
+Connection opened
+Read 1 blocks
+Read 2 blocks
+Read 3 blocks
+Read 4 blocks
+Read 5 blocks
+Read 6 blocks
+Read 7 blocks
+Read 8 blocks
+Read 9 blocks
+Read 10 blocks
+Read 11 blocks
+Read 12 blocks
+Read 13 blocks
+Read 14 blocks
+Read 15 blocks
+Read 16 blocks
+Read 17 blocks
+Read 18 blocks
+Read 19 blocks
+
+File: /var/folders/9R/9R1t+tR02Raxzk+F71Q50U+++Uw/-Tmp-/tmp3HRpZP
+Headers:
+Content-Type: text/html; charset=UTF-8
+Last-Modified: Tue, 25 Mar 2008 23:09:10 GMT
+Cache-Control: max-age=0 private
+ETag: &quot;904b02e0-c7ff-47f6-9f35-cc6de5d2a2e5&quot;
+Server: GFE/1.3
+Date: Sun, 30 Mar 2008 17:36:48 GMT
+Connection: Close
+
+File exists before cleanup: True
+File still exists: False
+</pre></div>
+</div>
+</div>
+<div class="section" id="urlopener">
+<h2>URLopener<a class="headerlink" href="#urlopener" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> provides a <tt class="xref py py-class docutils literal"><span class="pre">URLopener</span></tt> base class, and
+<tt class="xref py py-class docutils literal"><span class="pre">FancyURLopener</span></tt> with default handling for the supported
+protocols. If you find yourself needing to change their behavior, you
+are probably better off looking at the <a class="reference internal" href="../urllib2/index.html#module-urllib2" title="urllib2: Library for opening URLs."><tt class="xref py py-mod docutils literal"><span class="pre">urllib2</span></tt></a> module, added in
+Python 2.1.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/urllib.html">urllib</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../urllib2/index.html#module-urllib2" title="urllib2: Library for opening URLs."><tt class="xref py py-mod docutils literal"><span class="pre">urllib2</span></tt></a></dt>
+<dd>Updated API for working with URL-based services.</dd>
+<dt><a class="reference internal" href="../urlparse/index.html#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-mod docutils literal"><span class="pre">urlparse</span></tt></a></dt>
+<dd>Parse URL values to access their components.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../urllib2/index.html" title="urllib2 – Library for opening URLs."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../SocketServer/index.html" title="SocketServer – Creating network servers."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

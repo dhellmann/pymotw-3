@@ -1,0 +1,560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>filecmp &#8211; Compare files - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="tempfile – Create temporary filesystem resources." href="../tempfile/index.html" />
+    <link rel="prev" title="fileinput – Process lines from input streams" href="../fileinput/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">filecmp &#8211; Compare files</a><ul>
+<li><a class="reference internal" href="#example-data">Example Data</a></li>
+<li><a class="reference internal" href="#comparing-files">Comparing Files</a></li>
+<li><a class="reference internal" href="#using-dircmp">Using dircmp</a></li>
+<li><a class="reference internal" href="#using-differences-in-your-program">Using differences in your program</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../fileinput/index.html" title="previous chapter"><strong>Previous:</strong> fileinput &#8211; Process lines from input streams</a><br/>
+          <a href="../tempfile/index.html" title="next chapter"><strong>Next:</strong> tempfile &#8211; Create temporary filesystem resources.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/filecmp/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tempfile/index.html" title="tempfile – Create temporary filesystem resources."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../fileinput/index.html" title="fileinput – Process lines from input streams"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-filecmp">
+<span id="filecmp-compare-files"></span><h1>filecmp &#8211; Compare files<a class="headerlink" href="#module-filecmp" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Compare files and directories on the filesystem.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1 and later</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="example-data">
+<h2>Example Data<a class="headerlink" href="#example-data" title="Permalink to this headline">¶</a></h2>
+<p>The examples in the discussion below use a set of test files created by <tt class="docutils literal"><span class="pre">filecmp_mkexamples.py</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">mkfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span> <span class="ow">or</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">make_example_dir</span><span class="p">(</span><span class="n">top</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">top</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+    <span class="n">curdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir1&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir2&#39;</span><span class="p">)</span>
+
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir1/file_only_in_dir1&#39;</span><span class="p">)</span>
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir2/file_only_in_dir2&#39;</span><span class="p">)</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir1/dir_only_in_dir1&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir2/dir_only_in_dir2&#39;</span><span class="p">)</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir1/common_dir&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir2/common_dir&#39;</span><span class="p">)</span>
+
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir1/common_file&#39;</span><span class="p">,</span> <span class="s">&#39;this file is the same&#39;</span><span class="p">)</span>
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir2/common_file&#39;</span><span class="p">,</span> <span class="s">&#39;this file is the same&#39;</span><span class="p">)</span>
+
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir1/not_the_same&#39;</span><span class="p">)</span>
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir2/not_the_same&#39;</span><span class="p">)</span>
+
+    <span class="n">mkfile</span><span class="p">(</span><span class="s">&#39;dir1/file_in_dir1&#39;</span><span class="p">,</span> <span class="s">&#39;This is a file in dir1&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;dir2/file_in_dir1&#39;</span><span class="p">)</span>
+    
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">curdir</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="n">make_example_dir</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+    <span class="n">make_example_dir</span><span class="p">(</span><span class="s">&#39;example/dir1/common_dir&#39;</span><span class="p">)</span>
+    <span class="n">make_example_dir</span><span class="p">(</span><span class="s">&#39;example/dir2/common_dir&#39;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -Rlast example
+total 0
+0 drwxr-xr-x  4 dhellmann  dhellmann  136 Apr 20 17:04 .
+0 drwxr-xr-x  9 dhellmann  dhellmann  306 Apr 20 17:04 ..
+0 drwxr-xr-x  8 dhellmann  dhellmann  272 Apr 20 17:04 dir1
+0 drwxr-xr-x  8 dhellmann  dhellmann  272 Apr 20 17:04 dir2
+
+example/dir1:
+total 32
+0 drwxr-xr-x  8 dhellmann  dhellmann  272 Apr 20 17:04 .
+0 drwxr-xr-x  4 dhellmann  dhellmann  136 Apr 20 17:04 ..
+0 drwxr-xr-x  2 dhellmann  dhellmann   68 Apr 20 17:04 common_dir
+8 -rw-r--r--  1 dhellmann  dhellmann   21 Apr 20 17:04 common_file
+0 drwxr-xr-x  2 dhellmann  dhellmann   68 Apr 20 17:04 dir_only_in_dir1
+8 -rw-r--r--  1 dhellmann  dhellmann   22 Apr 20 17:04 file_in_dir1
+8 -rw-r--r--  1 dhellmann  dhellmann   22 Apr 20 17:04 file_only_in_dir1
+8 -rw-r--r--  1 dhellmann  dhellmann   17 Apr 20 17:04 not_the_same
+
+example/dir2:
+total 24
+0 drwxr-xr-x  8 dhellmann  dhellmann  272 Apr 20 17:04 .
+0 drwxr-xr-x  4 dhellmann  dhellmann  136 Apr 20 17:04 ..
+0 drwxr-xr-x  2 dhellmann  dhellmann   68 Apr 20 17:04 common_dir
+8 -rw-r--r--  1 dhellmann  dhellmann   21 Apr 20 17:04 common_file
+0 drwxr-xr-x  2 dhellmann  dhellmann   68 Apr 20 17:04 dir_only_in_dir2
+0 drwxr-xr-x  2 dhellmann  dhellmann   68 Apr 20 17:04 file_in_dir1
+8 -rw-r--r--  1 dhellmann  dhellmann   22 Apr 20 17:04 file_only_in_dir2
+8 -rw-r--r--  1 dhellmann  dhellmann   17 Apr 20 17:04 not_the_same
+</pre></div>
+</div>
+<p>The same directory structure is repeated one time under the &#8220;common_dir&#8221;
+directories to give interesting recursive comparison options.</p>
+</div>
+<div class="section" id="comparing-files">
+<h2>Comparing Files<a class="headerlink" href="#comparing-files" title="Permalink to this headline">¶</a></h2>
+<p>The filecmp module includes functions and a class for comparing files and
+directories on the filesystem. If you need to compare two files, use the cmp()
+function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="k">print</span> <span class="s">&#39;common_file:&#39;</span><span class="p">,</span> 
+<span class="k">print</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="s">&#39;example/dir1/common_file&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;example/dir2/common_file&#39;</span><span class="p">),</span>
+<span class="k">print</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="s">&#39;example/dir1/common_file&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;example/dir2/common_file&#39;</span><span class="p">,</span>
+                  <span class="n">shallow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;not_the_same:&#39;</span><span class="p">,</span> 
+<span class="k">print</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="s">&#39;example/dir1/not_the_same&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;example/dir2/not_the_same&#39;</span><span class="p">),</span>
+<span class="k">print</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="s">&#39;example/dir1/not_the_same&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;example/dir2/not_the_same&#39;</span><span class="p">,</span>
+                  <span class="n">shallow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;identical:&#39;</span><span class="p">,</span>
+<span class="k">print</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="s">&#39;example/dir1/file_only_in_dir1&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;example/dir1/file_only_in_dir1&#39;</span><span class="p">),</span>
+<span class="k">print</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmp</span><span class="p">(</span><span class="s">&#39;example/dir1/file_only_in_dir1&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;example/dir1/file_only_in_dir1&#39;</span><span class="p">,</span>
+                  <span class="n">shallow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, cmp() looks only at the information available from os.stat(). The
+shallow argument tells cmp() whether to look at the contents of the file, as
+well. The default is to perform a shallow comparison, without looking inside
+the files. Notice that files of the same size created at the same time seem to
+be the same if their contents are not compared.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_cmp.py
+
+common_file: True True
+not_the_same: True False
+identical: True True
+</pre></div>
+</div>
+<p>To compare a set of files in two directories without recursing, use
+filecmp.cmpfiles(). The arguments are the names of the directories and a list
+of files to be checked in the two locations. The list of common files should
+contain only filenames (directories always result in a mismatch) and
+the files must be present in both locations. The code below shows a simple way
+to build the common list. If you have a shorter formula, post it in the
+comments. The comparison also takes the shallow flag, just as with cmp().</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># Determine the items that exist in both directories</span>
+<span class="n">d1_contents</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">))</span>
+<span class="n">d2_contents</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;example/dir2&#39;</span><span class="p">))</span>
+<span class="n">common</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">d1_contents</span> <span class="o">&amp;</span> <span class="n">d2_contents</span><span class="p">)</span>
+<span class="n">common_files</span> <span class="o">=</span> <span class="p">[</span> <span class="n">f</span> 
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">common</span> 
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+                <span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;Common files:&#39;</span><span class="p">,</span> <span class="n">common_files</span>
+
+<span class="c"># Compare the directories</span>
+<span class="n">match</span><span class="p">,</span> <span class="n">mismatch</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">cmpfiles</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> 
+                                           <span class="s">&#39;example/dir2&#39;</span><span class="p">,</span> 
+                                           <span class="n">common_files</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Match:&#39;</span><span class="p">,</span> <span class="n">match</span>
+<span class="k">print</span> <span class="s">&#39;Mismatch:&#39;</span><span class="p">,</span> <span class="n">mismatch</span>
+<span class="k">print</span> <span class="s">&#39;Errors:&#39;</span><span class="p">,</span> <span class="n">errors</span>
+</pre></div>
+</div>
+<p>cmpfiles() returns three lists of filenames for files that match, files that
+do not match, and files that could not be compared (due to permission problems
+or for any other reason).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_cmpfiles.py
+
+Common files: [&#39;not_the_same&#39;, &#39;file_in_dir1&#39;, &#39;common_file&#39;]
+Match: [&#39;not_the_same&#39;, &#39;common_file&#39;]
+Mismatch: [&#39;file_in_dir1&#39;]
+Errors: []
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-dircmp">
+<h2>Using dircmp<a class="headerlink" href="#using-dircmp" title="Permalink to this headline">¶</a></h2>
+<p>The functions described above are suitable for relatively simple comparisons,
+but for recursive comparison of large directory trees or for more complete
+analysis, the dircmp class is more useful. In its simplest use case, you can
+print a report comparing two directories with the report() method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output is a plain-text report showing the results of just the
+contents of the directories given, without recursing. In this case,
+the file &#8220;not_the_same&#8221; is thought to be the same because the contents
+are not being compared. There is no way to have dircmp compare the
+contents of files like cmp() can.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_report.py
+
+diff example/dir1 example/dir2
+Only in example/dir1 : [&#39;dir_only_in_dir1&#39;, &#39;file_only_in_dir1&#39;]
+Only in example/dir2 : [&#39;dir_only_in_dir2&#39;, &#39;file_only_in_dir2&#39;]
+Identical files : [&#39;common_file&#39;, &#39;not_the_same&#39;]
+Common subdirectories : [&#39;common_dir&#39;]
+Common funny cases : [&#39;file_in_dir1&#39;]
+</pre></div>
+</div>
+<p>For more detail, and a recursive comparison, use report_full_closure():</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">report_full_closure</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output includes comparisons of all parallel subdirectories.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_report_full_closure.py
+
+diff example/dir1 example/dir2
+Only in example/dir1 : [&#39;dir_only_in_dir1&#39;, &#39;file_only_in_dir1&#39;]
+Only in example/dir2 : [&#39;dir_only_in_dir2&#39;, &#39;file_only_in_dir2&#39;]
+Identical files : [&#39;common_file&#39;, &#39;not_the_same&#39;]
+Common subdirectories : [&#39;common_dir&#39;]
+Common funny cases : [&#39;file_in_dir1&#39;]
+
+diff example/dir1/common_dir example/dir2/common_dir
+Common subdirectories : [&#39;dir1&#39;, &#39;dir2&#39;]
+
+diff example/dir1/common_dir/dir2 example/dir2/common_dir/dir2
+Identical files : [&#39;common_file&#39;, &#39;file_only_in_dir2&#39;, &#39;not_the_same&#39;]
+Common subdirectories : [&#39;common_dir&#39;, &#39;dir_only_in_dir2&#39;, &#39;file_in_dir1&#39;]
+
+diff example/dir1/common_dir/dir2/common_dir example/dir2/common_dir/dir2/common_dir
+
+diff example/dir1/common_dir/dir2/dir_only_in_dir2 example/dir2/common_dir/dir2/dir_only_in_dir2
+
+diff example/dir1/common_dir/dir2/file_in_dir1 example/dir2/common_dir/dir2/file_in_dir1
+
+diff example/dir1/common_dir/dir1 example/dir2/common_dir/dir1
+Identical files : [&#39;common_file&#39;, &#39;file_in_dir1&#39;, &#39;file_only_in_dir1&#39;, &#39;not_the_same&#39;]
+Common subdirectories : [&#39;common_dir&#39;, &#39;dir_only_in_dir1&#39;]
+
+diff example/dir1/common_dir/dir1/common_dir example/dir2/common_dir/dir1/common_dir
+
+diff example/dir1/common_dir/dir1/dir_only_in_dir1 example/dir2/common_dir/dir1/dir_only_in_dir1
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-differences-in-your-program">
+<h2>Using differences in your program<a class="headerlink" href="#using-differences-in-your-program" title="Permalink to this headline">¶</a></h2>
+<p>Besides producing printed reports, dircmp calculates useful lists of files you
+can use in your programs directly. Each of the following attributes is
+calculated only when requested, so instantiating a dircmp does not incur a lot
+of extra overhead.</p>
+<p>The files and subdirectories contained in the directories being compared are
+listed in left_list and right_list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">dc</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Left :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">left_list</span>
+<span class="k">print</span> <span class="s">&#39;Right:&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">right_list</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_list.py
+
+Left : [&#39;common_dir&#39;, &#39;common_file&#39;, &#39;dir_only_in_dir1&#39;, &#39;file_in_dir1&#39;, &#39;file_only_in_dir1&#39;, &#39;not_the_same&#39;]
+Right: [&#39;common_dir&#39;, &#39;common_file&#39;, &#39;dir_only_in_dir2&#39;, &#39;file_in_dir1&#39;, &#39;file_only_in_dir2&#39;, &#39;not_the_same&#39;]
+</pre></div>
+</div>
+<p>The inputs can be filtered by passing a list of names to ignore to the
+constructor. By default the names RCS, CVS, and tags are ignored.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">dc</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;common_file&#39;</span><span class="p">])</span>
+<span class="k">print</span> <span class="s">&#39;Left :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">left_list</span>
+<span class="k">print</span> <span class="s">&#39;Right:&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">right_list</span>
+</pre></div>
+</div>
+<p>In this case, the &#8220;common_file&#8221; is left out of the list of files to be
+compared.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_list_filter.py
+
+Left : [&#39;common_dir&#39;, &#39;dir_only_in_dir1&#39;, &#39;file_in_dir1&#39;, &#39;file_only_in_dir1&#39;, &#39;not_the_same&#39;]
+Right: [&#39;common_dir&#39;, &#39;dir_only_in_dir2&#39;, &#39;file_in_dir1&#39;, &#39;file_only_in_dir2&#39;, &#39;not_the_same&#39;]
+</pre></div>
+</div>
+<p>The set of files common to both input directories is maintained in common, and
+the files unique to each directory are listed in left_only, and right_only.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">dc</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Common:&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">common</span>
+<span class="k">print</span> <span class="s">&#39;Left  :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">left_only</span>
+<span class="k">print</span> <span class="s">&#39;Right :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">right_only</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_membership.py
+
+Common: [&#39;not_the_same&#39;, &#39;common_file&#39;, &#39;file_in_dir1&#39;, &#39;common_dir&#39;]
+Left  : [&#39;dir_only_in_dir1&#39;, &#39;file_only_in_dir1&#39;]
+Right : [&#39;dir_only_in_dir2&#39;, &#39;file_only_in_dir2&#39;]
+</pre></div>
+</div>
+<p>The common members can be further broken down into files, directories and
+&#8220;funny&#8221; items (anything that has a different type in the two directories or
+where there is an error from os.stat()).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">dc</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Common     :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">common</span>
+<span class="k">print</span> <span class="s">&#39;Directories:&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">common_dirs</span>
+<span class="k">print</span> <span class="s">&#39;Files      :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">common_files</span>
+<span class="k">print</span> <span class="s">&#39;Funny      :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">common_funny</span>
+</pre></div>
+</div>
+<p>In the example data, the item named &#8220;file_in_dir1&#8221; is a file in one directory
+and a subdirectory in the other, so it shows up in the &#8220;funny&#8221; list.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_common.py
+
+Common     : [&#39;not_the_same&#39;, &#39;common_file&#39;, &#39;file_in_dir1&#39;, &#39;common_dir&#39;]
+Directories: [&#39;common_dir&#39;]
+Files      : [&#39;not_the_same&#39;, &#39;common_file&#39;]
+Funny      : [&#39;file_in_dir1&#39;]
+</pre></div>
+</div>
+<p>The differences between files are broken down similarly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">dc</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Same      :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">same_files</span>
+<span class="k">print</span> <span class="s">&#39;Different :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">diff_files</span>
+<span class="k">print</span> <span class="s">&#39;Funny     :&#39;</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">funny_files</span>
+</pre></div>
+</div>
+<p>Remember, the file &#8220;not_the_same&#8221; is only being compared via os.stat, and the contents are not examined.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_diff.py
+
+Same      : [&#39;not_the_same&#39;, &#39;common_file&#39;]
+Different : []
+Funny     : []
+</pre></div>
+</div>
+<p>Finally, the subdirectories are also mapped to new dircmp objects in the
+attribute subdirs to allow easy recursive comparison.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">filecmp</span>
+
+<span class="n">dc</span> <span class="o">=</span> <span class="n">filecmp</span><span class="o">.</span><span class="n">dircmp</span><span class="p">(</span><span class="s">&#39;example/dir1&#39;</span><span class="p">,</span> <span class="s">&#39;example/dir2&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Subdirectories:&#39;</span>
+<span class="k">print</span> <span class="n">dc</span><span class="o">.</span><span class="n">subdirs</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python filecmp_dircmp_subdirs.py
+Subdirectories:
+{&#39;common_dir&#39;: &lt;filecmp.dircmp instance at 0x85da0&gt;}
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/filecmp.html">filecmp</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../os/index.html#os-directories"><em>Directories</em></a> from <a class="reference internal" href="../os/index.html#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a></dt>
+<dd>Listing the contents of a directory.</dd>
+<dt><a class="reference internal" href="../difflib/index.html#module-difflib" title="difflib: Compare sequences, especially lines of text."><tt class="xref py py-mod docutils literal"><span class="pre">difflib</span></tt></a></dt>
+<dd>Computing the differences between two sequences.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tempfile/index.html" title="tempfile – Create temporary filesystem resources."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../fileinput/index.html" title="fileinput – Process lines from input streams"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

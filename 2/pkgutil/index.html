@@ -1,0 +1,686 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pkgutil &#8211; Package Utilities - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Importing Modules" href="../importing.html" />
+    <link rel="next" title="zipimport – Load Python code from inside ZIP archives" href="../zipimport/index.html" />
+    <link rel="prev" title="imp – Interface to module import mechanism." href="../imp/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">pkgutil &#8211; Package Utilities</a><ul>
+<li><a class="reference internal" href="#package-import-paths">Package Import Paths</a><ul>
+<li><a class="reference internal" href="#development-versions-of-packages">Development Versions of Packages</a></li>
+<li><a class="reference internal" href="#managing-paths-with-pkg-files">Managing Paths with PKG Files</a></li>
+<li><a class="reference internal" href="#nested-packages">Nested Packages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#package-data">Package Data</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../imp/index.html" title="previous chapter"><strong>Previous:</strong> imp &#8211; Interface to module import mechanism.</a><br/>
+          <a href="../zipimport/index.html" title="next chapter"><strong>Next:</strong> zipimport &#8211; Load Python code from inside ZIP archives</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/pkgutil/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../zipimport/index.html" title="zipimport – Load Python code from inside ZIP archives"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../imp/index.html" title="imp – Interface to module import mechanism."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../importing.html" accesskey="U">Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-pkgutil">
+<span id="pkgutil-package-utilities"></span><h1>pkgutil &#8211; Package Utilities<a class="headerlink" href="#module-pkgutil" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Add to the module search path for a specific package and work with resources included in a package.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-pkgutil" title="pkgutil: Package utilities"><tt class="xref py py-mod docutils literal"><span class="pre">pkgutil</span></tt></a> module includes functions for working with Python
+packages.  <tt class="xref py py-func docutils literal"><span class="pre">extend_path()</span></tt> changes the import path for sub-modules
+of the package, and <tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> provides access to file resources
+distributed with the package.</p>
+<div class="section" id="package-import-paths">
+<h2>Package Import Paths<a class="headerlink" href="#package-import-paths" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">extend_path()</span></tt> function is used to modify the search path for
+modules in a given package to include other directories in
+<a class="reference internal" href="../sys/imports.html#sys-path"><em>sys.path</em></a>. This can be used to override installed
+versions of packages with development versions, or to combine
+platform-specific and shared modules into a single package namespace.</p>
+<p>The most common way to call <tt class="xref py py-func docutils literal"><span class="pre">extend_path()</span></tt> is by adding these two
+lines to the <tt class="docutils literal"><span class="pre">__init__.py</span></tt> inside the packag:</p>
+<p>e:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">extend_path()</span></tt> scans <tt class="docutils literal"><span class="pre">sys.path</span></tt> for directories that include a
+subdirectory named for the package given as the second argument.  The
+list of directories is combined with the path value passed as the
+first argument and returned as a single list, suitable for use as the
+package import path.</p>
+<p>An example package called <tt class="xref py py-mod docutils literal"><span class="pre">demopkg</span></tt> includes these files:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find demopkg1 -name &#39;*.py&#39;
+demopkg1/__init__.py
+demopkg1/shared.py
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">demopkg1/__init__.py</span></tt> contains:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">print</span> <span class="s">&#39;demopkg1.__path__ before:&#39;</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">__path__</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;demopkg1.__path__ after:&#39;</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">__path__</span><span class="p">)</span>
+<span class="k">print</span>
+</pre></div>
+</div>
+<p>The <strong class="command">print</strong> statements shows the search path before and after
+it is modified, to highlight the difference.</p>
+<p>And an <tt class="docutils literal"><span class="pre">extension</span></tt> directory, with add-on features for
+<tt class="xref py py-mod docutils literal"><span class="pre">demopkg</span></tt>, contains</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find extension -name &#39;*.py&#39;
+extension/__init__.py
+extension/demopkg1/__init__.py
+extension/demopkg1/not_shared.py
+</pre></div>
+</div>
+<p>A simple test program imports the <tt class="xref py py-mod docutils literal"><span class="pre">demopkg1</span></tt> package:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">demopkg1</span>
+<span class="k">print</span> <span class="s">&#39;demopkg1           :&#39;</span><span class="p">,</span> <span class="n">demopkg1</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">demopkg1.shared</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;demopkg1.shared    : Not found (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">err</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;demopkg1.shared    :&#39;</span><span class="p">,</span> <span class="n">demopkg1</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">demopkg1.not_shared</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;demopkg1.not_shared: Not found (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">err</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;demopkg1.not_shared:&#39;</span><span class="p">,</span> <span class="n">demopkg1</span><span class="o">.</span><span class="n">not_shared</span><span class="o">.</span><span class="n">__file__</span>
+</pre></div>
+</div>
+<p>When this test program is run directly from the command line, the
+<tt class="xref py py-mod docutils literal"><span class="pre">not_shared</span></tt> module is not found.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The full filesystem paths in these examples have been shortened to
+emphasize the parts that change.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python pkgutil_extend_path.py
+
+demopkg1.__path__ before:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;]
+
+demopkg1.__path__ after:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;]
+
+demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.py
+demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.py
+demopkg1.not_shared: Not found (No module named not_shared)
+</pre></div>
+</div>
+<p>However, if the <tt class="docutils literal"><span class="pre">extension</span></tt> directory is added to the
+<tt class="xref py py-data docutils literal"><span class="pre">PYTHONPATH</span></tt> and the program is run again, different results are
+produced.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export PYTHONPATH=extension
+$ python pkgutil_extend_path.py
+demopkg1.__path__ before:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;]
+
+demopkg1.__path__ after:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;,
+ &#39;.../PyMOTW/pkgutil/extension/demopkg1&#39;]
+
+demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.pyc
+demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.pyc
+demopkg1.not_shared: .../PyMOTW/pkgutil/extension/demopkg1/not_shared.py
+</pre></div>
+</div>
+<p>The version of <tt class="xref py py-mod docutils literal"><span class="pre">demopkg1</span></tt> inside the <tt class="docutils literal"><span class="pre">extension</span></tt> directory has
+been added to the search path, so the <tt class="xref py py-mod docutils literal"><span class="pre">not_shared</span></tt> module is
+found there.</p>
+<p>Extending the path in this manner is useful for combining
+platform-specific versions of packages with common packages,
+especially if the platform-specific versions include C extension
+modules.</p>
+<div class="section" id="development-versions-of-packages">
+<h3>Development Versions of Packages<a class="headerlink" href="#development-versions-of-packages" title="Permalink to this headline">¶</a></h3>
+<p>While develop enhancements to a project, it is common to need to test
+changes to an installed package. Replacing the installed copy with a
+development version may be a bad idea, since it is not necessarily
+correct and other tools on the system are likely to depend on the
+installed package.</p>
+<p>A completely separate copy of the package could be configured in a
+development environment using <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a>, but for small
+modifications the overhead of setting up a virtual environment with
+all of the dependencies may be excessive.</p>
+<p>Another option is to use <a class="reference internal" href="#module-pkgutil" title="pkgutil: Package utilities"><tt class="xref py py-mod docutils literal"><span class="pre">pkgutil</span></tt></a> to modify the module search
+path for modules that belong to the package under development. In this
+case, however, the path must be reversed so development version
+overrides the installed version.</p>
+<p>Given a package <tt class="xref py py-mod docutils literal"><span class="pre">demopkg2</span></tt> like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find demopkg2 -name &#39;*.py&#39;
+demopkg2/__init__.py
+demopkg2/overloaded.py
+</pre></div>
+</div>
+<p>With the function under development located in
+<tt class="docutils literal"><span class="pre">demopkg2/overloaded.py</span></tt>. The installed version contains</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;This is the installed version of func().&#39;</span>
+</pre></div>
+</div>
+<p>and <tt class="docutils literal"><span class="pre">demopkg2/__init__.py</span></tt> contains</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pkgutil</span>
+
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+<span class="n">__path__</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">reverse()</span></tt> is used to ensure that any directories added to the
+search path by <a class="reference internal" href="#module-pkgutil" title="pkgutil: Package utilities"><tt class="xref py py-mod docutils literal"><span class="pre">pkgutil</span></tt></a> are scanned for imports <em>before</em> the
+default location.</p>
+<p>This program imports <tt class="xref py py-mod docutils literal"><span class="pre">demopkg2.overloaded</span></tt> and calls <tt class="xref py py-func docutils literal"><span class="pre">func()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">demopkg2</span>
+<span class="k">print</span> <span class="s">&#39;demopkg2           :&#39;</span><span class="p">,</span> <span class="n">demopkg2</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="kn">import</span> <span class="nn">demopkg2.overloaded</span>
+<span class="k">print</span> <span class="s">&#39;demopkg2.overloaded:&#39;</span><span class="p">,</span> <span class="n">demopkg2</span><span class="o">.</span><span class="n">overloaded</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="k">print</span>
+<span class="n">demopkg2</span><span class="o">.</span><span class="n">overloaded</span><span class="o">.</span><span class="n">func</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Running it without any special path treatment produces output from the
+installed version of <tt class="xref py py-func docutils literal"><span class="pre">func()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pkgutil_devel.py
+demopkg2           : .../PyMOTW/pkgutil/demopkg2/__init__.py
+demopkg2.overloaded: .../PyMOTW/pkgutil/demopkg2/overloaded.py
+</pre></div>
+</div>
+<p>A development directory containing</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find develop -name &#39;*.py&#39;
+develop/demopkg2/__init__.py
+develop/demopkg2/overloaded.py
+</pre></div>
+</div>
+<p>and a modified version of <tt class="xref py py-mod docutils literal"><span class="pre">overloaded</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;This is the development version of func().&#39;</span>
+</pre></div>
+</div>
+<p>will be loaded when the test program is run with the <tt class="docutils literal"><span class="pre">develop</span></tt>
+directory in the search path.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export PYTHONPATH=develop
+$ python pkgutil_devel.py
+
+demopkg2           : .../PyMOTW/pkgutil/demopkg2/__init__.pyc
+demopkg2.overloaded: .../PyMOTW/pkgutil/develop/demopkg2/overloaded.pyc
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-paths-with-pkg-files">
+<h3>Managing Paths with PKG Files<a class="headerlink" href="#managing-paths-with-pkg-files" title="Permalink to this headline">¶</a></h3>
+<p>The first example above illustrated how to extend the search path
+using extra directories included in the <tt class="xref py py-data docutils literal"><span class="pre">PYTHONPATH</span></tt>. It is also
+possible to add to the search path using <tt class="docutils literal"><span class="pre">*.pkg</span></tt> files containing
+directory names. PKG files are similar to the PTH files used by the
+<a class="reference internal" href="../site/index.html#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> module. They can contain directory names, one per line, to
+be added to the search path for the package.</p>
+<p>Another way to structure the platform-specific portions of the
+application from the first example is to use a separate directory for
+each operating system, and include a <tt class="docutils literal"><span class="pre">.pkg</span></tt> file to extend the
+search path.</p>
+<p>This example uses the same <tt class="xref py py-mod docutils literal"><span class="pre">demopkg1</span></tt> files, and also includes
+the following files:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find os_* -type f
+os_one/demopkg1/__init__.py
+os_one/demopkg1/not_shared.py
+os_one/demopkg1.pkg
+os_two/demopkg1/__init__.py
+os_two/demopkg1/not_shared.py
+os_two/demopkg1.pkg
+</pre></div>
+</div>
+<p>The PKG files are named <tt class="docutils literal"><span class="pre">demopkg1.pkg</span></tt> to match the package
+being extended.  They both contain:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">demopkg</span>
+</pre></div>
+</div>
+<p>This demo program shows the version of the module being imported:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">demopkg1</span>
+<span class="k">print</span> <span class="s">&#39;demopkg1:&#39;</span><span class="p">,</span> <span class="n">demopkg1</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="kn">import</span> <span class="nn">demopkg1.shared</span>
+<span class="k">print</span> <span class="s">&#39;demopkg1.shared:&#39;</span><span class="p">,</span> <span class="n">demopkg1</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="kn">import</span> <span class="nn">demopkg1.not_shared</span>
+<span class="k">print</span> <span class="s">&#39;demopkg1.not_shared:&#39;</span><span class="p">,</span> <span class="n">demopkg1</span><span class="o">.</span><span class="n">not_shared</span><span class="o">.</span><span class="n">__file__</span>
+</pre></div>
+</div>
+<p>A simple run script can be used to switch between the two packages:</p>
+<div class="highlight-python"><div class="highlight"><pre>export PYTHONPATH=os_${1}
+echo &quot;PYTHONPATH=$PYTHONPATH&quot;
+echo
+
+python pkgutil_os_specific.py
+</pre></div>
+</div>
+<p>And when run with <tt class="docutils literal"><span class="pre">&quot;one&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;two&quot;</span></tt> as the arguments, the path is
+adjusted appropriately:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./with_os.sh one
+PYTHONPATH=os_one
+
+demopkg1.__path__ before:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;]
+
+demopkg1.__path__ after:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;,
+ &#39;.../PyMOTW/pkgutil/os_one/demopkg1&#39;,
+ &#39;demopkg&#39;]
+
+demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.pyc
+demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.pyc
+demopkg1.not_shared: .../PyMOTW/pkgutil/os_one/demopkg1/not_shared.pyc
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ ./with_os.sh two
+PYTHONPATH=os_two
+
+demopkg1.__path__ before:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;]
+
+demopkg1.__path__ after:
+[&#39;.../PyMOTW/pkgutil/demopkg1&#39;,
+ &#39;.../PyMOTW/pkgutil/os_two/demopkg1&#39;,
+ &#39;demopkg&#39;]
+
+demopkg1           : .../PyMOTW/pkgutil/demopkg1/__init__.pyc
+demopkg1.shared    : .../PyMOTW/pkgutil/demopkg1/shared.pyc
+demopkg1.not_shared: .../PyMOTW/pkgutil/os_two/demopkg1/not_shared.pyc
+</pre></div>
+</div>
+<p>PKG files can appear anywhere in the normal search path, so a
+single PKG file in the current working directory could also be
+used to include a development tree.</p>
+</div>
+<div class="section" id="nested-packages">
+<h3>Nested Packages<a class="headerlink" href="#nested-packages" title="Permalink to this headline">¶</a></h3>
+<p>For nested packages, it is only necessary to modify the path of the top-level
+package. For example, with this directory structure</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find nested -name &#39;*.py&#39;
+nested/__init__.py
+nested/second/__init__.py
+nested/second/deep.py
+nested/shallow.py
+</pre></div>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">nested/__init__.py</span></tt> contains</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pkgutil</span>
+
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">__path__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+<span class="n">__path__</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and a development tree like</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find develop/nested -name &#39;*.py&#39;
+develop/nested/__init__.py
+develop/nested/second/__init__.py
+develop/nested/second/deep.py
+develop/nested/shallow.py
+</pre></div>
+</div>
+<p>Both the <tt class="xref py py-mod docutils literal"><span class="pre">shallow</span></tt> and <tt class="xref py py-mod docutils literal"><span class="pre">deep</span></tt> modules contain a simple
+function to print out a message indicating whether or not they come
+from the installed or development version.</p>
+<p>This test program exercises the new packages.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nested</span>
+
+<span class="kn">import</span> <span class="nn">nested.shallow</span>
+<span class="k">print</span> <span class="s">&#39;nested.shallow:&#39;</span><span class="p">,</span> <span class="n">nested</span><span class="o">.</span><span class="n">shallow</span><span class="o">.</span><span class="n">__file__</span>
+<span class="n">nested</span><span class="o">.</span><span class="n">shallow</span><span class="o">.</span><span class="n">func</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="kn">import</span> <span class="nn">nested.second.deep</span>
+<span class="k">print</span> <span class="s">&#39;nested.second.deep:&#39;</span><span class="p">,</span> <span class="n">nested</span><span class="o">.</span><span class="n">second</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">__file__</span>
+<span class="n">nested</span><span class="o">.</span><span class="n">second</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">func</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When <tt class="docutils literal"><span class="pre">pkgutil_nested.py</span></tt> is run without any path manipulation, the
+installed version of both modules are used.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pkgutil_nested.py
+nested.shallow: .../PyMOTW/pkgutil/nested/shallow.pyc
+This func() comes from the installed version of nested.shallow
+
+nested.second.deep: .../PyMOTW/pkgutil/nested/second/deep.pyc
+This func() comes from the installed version of nested.second.deep
+</pre></div>
+</div>
+<p>When the <tt class="docutils literal"><span class="pre">develop</span></tt> directory is added to the path, the development
+version of both functions override the installed versions.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ PYTHONPATH=develop python pkgutil_nested.py
+nested.shallow: .../PyMOTW/pkgutil/develop/nested/shallow.pyc
+This func() comes from the development version of nested.shallow
+
+nested.second.deep: .../PyMOTW/pkgutil/develop/nested/second/deep.pyc
+This func() comes from the development version of nested.second.deep
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="package-data">
+<h2>Package Data<a class="headerlink" href="#package-data" title="Permalink to this headline">¶</a></h2>
+<p>In addition to code, Python packages can contain data files such as
+templates, default configuration files, images, and other supporting
+files used by the code in the package.  The <tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> function
+gives access to the data in the files in a format-agnostic way, so it
+does not matter if the package is distributed as an EGG, part of a
+frozen binary, or regular files on the filesystem.</p>
+<p>With a package <tt class="xref py py-mod docutils literal"><span class="pre">pkgwithdata</span></tt> containing a <tt class="docutils literal"><span class="pre">templates</span></tt> directory</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find pkgwithdata -type f
+
+pkgwithdata/__init__.py
+pkgwithdata/templates/base.html
+</pre></div>
+</div>
+<p>and <tt class="docutils literal"><span class="pre">pkgwithdata/templates/base.html</span></tt> containing</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML//EN&quot;&gt;
+&lt;html&gt; &lt;head&gt;
+&lt;title&gt;PyMOTW Template&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;Example Template&lt;/h1&gt;
+
+&lt;p&gt;This is a sample data file.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>This program uses <tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> to retrieve the template contents
+and print them out.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pkgutil</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s">&#39;pkgwithdata&#39;</span><span class="p">,</span> <span class="s">&#39;templates/base.html&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">template</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The arguments to <tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> are the dotted name of the package,
+and a filename relative to the top of the package.  The return value
+is a byte sequence, so it is encoded as UTF-8 before being printed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pkgutil_get_data.py
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML//EN&quot;&gt;
+&lt;html&gt; &lt;head&gt;
+&lt;title&gt;PyMOTW Template&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;Example Template&lt;/h1&gt;
+
+&lt;p&gt;This is a sample data file.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> is distribution format-agnostic because it uses the
+import hooks defined in <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> to access the package contents.
+Any loader that provides the hooks can be used, including the ZIP
+archive importer in <a class="reference internal" href="../zipfile/index.html#module-zipfile" title="zipfile: Read and write ZIP archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Create a ZIP file with code from the current directory</span>
+<span class="c"># and the template using a name that does not appear on the</span>
+<span class="c"># local filesystem.</span>
+<span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">PyZipFile</span><span class="p">(</span><span class="s">&#39;pkgwithdatainzip.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">writepy</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;pkgwithdata/templates/base.html&#39;</span><span class="p">,</span>
+             <span class="s">&#39;pkgwithdata/templates/fromzip.html&#39;</span><span class="p">,</span>
+             <span class="p">)</span>
+
+<span class="c"># Add the ZIP file to the import path.</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;pkgwithdatainzip.zip&#39;</span><span class="p">)</span>
+
+<span class="c"># Import pkgwithdata to show that it comes from the ZIP archive.</span>
+<span class="kn">import</span> <span class="nn">pkgwithdata</span>
+<span class="k">print</span> <span class="s">&#39;Loading pkgwithdata from&#39;</span><span class="p">,</span> <span class="n">pkgwithdata</span><span class="o">.</span><span class="n">__file__</span>
+
+<span class="c"># Print the template body</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Template:&#39;</span>
+<span class="k">print</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s">&#39;pkgwithdata&#39;</span><span class="p">,</span> <span class="s">&#39;templates/fromzip.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example creates a ZIP archive with a copy of the
+<tt class="xref py py-mod docutils literal"><span class="pre">pkgwithdata</span></tt> package, including a renamed version of the
+template file.  It then adds the ZIP archive to the import path before
+using <a class="reference internal" href="#module-pkgutil" title="pkgutil: Package utilities"><tt class="xref py py-mod docutils literal"><span class="pre">pkgutil</span></tt></a> to load the template and print it.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pkgutil_get_data_zip.py
+
+Loading pkgwithdata from pkgwithdatainzip.zip/pkgwithdata/__init__.pyc
+
+Template:
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML//EN&quot;&gt;
+&lt;html&gt; &lt;head&gt;
+&lt;title&gt;PyMOTW Template&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;Example Template&lt;/h1&gt;
+
+&lt;p&gt;This is a sample data file.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/pkgutil.html">pkgutil</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a></dt>
+<dd>Ian Bicking&#8217;s virtual environment script.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">distutils</span></tt></dt>
+<dd>Packaging tools from Python standard library.</dd>
+<dt><a class="reference external" href="http://packages.python.org/distribute/">Distribute</a></dt>
+<dd>Next-generation packaging tools.</dd>
+<dt><span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a></dt>
+<dd>Import Hooks</dd>
+<dt><a class="reference internal" href="../zipfile/index.html#module-zipfile" title="zipfile: Read and write ZIP archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a></dt>
+<dd>Create importable ZIP archives.</dd>
+<dt><a class="reference internal" href="../zipimport/index.html#module-zipimport" title="zipimport: Load Python code from inside ZIP archives."><tt class="xref py py-mod docutils literal"><span class="pre">zipimport</span></tt></a></dt>
+<dd>Importer for packages in ZIP archives.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../zipimport/index.html" title="zipimport – Load Python code from inside ZIP archives"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../imp/index.html" title="imp – Interface to module import mechanism."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../importing.html" >Importing Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

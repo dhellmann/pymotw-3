@@ -1,0 +1,956 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ConfigParser &#8211; Work with configuration files - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File Formats" href="../file_formats.html" />
+    <link rel="next" title="robotparser – Internet spider access control" href="../robotparser/index.html" />
+    <link rel="prev" title="csv – Comma-separated value files" href="../csv/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">ConfigParser &#8211; Work with configuration files</a><ul>
+<li><a class="reference internal" href="#configuration-file-format">Configuration File Format</a></li>
+<li><a class="reference internal" href="#reading-configuration-files">Reading Configuration Files</a><ul>
+<li><a class="reference internal" href="#unicode-configuration-data">Unicode Configuration Data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#accessing-configuration-settings">Accessing Configuration Settings</a><ul>
+<li><a class="reference internal" href="#testing-whether-values-are-present">Testing whether values are present</a></li>
+<li><a class="reference internal" href="#value-types">Value Types</a></li>
+<li><a class="reference internal" href="#options-as-flags">Options as Flags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modifying-settings">Modifying Settings</a></li>
+<li><a class="reference internal" href="#saving-configuration-files">Saving Configuration Files</a></li>
+<li><a class="reference internal" href="#option-search-path">Option Search Path</a></li>
+<li><a class="reference internal" href="#combining-values-with-interpolation">Combining Values with Interpolation</a><ul>
+<li><a class="reference internal" href="#using-defaults">Using Defaults</a></li>
+<li><a class="reference internal" href="#substitution-errors">Substitution Errors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../csv/index.html" title="previous chapter"><strong>Previous:</strong> csv &#8211; Comma-separated value files</a><br/>
+          <a href="../robotparser/index.html" title="next chapter"><strong>Next:</strong> robotparser &#8211; Internet spider access control</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/ConfigParser/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../robotparser/index.html" title="robotparser – Internet spider access control"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../csv/index.html" title="csv – Comma-separated value files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_formats.html" accesskey="U">File Formats</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-ConfigParser">
+<span id="configparser-work-with-configuration-files"></span><h1>ConfigParser &#8211; Work with configuration files<a class="headerlink" href="#module-ConfigParser" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read/write configuration files similar to Windows INI files</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5</td>
+</tr>
+</tbody>
+</table>
+<p>Use the <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Read/write configuration files similar to Windows INI files"><tt class="xref py py-mod docutils literal"><span class="pre">ConfigParser</span></tt></a> module to manage user-editable
+configuration files for an application. The configuration files are
+organized into sections, and each section can contain name-value pairs
+for configuration data. Value interpolation using Python formatting
+strings is also supported, to build values that depend on one another
+(this is especially handy for URLs and message strings).</p>
+<div class="section" id="configuration-file-format">
+<h2>Configuration File Format<a class="headerlink" href="#configuration-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The file format used by <a class="reference internal" href="#module-ConfigParser" title="ConfigParser: Read/write configuration files similar to Windows INI files"><tt class="xref py py-mod docutils literal"><span class="pre">ConfigParser</span></tt></a> is similar to the format
+used by older versions of Microsoft Windows.  It consists of one or
+more named <em>sections</em>, each of which can contain individual <em>options</em>
+with names and values.</p>
+<p>Config file sections are identified by looking for lines starting with
+<tt class="docutils literal"><span class="pre">[</span></tt> and ending with <tt class="docutils literal"><span class="pre">]</span></tt>.  The value between the square brackets is
+the section name, and can contain any characters except square
+brackets.</p>
+<p>Options are listed one per line within a section.  The line starts
+with the name of the option, which is separated from the value by a
+colon (<tt class="docutils literal"><span class="pre">:</span></tt>) or equal sign (<tt class="docutils literal"><span class="pre">=</span></tt>).  Whitespace around the separator
+is ignored when the file is parsed.</p>
+<p>A sample configuration file with section &#8220;bug_tracker&#8221; and three options
+would look like:</p>
+<div class="highlight-python"><div class="highlight"><pre>[bug_tracker]
+url = http://localhost:8080/bugs/
+username = dhellmann
+password = SECRET
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-configuration-files">
+<h2>Reading Configuration Files<a class="headerlink" href="#reading-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>The most common use for a configuration file is to have a user or
+system administrator edit the file with a regular text editor to set
+application behavior defaults, and then have the application read the
+file, parse it, and act based on its contents.  Use the <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt>
+method of <tt class="xref py py-mod docutils literal"><span class="pre">SafeConfigParser</span></tt> to read the configuration file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;simple.ini&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This program reads the <tt class="docutils literal"><span class="pre">simple.ini</span></tt> file from the previous section
+and prints the value of the <tt class="xref py py-data docutils literal"><span class="pre">url</span></tt> option from the
+<tt class="xref py py-data docutils literal"><span class="pre">bug_tracker</span></tt> section.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_read.py
+
+http://localhost:8080/bugs/
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt> method also accepts a list of filenames.  Each name
+in turn is scanned, and if the file exists it is opened and read.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;does_not_exist.ini&#39;</span><span class="p">,</span> <span class="s">&#39;also-does-not-exist.ini&#39;</span><span class="p">,</span>
+              <span class="s">&#39;simple.ini&#39;</span><span class="p">,</span> <span class="s">&#39;multisection.ini&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+
+<span class="n">found</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+
+<span class="n">missing</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Found config files:&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Missing files     :&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt> returns a list containing the names of the files
+successfully loaded, so the program can discover which configuration
+files are missing and decide whether to ignore them.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_read_many.py
+
+Found config files: [&#39;multisection.ini&#39;, &#39;simple.ini&#39;]
+Missing files     : [&#39;also-does-not-exist.ini&#39;, &#39;does_not_exist.ini&#39;]
+</pre></div>
+</div>
+<div class="section" id="unicode-configuration-data">
+<h3>Unicode Configuration Data<a class="headerlink" href="#unicode-configuration-data" title="Permalink to this headline">¶</a></h3>
+<p>Configuration files containing Unicode data should be opened using the
+<a class="reference internal" href="../codecs/index.html#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> module to set the proper encoding value.</p>
+<p>Changing the password value of the original input to contain Unicode
+characters and saving the results in UTF-8 encoding gives:</p>
+<div class="highlight-python"><div class="highlight"><pre>[bug_tracker]
+url = http://localhost:8080/bugs/
+username = dhellmann
+password = ßéç®é†
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../codecs/index.html#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> file handle can be passed to <tt class="xref py py-func docutils literal"><span class="pre">readfp()</span></tt>, which
+uses the <a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-func docutils literal"><span class="pre">readline()</span></tt></a> method of its argument to get lines from the
+file and parse them.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+
+<span class="c"># Open the file with the correct encoding</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;unicode.ini&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">readfp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">password</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Password:&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Type    :&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;repr()  :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The value returned by <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> is a <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> object, so in
+order to print it safely it must be re-encoded as UTF-8.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_unicode.py
+
+Password: ßéç®é†
+Type    : &lt;type &#39;unicode&#39;&gt;
+repr()  : u&#39;\xdf\xe9\xe7\xae\xe9\u2020&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="accessing-configuration-settings">
+<h2>Accessing Configuration Settings<a class="headerlink" href="#accessing-configuration-settings" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> includes methods for examining the structure
+of the parsed configuration, including listing the sections and
+options, and getting their values.  This configuration file includes
+two sections for separate web services:</p>
+<div class="highlight-python"><div class="highlight"><pre>[bug_tracker]
+url = http://localhost:8080/bugs/
+username = dhellmann
+password = SECRET
+
+[wiki]
+url = http://localhost:8080/wiki/
+username = dhellmann
+password = SECRET
+</pre></div>
+</div>
+<p>And this sample program exercies some of the methods for looking at
+the configuration data, including <tt class="xref py py-func docutils literal"><span class="pre">sections()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">options()</span></tt>,
+and <tt class="xref py py-func docutils literal"><span class="pre">items()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">section_name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Section:&#39;</span><span class="p">,</span> <span class="n">section_name</span>
+    <span class="k">print</span> <span class="s">&#39;  Options:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">section_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section_name</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Both <tt class="xref py py-func docutils literal"><span class="pre">sections()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">options()</span></tt> return lists of strings,
+while <tt class="xref py py-func docutils literal"><span class="pre">items()</span></tt> returns a list of tuples containing the name-value
+pairs.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_structure.py
+
+Section: bug_tracker
+  Options: [&#39;url&#39;, &#39;username&#39;, &#39;password&#39;]
+  url = http://localhost:8080/bugs/
+  username = dhellmann
+  password = SECRET
+
+Section: wiki
+  Options: [&#39;url&#39;, &#39;username&#39;, &#39;password&#39;]
+  url = http://localhost:8080/wiki/
+  username = dhellmann
+  password = SECRET
+</pre></div>
+</div>
+<div class="section" id="testing-whether-values-are-present">
+<h3>Testing whether values are present<a class="headerlink" href="#testing-whether-values-are-present" title="Permalink to this headline">¶</a></h3>
+<p>To test if a section exists, use <tt class="xref py py-func docutils literal"><span class="pre">has_section()</span></tt>, passing the
+section name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;wiki&#39;</span><span class="p">,</span> <span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;dvcs&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%-12s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">candidate</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Testing if a section exists before calling <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> avoids
+exceptions for missing data.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_has_section.py
+
+wiki        : True
+bug_tracker : True
+dvcs        : False
+</pre></div>
+</div>
+<p>Use <tt class="xref py py-func docutils literal"><span class="pre">has_option()</span></tt> to test if an option exists within a section.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;wiki&#39;</span><span class="p">,</span> <span class="s">&#39;none&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> section exists: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="s">&#39;description&#39;</span> <span class="p">]:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.</span><span class="si">%-12s</span><span class="s">  : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">candidate</span><span class="p">))</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>If the section does not exist, <tt class="xref py py-func docutils literal"><span class="pre">has_option()</span></tt> returns <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_has_option.py
+
+wiki section exists: True
+wiki.username      : True
+wiki.password      : True
+wiki.url           : True
+wiki.description   : False
+
+none section exists: False
+none.username      : False
+none.password      : False
+none.url           : False
+none.description   : False
+</pre></div>
+</div>
+</div>
+<div class="section" id="value-types">
+<h3>Value Types<a class="headerlink" href="#value-types" title="Permalink to this headline">¶</a></h3>
+<p>All section and option names are treated as strings, but option values
+can be strings, integers, floating point numbers, or booleans.  There
+are a range of possible boolean values that are converted true or
+false.  This example file includes one of each:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">ints</span><span class="p">]</span>
+<span class="n">positive</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">negative</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">floats</span><span class="p">]</span>
+<span class="n">positive</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">negative</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.14</span>
+
+<span class="p">[</span><span class="n">booleans</span><span class="p">]</span>
+<span class="n">number_true</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">number_false</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">yn_true</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">yn_false</span> <span class="o">=</span> <span class="n">no</span>
+<span class="n">tf_true</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">tf_false</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">onoff_true</span> <span class="o">=</span> <span class="n">on</span>
+<span class="n">onoff_false</span> <span class="o">=</span> <span class="n">false</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> does not make any attempt to understand the
+option type.  The application is expected to use the correct method to
+fetch the value as the desired type.  <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> always returns a
+string.  Use <tt class="xref py py-func docutils literal"><span class="pre">getint()</span></tt> for integers, <tt class="xref py py-func docutils literal"><span class="pre">getfloat()</span></tt> for
+floating point numbers, and <tt class="xref py py-func docutils literal"><span class="pre">getboolean()</span></tt> for boolean values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;types.ini&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Integers:&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s">&#39;ints&#39;</span><span class="p">):</span>
+    <span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;ints&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&#39;ints&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-12s</span><span class="s"> : </span><span class="si">%-7r</span><span class="s"> -&gt; </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Floats:&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s">&#39;floats&#39;</span><span class="p">):</span>
+    <span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;floats&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getfloat</span><span class="p">(</span><span class="s">&#39;floats&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-12s</span><span class="s"> : </span><span class="si">%-7r</span><span class="s"> -&gt; </span><span class="si">%0.2f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Booleans:&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s">&#39;booleans&#39;</span><span class="p">):</span>
+    <span class="n">string_value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;booleans&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s">&#39;booleans&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-12s</span><span class="s"> : </span><span class="si">%-7r</span><span class="s"> -&gt; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">string_value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Running this program with the example input produces:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_value_types.py
+
+Integers:
+  positive     : &#39;1&#39;     -&gt; 1
+  negative     : &#39;-5&#39;    -&gt; -5
+
+Floats:
+  positive     : &#39;0.2&#39;   -&gt; 0.20
+  negative     : &#39;-3.14&#39; -&gt; -3.14
+
+Booleans:
+  number_true  : &#39;1&#39;     -&gt; True
+  number_false : &#39;0&#39;     -&gt; False
+  yn_true      : &#39;yes&#39;   -&gt; True
+  yn_false     : &#39;no&#39;    -&gt; False
+  tf_true      : &#39;true&#39;  -&gt; True
+  tf_false     : &#39;false&#39; -&gt; False
+  onoff_true   : &#39;on&#39;    -&gt; True
+  onoff_false  : &#39;false&#39; -&gt; False
+</pre></div>
+</div>
+</div>
+<div class="section" id="options-as-flags">
+<h3>Options as Flags<a class="headerlink" href="#options-as-flags" title="Permalink to this headline">¶</a></h3>
+<p>Usually the parser requires an explicit value for each option, but
+with the <tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> parameter <em>allow_no_value</em> set to
+<tt class="docutils literal"><span class="pre">True</span></tt> an option can appear by itself on a line in the input file,
+and be used as a flag.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+
+<span class="c"># Requre values</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;allow_no_value.ini&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ParsingError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Could not parse:&#39;</span><span class="p">,</span> <span class="n">err</span>
+
+<span class="c"># Allow stand-alone option names</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Trying again with allow_no_value=True&#39;</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">(</span><span class="n">allow_no_value</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;allow_no_value.ini&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;turn_feature_on&#39;</span><span class="p">,</span> <span class="s">&#39;turn_other_feature_on&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="n">flag</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s">&#39;flags&#39;</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;  has_option:&#39;</span><span class="p">,</span> <span class="n">exists</span>
+    <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;         get:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;flags&#39;</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When an option has no explicit value, <tt class="xref py py-func docutils literal"><span class="pre">has_option()</span></tt> reports that
+the option exists and <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> returns <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_allow_no_value.py
+
+Could not parse: File contains parsing errors: allow_no_value.ini
+        [line  2]: &#39;turn_feature_on\n&#39;
+
+Trying again with allow_no_value=True
+
+turn_feature_on
+  has_option: True
+         get: None
+
+turn_other_feature_on
+  has_option: False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="modifying-settings">
+<h2>Modifying Settings<a class="headerlink" href="#modifying-settings" title="Permalink to this headline">¶</a></h2>
+<p>While <tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> is primarily intended to be configured
+by reading settings from files, settings can also be populated by
+calling <tt class="xref py py-func docutils literal"><span class="pre">add_section()</span></tt> to create a new section, and <tt class="xref py py-func docutils literal"><span class="pre">set()</span></tt>
+to add or change an option.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="s">&#39;http://localhost:8080/bugs&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;dhellmann&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;secret&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">section</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All options must be set as strings, even if they will be retrieved as
+integer, float, or boolean values.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_populate.py
+
+bug_tracker
+  url = &#39;http://localhost:8080/bugs&#39;
+  username = &#39;dhellmann&#39;
+  password = &#39;secret&#39;
+</pre></div>
+</div>
+<p>Sections and options can be removed from a <tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt>
+with <tt class="xref py py-func docutils literal"><span class="pre">remove_section()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">remove_option()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;multisection.ini&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Read values:</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">section</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">remove_section</span><span class="p">(</span><span class="s">&#39;wiki&#39;</span><span class="p">)</span>
+        
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Modified values:</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">section</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Removing a section deletes any options it contains.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_remove.py
+
+Read values:
+
+bug_tracker
+  url = &#39;http://localhost:8080/bugs/&#39;
+  username = &#39;dhellmann&#39;
+  password = &#39;SECRET&#39;
+wiki
+  url = &#39;http://localhost:8080/wiki/&#39;
+  username = &#39;dhellmann&#39;
+  password = &#39;SECRET&#39;
+
+Modified values:
+
+bug_tracker
+  url = &#39;http://localhost:8080/bugs/&#39;
+  username = &#39;dhellmann&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-configuration-files">
+<h2>Saving Configuration Files<a class="headerlink" href="#saving-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>Once a <tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> is populated with desired data, it
+can be saved to a file by calling the <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt> method.  This
+makes it possible to provide a user interface for editing the
+configuration settings, without having to write any code to manage the
+file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="s">&#39;http://localhost:8080/bugs&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;dhellmann&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;secret&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt> method takes a file-like object as argument.  It
+writes the data out in the INI format so it can be parsed again by
+<tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_write.py
+
+[bug_tracker]
+url = http://localhost:8080/bugs
+username = dhellmann
+password = secret
+</pre></div>
+</div>
+</div>
+<div class="section" id="option-search-path">
+<h2>Option Search Path<a class="headerlink" href="#option-search-path" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> uses a multi-step search process when
+looking for an option.</p>
+<p>Before starting the option search, the section name is tested.  If the
+section does not exist, and the name is not the special value
+<tt class="docutils literal"><span class="pre">DEFAULT</span></tt>, then <tt class="xref py py-class docutils literal"><span class="pre">NoSectionError</span></tt> is raised.</p>
+<ol class="arabic simple">
+<li>If the option name appears in the <em>vars</em> dictionary passed to
+<tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt>, the value from <em>vars</em> is returned.</li>
+<li>If the option name appears in the specified section, the value from
+that section is returned.</li>
+<li>If the option name appears in the <tt class="docutils literal"><span class="pre">DEFAULT</span></tt> section, that value
+is returned.</li>
+<li>If the option name appears in the <em>defaults</em> dictionary passed to
+the constructor, that value is returned.</li>
+</ol>
+<p>If the name is not found in any of those locations,
+<tt class="xref py py-class docutils literal"><span class="pre">NoOptionError</span></tt> is raised.</p>
+<p>The search path behavior can be demonstrated using this configuration
+file:</p>
+<div class="highlight-python"><div class="highlight"><pre>[DEFAULT]
+file-only = value from DEFAULT section
+init-and-file = value from DEFAULT section
+from-section = value from DEFAULT section
+from-vars = value from DEFAULT section
+
+[sect]
+section-only = value from section in file
+from-section = value from section in file
+from-vars = value from section in file
+</pre></div>
+</div>
+<p>and this test program:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+
+<span class="c"># Define the names of the options</span>
+<span class="n">option_names</span> <span class="o">=</span>  <span class="p">[</span>
+    <span class="s">&#39;from-default&#39;</span><span class="p">,</span>
+    <span class="s">&#39;from-section&#39;</span><span class="p">,</span> <span class="s">&#39;section-only&#39;</span><span class="p">,</span>
+    <span class="s">&#39;file-only&#39;</span><span class="p">,</span> <span class="s">&#39;init-only&#39;</span><span class="p">,</span> <span class="s">&#39;init-and-file&#39;</span><span class="p">,</span>
+    <span class="s">&#39;from-vars&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="c"># Initialize the parser with some defaults</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">(</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;from-default&#39;</span><span class="p">:</span><span class="s">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+              <span class="s">&#39;init-only&#39;</span><span class="p">:</span><span class="s">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+              <span class="s">&#39;init-and-file&#39;</span><span class="p">:</span><span class="s">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+              <span class="s">&#39;from-section&#39;</span><span class="p">:</span><span class="s">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+              <span class="s">&#39;from-vars&#39;</span><span class="p">:</span><span class="s">&#39;value from defaults passed to init&#39;</span><span class="p">,</span>
+              <span class="p">})</span>
+
+<span class="k">print</span> <span class="s">&#39;Defaults before loading file:&#39;</span>
+<span class="n">defaults</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">defaults</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">option_names</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-15s</span><span class="s"> = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+<span class="c"># Load the configuration file</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;with-defaults.ini&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Defaults after loading file:&#39;</span>
+<span class="n">defaults</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">defaults</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">option_names</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-15s</span><span class="s"> = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+<span class="c"># Define some local overrides</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;from-vars&#39;</span><span class="p">:</span><span class="s">&#39;value from vars&#39;</span><span class="p">}</span>
+
+<span class="c"># Show the values of all of the options</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Option lookup:&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">option_names</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;sect&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-15s</span><span class="s"> = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="c"># Show error messages for options that do not exist</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Error cases:&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;No such option :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;sect&#39;</span><span class="p">,</span> <span class="s">&#39;no-option&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;No such section:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;no-sect&#39;</span><span class="p">,</span> <span class="s">&#39;no-option&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoSectionError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output shows the origin for the value of each option, and
+illustrates the way defaults from different sources override existing
+values.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_defaults.py
+
+Defaults before loading file:
+  from-default    = &#39;value from defaults passed to init&#39;
+  from-section    = &#39;value from defaults passed to init&#39;
+  init-only       = &#39;value from defaults passed to init&#39;
+  init-and-file   = &#39;value from defaults passed to init&#39;
+  from-vars       = &#39;value from defaults passed to init&#39;
+
+Defaults after loading file:
+  from-default    = &#39;value from defaults passed to init&#39;
+  from-section    = &#39;value from DEFAULT section&#39;
+  file-only       = &#39;value from DEFAULT section&#39;
+  init-only       = &#39;value from defaults passed to init&#39;
+  init-and-file   = &#39;value from DEFAULT section&#39;
+  from-vars       = &#39;value from DEFAULT section&#39;
+
+Option lookup:
+  from-default    = &#39;value from defaults passed to init&#39;
+  from-section    = &#39;value from section in file&#39;
+  section-only    = &#39;value from section in file&#39;
+  file-only       = &#39;value from DEFAULT section&#39;
+  init-only       = &#39;value from defaults passed to init&#39;
+  init-and-file   = &#39;value from DEFAULT section&#39;
+  from-vars       = &#39;value from vars&#39;
+
+Error cases:
+No such option : No option &#39;no-option&#39; in section: &#39;sect&#39;
+No such section: No section: &#39;no-sect&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="combining-values-with-interpolation">
+<h2>Combining Values with Interpolation<a class="headerlink" href="#combining-values-with-interpolation" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">SafeConfigParser</span></tt> provides a feature called <em>interpolation</em>
+that can be used to combine values together.  Values containing
+standard Python format strings trigger the interpolation feature when
+they are retrieved with <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt>.  Options named within the value
+being fetched are replaced with their values in turn, until no more
+substitution is necessary.</p>
+<p>The URL examples from earlier in this section can be rewritten to use
+interpolation to make it easier to change only part of the value.  For
+example, this configuration file separates the protocol, hostname, and
+port from the URL as separate options.</p>
+<div class="highlight-python"><div class="highlight"><pre>[bug_tracker]
+protocol = http
+server = localhost
+port = 8080
+url = %(protocol)s://%(server)s:%(port)s/bugs/
+username = dhellmann
+password = SECRET
+</pre></div>
+</div>
+<p>Interpolation is performed by default each time <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> is called.
+Pass a true value in the <tt class="xref py py-data docutils literal"><span class="pre">raw</span></tt> argument to retrieve the original
+value, without interpolation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;interpolation.ini&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Original value       :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;port&#39;</span><span class="p">,</span> <span class="s">&#39;9090&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Altered port value   :&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Without interpolation:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because the value is computed by <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt>, changing one of the
+settings being used by the <tt class="docutils literal"><span class="pre">url</span></tt> value changes the return value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_interpolation.py
+
+Original value       : http://localhost:8080/bugs/
+Altered port value   : http://localhost:9090/bugs/
+Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
+</pre></div>
+</div>
+<div class="section" id="using-defaults">
+<h3>Using Defaults<a class="headerlink" href="#using-defaults" title="Permalink to this headline">¶</a></h3>
+<p>Values for interpolation do not need to appear in the same section as
+the original option.  Defaults can be mixed with override values.
+Using this config file:</p>
+<div class="highlight-python"><div class="highlight"><pre>[DEFAULT]
+url = %(protocol)s://%(server)s:%(port)s/bugs/
+protocol = http
+server = bugs.example.com
+port = 80
+
+[bug_tracker]
+server = localhost
+port = 8080
+username = dhellmann
+password = SECRET
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">url</span></tt> value comes from the <tt class="docutils literal"><span class="pre">DEFAULT</span></tt> section, and the
+substitution starts by looking in <tt class="docutils literal"><span class="pre">bug_tracker</span></tt> and falling back to
+<tt class="docutils literal"><span class="pre">DEFAULT</span></tt> for pieces not found.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;interpolation_defaults.ini&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;URL:&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">hostname</span></tt> and <tt class="docutils literal"><span class="pre">port</span></tt> values come from the <tt class="docutils literal"><span class="pre">bug_tracker</span></tt>
+section, but the <tt class="docutils literal"><span class="pre">protocol</span></tt> comes from <tt class="docutils literal"><span class="pre">DEFAULT</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_interpolation_defaults.py
+
+URL: http://localhost:8080/bugs/
+</pre></div>
+</div>
+</div>
+<div class="section" id="substitution-errors">
+<h3>Substitution Errors<a class="headerlink" href="#substitution-errors" title="Permalink to this headline">¶</a></h3>
+<p>Substitution stops after <tt class="xref py py-attr docutils literal"><span class="pre">MAX_INTERPOLATION_DEPTH</span></tt> steps to
+avoid problems due to recursive references.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;sect&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;sect&#39;</span><span class="p">,</span> <span class="s">&#39;opt&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%(opt)s</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;sect&#39;</span><span class="p">,</span> <span class="s">&#39;opt&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">InterpolationDepthError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<p>An <tt class="xref py py-class docutils literal"><span class="pre">InterpolationDepthError</span></tt> exception is raised if there are
+too many substitution steps.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_interpolation_recursion.py
+
+ERROR: Value interpolation too deeply recursive:
+        section: [sect]
+        option : opt
+        rawval : %(opt)s
+</pre></div>
+</div>
+<p>Missing values result in an <tt class="xref py py-class docutils literal"><span class="pre">InterpolationMissingOptionError</span></tt>
+exception.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="s">&#39;http://</span><span class="si">%(server)s</span><span class="s">:</span><span class="si">%(port)s</span><span class="s">/bugs&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;bug_tracker&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">InterpolationMissingOptionError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<p>Since no <tt class="docutils literal"><span class="pre">server</span></tt> value is defined, the <tt class="docutils literal"><span class="pre">url</span></tt> cannot be
+constructed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ConfigParser_interpolation_error.py
+
+ERROR: Bad value substitution:
+        section: [bug_tracker]
+        option : url
+        key    : server
+        rawval : :%(port)s/bugs
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/configparser.html">ConfigParser</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../codecs/index.html#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a></dt>
+<dd>The codecs module is for reading and writing Unicode files.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../robotparser/index.html" title="robotparser – Internet spider access control"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../csv/index.html" title="csv – Comma-separated value files"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_formats.html" >File Formats</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

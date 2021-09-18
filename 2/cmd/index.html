@@ -1,0 +1,792 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cmd &#8211; Create line-oriented command processors - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Program Frameworks" href="../frameworks.html" />
+    <link rel="next" title="shlex – Lexical analysis of shell-style syntaxes." href="../shlex/index.html" />
+    <link rel="prev" title="Program Frameworks" href="../frameworks.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">cmd &#8211; Create line-oriented command processors</a><ul>
+<li><a class="reference internal" href="#processing-commands">Processing Commands</a></li>
+<li><a class="reference internal" href="#command-arguments">Command Arguments</a></li>
+<li><a class="reference internal" href="#live-help">Live Help</a></li>
+<li><a class="reference internal" href="#auto-completion">Auto-Completion</a></li>
+<li><a class="reference internal" href="#overriding-base-class-methods">Overriding Base Class Methods</a></li>
+<li><a class="reference internal" href="#configuring-cmd-through-attributes">Configuring Cmd Through Attributes</a></li>
+<li><a class="reference internal" href="#shelling-out">Shelling Out</a></li>
+<li><a class="reference internal" href="#alternative-inputs">Alternative Inputs</a></li>
+<li><a class="reference internal" href="#commands-from-sys-argv">Commands from sys.argv</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../frameworks.html" title="previous chapter"><strong>Previous:</strong> Program Frameworks</a><br/>
+          <a href="../shlex/index.html" title="next chapter"><strong>Next:</strong> shlex &#8211; Lexical analysis of shell-style syntaxes.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/cmd/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../shlex/index.html" title="shlex – Lexical analysis of shell-style syntaxes."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../frameworks.html" title="Program Frameworks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../frameworks.html" accesskey="U">Program Frameworks</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-cmd">
+<span id="cmd-create-line-oriented-command-processors"></span><h1>cmd &#8211; Create line-oriented command processors<a class="headerlink" href="#module-cmd" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Create line-oriented command processors.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later, with some additions in 2.3</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-cmd" title="cmd: Create line-oriented command processors."><tt class="xref py py-mod docutils literal"><span class="pre">cmd</span></tt></a> module contains one public class, <tt class="xref py py-class docutils literal"><span class="pre">Cmd</span></tt>,
+designed to be used as a base class for command processors such as
+interactive shells and other command interpreters. By default it uses
+<a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> for interactive prompt handling, command line editing,
+and command completion.</p>
+<div class="section" id="processing-commands">
+<h2>Processing Commands<a class="headerlink" href="#processing-commands" title="Permalink to this headline">¶</a></h2>
+<p>The interpreter uses a loop to read all lines from its input, parse
+them, and then dispatch the command to an appropriate command
+handler. Input lines are parsed into two parts. The command, and any
+other text on the line. If the user enters a command <tt class="docutils literal"><span class="pre">foo</span> <span class="pre">bar</span></tt>, and
+your class includes a method named <tt class="xref py py-func docutils literal"><span class="pre">do_foo()</span></tt>, it is called with
+<tt class="docutils literal"><span class="pre">&quot;bar&quot;</span></tt> as the only argument.</p>
+<p>The end-of-file marker is dispatched to <tt class="xref py py-func docutils literal"><span class="pre">do_EOF()</span></tt>. If a command
+handler returns a true value, the program will exit cleanly. So to
+give a clean way to exit your interpreter, make sure to implement
+<tt class="xref py py-func docutils literal"><span class="pre">do_EOF()</span></tt> and have it return True.</p>
+<p>This simple example program supports the &#8220;greet&#8221; command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">HelloWorld</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple command processor example.&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;hello&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">HelloWorld</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By running it interactively, we can demonstrate how commands are dispatched as
+well as show of some of the features included in <tt class="xref py py-class docutils literal"><span class="pre">Cmd</span></tt> for free.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_simple.py
+(Cmd)
+</pre></div>
+</div>
+<p>The first thing to notice is the command prompt, <tt class="docutils literal"><span class="pre">(Cmd)</span></tt>. The
+prompt can be configured through the attribute prompt. If the prompt
+changes as the result of a command processor, the new value is used to
+query for the next command.</p>
+<div class="highlight-python"><div class="highlight"><pre>(Cmd) help
+
+Undocumented commands:
+======================
+EOF  greet  help
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">help</span></tt> command is built into <tt class="xref py py-class docutils literal"><span class="pre">Cmd</span></tt>. With no arguments, it
+shows the list of commands available. If you include a command you
+want help on, the output is more verbose and restricted to details of
+that command, when available.</p>
+<p>If we use the greet command, <tt class="xref py py-func docutils literal"><span class="pre">do_greet()</span></tt> is invoked to handle it:</p>
+<div class="highlight-python"><div class="highlight"><pre>(Cmd) greet
+hello
+</pre></div>
+</div>
+<p>If your class does not include a specific command processor for a
+command, the method <tt class="xref py py-func docutils literal"><span class="pre">default()</span></tt> is called with the entire input
+line as an argument. The built-in implementation of <tt class="xref py py-func docutils literal"><span class="pre">default()</span></tt>
+reports an error.</p>
+<div class="highlight-python"><div class="highlight"><pre>(Cmd) foo *** Unknown syntax: foo
+</pre></div>
+</div>
+<p>Since <tt class="xref py py-func docutils literal"><span class="pre">do_EOF()</span></tt> returns True, typing Ctrl-D will drop us out of
+the interpreter.</p>
+<div class="highlight-python"><div class="highlight"><pre>(Cmd) ^D$
+</pre></div>
+</div>
+<p>Notice that no newline is printed, so the results are a little messy.</p>
+</div>
+<div class="section" id="command-arguments">
+<h2>Command Arguments<a class="headerlink" href="#command-arguments" title="Permalink to this headline">¶</a></h2>
+<p>This version of the example includes a few enhancements to eliminate some of
+the annoyances and add help for the greet command.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">HelloWorld</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple command processor example.&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;greet [person]</span>
+<span class="sd">        Greet the named person&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">person</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;hi,&quot;</span><span class="p">,</span> <span class="n">person</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;hi&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    
+    <span class="k">def</span> <span class="nf">postloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">HelloWorld</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>First, let&#8217;s look at the help. The docstring added to
+<tt class="xref py py-func docutils literal"><span class="pre">do_greet()</span></tt> becomes the help text for the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_arguments.py
+(Cmd) help
+
+Documented commands (type help ):
+========================================
+greet
+
+Undocumented commands:
+======================
+EOF  help
+
+(Cmd) help greet
+greet [person]
+        Greet the named person
+</pre></div>
+</div>
+<p>The output shows one optional argument to the greet command,
+<em>person</em>. Although the argument is optional to the command, there is a
+distinction between the command and the callback method. The method
+always takes the argument, but sometimes the value is an empty
+string. It is left up to the command processor to determine if an
+empty argument is valid, or do any further parsing and processing of
+the command. In this example, if a person&#8217;s name is provided then the
+greeting is personalized.</p>
+<div class="highlight-python"><div class="highlight"><pre>(Cmd) greet Alice
+hi, Alice
+(Cmd) greet
+hi
+</pre></div>
+</div>
+<p>Whether an argument is given by the user or not, the value passed to the
+command processor does not include the command itself. That simplifies parsing
+in the command processor, if multiple arguments are needed.</p>
+</div>
+<div class="section" id="live-help">
+<h2>Live Help<a class="headerlink" href="#live-help" title="Permalink to this headline">¶</a></h2>
+<p>In the previous example, the formatting of the help text leaves
+something to be desired. Since it comes from the docstring, it retains
+the indentation from our source. We could edit the source to remove
+the extra white-space, but that would leave our application looking
+poorly formatted. An alternative solution is to implement a help
+handler for the greet command, named <tt class="xref py py-func docutils literal"><span class="pre">help_greet()</span></tt>. When
+present, the help handler is called on to produce help text for the
+named command.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">HelloWorld</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple command processor example.&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">person</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;hi,&quot;</span><span class="p">,</span> <span class="n">person</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;hi&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">help_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="s">&#39;greet [person]&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;Greet the named person&#39;</span><span class="p">,</span>
+                           <span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">HelloWorld</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this simple example, the text is static but formatted more nicely. It would
+also be possible to use previous command state to tailor the contents of the
+help text to the current context.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_do_help.py
+(Cmd) help greet
+greet [person]
+Greet the named person
+</pre></div>
+</div>
+<p>It is up to the help handler to actually output the help message, and not
+simply return the help text for handling elsewhere.</p>
+</div>
+<div class="section" id="auto-completion">
+<h2>Auto-Completion<a class="headerlink" href="#auto-completion" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">Cmd</span></tt> includes support for command completion based on the
+names of the commands with processor methods. The user triggers
+completion by hitting the tab key at an input prompt. When multiple
+completions are possible, pressing tab twice prints a list of the
+options.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_do_help.py
+(Cmd) &lt;tab&gt;&lt;tab&gt;
+EOF    greet  help
+(Cmd) h&lt;tab&gt;
+(Cmd) help
+</pre></div>
+</div>
+<p>Once the command is known, argument completion is handled by methods with the
+prefix <tt class="docutils literal"><span class="pre">complete_</span></tt>. This allows you to assemble a list of possible completions
+using your own criteria (query a database, look at at a file or directory on
+the filesystem, etc.). In this case, the program has a hard-coded set of
+&#8220;friends&#8221; who receive a less formal greeting than named or anonymous
+strangers. A real program would probably save the list somewhere, and either
+read it once and cache the contents to be scanned as needed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">HelloWorld</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple command processor example.&quot;&quot;&quot;</span>
+    
+    <span class="n">FRIENDS</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;Alice&#39;</span><span class="p">,</span> <span class="s">&#39;Adam&#39;</span><span class="p">,</span> <span class="s">&#39;Barbara&#39;</span><span class="p">,</span> <span class="s">&#39;Bob&#39;</span> <span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person</span><span class="p">):</span>
+        <span class="s">&quot;Greet the person&quot;</span>
+        <span class="k">if</span> <span class="n">person</span> <span class="ow">and</span> <span class="n">person</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">FRIENDS</span><span class="p">:</span>
+            <span class="n">greeting</span> <span class="o">=</span> <span class="s">&#39;hi, </span><span class="si">%s</span><span class="s">!&#39;</span> <span class="o">%</span> <span class="n">person</span>
+        <span class="k">elif</span> <span class="n">person</span><span class="p">:</span>
+            <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;hello, &quot;</span> <span class="o">+</span> <span class="n">person</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">greeting</span> <span class="o">=</span> <span class="s">&#39;hello&#39;</span>
+        <span class="k">print</span> <span class="n">greeting</span>
+    
+    <span class="k">def</span> <span class="nf">complete_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">begidx</span><span class="p">,</span> <span class="n">endidx</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
+            <span class="n">completions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FRIENDS</span><span class="p">[:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">completions</span> <span class="o">=</span> <span class="p">[</span> <span class="n">f</span>
+                            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">FRIENDS</span>
+                            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                            <span class="p">]</span>
+        <span class="k">return</span> <span class="n">completions</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">HelloWorld</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When there is input text, <tt class="xref py py-func docutils literal"><span class="pre">complete_greet()</span></tt> returns a list of
+friends that match. Otherwise, the full list of friends is returned.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_arg_completion.py
+(Cmd) greet &lt;tab&gt;&lt;tab&gt;
+Adam     Alice    Barbara  Bob
+(Cmd) greet A&lt;tab&gt;&lt;tab&gt;
+Adam   Alice
+(Cmd) greet Ad&lt;tab&gt;
+(Cmd) greet Adam
+hi, Adam!
+</pre></div>
+</div>
+<p>If the name given is not in the list of friends, the formal greeting is given.</p>
+<div class="highlight-python"><div class="highlight"><pre>(Cmd) greet Joe
+hello, Joe
+</pre></div>
+</div>
+</div>
+<div class="section" id="overriding-base-class-methods">
+<h2>Overriding Base Class Methods<a class="headerlink" href="#overriding-base-class-methods" title="Permalink to this headline">¶</a></h2>
+<p>Cmd includes several methods that can be overridden as hooks for taking
+actions or altering the base class behavior. This example is not exhaustive,
+but contains many of the methods commonly useful.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">Illustrate</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="s">&quot;Illustrate the base class method use.&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">cmdloop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intro</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;cmdloop(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">intro</span>
+        <span class="k">return</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">intro</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">preloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;preloop()&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">postloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;postloop()&#39;</span>
+        
+    <span class="k">def</span> <span class="nf">parseline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;parseline(</span><span class="si">%s</span><span class="s">) =&gt;&#39;</span> <span class="o">%</span> <span class="n">line</span><span class="p">,</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">parseline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    
+    <span class="k">def</span> <span class="nf">onecmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;onecmd(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">s</span>
+        <span class="k">return</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">onecmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">emptyline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;emptyline()&#39;</span>
+        <span class="k">return</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">emptyline</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;default(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">line</span>
+        <span class="k">return</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">precmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;precmd(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">line</span>
+        <span class="k">return</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">precmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">postcmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;postcmd(</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="n">postcmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;hello,&#39;</span><span class="p">,</span> <span class="n">line</span>
+
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="s">&quot;Exit&quot;</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">Illustrate</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">(</span><span class="s">&#39;Illustrating the methods of cmd.Cmd&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">cmdloop()</span></tt> is the main processing loop of the interpreter. You
+can override it, but it is usually not necessary, since the
+<tt class="xref py py-func docutils literal"><span class="pre">preloop()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">postloop()</span></tt> hooks are available.</p>
+<p>Each iteration through <tt class="xref py py-func docutils literal"><span class="pre">cmdloop()</span></tt> calls <tt class="xref py py-func docutils literal"><span class="pre">onecmd()</span></tt> to
+dispatch the command to its processor. The actual input line is parsed
+with <tt class="xref py py-func docutils literal"><span class="pre">parseline()</span></tt> to create a tuple containing the command, and
+the remaining portion of the line.</p>
+<p>If the line is empty, <tt class="xref py py-func docutils literal"><span class="pre">emptyline()</span></tt> is called. The default
+implementation runs the previous command again. If the line contains a
+command, first <tt class="xref py py-func docutils literal"><span class="pre">precmd()</span></tt> is called then the processor is looked
+up and invoked. If none is found, <tt class="xref py py-func docutils literal"><span class="pre">default()</span></tt> is called
+instead. Finally postcmd() is called.</p>
+<p>Here&#8217;s an example session with <tt class="docutils literal"><span class="pre">print</span></tt> statements added:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_illustrate_methods.py
+cmdloop(Illustrating the methods of cmd.Cmd)
+preloop()
+Illustrating the methods of cmd.Cmd
+(Cmd) greet Bob
+precmd(greet Bob)
+onecmd(greet Bob)
+parseline(greet Bob) =&gt; (&#39;greet&#39;, &#39;Bob&#39;, &#39;greet Bob&#39;)
+hello, Bob
+postcmd(None, greet Bob)
+(Cmd) ^Dprecmd(EOF)
+onecmd(EOF)
+parseline(EOF) =&gt; (&#39;EOF&#39;, &#39;&#39;, &#39;EOF&#39;)
+postcmd(True, EOF)
+postloop()
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-cmd-through-attributes">
+<h2>Configuring Cmd Through Attributes<a class="headerlink" href="#configuring-cmd-through-attributes" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the methods described above, there are several attributes for
+controlling command interpreters.</p>
+<p><tt class="docutils literal"><span class="pre">prompt</span></tt> can be set to a string to be printed each time the user is asked for a
+new command.</p>
+<p><tt class="docutils literal"><span class="pre">intro</span></tt> is the &#8220;welcome&#8221; message printed at the start of the program. cmdloop()
+takes an argument for this value, or you can set it on the class directly.</p>
+<p>When printing help, the <tt class="docutils literal"><span class="pre">doc_header</span></tt>, <tt class="docutils literal"><span class="pre">misc_header</span></tt>,
+<tt class="docutils literal"><span class="pre">undoc_header</span></tt>, and <tt class="docutils literal"><span class="pre">ruler</span></tt> attributes are used to format the
+output.</p>
+<p>This example class shows a command processor to let the user control the
+prompt for the interactive session.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">HelloWorld</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple command processor example.&quot;&quot;&quot;</span>
+
+    <span class="n">prompt</span> <span class="o">=</span> <span class="s">&#39;prompt: &#39;</span>
+    <span class="n">intro</span> <span class="o">=</span> <span class="s">&quot;Simple command processor example.&quot;</span>
+
+    <span class="n">doc_header</span> <span class="o">=</span> <span class="s">&#39;doc_header&#39;</span>
+    <span class="n">misc_header</span> <span class="o">=</span> <span class="s">&#39;misc_header&#39;</span>
+    <span class="n">undoc_header</span> <span class="o">=</span> <span class="s">&#39;undoc_header&#39;</span>
+    
+    <span class="n">ruler</span> <span class="o">=</span> <span class="s">&#39;-&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">do_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="s">&quot;Change the interactive prompt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="n">line</span> <span class="o">+</span> <span class="s">&#39;: &#39;</span>
+
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">HelloWorld</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_attributes.py
+Simple command processor example.
+prompt: prompt hello
+hello: help
+
+doc_header
+----------
+prompt
+
+undoc_header
+------------
+EOF  help
+
+hello:
+</pre></div>
+</div>
+</div>
+<div class="section" id="shelling-out">
+<h2>Shelling Out<a class="headerlink" href="#shelling-out" title="Permalink to this headline">¶</a></h2>
+<p>To supplement the standard command processing, <tt class="xref py py-class docutils literal"><span class="pre">Cmd</span></tt> includes 2
+special command prefixes. A question mark (<tt class="docutils literal"><span class="pre">?</span></tt>) is equivalent to the
+built-in help command, and can be used in the same way. An exclamation
+point (<tt class="docutils literal"><span class="pre">!</span></tt>) maps to <tt class="xref py py-func docutils literal"><span class="pre">do_shell()</span></tt>, and is intended for shelling
+out to run other commands, as in this example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">ShellEnabled</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    
+    <span class="n">last_output</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">do_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="s">&quot;Run a shell command&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;running shell command:&quot;</span><span class="p">,</span> <span class="n">line</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">print</span> <span class="n">output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_output</span> <span class="o">=</span> <span class="n">output</span>
+    
+    <span class="k">def</span> <span class="nf">do_echo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="s">&quot;Print the input, replacing &#39;$out&#39; with the output of the last shell command&quot;</span>
+        <span class="c"># Obviously not robust</span>
+        <span class="k">print</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;$out&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_output</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">ShellEnabled</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_do_shell.py
+(Cmd) ?
+
+Documented commands (type help ):
+========================================
+echo  shell
+
+Undocumented commands:
+======================
+EOF  help
+
+(Cmd) ? shell
+Run a shell command
+(Cmd) ? echo
+Print the input, replacing &#39;$out&#39; with the output of the last shell command
+(Cmd) shell pwd
+running shell command: pwd
+/Users/dhellmann/Documents/PyMOTW/in_progress/cmd
+
+(Cmd) ! pwd
+running shell command: pwd
+/Users/dhellmann/Documents/PyMOTW/in_progress/cmd
+
+(Cmd) echo $out
+/Users/dhellmann/Documents/PyMOTW/in_progress/cmd
+
+(Cmd)
+</pre></div>
+</div>
+</div>
+<div class="section" id="alternative-inputs">
+<h2>Alternative Inputs<a class="headerlink" href="#alternative-inputs" title="Permalink to this headline">¶</a></h2>
+<p>While the default mode for <tt class="xref py py-func docutils literal"><span class="pre">Cmd()</span></tt> is to interact with the user
+through the <a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> library, it is also possible to pass a
+series of commands in to standard input using standard Unix shell
+redirection.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo help | python cmd_do_help.py
+(Cmd)
+Documented commands (type help ):
+========================================
+greet
+
+Undocumented commands:
+======================
+EOF  help
+
+(Cmd)
+</pre></div>
+</div>
+<p>If you would rather have your program read the script file directly, a
+few other changes may be needed. Since <a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> interacts with
+the terminal/tty device, rather than the standard input stream, you
+should disable it if you know your script is going to be reading from
+a file. Also, to avoid printing superfluous prompts, you can set the
+prompt to an empty string. This example shows how to open a file and
+pass it as input to a modified version of the HelloWorld example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">HelloWorld</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple command processor example.&quot;&quot;&quot;</span>
+    
+    <span class="c"># Disable rawinput module use</span>
+    <span class="n">use_rawinput</span> <span class="o">=</span> <span class="bp">False</span>
+    
+    <span class="c"># Do not show a prompt after each command read</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;hello,&quot;</span><span class="p">,</span> <span class="n">line</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">HelloWorld</span><span class="p">(</span><span class="n">stdin</span><span class="o">=</span><span class="nb">input</span><span class="p">)</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="nb">input</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>With <em>use_rawinput</em> set to False and <em>prompt</em> set to an empty string,
+we can call the script on this input file:</p>
+<div class="highlight-python"><div class="highlight"><pre>greet
+greet Alice and Bob
+</pre></div>
+</div>
+<p>to produce output like:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_file.py cmd_file.txt
+hello,
+hello, Alice and Bob
+</pre></div>
+</div>
+</div>
+<div class="section" id="commands-from-sys-argv">
+<h2>Commands from sys.argv<a class="headerlink" href="#commands-from-sys-argv" title="Permalink to this headline">¶</a></h2>
+<p>You can also process command line arguments to the program as a
+command for your interpreter class, instead of reading commands from
+stdin or a file.  To use the command line arguments, you can call
+<tt class="xref py py-func docutils literal"><span class="pre">onecmd()</span></tt> directly, as in this example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cmd</span>
+
+<span class="k">class</span> <span class="nc">InteractiveOrCommandLine</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Accepts commands via the normal interactive prompt or on the command line.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">do_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;hello,&#39;</span><span class="p">,</span> <span class="n">line</span>
+    
+    <span class="k">def</span> <span class="nf">do_EOF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">InteractiveOrCommandLine</span><span class="p">()</span><span class="o">.</span><span class="n">onecmd</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">InteractiveOrCommandLine</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Since <tt class="xref py py-func docutils literal"><span class="pre">onecmd()</span></tt> takes a single string as input, the arguments
+to the program need to be joined together before being passed in.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cmd_argv.py greet Command Line User
+hello, Command Line User
+$ python cmd_argv.py
+(Cmd) greet Interactive User
+hello, Interactive User
+(Cmd)
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/cmd.html">cmd</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/cmd2">cmd2</a></dt>
+<dd>Drop-in replacement for cmd with additional features.</dd>
+<dt><a class="reference external" href="http://tiswww.case.edu/php/chet/readline/rltop.html">GNU readline</a></dt>
+<dd>The GNU Readline library provides functions that allow users
+to edit input lines as they are typed.</dd>
+<dt><a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a></dt>
+<dd>The Python standard library interface to readline.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../shlex/index.html" title="shlex – Lexical analysis of shell-style syntaxes."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../frameworks.html" title="Program Frameworks"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../frameworks.html" >Program Frameworks</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

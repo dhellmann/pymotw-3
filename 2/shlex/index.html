@@ -1,0 +1,628 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>shlex &#8211; Lexical analysis of shell-style syntaxes. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Program Frameworks" href="../frameworks.html" />
+    <link rel="next" title="Development Tools" href="../dev_tools.html" />
+    <link rel="prev" title="cmd – Create line-oriented command processors" href="../cmd/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">shlex &#8211; Lexical analysis of shell-style syntaxes.</a><ul>
+<li><a class="reference internal" href="#quoted-strings">Quoted Strings</a></li>
+<li><a class="reference internal" href="#embedded-comments">Embedded Comments</a></li>
+<li><a class="reference internal" href="#split">Split</a></li>
+<li><a class="reference internal" href="#including-other-sources-of-tokens">Including Other Sources of Tokens</a></li>
+<li><a class="reference internal" href="#controlling-the-parser">Controlling the Parser</a></li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li><a class="reference internal" href="#posix-vs-non-posix-parsing">POSIX vs. Non-POSIX Parsing</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../cmd/index.html" title="previous chapter"><strong>Previous:</strong> cmd &#8211; Create line-oriented command processors</a><br/>
+          <a href="../dev_tools.html" title="next chapter"><strong>Next:</strong> Development Tools</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/shlex/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dev_tools.html" title="Development Tools"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../cmd/index.html" title="cmd – Create line-oriented command processors"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../frameworks.html" accesskey="U">Program Frameworks</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-shlex">
+<span id="shlex-lexical-analysis-of-shell-style-syntaxes"></span><h1>shlex &#8211; Lexical analysis of shell-style syntaxes.<a class="headerlink" href="#module-shlex" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Lexical analysis of shell-style syntaxes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2, with additions in later versions</td>
+</tr>
+</tbody>
+</table>
+<p>The shlex module implements a class for parsing simple shell-like syntaxes. It
+can be used for writing your own domain specific language, or for parsing
+quoted strings (a task that is more complex than it seems, at first).</p>
+<div class="section" id="quoted-strings">
+<h2>Quoted Strings<a class="headerlink" href="#quoted-strings" title="Permalink to this headline">¶</a></h2>
+<p>A common problem when working with input text is to identify a sequence of
+quoted words as a single entity. Splitting the text on quotes does not always
+work as expected, especially if there are nested levels of quotes. Take the
+following text:</p>
+<div class="highlight-python"><div class="highlight"><pre>This string has embedded &quot;double quotes&quot; and &#39;single quotes&#39; in it,
+and even &quot;a &#39;nested example&#39;&quot;.
+</pre></div>
+</div>
+<p>A naive approach might attempt to construct a regular expression to
+find the parts of the text outside the quotes to separate them from
+the text inside the quotes, or vice versa. Such an approach would be
+unnecessarily complex and prone to errors resulting from edge cases
+like apostrophes or even typos. A better solution is to use a true
+parser, such as the one provided by the <a class="reference internal" href="#module-shlex" title="shlex: Lexical analysis of shell-style syntaxes."><tt class="xref py py-mod docutils literal"><span class="pre">shlex</span></tt></a> module. Here is a
+simple example that prints the tokens identified in the input file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Please specify one filename on the command line.&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">body</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;ORIGINAL:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;TOKENS:&#39;</span>
+<span class="n">lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lexer</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When run on data with embedded quotes, the parser produces the list of tokens
+we expect:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_example.py quotes.txt
+
+ORIGINAL: &#39;This string has embedded &quot;double quotes&quot; and \&#39;single quotes\&#39; in it,\nand even &quot;a \&#39;nested example\&#39;&quot;.\n&#39;
+
+TOKENS:
+&#39;This&#39;
+&#39;string&#39;
+&#39;has&#39;
+&#39;embedded&#39;
+&#39;&quot;double quotes&quot;&#39;
+&#39;and&#39;
+&quot;&#39;single quotes&#39;&quot;
+&#39;in&#39;
+&#39;it&#39;
+&#39;,&#39;
+&#39;and&#39;
+&#39;even&#39;
+&#39;&quot;a \&#39;nested example\&#39;&quot;&#39;
+&#39;.&#39;
+</pre></div>
+</div>
+<p>Isolated quotes such as apostrophes are also handled.  Given this
+input file:</p>
+<div class="highlight-python"><div class="highlight"><pre>This string has an embedded apostrophe, doesn&#39;t it?
+</pre></div>
+</div>
+<p>The token with the embedded apostrophe is no problem:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_example.py apostrophe.txt
+
+ORIGINAL: &quot;This string has an embedded apostrophe, doesn&#39;t it?&quot;
+
+TOKENS:
+&#39;This&#39;
+&#39;string&#39;
+&#39;has&#39;
+&#39;an&#39;
+&#39;embedded&#39;
+&#39;apostrophe&#39;
+&#39;,&#39;
+&quot;doesn&#39;t&quot;
+&#39;it&#39;
+&#39;?&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="embedded-comments">
+<h2>Embedded Comments<a class="headerlink" href="#embedded-comments" title="Permalink to this headline">¶</a></h2>
+<p>Since the parser is intended to be used with command languages, it needs to
+handle comments. By default, any text following a # is considered part of a
+comment, and ignored. Due to the nature of the parser, only single character
+comment prefixes are supported. The set of comment characters used can be
+configured through the commenters property.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_example.py comments.txt
+
+ORIGINAL: &#39;This line is recognized.\n# But this line is ignored.\nAnd this line is processed.&#39;
+
+TOKENS:
+&#39;This&#39;
+&#39;line&#39;
+&#39;is&#39;
+&#39;recognized&#39;
+&#39;.&#39;
+&#39;And&#39;
+&#39;this&#39;
+&#39;line&#39;
+&#39;is&#39;
+&#39;processed&#39;
+&#39;.&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="split">
+<h2>Split<a class="headerlink" href="#split" title="Permalink to this headline">¶</a></h2>
+<p>If you just need to split an existing string into component tokens,
+the convenience function <tt class="xref py py-func docutils literal"><span class="pre">split()</span></tt> is a simple wrapper around
+the parser.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;This text has &quot;quoted parts&quot; inside it.&quot;&quot;&quot;</span>
+<span class="k">print</span> <span class="s">&#39;ORIGINAL:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;TOKENS:&#39;</span>
+<span class="k">print</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result is a list:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_split.py
+
+ORIGINAL: &#39;This text has &quot;quoted parts&quot; inside it.&#39;
+
+TOKENS:
+[&#39;This&#39;, &#39;text&#39;, &#39;has&#39;, &#39;quoted parts&#39;, &#39;inside&#39;, &#39;it.&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="including-other-sources-of-tokens">
+<h2>Including Other Sources of Tokens<a class="headerlink" href="#including-other-sources-of-tokens" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-shlex" title="shlex: Lexical analysis of shell-style syntaxes."><tt class="xref py py-class docutils literal"><span class="pre">shlex</span></tt></a> class includes several configuration properties
+which allow us to control its behavior. The <em>source</em> property
+enables a feature for code (or configuration) re-use by allowing one
+token stream to include another. This is similar to the Bourne shell
+<tt class="docutils literal"><span class="pre">source</span></tt> operator, hence the name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;This text says to source quotes.txt before continuing.&quot;&quot;&quot;</span>
+<span class="k">print</span> <span class="s">&#39;ORIGINAL:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="n">lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">lexer</span><span class="o">.</span><span class="n">wordchars</span> <span class="o">+=</span> <span class="s">&#39;.&#39;</span>
+<span class="n">lexer</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s">&#39;source&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;TOKENS:&#39;</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lexer</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice the string <tt class="docutils literal"><span class="pre">source</span> <span class="pre">quotes.txt</span></tt> embedded in the original
+text. Since the source property of the lexer is set to &#8220;source&#8221;, when
+the keyword is encountered the filename appearing in the next title is
+automatically included. In order to cause the filename to appear as a
+single token, the <tt class="docutils literal"><span class="pre">.</span></tt> character needs to be added to the list of
+characters that are included in words (otherwise &#8220;<tt class="docutils literal"><span class="pre">quotes.txt</span></tt>&#8221;
+becomes three tokens, &#8220;<tt class="docutils literal"><span class="pre">quotes</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">.</span></tt>&#8221;, &#8220;<tt class="docutils literal"><span class="pre">txt</span></tt>&#8221;). The output
+looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_source.py
+
+ORIGINAL: &#39;This text says to source quotes.txt before continuing.&#39;
+
+TOKENS:
+&#39;This&#39;
+&#39;text&#39;
+&#39;says&#39;
+&#39;to&#39;
+&#39;This&#39;
+&#39;string&#39;
+&#39;has&#39;
+&#39;embedded&#39;
+&#39;&quot;double quotes&quot;&#39;
+&#39;and&#39;
+&quot;&#39;single quotes&#39;&quot;
+&#39;in&#39;
+&#39;it&#39;
+&#39;,&#39;
+&#39;and&#39;
+&#39;even&#39;
+&#39;&quot;a \&#39;nested example\&#39;&quot;&#39;
+&#39;.&#39;
+&#39;before&#39;
+&#39;continuing.&#39;
+</pre></div>
+</div>
+<p>The &#8220;source&#8221; feature uses a method called <tt class="xref py py-func docutils literal"><span class="pre">sourcehook()</span></tt> to load
+the additional input source, so you can subclass <a class="reference internal" href="#module-shlex" title="shlex: Lexical analysis of shell-style syntaxes."><tt class="xref py py-class docutils literal"><span class="pre">shlex</span></tt></a> to
+provide your own implementation to load data from anywhere.</p>
+</div>
+<div class="section" id="controlling-the-parser">
+<h2>Controlling the Parser<a class="headerlink" href="#controlling-the-parser" title="Permalink to this headline">¶</a></h2>
+<p>I have already given an example changing the <em>wordchars</em> value to
+control which characters are included in words. It is also possible to
+set the <em>quotes</em> character to use additional or alternative
+quotes. Each quote must be a single character, so it is not possible
+to have different open and close quotes (no parsing on parentheses,
+for example).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;|Col 1||Col 2||Col 3|&quot;&quot;&quot;</span>
+<span class="k">print</span> <span class="s">&#39;ORIGINAL:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="n">lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">lexer</span><span class="o">.</span><span class="n">quotes</span> <span class="o">=</span> <span class="s">&#39;|&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;TOKENS:&#39;</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lexer</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, each table cell is wrapped in vertical bars:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_table.py
+
+ORIGINAL: &#39;|Col 1||Col 2||Col 3|&#39;
+
+TOKENS:
+&#39;|Col 1|&#39;
+&#39;|Col 2|&#39;
+&#39;|Col 3|&#39;
+</pre></div>
+</div>
+<p>It is also possible to control the whitespace characters used to split words.
+If we modify the example in shlex_example.py to include period and comma, as
+follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Please specify one filename on the command line.&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">body</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;ORIGINAL:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;TOKENS:&#39;</span>
+<span class="n">lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="n">lexer</span><span class="o">.</span><span class="n">whitespace</span> <span class="o">+=</span> <span class="s">&#39;.,&#39;</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lexer</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The results change to:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_whitespace.py quotes.txt
+
+ORIGINAL: &#39;This string has embedded &quot;double quotes&quot; and \&#39;single quotes\&#39; in it,\nand even &quot;a \&#39;nested example\&#39;&quot;.\n&#39;
+
+TOKENS:
+&#39;This&#39;
+&#39;string&#39;
+&#39;has&#39;
+&#39;embedded&#39;
+&#39;&quot;double quotes&quot;&#39;
+&#39;and&#39;
+&quot;&#39;single quotes&#39;&quot;
+&#39;in&#39;
+&#39;it&#39;
+&#39;and&#39;
+&#39;even&#39;
+&#39;&quot;a \&#39;nested example\&#39;&quot;&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>When the parser encounters the end of its input before all quoted
+strings are closed, it raises <a class="reference internal" href="../exceptions/index.html#exceptions-valueerror"><em>ValueError</em></a>. When that happens, it is useful to examine
+some of the properties of the parser maintained as it processes the
+input. For example, <em>infile</em> refers to the name of the file being
+processed (which might be different from the original file, if one
+file sources another). The <em>lineno</em> reports the line when the error is
+discovered. The <em>lineno</em> is typically the end of the file, which may
+be far away from the first quote. The <em>token</em> attribute contains the
+buffer of text not already included in a valid token. The
+<tt class="xref py py-func docutils literal"><span class="pre">error_leader()</span></tt> method produces a message prefix in a style
+similar to Unix compilers, which enables editors such as emacs to
+parse the error and take the user directly to the invalid line.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;This line is ok.</span>
+<span class="s">This line has an &quot;unfinished quote.</span>
+<span class="s">This line is ok, too.</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="k">print</span> <span class="s">&#39;ORIGINAL:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="n">lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;TOKENS:&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">lexer</span><span class="p">:</span>
+        <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="n">first_line_of_error</span> <span class="o">=</span> <span class="n">lexer</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">lexer</span><span class="o">.</span><span class="n">error_leader</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="s">&#39;following &quot;&#39;</span> <span class="o">+</span> <span class="n">first_line_of_error</span> <span class="o">+</span> <span class="s">&#39;&quot;&#39;</span>
+</pre></div>
+</div>
+<p>The example above produces this output:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_errors.py
+
+ORIGINAL: &#39;This line is ok.\nThis line has an &quot;unfinished quote.\nThis line is ok, too.\n&#39;
+
+TOKENS:
+&#39;This&#39;
+&#39;line&#39;
+&#39;is&#39;
+&#39;ok&#39;
+&#39;.&#39;
+&#39;This&#39;
+&#39;line&#39;
+&#39;has&#39;
+&#39;an&#39;
+ERROR: &quot;None&quot;, line 4:  No closing quotation following &quot;&quot;unfinished quote.&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="posix-vs-non-posix-parsing">
+<h2>POSIX vs. Non-POSIX Parsing<a class="headerlink" href="#posix-vs-non-posix-parsing" title="Permalink to this headline">¶</a></h2>
+<p>The default behavior for the parser is to use a backwards-compatible style
+which is not POSIX-compliant. For POSIX behavior, set the posix argument when
+constructing the parser.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shlex</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;Do&quot;Not&quot;Separate&#39;</span><span class="p">,</span>
+           <span class="s">&#39;&quot;Do&quot;Separate&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Escaped \e Character not in quotes&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Escaped &quot;\e&quot; Character in double quotes&#39;</span><span class="p">,</span>
+           <span class="s">&quot;Escaped &#39;\e&#39; Character in single quotes&quot;</span><span class="p">,</span>
+           <span class="s">r&quot;Escaped &#39;\&#39;&#39; </span><span class="se">\&quot;</span><span class="s">\&#39;</span><span class="se">\&quot;</span><span class="s"> single quote&quot;</span><span class="p">,</span>
+           <span class="s">r&#39;Escaped &quot;\&quot;&quot; </span><span class="se">\&#39;</span><span class="s">\&quot;</span><span class="se">\&#39;</span><span class="s"> double quote&#39;</span><span class="p">,</span>
+           <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&#39;Strip extra layer of quotes&#39;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
+           <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;ORIGINAL :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;non-POSIX:&#39;</span><span class="p">,</span>
+
+    <span class="n">non_posix_lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">posix</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">non_posix_lexer</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;error(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">err</span>
+
+    
+    <span class="k">print</span> <span class="s">&#39;POSIX    :&#39;</span><span class="p">,</span>
+    <span class="n">posix_lexer</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">shlex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">posix</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">posix_lexer</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;error(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">err</span>
+
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Here are a few examples of the differences in parsing behavior:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python shlex_posix.py
+
+ORIGINAL : &#39;Do&quot;Not&quot;Separate&#39;
+non-POSIX: [&#39;Do&quot;Not&quot;Separate&#39;]
+POSIX    : [&#39;DoNotSeparate&#39;]
+
+ORIGINAL : &#39;&quot;Do&quot;Separate&#39;
+non-POSIX: [&#39;&quot;Do&quot;&#39;, &#39;Separate&#39;]
+POSIX    : [&#39;DoSeparate&#39;]
+
+ORIGINAL : &#39;Escaped \\e Character not in quotes&#39;
+non-POSIX: [&#39;Escaped&#39;, &#39;\\&#39;, &#39;e&#39;, &#39;Character&#39;, &#39;not&#39;, &#39;in&#39;, &#39;quotes&#39;]
+POSIX    : [&#39;Escaped&#39;, &#39;e&#39;, &#39;Character&#39;, &#39;not&#39;, &#39;in&#39;, &#39;quotes&#39;]
+
+ORIGINAL : &#39;Escaped &quot;\\e&quot; Character in double quotes&#39;
+non-POSIX: [&#39;Escaped&#39;, &#39;&quot;\\e&quot;&#39;, &#39;Character&#39;, &#39;in&#39;, &#39;double&#39;, &#39;quotes&#39;]
+POSIX    : [&#39;Escaped&#39;, &#39;\\e&#39;, &#39;Character&#39;, &#39;in&#39;, &#39;double&#39;, &#39;quotes&#39;]
+
+ORIGINAL : &quot;Escaped &#39;\\e&#39; Character in single quotes&quot;
+non-POSIX: [&#39;Escaped&#39;, &quot;&#39;\\e&#39;&quot;, &#39;Character&#39;, &#39;in&#39;, &#39;single&#39;, &#39;quotes&#39;]
+POSIX    : [&#39;Escaped&#39;, &#39;\\e&#39;, &#39;Character&#39;, &#39;in&#39;, &#39;single&#39;, &#39;quotes&#39;]
+
+ORIGINAL : &#39;Escaped \&#39;\\\&#39;\&#39; \\&quot;\\\&#39;\\&quot; single quote&#39;
+non-POSIX: error(No closing quotation)
+POSIX    : [&#39;Escaped&#39;, &#39;\\ \\&quot;\\&quot;&#39;, &#39;single&#39;, &#39;quote&#39;]
+
+ORIGINAL : &#39;Escaped &quot;\\&quot;&quot; \\\&#39;\\&quot;\\\&#39; double quote&#39;
+non-POSIX: error(No closing quotation)
+POSIX    : [&#39;Escaped&#39;, &#39;&quot;&#39;, &#39;\&#39;&quot;\&#39;&#39;, &#39;double&#39;, &#39;quote&#39;]
+
+ORIGINAL : &#39;&quot;\&#39;Strip extra layer of quotes\&#39;&quot;&#39;
+non-POSIX: [&#39;&quot;\&#39;Strip extra layer of quotes\&#39;&quot;&#39;]
+POSIX    : [&quot;&#39;Strip extra layer of quotes&#39;&quot;]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/shlex.html">shlex</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../cmd/index.html#module-cmd" title="cmd: Create line-oriented command processors."><tt class="xref py py-mod docutils literal"><span class="pre">cmd</span></tt></a></dt>
+<dd>Tools for building interactive command interpreters.</dd>
+<dt><a class="reference internal" href="../optparse/index.html#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a></dt>
+<dd>Command line option parsing.</dd>
+<dt><a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a></dt>
+<dd>Command line option parsing.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dev_tools.html" title="Development Tools"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../cmd/index.html" title="cmd – Create line-oriented command processors"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../frameworks.html" >Program Frameworks</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

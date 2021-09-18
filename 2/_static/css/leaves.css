@@ -1,0 +1,510 @@
+/* --------------------------------------------------
+   CSS Document For Leaves v1.0 - Anthonyy @ OSWD.org
+   -------------------------------------------------- */
+
+body {
+    background-color: white;
+    text-align: left;
+    border: none;
+}
+
+/* CONTAINER */
+
+#container {
+    /*width: 750px;*/
+    margin: 0 auto;
+    font-family: Lucida Grande, Verdana, Arial, Helvetica, sans-serif; /* Lucida Grande for the Macs, Verdana for the PCs */
+    font-size: 12px;
+    line-height: 1.6em;
+    /*			color: #666;*/
+    background-color: #FFF;
+}
+
+/* GENERAL MOJO AND MULA */
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 1.25em;
+    color: #CC6633;
+/*    margin-bottom: 30px;*/
+    margin-bottom: 0;
+    background-color: #FFF;
+}
+
+h2 {
+    color: #666666;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFF;
+}
+
+h3 {
+    color: #444444;
+}
+
+a {
+    color:#CC6714;
+    text-decoration: none;
+}
+
+a:hover {
+    color:#CC6714;
+    background-color: #F5F5F5;
+}
+
+a:visited {
+    color:#CC6714;
+}
+
+
+form {
+    float:right;
+    margin-top: -45px;
+    font-size: 9px;
+}
+
+input {
+    background-color: #FFF;
+    color: #999999;
+    border: 1px solid #CCC;
+    font-size: 11px;
+    padding: 3px;
+}
+
+.button {
+    padding: 2px;
+}
+
+/* HEADER ELEMENTS */
+
+#header {
+    border-bottom: 4px solid #948979;
+/*    padding-top: 10px;*/
+    clear: both;
+    margin-bottom: 10px;
+}
+
+
+/* the slogan */
+#header p { 
+    margin-top: -20px;
+    margin-left: 30px;
+    color: #999999;
+}
+
+/* NAVIGATION ELEMENTS */
+
+#navigation ul {
+    margin-left: 0;
+    padding-left: 0;
+    list-style-type: none;			
+    float: left;
+    width: 140px;
+}
+
+#navigation a {
+    display: block;
+    padding: 5px;
+    width: 140px;
+    border-bottom: 1px solid #CCC;
+}
+
+#navigation a:link, #navlist a:visited {
+    color:#CC6714;
+    text-decoration: none;
+}
+
+#navigation a:hover {
+    background: #000000 url("/static/images/arrow.gif") 96% 50% no-repeat;
+    background-color: #F5F5F5;
+    color:#CC6714;
+}
+
+div.related {
+    background-color: #F5F5F5;
+    line-height: 30px;
+    color:#CC6714;
+    margin-bottom: 1em;
+}
+
+div.related ul {
+    border: none;
+}
+
+div.related ul li a {
+    color:#CC6714;
+}
+
+/* THE SMALL BOX BELOW NAV */
+
+#navigation p {
+    margin-top: 40px;
+    padding: 5px;
+    border-bottom: 1px dotted #CCC;
+    border-top: 1px dotted #CCC;
+}
+#sidebar_left_wrapper {
+    float: left;
+    width: 140px;
+    color: #666;
+}
+#sidebar_left {
+    margin-left: 0;
+    padding-left: 1em;
+    list-style-type: none;			
+    border-bottom: 1px dotted #CCC;
+    border-top: 1px dotted #CCC;
+}
+
+/* CONTENT ELEMENTS */
+
+#content {
+    /*width: 362px;*/
+    margin-left: 180px;
+    margin-right: 250px;
+}
+
+#content p {
+    padding-bottom: 10px;
+    /*			border-bottom: 1px solid #DDDDDD; /* A faint grey line below the text */
+}
+
+/* for feedburner embedded content */
+#content p.date {
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    display: inline;
+    padding-left: 1em;
+    color: #aaaaaa;
+}
+
+/* parts of an article */
+#content div.article p {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+#content div.article h3 {
+    border-bottom: 1px solid #DDDDDD;		    
+}
+
+#content div.article div.byline {
+    font-size: 80%;
+}
+
+#content div.section p.deck {
+    background-color: #dddddd;
+    color: #444444;
+    font-size: 120%;
+    padding: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+#content p.article-reprint-disclaimer {
+    color: #aaaaaa;
+    font-size: 80%;
+}
+
+#content p.reprint-disclaimer {
+    color: #aaaaaa;
+    font-size: 80%;
+}
+
+#content p.review-disclaimer {
+    color: #aaaaaa;
+    font-size: 90%;
+}
+
+#content p.pub-date {
+    color: #aaaaaa;
+    font-size: 90%;
+}
+
+#content div.section p.callout {
+    /*		    background-color: #CC6714;*/
+    background-color: #ee8936;
+    color: #333333;
+    font-size: 150%;
+    font-style: italic;
+    padding: 1em;
+    margin: 2em;
+}
+
+#content p.caption {
+    font-style: italic;
+    text-align: center;
+    font-size: 90%;
+}
+
+/* parts of a project page */
+#content div.section p.project-description {
+    background-color: #dddddd;
+    color: #444444;
+    font-size: 120%;
+    padding: 1.5em;
+}
+
+/* parts of a pymotw page */
+#content div.section p {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+#content h1 {
+    color: #666666;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFF;
+}
+
+#content h2 {
+    border-bottom: 1px solid #DDDDDD;		    
+}
+
+#content pre {
+    background-color: white;
+    display:block;
+    border: 0;
+}
+
+#content div.highlight-python {
+    margin-left: 2em;
+    margin-right: 2em;		    
+}
+
+#content div.admonition dl {
+    margin-left: 1em;
+}
+
+/* pre-formatted without line numbers */
+#content div.highlight-python pre {
+    border: 1px solid #DDDDDD;		    
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.topic {
+    background: #FFFFFF;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+#content div.topic div.highlight-python pre {
+	border: 0;
+}
+
+/* pre-formatted with line numbers */
+#content div.highlight-python td.linenos pre {
+    border: 0;
+    padding-left: 0;
+    padding-right: 5px;
+	border-right: 1px solid #DDDDDD;
+}
+#content div.highlight-python table.highlightable td.code {
+    border: 1px solid #DDDDDD;		    
+    padding: 1em;
+    padding-right: 1em;
+}
+
+.coverimage {
+    float: right;
+}
+
+/* COMMENTS */
+
+#disqus_wrapper {
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    /*background-color: #eeeeee;*/
+    padding: 1em;
+}
+
+#addthis {
+    padding-bottom: 1em;
+}
+
+/* TABLES */
+
+#content table.docutils {
+    border-collapse: separate;
+}
+table.docutils td, table.docutils th {
+    padding: 1px 8px 1px 8px;
+    border-color: #CCCCCC;
+    border-width: 1px;
+    border-style: none none solid none;
+}
+table.docutils thead td, table.docutils thead th {
+    padding: 1px 8px 1px 8px;
+    border-color: #CCCCCC;
+    border-width: 3px;
+    border-style: none none solid none;
+}
+
+/* rst field-list tables */
+table.docutils th {
+    background-color: #F5F5F5;
+}
+
+/* MANUAL TABLES IN HTML TEMPLATES */
+
+table.manual {
+    padding: 1em;
+}
+
+table.manual tbody tr {
+    padding: 2em;
+}
+
+table.manual tbody tr td {
+    padding: 1em;
+}
+
+/* QUOTES */
+
+blockquote {
+    /* from http://www.protocolostomy.com/ */
+    background: #F5F5F5 url("/static/images/quotes.gif") top left no-repeat;
+/*    padding: 10px 35px 5px 35px;*/
+    padding-left: 35px;
+    border-radius: 3px;
+}
+
+p.attribution {
+    font-style: italic;
+}
+
+/* SIDEBAR ELEMENTS */
+
+#sidebar {
+    float: right;
+    width: 225px;
+}
+
+#sidebar p {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+#sidebar h3 {
+    color: #666666;
+}
+
+#sidebar ul {
+    margin-left: 1em;
+    padding-left: 1em;
+}
+
+#sidebar ul li ul {
+    margin-left: 1em;
+    padding-left: 0;
+}
+
+/* Feedburner embed */
+
+#content p.fbsubscribelink {
+    border-bottom: 0;
+}
+
+/* READERNAUT EMBED */
+
+a.booklink {
+    padding: 5px;
+}
+
+a.booklink img {
+    border: 0px;
+}
+
+/* FOOTER ELEMENTS */
+
+#footer_ads {
+    margin-top: 20px;
+    clear: both;
+    padding: 0px 5px 0px 5px;
+    border-top: 10px solid #575352;
+}
+
+#footer {
+    clear: both;
+    background-color:#575352;
+    padding: 0px 5px 0px 5px;
+    font-size: 11px;
+}
+
+#footer p {
+    color:#89817f;
+    padding: 5px;
+}
+
+#footer p a {
+    color: #89817f;
+    border-bottom: 1px dotted #89817f;
+}
+
+#footer p a:hover {
+    color: #FFFFFF;
+    background-color:#575352;
+}
+
+/* Pygments styles */
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #808080 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #008000; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */

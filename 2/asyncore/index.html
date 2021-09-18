@@ -1,0 +1,778 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>asyncore &#8211; Asynchronous I/O handler - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Interprocess Communication and Networking" href="../ipc.html" />
+    <link rel="next" title="signal – Receive notification of asynchronous system events" href="../signal/index.html" />
+    <link rel="prev" title="asynchat – Asynchronous protocol handler" href="../asynchat/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">asyncore &#8211; Asynchronous I/O handler</a><ul>
+<li><a class="reference internal" href="#clients">Clients</a></li>
+<li><a class="reference internal" href="#servers">Servers</a></li>
+<li><a class="reference internal" href="#working-with-other-event-loops">Working with Other Event Loops</a></li>
+<li><a class="reference internal" href="#working-with-files">Working with Files</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../asynchat/index.html" title="previous chapter"><strong>Previous:</strong> asynchat &#8211; Asynchronous protocol handler</a><br/>
+          <a href="../signal/index.html" title="next chapter"><strong>Next:</strong> signal &#8211; Receive notification of asynchronous system events</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/asyncore/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../signal/index.html" title="signal – Receive notification of asynchronous system events"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../asynchat/index.html" title="asynchat – Asynchronous protocol handler"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../ipc.html" accesskey="U">Interprocess Communication and Networking</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-asyncore">
+<span id="asyncore-asynchronous-i-o-handler"></span><h1>asyncore &#8211; Asynchronous I/O handler<a class="headerlink" href="#module-asyncore" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Asynchronous I/O handler</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The asyncore module includes tools for working with I/O objects such as sockets so they can be managed asynchronously (instead of, for example, using threads).  The main class provided is <tt class="xref py py-class docutils literal"><span class="pre">dispatcher</span></tt>, a wrapper around a socket that provides hooks for handling events like connecting, reading, and writing when invoked from the main loop function, <tt class="xref py py-func docutils literal"><span class="pre">loop()</span></tt>.</p>
+<div class="section" id="clients">
+<h2>Clients<a class="headerlink" href="#clients" title="Permalink to this headline">¶</a></h2>
+<p>To create an asyncore-based client, subclass <tt class="xref py py-class docutils literal"><span class="pre">dispatcher</span></tt> and provide implementations for creating the socket, reading, and writing.  Let&#8217;s examine this HTTP client, based on the one from the standard library documentation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncore</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+<span class="k">class</span> <span class="nc">HttpClient</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parsed_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_buffer</span> <span class="o">=</span> <span class="s">&#39;GET </span><span class="si">%s</span><span class="s"> HTTP/1.0</span><span class="se">\r\n\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parsed_url</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;connecting to </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_connect()&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_close()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">is_writable</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_buffer</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_writable</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;writable() -&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">is_writable</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_writable</span>
+    
+    <span class="k">def</span> <span class="nf">readable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;readable() -&gt; True&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">handle_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write_buffer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_write() -&gt; &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_buffer</span><span class="p">[:</span><span class="n">sent</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_buffer</span><span class="p">[</span><span class="n">sent</span><span class="p">:]</span>
+
+    <span class="k">def</span> <span class="nf">handle_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">8192</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_read() -&gt; </span><span class="si">%d</span><span class="s"> bytes&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                        <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(name)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+    <span class="n">clients</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">HttpClient</span><span class="p">(</span><span class="s">&#39;http://www.python.org/&#39;</span><span class="p">),</span>
+        <span class="n">HttpClient</span><span class="p">(</span><span class="s">&#39;http://www.doughellmann.com/PyMOTW/contents.html&#39;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;LOOP STARTING&#39;</span><span class="p">)</span>
+
+    <span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;LOOP DONE&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">clients</span><span class="p">:</span>
+        <span class="n">response_body</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">read_buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+        <span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="s">&#39;got&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span> <span class="s">&#39;bytes&#39;</span>    
+</pre></div>
+</div>
+<p>First, the socket is created in <tt class="docutils literal"><span class="pre">__init__()</span></tt> using the base class method <tt class="docutils literal"><span class="pre">create_socket()</span></tt>.  Alternative implementations of the method may be provided, but in this case we want a TCP/IP socket so the base class version is sufficient.</p>
+<p>The <tt class="docutils literal"><span class="pre">handle_connect()</span></tt> hook is present simply to illustrate when it is called.  Other types of clients that need to do some sort of hand-shaking or protocol negotiation should do the work in <tt class="docutils literal"><span class="pre">handle_connect()</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">handle_close()</span></tt> is similarly presented for the purposes of showing when the method is called.  The base class version closes the socket correctly, so if you don&#8217;t need to do extra cleanup on close you can leave the method out.</p>
+<p>The asyncore loop uses <tt class="docutils literal"><span class="pre">writable()</span></tt> and its sibling method <tt class="docutils literal"><span class="pre">readable()</span></tt> to decide what actions to take with each dispatcher.  Actual use of poll() or select() on the sockets or file descriptors managed by each dispatcher is handled inside the <a class="reference internal" href="#module-asyncore" title="asyncore: Asynchronous I/O handler"><tt class="xref py py-mod docutils literal"><span class="pre">asyncore</span></tt></a> code, so you don&#8217;t need to do that yourself.  Simply indicate whether the dispatcher cares at all about reading or writing.  In the case of this HTTP client, <tt class="docutils literal"><span class="pre">writable()</span></tt> returns True as long as there is data from the request to send to the server.  <tt class="docutils literal"><span class="pre">readable()</span></tt> always returns True because we want to read all of the data.</p>
+<p>Each time through the loop when <tt class="docutils literal"><span class="pre">writable()</span></tt> responds positively, <tt class="docutils literal"><span class="pre">handle_write()</span></tt> is invoked.  In this version, the HTTP request string that was built in <tt class="docutils literal"><span class="pre">__init__()</span></tt> is sent to the server and the write buffer is reduced by the amount successfully sent.</p>
+<p>Similarly, when <tt class="docutils literal"><span class="pre">readable()</span></tt> responds positively and there is data to read, <tt class="docutils literal"><span class="pre">handle_read()</span></tt> is invoked.</p>
+<p>The example below the <tt class="docutils literal"><span class="pre">__main__</span></tt> test configures logging for debugging then creates two clients to download two separate web pages.  Creating the clients registers them in a &#8220;map&#8221; kept internally by asyncore.  The downloading occurs as the loop iterates over the clients.  When the client reads 0 bytes from a socket that seems readable, the condition is interpreted as a closed connection and <tt class="docutils literal"><span class="pre">handle_close()</span></tt> is called.</p>
+<p>One example of how this client app may run is:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python asyncore_http_client.py
+
+http://www.python.org/: connecting to (&#39;www.python.org&#39;, 80)
+http://www.doughellmann.com/PyMOTW/contents.html: connecting to (&#39;www.doughellmann.com&#39;, 80)
+root: LOOP STARTING
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: writable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: writable() -&gt; True
+http://www.python.org/: handle_connect()
+http://www.python.org/: handle_write() -&gt; &quot;GET http://www.python.org/ HTTP/1.0
+
+&quot;
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: writable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: handle_connect()
+http://www.doughellmann.com/PyMOTW/contents.html: handle_write() -&gt; &quot;GET http://www.doughellmann.com/PyMOTW/contents.html HTTP/1.0
+
+&quot;
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 2896 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1432 bytes
+http://www.python.org/: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: handle_close()
+http://www.python.org/: handle_read() -&gt; 0 bytes
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: handle_read() -&gt; 481 bytes
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: handle_close()
+http://www.doughellmann.com/PyMOTW/contents.html: handle_read() -&gt; 0 bytes
+root: LOOP DONE
+http://www.python.org/ got 21704 bytes
+http://www.doughellmann.com/PyMOTW/contents.html got 481 bytes
+</pre></div>
+</div>
+</div>
+<div class="section" id="servers">
+<h2>Servers<a class="headerlink" href="#servers" title="Permalink to this headline">¶</a></h2>
+<p>The example below illustrates using asyncore on the server by re-implementing the EchoServer from the <a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a> examples.  There are three classes: <tt class="docutils literal"><span class="pre">EchoServer</span></tt> receives incoming connections from clients and creates <tt class="docutils literal"><span class="pre">EchoHandler</span></tt> instances to deal with each.  The <tt class="docutils literal"><span class="pre">EchoClient</span></tt> is an asyncore dispatcher similar to the HttpClient defined above.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncore</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">EchoServer</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Receives connections and establishes handlers for each client.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;EchoServer&#39;</span><span class="p">)</span>
+        <span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;binding to </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">handle_accept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Called when a client connects to our socket</span>
+        <span class="n">client_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_accept() -&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">client_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">EchoHandler</span><span class="p">(</span><span class="n">sock</span><span class="o">=</span><span class="n">client_info</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c"># We only want to deal with one client at a time,</span>
+        <span class="c"># so close as soon as we set up the handler.</span>
+        <span class="c"># Normally you would not do this and the server</span>
+        <span class="c"># would run forever or until it received instructions</span>
+        <span class="c"># to stop.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_close</span><span class="p">()</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_close()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">EchoHandler</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles echoing messages from a single client.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="n">chunk_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;EchoHandler</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()))</span>
+        <span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="o">=</span><span class="n">sock</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_to_write</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;We want to write if we have received data.&quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_to_write</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;writable() -&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+    
+    <span class="k">def</span> <span class="nf">handle_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write as much as possible of the most recent message we have received.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_to_write</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">sent</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">sent</span><span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">to_write</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">remaining</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_write() -&gt; (</span><span class="si">%d</span><span class="s">) &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">sent</span><span class="p">,</span> <span class="n">data</span><span class="p">[:</span><span class="n">sent</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">writable</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">handle_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read an incoming message from the client and put it into our outgoing queue.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_read() -&gt; (</span><span class="si">%d</span><span class="s">) &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_to_write</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_close()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">EchoClient</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sends messages to the server and receives responses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_send</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="n">chunk_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;EchoClient&#39;</span><span class="p">)</span>
+        <span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;connecting to </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">handle_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_connect()&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_close()&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">received_message</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">received_message</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;RECEIVED COPY OF MESSAGE&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;ERROR IN TRANSMISSION&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;EXPECTED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;RECEIVED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">received_message</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;writable() -&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_send</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_send</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_send</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_write() -&gt; (</span><span class="si">%d</span><span class="s">) &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">sent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_send</span><span class="p">[:</span><span class="n">sent</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_send</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_send</span><span class="p">[</span><span class="n">sent</span><span class="p">:]</span>
+
+    <span class="k">def</span> <span class="nf">handle_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;handle_read() -&gt; (</span><span class="si">%d</span><span class="s">) &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">received_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                        <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(name)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># let the kernel give us a port</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">EchoServer</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">address</span> <span class="c"># find out what port we were given</span>
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">EchoClient</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The EchoServer and EchoHandler are defined in separate classes because they do different things.  When EchoServer accepts a connection, a new socket is established.  Rather than try to dispatch to individual clients within EchoServer, an EchoHandler is created to take advantage of the socket map maintained by asyncore.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python asyncore_echo_server.py
+
+EchoServer: binding to (&#39;127.0.0.1&#39;, 56199)
+EchoClient: connecting to (&#39;127.0.0.1&#39;, 56199)
+EchoClient: writable() -&gt; True
+EchoServer: handle_accept() -&gt; (&#39;127.0.0.1&#39;, 56200)
+EchoServer: handle_close()
+EchoClient: handle_connect()
+EchoClient: handle_write() -&gt; (512) &quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque vel arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra f&quot;
+EchoClient: writable() -&gt; True
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; False
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_read() -&gt; (256) &quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque ve&quot;
+EchoClient: handle_write() -&gt; (225) &quot;ringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+justo.
+&quot;
+EchoClient: writable() -&gt; False
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; True
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_read() -&gt; (256) &quot;l arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra f&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_write() -&gt; (256) &quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque ve&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; True
+EchoClient: writable() -&gt; False
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; True
+EchoClient: handle_read() -&gt; (256) &quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque ve&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_read() -&gt; (225) &quot;ringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+justo.
+&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_write() -&gt; (256) &quot;l arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra f&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; True
+EchoClient: writable() -&gt; False
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; True
+EchoClient: handle_read() -&gt; (256) &quot;l arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra f&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_write() -&gt; (225) &quot;ringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+justo.
+&quot;
+EchoHandler(&#39;127.0.0.1&#39;, 56199): writable() -&gt; False
+EchoHandler(&#39;127.0.0.1&#39;, 56199): handle_close()
+EchoClient: writable() -&gt; False
+EchoClient: handle_read() -&gt; (225) &quot;ringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+justo.
+&quot;
+EchoClient: writable() -&gt; False
+EchoClient: handle_close()
+EchoClient: RECEIVED COPY OF MESSAGE
+EchoClient: handle_read() -&gt; (0) &quot;&quot;
+</pre></div>
+</div>
+<p>In this example the server, handler, and client objects are all being maintained in the same socket map by asyncore in a single process. To separate the server from the client, simply instantiate them from separate scripts and run <tt class="docutils literal"><span class="pre">asyncore.loop()</span></tt> in both. When a dispatcher is closed, it is removed from the map maintained by asyncore and the loop exits when the map is empty.</p>
+</div>
+<div class="section" id="working-with-other-event-loops">
+<h2>Working with Other Event Loops<a class="headerlink" href="#working-with-other-event-loops" title="Permalink to this headline">¶</a></h2>
+<p>It is sometimes necessary to integrate the asyncore event loop with an event loop from the parent application.  For example, a GUI application would not want the UI to block until all asynchronous transfers are handled &#8211; that would defeat the purpose of making them asynchronous.  To make this sort of integration easy, <tt class="docutils literal"><span class="pre">asyncore.loop()</span></tt> accepts arguments to set a timeout and to limit the number of times the loop is run.  We can see their effect on the client by re-using HttpClient from the first example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncore</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">asyncore_http_client</span> <span class="kn">import</span> <span class="n">HttpClient</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(name)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+<span class="n">clients</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">HttpClient</span><span class="p">(</span><span class="s">&#39;http://www.doughellmann.com/PyMOTW/contents.html&#39;</span><span class="p">),</span>
+    <span class="n">HttpClient</span><span class="p">(</span><span class="s">&#39;http://www.python.org/&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+<span class="n">loop_counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">asyncore</span><span class="o">.</span><span class="n">socket_map</span><span class="p">:</span>
+    <span class="n">loop_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;loop_counter=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">loop_counter</span><span class="p">)</span>
+    <span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we see that the client is only asked to read or data once per call into <tt class="docutils literal"><span class="pre">asyncore.loop()</span></tt>.  Instead of our own <tt class="docutils literal"><span class="pre">while</span></tt> loop, we could call <tt class="docutils literal"><span class="pre">asyncore.loop()</span></tt> like this from a GUI toolkit idle handler or other mechanism for doing a small amount of work when the UI is not busy with other event handlers.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python asyncore_loop.py
+
+http://www.doughellmann.com/PyMOTW/contents.html: connecting to (&#39;www.doughellmann.com&#39;, 80)
+http://www.python.org/: connecting to (&#39;www.python.org&#39;, 80)
+root: loop_counter=1
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: writable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: writable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: handle_connect()
+http://www.doughellmann.com/PyMOTW/contents.html: handle_write() -&gt; &quot;GET http://www.doughellmann.com/PyMOTW/contents.html HTTP/1.0
+
+&quot;
+root: loop_counter=2
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: writable() -&gt; True
+http://www.python.org/: handle_connect()
+http://www.python.org/: handle_write() -&gt; &quot;GET http://www.python.org/ HTTP/1.0
+
+&quot;
+root: loop_counter=3
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 2896 bytes
+root: loop_counter=4
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=5
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=6
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=7
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=8
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=9
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=10
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=11
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=12
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=13
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=14
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=15
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1448 bytes
+root: loop_counter=16
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_read() -&gt; 1432 bytes
+root: loop_counter=17
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.python.org/: readable() -&gt; True
+http://www.python.org/: handle_close()
+http://www.python.org/: handle_read() -&gt; 0 bytes
+root: loop_counter=18
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+root: loop_counter=19
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: handle_read() -&gt; 481 bytes
+root: loop_counter=20
+http://www.doughellmann.com/PyMOTW/contents.html: readable() -&gt; True
+http://www.doughellmann.com/PyMOTW/contents.html: handle_close()
+http://www.doughellmann.com/PyMOTW/contents.html: handle_read() -&gt; 0 bytes
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-files">
+<h2>Working with Files<a class="headerlink" href="#working-with-files" title="Permalink to this headline">¶</a></h2>
+<p>Normally you would want to use asyncore with sockets, but there are times when it is useful to read files asynchronously, too (to use files when testing network servers without requiring the network setup, or to read or write large data files in parts).  For these situations, asyncore provides the <tt class="xref py py-class docutils literal"><span class="pre">file_dispatcher</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">file_wrapper</span></tt> classes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncore</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">FileReader</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">file_dispatcher</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    
+    <span class="k">def</span> <span class="nf">handle_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;READ: (</span><span class="si">%d</span><span class="s">) &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">handle_expt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Ignore events that look like out of band data</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">lorem_fd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDONLY</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">FileReader</span><span class="p">(</span><span class="n">lorem_fd</span><span class="p">)</span>
+<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example was tested under Python 2.5.2, so I am using <tt class="docutils literal"><span class="pre">os.open()</span></tt> to get a file descriptor for the file.  For Python 2.6 and later, <tt class="docutils literal"><span class="pre">file_dispatcher</span></tt> automatically converts anything with a <tt class="docutils literal"><span class="pre">fileno()</span></tt> method to a file descriptor.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python asyncore_file_dispatcher.py
+
+READ: (256) &quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque ve&quot;
+READ: (256) &quot;l arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra f&quot;
+READ: (225) &quot;ringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+justo.
+&quot;
+READ: (0) &quot;&quot;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/asyncore.html">asyncore</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../asynchat/index.html#module-asynchat" title="asynchat: Asynchronous protocol handler"><tt class="xref py py-mod docutils literal"><span class="pre">asynchat</span></tt></a></dt>
+<dd>The asynchat module builds on asyncore to make it easier to create clients
+and servers communicate by passing messages back and forth using a set protocol.</dd>
+<dt><a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a></dt>
+<dd>The SocketServer module article includes another example of the EchoServer with
+threading and forking variants.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../signal/index.html" title="signal – Receive notification of asynchronous system events"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../asynchat/index.html" title="asynchat – Asynchronous protocol handler"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../ipc.html" >Interprocess Communication and Networking</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

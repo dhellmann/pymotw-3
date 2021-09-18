@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<top>
-  <child>Regular text.</child>
-  <child_with_tail>Regular text.</child_with_tail>"Tail" text.
-  <with_attributes name="value" foo="bar" />
-  <entity_expansion attribute="This &#38; That">
-    That &#38; This
-  </entity_expansion>
-</top>

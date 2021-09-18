@@ -1,0 +1,596 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>tarfile &#8211; Tar archive access - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Compression and Archiving" href="../compression.html" />
+    <link rel="next" title="zipfile – Read and write ZIP archive files" href="../zipfile/index.html" />
+    <link rel="prev" title="gzip – Read and write GNU zip files" href="../gzip/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">tarfile &#8211; Tar archive access</a><ul>
+<li><a class="reference internal" href="#testing-tar-files">Testing Tar Files</a></li>
+<li><a class="reference internal" href="#reading-meta-data-from-an-archive">Reading Meta-data from an Archive</a></li>
+<li><a class="reference internal" href="#extracting-files-from-an-archive">Extracting Files From an Archive</a></li>
+<li><a class="reference internal" href="#creating-new-archives">Creating New Archives</a></li>
+<li><a class="reference internal" href="#using-alternate-archive-member-names">Using Alternate Archive Member Names</a></li>
+<li><a class="reference internal" href="#writing-data-from-sources-other-than-files">Writing Data from Sources Other Than Files</a></li>
+<li><a class="reference internal" href="#appending-to-archives">Appending to Archives</a></li>
+<li><a class="reference internal" href="#working-with-compressed-archives">Working with Compressed Archives</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../gzip/index.html" title="previous chapter"><strong>Previous:</strong> gzip &#8211; Read and write GNU zip files</a><br/>
+          <a href="../zipfile/index.html" title="next chapter"><strong>Next:</strong> zipfile &#8211; Read and write ZIP archive files</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/tarfile/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../zipfile/index.html" title="zipfile – Read and write ZIP archive files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../gzip/index.html" title="gzip – Read and write GNU zip files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" accesskey="U">Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-tarfile">
+<span id="tarfile-tar-archive-access"></span><h1>tarfile &#8211; Tar archive access<a class="headerlink" href="#module-tarfile" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Tar archive access.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-tarfile" title="tarfile: Tar archive access"><tt class="xref py py-mod docutils literal"><span class="pre">tarfile</span></tt></a> module provides read and write access to UNIX tar
+archives, including compressed files.  In addition to the POSIX
+standards, several GNU tar extensions are supported.  Various UNIX
+special file types (hard and soft links, device nodes, etc.) are also
+handled.</p>
+<div class="section" id="testing-tar-files">
+<h2>Testing Tar Files<a class="headerlink" href="#testing-tar-files" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">is_tarfile()</span></tt> function returns a boolean indicating whether
+or not the filename passed as an argument refers to a valid tar file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;example.tar&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;bad_example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;notthere.tar&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">  </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">is_tarfile</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">  </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the file does not exist, <tt class="xref py py-func docutils literal"><span class="pre">is_tarfile()</span></tt> raises an
+<a class="reference internal" href="../exceptions/index.html#exceptions-ioerror"><em>IOError</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_is_tarfile.py
+
+          README.txt  False
+         example.tar  True
+     bad_example.tar  False
+        notthere.tar  [Errno 2] No such file or directory: &#39;notthere.tar&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-meta-data-from-an-archive">
+<h2>Reading Meta-data from an Archive<a class="headerlink" href="#reading-meta-data-from-an-archive" title="Permalink to this headline">¶</a></h2>
+<p>Use the <tt class="xref py py-class docutils literal"><span class="pre">TarFile</span></tt> class to work directly with a tar archive. It
+supports methods for reading data about existing archives as well as
+modifying the archives by adding additional files.</p>
+<p>To read the names of the files in an existing archive, use
+<tt class="xref py py-func docutils literal"><span class="pre">getnames()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">getnames</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The return value is a list of strings with the names of the archive
+contents:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_getnames.py
+
+[&#39;README.txt&#39;]
+</pre></div>
+</div>
+<p>In addition to names, meta-data about the archive members is available
+as instances of <tt class="xref py py-class docutils literal"><span class="pre">TarInfo</span></tt> objects.  Load the meta-data via
+<tt class="xref py py-func docutils literal"><span class="pre">getmembers()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">getmember()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">member_info</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">member_info</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Modified:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">member_info</span><span class="o">.</span><span class="n">mtime</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Mode    :</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">member_info</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Type    :</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">member_info</span><span class="o">.</span><span class="n">type</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Size    :</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">member_info</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s">&#39;bytes&#39;</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_getmembers.py
+
+README.txt
+        Modified:       Sun Feb 22 11:13:55 2009
+        Mode    :       0644
+        Type    :       0
+        Size    :       75 bytes
+</pre></div>
+</div>
+<p>If you know in advance the name of the archive member, you can
+retrieve its <tt class="xref py py-class docutils literal"><span class="pre">TarInfo</span></tt> object with <tt class="xref py py-func docutils literal"><span class="pre">getmember()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;notthere.txt&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">getmember</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;ERROR: Did not find </span><span class="si">%s</span><span class="s"> in tar archive&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is </span><span class="si">%d</span><span class="s"> bytes&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the archive member is not present, <tt class="xref py py-func docutils literal"><span class="pre">getmember()</span></tt> raises a
+<a class="reference internal" href="../exceptions/index.html#exceptions-keyerror"><em>KeyError</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_getmember.py
+
+README.txt is 75 bytes
+ERROR: Did not find notthere.txt in tar archive
+</pre></div>
+</div>
+</div>
+<div class="section" id="extracting-files-from-an-archive">
+<h2>Extracting Files From an Archive<a class="headerlink" href="#extracting-files-from-an-archive" title="Permalink to this headline">¶</a></h2>
+<p>To access the data from an archive member within your program, use the
+<tt class="xref py py-func docutils literal"><span class="pre">extractfile()</span></tt> method, passing the member&#8217;s name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;notthere.txt&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;ERROR: Did not find </span><span class="si">%s</span><span class="s"> in tar archive&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">filename</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_extractfile.py
+
+README.txt : The examples for the tarfile module use this file and example.tar as data.
+
+ERROR: Did not find notthere.txt in tar archive
+</pre></div>
+</div>
+<p>If you just want to unpack the archive and write the files to the
+filesystem, use <tt class="xref py py-func docutils literal"><span class="pre">extract()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">extractall()</span></tt> instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_extract.py
+
+[&#39;README.txt&#39;]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The standard library documentation includes a note stating that
+<tt class="xref py py-func docutils literal"><span class="pre">extractall()</span></tt> is safer than <tt class="xref py py-func docutils literal"><span class="pre">extract()</span></tt>, and it
+should be used in most cases.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_extractall.py
+
+[&#39;README.txt&#39;]
+</pre></div>
+</div>
+<p>If you only want to extract certain files from the archive, their
+names can be passed to <tt class="xref py py-func docutils literal"><span class="pre">extractall()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;example.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">,</span> <span class="n">members</span><span class="o">=</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">getmember</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)])</span>
+<span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&#39;outdir&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_extractall_members.py
+
+[&#39;README.txt&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-new-archives">
+<h2>Creating New Archives<a class="headerlink" href="#creating-new-archives" title="Permalink to this headline">¶</a></h2>
+<p>To create a new archive, simply open the <tt class="xref py py-class docutils literal"><span class="pre">TarFile</span></tt> with a mode
+of <tt class="docutils literal"><span class="pre">'w'</span></tt>. Any existing file is truncated and a new archive is
+started. To add files, use the <tt class="xref py py-func docutils literal"><span class="pre">add()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="k">print</span> <span class="s">&#39;creating archive&#39;</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_add.tar&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;adding README.txt&#39;</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;closing&#39;</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Contents:&#39;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_add.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">member_info</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">member_info</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_add.py
+
+creating archive
+adding README.txt
+closing
+
+Contents:
+README.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-alternate-archive-member-names">
+<h2>Using Alternate Archive Member Names<a class="headerlink" href="#using-alternate-archive-member-names" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to add a file to an archive using a name other than the
+original file name, by constructing a <tt class="xref py py-class docutils literal"><span class="pre">TarInfo</span></tt> object with an
+alternate <em>arcname</em> and passing it to <tt class="xref py py-func docutils literal"><span class="pre">addfile()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="k">print</span> <span class="s">&#39;creating archive&#39;</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_addfile.tar&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;adding README.txt as RENAMED.txt&#39;</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">gettarinfo</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">&#39;RENAMED.txt&#39;</span><span class="p">)</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">addfile</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;closing&#39;</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Contents:&#39;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_addfile.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">member_info</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">member_info</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>The archive includes only the changed filename:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_addfile.py
+
+creating archive
+adding README.txt as RENAMED.txt
+closing
+
+Contents:
+RENAMED.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-data-from-sources-other-than-files">
+<h2>Writing Data from Sources Other Than Files<a class="headerlink" href="#writing-data-from-sources-other-than-files" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you want to write data to an archive but the data is not in
+a file on the filesystem. Rather than writing the data to a file, then
+adding that file to the archive, you can use <tt class="xref py py-func docutils literal"><span class="pre">addfile()</span></tt> to add
+data from an open file-like handle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="s">&#39;This is the data to write to the archive.&#39;</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_addfile_string.tar&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarInfo</span><span class="p">(</span><span class="s">&#39;made_up_file.txt&#39;</span><span class="p">)</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">addfile</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Contents:&#39;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_addfile_string.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">member_info</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">member_info</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">member_info</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By first constructing a <tt class="xref py py-class docutils literal"><span class="pre">TarInfo</span></tt> object ourselves, we can give
+the archive member any name we wish.  After setting the size, we can
+write the data to the archive using <tt class="xref py py-func docutils literal"><span class="pre">addfile()</span></tt> and passing a
+<a class="reference internal" href="../StringIO/index.html#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">StringIO</span></tt></a> buffer as a source of the data.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_addfile_string.py
+
+
+Contents:
+made_up_file.txt
+This is the data to write to the archive.
+</pre></div>
+</div>
+</div>
+<div class="section" id="appending-to-archives">
+<h2>Appending to Archives<a class="headerlink" href="#appending-to-archives" title="Permalink to this headline">¶</a></h2>
+<p>In addition to creating new archives, it is possible to append to an
+existing file. To open a file to append to it, use mode <tt class="docutils literal"><span class="pre">'a'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="k">print</span> <span class="s">&#39;creating archive&#39;</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_append.tar&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;contents:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">name</span> 
+                    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_append.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getmembers</span><span class="p">()]</span>
+
+<span class="k">print</span> <span class="s">&#39;adding index.rst&#39;</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_append.tar&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;index.rst&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;contents:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">name</span> 
+                    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tarfile_append.tar&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getmembers</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>The resulting archive ends up with two members:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_append.py
+
+creating archive
+contents: [&#39;README.txt&#39;]
+adding index.rst
+contents: [&#39;README.txt&#39;, &#39;index.rst&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-compressed-archives">
+<h2>Working with Compressed Archives<a class="headerlink" href="#working-with-compressed-archives" title="Permalink to this headline">¶</a></h2>
+<p>Besides regular tar archive files, the <a class="reference internal" href="#module-tarfile" title="tarfile: Tar archive access"><tt class="xref py py-mod docutils literal"><span class="pre">tarfile</span></tt></a> module can work
+with archives compressed via the gzip or bzip2 protocols.  To open a
+compressed archive, modify the mode string passed to open() to include
+<tt class="docutils literal"><span class="pre">&quot;:gz&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;:bz2&quot;</span></tt>, depending on the compression method you want
+to use.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%-30s</span><span class="s"> </span><span class="si">%-10s</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;FILENAME&#39;</span><span class="p">,</span> <span class="s">&#39;SIZE&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">write_mode</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s">&#39;tarfile_compression.tar&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;tarfile_compression.tar.gz&#39;</span><span class="p">,</span> <span class="s">&#39;w:gz&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;tarfile_compression.tar.bz2&#39;</span><span class="p">,</span> <span class="s">&#39;w:bz2&#39;</span><span class="p">),</span>
+    <span class="p">]:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">write_mode</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">st_size</span><span class="p">),</span>
+    <span class="k">print</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;r:*&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getmembers</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>When opening an existing archive for reading, you can specify
+<tt class="docutils literal"><span class="pre">&quot;r:*&quot;</span></tt> to have <a class="reference internal" href="#module-tarfile" title="tarfile: Tar archive access"><tt class="xref py py-mod docutils literal"><span class="pre">tarfile</span></tt></a> determine the compression method to
+use automatically.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tarfile_compression.py
+
+FILENAME                       SIZE
+README.txt                     75
+tarfile_compression.tar        10240      [&#39;README.txt&#39;]
+tarfile_compression.tar.gz     211        [&#39;README.txt&#39;]
+tarfile_compression.tar.bz2    188        [&#39;README.txt&#39;]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/tarfile.html">tarfile</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.gnu.org/software/tar/manual/html_node/Standard.html">GNU tar manual</a></dt>
+<dd>Documentation of the tar format, including extensions.</dd>
+<dt><a class="reference internal" href="../zipfile/index.html#module-zipfile" title="zipfile: Read and write ZIP archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a></dt>
+<dd>Similar access for ZIP archives.</dd>
+<dt><a class="reference internal" href="../gzip/index.html#module-gzip" title="gzip: Read and write gzip files"><tt class="xref py py-mod docutils literal"><span class="pre">gzip</span></tt></a></dt>
+<dd>GNU zip compression</dd>
+<dt><a class="reference internal" href="../bz2/index.html#module-bz2" title="bz2: bzip2 compression"><tt class="xref py py-mod docutils literal"><span class="pre">bz2</span></tt></a></dt>
+<dd>bzip2 compression</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../zipfile/index.html" title="zipfile – Read and write ZIP archive files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../gzip/index.html" title="gzip – Read and write GNU zip files"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" >Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

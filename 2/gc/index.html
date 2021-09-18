@@ -1,0 +1,1159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>gc &#8211; Garbage Collector - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="next" title="inspect – Inspect live objects" href="../inspect/index.html" />
+    <link rel="prev" title="contextlib – Context manager utilities" href="../contextlib/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">gc &#8211; Garbage Collector</a><ul>
+<li><a class="reference internal" href="#tracing-references">Tracing References</a></li>
+<li><a class="reference internal" href="#forcing-garbage-collection">Forcing Garbage Collection</a></li>
+<li><a class="reference internal" href="#finding-references-to-objects-that-can-t-be-collected">Finding References to Objects that Can&#8217;t be Collected</a></li>
+<li><a class="reference internal" href="#collection-thresholds-and-generations">Collection Thresholds and Generations</a></li>
+<li><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../contextlib/index.html" title="previous chapter"><strong>Previous:</strong> contextlib &#8211; Context manager utilities</a><br/>
+          <a href="../inspect/index.html" title="next chapter"><strong>Next:</strong> inspect &#8211; Inspect live objects</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/gc/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../inspect/index.html" title="inspect – Inspect live objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../contextlib/index.html" title="contextlib – Context manager utilities"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" accesskey="U">Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-gc">
+<span id="gc-garbage-collector"></span><h1>gc &#8211; Garbage Collector<a class="headerlink" href="#module-gc" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Manages memory used by Python objects</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> exposes the underlying memory management mechanism of
+Python, the automatic garbage collector.  The module includes
+functions for controlling how the collector operates and to examine
+the objects known to the system, either pending collection or stuck in
+reference cycles and unable to be freed.</p>
+<div class="section" id="tracing-references">
+<h2>Tracing References<a class="headerlink" href="#tracing-references" title="Permalink to this headline">¶</a></h2>
+<p>With <a class="reference internal" href="#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> you can use the incoming and outgoing references
+between objects to find cycles in complex data structures.  If you
+know the data structure with the cycle, you can construct custom code
+to examine its properties.  If not, you can the
+<tt class="xref py py-func docutils literal"><span class="pre">get_referents()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">get_referrers()</span></tt> functions to build
+generic debugging tools.</p>
+<p>For example, <tt class="xref py py-func docutils literal"><span class="pre">get_referents()</span></tt> shows the objects <em>referred to</em>
+by the input arguments.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+<span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;three refers to:&#39;</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_referents</span><span class="p">(</span><span class="n">three</span><span class="p">):</span>
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> instance <tt class="docutils literal"><span class="pre">three</span></tt> holds references
+to its instance dictionary (in the <tt class="docutils literal"><span class="pre">__dict__</span></tt> attribute) and its
+class.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_get_referents.py
+
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(three)
+Linking nodes Graph(three).next = Graph(one)
+
+three refers to:
+{&#39;name&#39;: &#39;three&#39;, &#39;next&#39;: Graph(one)}
+&lt;class &#39;__main__.Graph&#39;&gt;
+</pre></div>
+</div>
+<p>This example uses a <a class="reference internal" href="../Queue/index.html#module-Queue" title="Queue: Provides a thread-safe FIFO implementation"><tt class="xref py py-mod docutils literal"><span class="pre">Queue</span></tt></a> to perform a breadth-first traversal
+of all of the object references looking for cycles.  The items
+inserted into the queue are tuples containing the reference chain so
+far and the next object to examine.  It starts with <tt class="docutils literal"><span class="pre">three</span></tt>, and
+look at everything it refers to.  Skipping classes lets us avoid
+looking at methods, modules, etc.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+<span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="k">print</span>
+
+<span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="n">to_process</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+<span class="c"># Start with an empty object chain and Graph three.</span>
+<span class="n">to_process</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="p">([],</span> <span class="n">three</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="c"># Look for cycles, building the object chain for each object we find</span>
+<span class="c"># in the queue so we can print the full cycle when we&#39;re done.</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">to_process</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="n">chain</span><span class="p">,</span> <span class="nb">next</span> <span class="o">=</span> <span class="n">to_process</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">chain</span> <span class="o">=</span> <span class="n">chain</span><span class="p">[:]</span>
+    <span class="n">chain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">next</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Examining:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">next</span><span class="p">)</span>
+    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="nb">next</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_referents</span><span class="p">(</span><span class="nb">next</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+            <span class="c"># Ignore strings and classes</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="nb">id</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="k">print</span>
+            <span class="k">print</span> <span class="s">&#39;Found a cycle to </span><span class="si">%s</span><span class="s">:&#39;</span> <span class="o">%</span> <span class="n">r</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chain</span><span class="p">):</span>
+                <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%d</span><span class="s">: &#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span>
+                <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">to_process</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="p">)</span>
+            
+</pre></div>
+</div>
+<p>The cycle in the nodes is easily found by watching for objects that
+have already been processed.  To avoid holding references to those
+objects, their <tt class="xref py py-func docutils literal"><span class="pre">id()</span></tt> values are cached in a set.  The
+dictionary objects found in the cycle are the <tt class="docutils literal"><span class="pre">__dict__</span></tt> values for
+the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> instances, and hold their instance attributes.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_get_referents_cycles.py
+
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(three)
+Linking nodes Graph(three).next = Graph(one)
+
+Examining: Graph(three)
+Examining: {&#39;name&#39;: &#39;three&#39;, &#39;next&#39;: Graph(one)}
+Examining: Graph(one)
+Examining: {&#39;name&#39;: &#39;one&#39;, &#39;next&#39;: Graph(two)}
+Examining: Graph(two)
+Examining: {&#39;name&#39;: &#39;two&#39;, &#39;next&#39;: Graph(three)}
+
+Found a cycle to Graph(three):
+  0: Graph(three)
+  1: {&#39;name&#39;: &#39;three&#39;, &#39;next&#39;: Graph(one)}
+  2: Graph(one)
+  3: {&#39;name&#39;: &#39;one&#39;, &#39;next&#39;: Graph(two)}
+  4: Graph(two)
+  5: {&#39;name&#39;: &#39;two&#39;, &#39;next&#39;: Graph(three)}
+</pre></div>
+</div>
+</div>
+<div class="section" id="forcing-garbage-collection">
+<h2>Forcing Garbage Collection<a class="headerlink" href="#forcing-garbage-collection" title="Permalink to this headline">¶</a></h2>
+<p>Although the garbage collector runs automatically as the interpreter
+executes your program, you may want to trigger collection to run at a
+specific time when you know there are a lot of objects to free or
+there is not much work happening in your application.  Trigger
+collection using <tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+<span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="k">print</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Show the effect of garbage collection</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Collecting </span><span class="si">%d</span><span class="s"> ...&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+    <span class="k">print</span> <span class="s">&#39;Remaining Garbage:&#39;</span><span class="p">,</span> 
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+    <span class="k">print</span>
+    
+</pre></div>
+</div>
+<p>In this example, the cycle is cleared as soon as collection runs the
+first time, since nothing refers to the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> nodes except
+themselves.  <tt class="xref py py-func docutils literal"><span class="pre">collect()</span></tt> returns the number of &#8220;unreachable&#8221;
+objects it found.  In this case, the value is <tt class="docutils literal"><span class="pre">6</span></tt> because there are
+3 objects with their instance attribute dictionaries.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_collect.py
+
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(three)
+Linking nodes Graph(three).next = Graph(one)
+
+Collecting 0 ...
+Unreachable objects: 6
+Remaining Garbage:[]
+
+Collecting 1 ...
+Unreachable objects: 0
+Remaining Garbage:[]
+</pre></div>
+</div>
+<p>If <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> has a <tt class="xref py py-func docutils literal"><span class="pre">__del__()</span></tt> method, however, the garbage
+collector cannot break the cycle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+<span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Show the effect of garbage collection</span>
+<span class="k">print</span> <span class="s">&#39;Collecting...&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+<span class="k">print</span> <span class="s">&#39;Remaining Garbage:&#39;</span><span class="p">,</span> 
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>Because more than one object in the cycle has a finalizer method, the
+order in which the objects need to be finalized and then garbage
+collected cannot be determined, so the garbage collector plays it safe
+and keeps the objects.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_collect_with_del.py
+
+Graph(one).next = Graph(two)
+Graph(two).next = Graph(three)
+Graph(three).next = Graph(one)
+Collecting...
+Unreachable objects: 6
+Remaining Garbage:[Graph(one), Graph(two), Graph(three)]
+</pre></div>
+</div>
+<p>When the cycle is broken, the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> instances can be
+collected.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+<span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Collecting now keeps the objects as uncollectable</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Collecting...&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+<span class="k">print</span> <span class="s">&#39;Remaining Garbage:&#39;</span><span class="p">,</span> 
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+    
+<span class="c"># Break the cycle</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Breaking the cycle&#39;</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Removing references in gc.garbage&#39;</span>
+<span class="k">del</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">[:]</span>
+
+<span class="c"># Now the objects are removed</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Collecting...&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+<span class="k">print</span> <span class="s">&#39;Remaining Garbage:&#39;</span><span class="p">,</span> 
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because <tt class="docutils literal"><span class="pre">gc.garbage</span></tt> holds a reference to the objects from the
+previous garbage collection run, it needs to be cleared out after the
+cycle is broken to reduce the reference counts so they can be
+finalized and freed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_collect_break_cycle.py
+
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(three)
+Linking nodes Graph(three).next = Graph(one)
+
+Collecting...
+Unreachable objects: 6
+Remaining Garbage:[Graph(one), Graph(two), Graph(three)]
+
+Breaking the cycle
+Linking nodes Graph(one).next = None
+Removing references in gc.garbage
+Graph(two).__del__()
+Graph(three).__del__()
+Graph(one).__del__()
+
+Collecting...
+Unreachable objects: 0
+Remaining Garbage:[]
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-references-to-objects-that-can-t-be-collected">
+<h2>Finding References to Objects that Can&#8217;t be Collected<a class="headerlink" href="#finding-references-to-objects-that-can-t-be-collected" title="Permalink to this headline">¶</a></h2>
+<p>Looking for the object holding a reference to something in the garbage
+is a little trickier than seeing what an object references.  Because
+the code asking about the reference needs to hold a reference itself,
+some of the referrers need to be ignored.  This example creates a
+graph cycle, then works through the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> instances in the
+garbage and removes the reference in the &#8220;parent&#8221; node.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct two graph cycles</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+<span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Collecting now keeps the objects as uncollectable</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Collecting...&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+<span class="k">print</span> <span class="s">&#39;Remaining Garbage:&#39;</span><span class="p">,</span> 
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+
+<span class="n">REFERRERS_TO_IGNORE</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">locals</span><span class="p">(),</span> <span class="nb">globals</span><span class="p">(),</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span> <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">find_referring_graphs</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Looking for references to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">referrers</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_referrers</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                 <span class="k">if</span> <span class="n">r</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">REFERRERS_TO_IGNORE</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">referrers</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">Graph</span><span class="p">):</span>
+            <span class="c"># A graph node</span>
+            <span class="k">yield</span> <span class="n">ref</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="c"># An instance or other namespace dictionary</span>
+            <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">find_referring_graphs</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">parent</span>
+
+<span class="c"># Look for objects that refer to the objects that remain in</span>
+<span class="c"># gc.garbage.</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Clearing referrers:&#39;</span>
+<span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">find_referring_graphs</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="n">ref</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">ref</span> <span class="c"># remove local reference so the node can be deleted</span>
+    <span class="k">del</span> <span class="n">obj</span> <span class="c"># remove local reference so the node can be deleted</span>
+
+<span class="c"># Clear references held by gc.garbage</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Clearing gc.garbage:&#39;</span>
+<span class="k">del</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">[:]</span>
+        
+<span class="c"># Everything should have been freed this time</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Collecting...&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+<span class="k">print</span> <span class="s">&#39;Remaining Garbage:&#39;</span><span class="p">,</span> 
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This sort of logic is overkill if you understand why the cycles are
+being created in the first place, but if you have an unexplained cycle
+in your data using <tt class="xref py py-func docutils literal"><span class="pre">get_referrers()</span></tt> can expose the unexpected
+relationship.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_get_referrers.py
+
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(three)
+Linking nodes Graph(three).next = Graph(one)
+
+Collecting...
+Unreachable objects: 6
+Remaining Garbage:[Graph(one), Graph(two), Graph(three)]
+
+Clearing referrers:
+Looking for references to Graph(one)
+Looking for references to {&#39;name&#39;: &#39;three&#39;, &#39;next&#39;: Graph(one)}
+Linking nodes Graph(three).next = None
+Looking for references to Graph(two)
+Looking for references to {&#39;name&#39;: &#39;one&#39;, &#39;next&#39;: Graph(two)}
+Linking nodes Graph(one).next = None
+Looking for references to Graph(three)
+Looking for references to {&#39;name&#39;: &#39;two&#39;, &#39;next&#39;: Graph(three)}
+Linking nodes Graph(two).next = None
+
+Clearing gc.garbage:
+Graph(three).__del__()
+Graph(two).__del__()
+Graph(one).__del__()
+
+Collecting...
+Unreachable objects: 0
+Remaining Garbage:[]
+</pre></div>
+</div>
+</div>
+<div class="section" id="collection-thresholds-and-generations">
+<h2>Collection Thresholds and Generations<a class="headerlink" href="#collection-thresholds-and-generations" title="Permalink to this headline">¶</a></h2>
+<p>The garbage collector maintains three lists of objects it sees as it
+runs, one for each &#8220;generation&#8221; tracked by the collector.  As objects
+are examined in each generation, they are either collected or they age
+into subsequent generations until they finally reach the stage where
+they are kept permanently.</p>
+<p>The collector routines can be tuned to occur at different frequencies
+based on the difference between the number of object allocations and
+deallocations between runs.  When the number of allocations minus the
+number of deallocations is greater than the threshold for the
+generation, the garbage collector is run.  The current thresholds can
+be examined with <tt class="xref py py-func docutils literal"><span class="pre">get_threshold()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="k">print</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_threshold</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The return value is a tuple with the threshold for each generation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_get_threshold.py
+
+(700, 10, 10)
+</pre></div>
+</div>
+<p>The thresholds can be changed with <tt class="xref py py-func docutils literal"><span class="pre">set_threshold()</span></tt>.  This
+example program reads the threshold for generation <tt class="docutils literal"><span class="pre">0</span></tt> from the
+command line, adjusts the <a class="reference internal" href="#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> settings, then allocates a series
+of objects.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Missing or invalid threshold, using default&#39;</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">class</span> <span class="nc">MyObj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">print</span> <span class="s">&#39;Created&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_STATS</span><span class="p">)</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_threshold</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Thresholds:&#39;</span><span class="p">,</span> <span class="n">gc</span><span class="o">.</span><span class="n">get_threshold</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Clear the collector by forcing a run&#39;</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;Creating objects&#39;</span>
+<span class="n">objs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MyObj</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Different threshold values introduce the garbage collection sweeps at
+different times, shown here because debugging is enabled.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u gc_threshold.py 5
+
+Thresholds: (5, 1, 1)
+Clear the collector by forcing a run
+gc: collecting generation 2...
+gc: objects in each generation: 144 3163 0
+gc: done, 0.0004s elapsed.
+
+Creating objects
+gc: collecting generation 0...
+gc: objects in each generation: 7 0 3234
+gc: done, 0.0000s elapsed.
+Created 0
+Created 1
+Created 2
+Created 3
+Created 4
+gc: collecting generation 0...
+gc: objects in each generation: 6 4 3234
+gc: done, 0.0000s elapsed.
+Created 5
+Created 6
+Created 7
+Created 8
+Created 9
+gc: collecting generation 2...
+gc: objects in each generation: 5 6 3232
+gc: done, 0.0004s elapsed.
+</pre></div>
+</div>
+<p>A smaller threshold causes the sweeps to run more frequently.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u gc_threshold.py 2
+
+Thresholds: (2, 1, 1)
+Clear the collector by forcing a run
+gc: collecting generation 2...
+gc: objects in each generation: 144 3163 0
+gc: done, 0.0004s elapsed.
+
+Creating objects
+gc: collecting generation 0...
+gc: objects in each generation: 3 0 3234
+gc: done, 0.0000s elapsed.
+gc: collecting generation 0...
+gc: objects in each generation: 4 3 3234
+gc: done, 0.0000s elapsed.
+Created 0
+Created 1
+gc: collecting generation 1...
+gc: objects in each generation: 3 4 3234
+gc: done, 0.0000s elapsed.
+Created 2
+Created 3
+Created 4
+gc: collecting generation 0...
+gc: objects in each generation: 5 0 3239
+gc: done, 0.0000s elapsed.
+Created 5
+Created 6
+Created 7
+gc: collecting generation 0...
+gc: objects in each generation: 5 3 3239
+gc: done, 0.0000s elapsed.
+Created 8
+Created 9
+gc: collecting generation 2...
+gc: objects in each generation: 2 6 3235
+gc: done, 0.0004s elapsed.
+</pre></div>
+</div>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>Debugging memory leaks can be challenging.  <a class="reference internal" href="#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> includes several
+options to expose the inner workings to make the job easier.  The
+options are bit-flags meant to be combined and passed to
+<tt class="xref py py-func docutils literal"><span class="pre">set_debug()</span></tt> to configure the garbage collector while your
+program is running.  Debugging information is printed to <a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>stderr</em></a>.</p>
+<p>The <tt class="xref py py-const docutils literal"><span class="pre">DEBUG_STATS</span></tt> flag turns on statistics reporting, causing
+the garbage collector to report when it is running, the number of
+objects tracked for each generation, and the amount of time it took to
+perform the sweep.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_STATS</span><span class="p">)</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example output shows two separate runs of the collector because
+it runs once when it is invoked explicitly, and a second time when the
+interpreter exits.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gc_debug_stats.py
+
+gc: collecting generation 2...
+gc: objects in each generation: 667 2808 0
+gc: done, 0.0011s elapsed.
+gc: collecting generation 2...
+gc: objects in each generation: 0 0 3164
+gc: done, 0.0009s elapsed.
+</pre></div>
+</div>
+<p>Enabling <tt class="xref py py-const docutils literal"><span class="pre">DEBUG_COLLECTABLE</span></tt> and <tt class="xref py py-const docutils literal"><span class="pre">DEBUG_UNCOLLECTABLE</span></tt>
+causes the collector to report on whether each object it examines can
+or cannot be collected.  You need to combine these flags need with
+<tt class="xref py py-const docutils literal"><span class="pre">DEBUG_OBJECTS</span></tt> so <a class="reference internal" href="#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> will print information about
+the objects being held.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="n">flags</span> <span class="o">=</span> <span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_COLLECTABLE</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_UNCOLLECTABLE</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_OBJECTS</span>
+         <span class="p">)</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">print</span> <span class="s">&#39;Creating </span><span class="si">%s</span><span class="s"> 0x</span><span class="si">%x</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CleanupGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Construct another node that stands on its own</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle with a finalizer</span>
+<span class="n">four</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;four&#39;</span><span class="p">)</span>
+<span class="n">five</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;five&#39;</span><span class="p">)</span>
+<span class="n">four</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">five</span><span class="p">)</span>
+<span class="n">five</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">four</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="n">four</span> <span class="o">=</span> <span class="n">five</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">print</span>
+
+<span class="c"># Force a sweep</span>
+<span class="k">print</span> <span class="s">&#39;Collecting&#39;</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Done&#39;</span>
+</pre></div>
+</div>
+<p>The two classes <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">CleanupGraph</span></tt> are
+constructed so it is possible to create structures that are
+automatically collectable and structures where cycles need to be
+explicitly broken by the user.</p>
+<p>The output shows that the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> instances <tt class="xref py py-obj docutils literal"><span class="pre">one</span></tt> and
+<tt class="xref py py-obj docutils literal"><span class="pre">two</span></tt> create a cycle, but are still collectable because they do
+not have a finalizer and their only incoming references are from other
+objects that can be collected.  Although <tt class="xref py py-class docutils literal"><span class="pre">CleanupGraph</span></tt> has a
+finalizer, <tt class="xref py py-obj docutils literal"><span class="pre">three</span></tt> is reclaimed as soon as its reference count
+goes to zero. In contrast, <tt class="xref py py-obj docutils literal"><span class="pre">four</span></tt> and <tt class="xref py py-obj docutils literal"><span class="pre">five</span></tt> create a cycle
+and cannot be freed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u gc_debug_collectable_objects.py
+
+Creating Graph 0x10045f750 (one)
+Creating Graph 0x10045f790 (two)
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(one)
+Creating CleanupGraph 0x10045f7d0 (three)
+Creating CleanupGraph 0x10045f810 (four)
+Creating CleanupGraph 0x10045f850 (five)
+Linking nodes CleanupGraph(four).next = CleanupGraph(five)
+Linking nodes CleanupGraph(five).next = CleanupGraph(four)
+CleanupGraph(three).__del__()
+
+Collecting
+gc: collectable &lt;Graph 0x10045f750&gt;
+gc: collectable &lt;Graph 0x10045f790&gt;
+gc: collectable &lt;dict 0x100360a30&gt;
+gc: collectable &lt;dict 0x100361cc0&gt;
+gc: uncollectable &lt;CleanupGraph 0x10045f810&gt;
+gc: uncollectable &lt;CleanupGraph 0x10045f850&gt;
+gc: uncollectable &lt;dict 0x100361de0&gt;
+gc: uncollectable &lt;dict 0x100362140&gt;
+Done
+</pre></div>
+</div>
+<p>The flag <tt class="xref py py-const docutils literal"><span class="pre">DEBUG_INSTANCES</span></tt> works much the same way for
+instances of old-style classes (not derived from <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="n">flags</span> <span class="o">=</span> <span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_COLLECTABLE</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_UNCOLLECTABLE</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_INSTANCES</span>
+         <span class="p">)</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">print</span> <span class="s">&#39;Creating </span><span class="si">%s</span><span class="s"> 0x</span><span class="si">%x</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Linking nodes </span><span class="si">%s</span><span class="s">.next = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CleanupGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Construct another node that stands on its own</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle with a finalizer</span>
+<span class="n">four</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;four&#39;</span><span class="p">)</span>
+<span class="n">five</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;five&#39;</span><span class="p">)</span>
+<span class="n">four</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">five</span><span class="p">)</span>
+<span class="n">five</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">four</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="n">four</span> <span class="o">=</span> <span class="n">five</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">print</span>
+
+<span class="c"># Force a sweep</span>
+<span class="k">print</span> <span class="s">&#39;Collecting&#39;</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Done&#39;</span>
+</pre></div>
+</div>
+<p>In this case, however, the <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> objects holding the instance
+attributes are not included in the output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u gc_debug_collectable_instances.py
+
+Creating Graph 0x1004687a0 (one)
+Creating Graph 0x1004687e8 (two)
+Linking nodes Graph(one).next = Graph(two)
+Linking nodes Graph(two).next = Graph(one)
+Creating CleanupGraph 0x100468878 (three)
+Creating CleanupGraph 0x1004688c0 (four)
+Creating CleanupGraph 0x100468908 (five)
+Linking nodes CleanupGraph(four).next = CleanupGraph(five)
+Linking nodes CleanupGraph(five).next = CleanupGraph(four)
+CleanupGraph(three).__del__()
+
+Collecting
+gc: collectable &lt;Graph instance at 0x1004687a0&gt;
+gc: collectable &lt;Graph instance at 0x1004687e8&gt;
+gc: uncollectable &lt;CleanupGraph instance at 0x1004688c0&gt;
+gc: uncollectable &lt;CleanupGraph instance at 0x100468908&gt;
+Done
+</pre></div>
+</div>
+<p>If seeing the uncollectable objects is not enough information to
+understand where data is being retained, you can enable
+<tt class="xref py py-const docutils literal"><span class="pre">DEBUG_SAVEALL</span></tt> to cause <a class="reference internal" href="#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> to preserve all objects it
+finds without any references in the <tt class="xref py py-obj docutils literal"><span class="pre">garbage</span></tt> list, so you can
+examine them.  This is helpful if, for example, you don&#8217;t have access
+to the constructor to print the object id when each object is created.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="n">flags</span> <span class="o">=</span> <span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_COLLECTABLE</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_UNCOLLECTABLE</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_OBJECTS</span> <span class="o">|</span>
+         <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_SAVEALL</span>
+         <span class="p">)</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CleanupGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Construct another node that stands on its own</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle with a finalizer</span>
+<span class="n">four</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;four&#39;</span><span class="p">)</span>
+<span class="n">five</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;five&#39;</span><span class="p">)</span>
+<span class="n">four</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">five</span><span class="p">)</span>
+<span class="n">five</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">four</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="n">four</span> <span class="o">=</span> <span class="n">five</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Force a sweep</span>
+<span class="k">print</span> <span class="s">&#39;Collecting&#39;</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Done&#39;</span>
+
+<span class="c"># Report on what was left</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Graph</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Retained: </span><span class="si">%s</span><span class="s"> 0x</span><span class="si">%x</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">o</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u gc_debug_saveall.py
+
+CleanupGraph(three).__del__()
+Collecting
+gc: collectable &lt;Graph 0x10045f790&gt;
+gc: collectable &lt;Graph 0x10045f7d0&gt;
+gc: collectable &lt;dict 0x100361890&gt;
+gc: collectable &lt;dict 0x100361cb0&gt;
+gc: uncollectable &lt;CleanupGraph 0x10045f850&gt;
+gc: uncollectable &lt;CleanupGraph 0x10045f890&gt;
+gc: uncollectable &lt;dict 0x100361dd0&gt;
+gc: uncollectable &lt;dict 0x100362130&gt;
+Done
+Retained: Graph(one) 0x10045f790
+Retained: Graph(two) 0x10045f7d0
+Retained: CleanupGraph(four) 0x10045f850
+Retained: CleanupGraph(five) 0x10045f890
+</pre></div>
+</div>
+<p>For simplicity, <tt class="xref py py-const docutils literal"><span class="pre">DEBUG_LEAK</span></tt> is defined as a combination of all
+of the other options.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="n">flags</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_LEAK</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">next</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="nb">next</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CleanupGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.__del__()&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="c"># Construct a graph cycle</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+
+<span class="c"># Construct another node that stands on its own</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+
+<span class="c"># Construct a graph cycle with a finalizer</span>
+<span class="n">four</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;four&#39;</span><span class="p">)</span>
+<span class="n">five</span> <span class="o">=</span> <span class="n">CleanupGraph</span><span class="p">(</span><span class="s">&#39;five&#39;</span><span class="p">)</span>
+<span class="n">four</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">five</span><span class="p">)</span>
+<span class="n">five</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">four</span><span class="p">)</span>
+
+<span class="c"># Remove references to the graph nodes in this module&#39;s namespace</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">two</span> <span class="o">=</span> <span class="n">three</span> <span class="o">=</span> <span class="n">four</span> <span class="o">=</span> <span class="n">five</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c"># Force a sweep</span>
+<span class="k">print</span> <span class="s">&#39;Collecting&#39;</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Done&#39;</span>
+
+<span class="c"># Report on what was left</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Graph</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Retained: </span><span class="si">%s</span><span class="s"> 0x</span><span class="si">%x</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">o</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Keep in mind that because <tt class="xref py py-const docutils literal"><span class="pre">DEBUG_SAVEALL</span></tt> is enabled by
+<tt class="xref py py-const docutils literal"><span class="pre">DEBUG_LEAK</span></tt>, even the unreferenced objects that would normally
+have been collected and deleted are retained.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u gc_debug_leak.py
+
+CleanupGraph(three).__del__()
+Collecting
+gc: collectable &lt;Graph 0x10045f790&gt;
+gc: collectable &lt;Graph 0x10045f7d0&gt;
+gc: collectable &lt;dict 0x100360a20&gt;
+gc: collectable &lt;dict 0x100361c20&gt;
+gc: uncollectable &lt;CleanupGraph 0x10045f850&gt;
+gc: uncollectable &lt;CleanupGraph 0x10045f890&gt;
+gc: uncollectable &lt;dict 0x100361d40&gt;
+gc: uncollectable &lt;dict 0x1003620a0&gt;
+Done
+Retained: Graph(one) 0x10045f790
+Retained: Graph(two) 0x10045f7d0
+Retained: CleanupGraph(four) 0x10045f850
+Retained: CleanupGraph(five) 0x10045f890
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/gc.html">gc</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../weakref/index.html#module-weakref" title="weakref: Refer to an &quot;expensive&quot; object, but allow it to be garbage collected if there are no other non-weak references."><tt class="xref py py-mod docutils literal"><span class="pre">weakref</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../weakref/index.html#module-weakref" title="weakref: Refer to an &quot;expensive&quot; object, but allow it to be garbage collected if there are no other non-weak references."><tt class="xref py py-mod docutils literal"><span class="pre">weakref</span></tt></a> module gives you references to objects
+without increasing their reference count, so they can still be
+garbage collected.</dd>
+<dt><a class="reference external" href="http://docs.python.org/c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></dt>
+<dd>Background material from Python&#8217;s C API documentation.</dd>
+<dt><a class="reference external" href="http://effbot.org/pyfaq/how-does-python-manage-memory.htm">How does Python manage memory?</a></dt>
+<dd>An article on Python memory management by Fredrik Lundh.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../inspect/index.html" title="inspect – Inspect live objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../contextlib/index.html" title="contextlib – Context manager utilities"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

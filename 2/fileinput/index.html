@@ -1,0 +1,488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>fileinput &#8211; Process lines from input streams - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="filecmp – Compare files" href="../filecmp/index.html" />
+    <link rel="prev" title="os.path – Platform-independent manipulation of file names." href="../ospath/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">fileinput &#8211; Process lines from input streams</a><ul>
+<li><a class="reference internal" href="#converting-m3u-files-to-rss">Converting M3U files to RSS</a></li>
+<li><a class="reference internal" href="#progress-meta-data">Progress Meta-data</a></li>
+<li><a class="reference internal" href="#in-place-filtering">In-place Filtering</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../ospath/index.html" title="previous chapter"><strong>Previous:</strong> os.path &#8211; Platform-independent manipulation of file names.</a><br/>
+          <a href="../filecmp/index.html" title="next chapter"><strong>Next:</strong> filecmp &#8211; Compare files</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/fileinput/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../filecmp/index.html" title="filecmp – Compare files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ospath/index.html" title="os.path – Platform-independent manipulation of file names."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-fileinput">
+<span id="fileinput-process-lines-from-input-streams"></span><h1>fileinput &#8211; Process lines from input streams<a class="headerlink" href="#module-fileinput" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Create command-line filter programs to process lines from input streams.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The fileinput module is a framework for creating command line programs
+for processing text files in a filter-ish manner.</p>
+<div class="section" id="converting-m3u-files-to-rss">
+<h2>Converting M3U files to RSS<a class="headerlink" href="#converting-m3u-files-to-rss" title="Permalink to this headline">¶</a></h2>
+<p>For example, the
+<a class="reference external" href="http://www.doughellmann.com/projects/m3utorss">m3utorss</a> app I recently wrote for my friend <a class="reference external" href="http://events.mediumloud.com/">Patrick</a> to convert some of his demo
+recordings into a podcastable format.</p>
+<p>The inputs to the program are one or more m3u file listing the mp3 files to be
+distributed. The output is a single blob of XML that looks like an RSS feed
+(output is written to stdout, for simplicity). To process the input, I need to
+iterate over the list of filenames and:</p>
+<ul class="simple">
+<li>Open each file.</li>
+<li>Read each line of the file.</li>
+<li>Figure out if the line refers to an mp3 file.</li>
+<li>If it does, extract the information from the mp3 file needed for the RSS feed.</li>
+<li>Print the output.</li>
+</ul>
+<p>I could have written all of that file handling out by hand. It isn&#8217;t that
+complicated, and with some testing I&#8217;m sure I could even get the error
+handling right. But with the fileinput module, I don&#8217;t need to worry about
+that. I just write something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+    <span class="n">mp3filename</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mp3filename</span> <span class="ow">or</span> <span class="n">mp3filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">):</span>
+        <span class="k">continue</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">rss</span><span class="p">,</span> <span class="s">&#39;item&#39;</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">)</span>
+    <span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">mp3filename</span>
+    <span class="n">encl</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s">&#39;enclosure&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;type&#39;</span><span class="p">:</span><span class="s">&#39;audio/mpeg&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">:</span><span class="n">mp3filename</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">fileinput.input()</span></tt> function takes as argument a list of
+filenames to examine. If the list is empty, the module reads data from
+standard input. The function returns an iterator which returns
+individual lines from the text files being processed.  So, all I have
+to do is loop over each line, skipping blanks and comments, to find
+the references to mp3 files.</p>
+<p>Here&#8217;s the complete program:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">SubElement</span><span class="p">,</span> <span class="n">tostring</span>
+<span class="kn">from</span> <span class="nn">xml.dom</span> <span class="kn">import</span> <span class="n">minidom</span>
+
+<span class="c"># Establish the RSS and channel nodes</span>
+<span class="n">rss</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s">&#39;rss&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;xmlns:dc&#39;</span><span class="p">:</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span><span class="p">,</span>
+                      <span class="s">&#39;version&#39;</span><span class="p">:</span><span class="s">&#39;2.0&#39;</span><span class="p">,</span>
+                      <span class="p">})</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">rss</span><span class="p">,</span> <span class="s">&#39;channel&#39;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">)</span>
+<span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Sample podcast feed&#39;</span>
+<span class="n">desc</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="s">&#39;description&#39;</span><span class="p">)</span>
+<span class="n">desc</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Generated for PyMOTW&#39;</span>
+<span class="n">pubdate</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="s">&#39;pubDate&#39;</span><span class="p">)</span>
+<span class="n">pubdate</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">()</span>
+<span class="n">gen</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="s">&#39;generator&#39;</span><span class="p">)</span>
+<span class="n">gen</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&#39;http://www.doughellmann.com/PyMOTW/&#39;</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+    <span class="n">mp3filename</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mp3filename</span> <span class="ow">or</span> <span class="n">mp3filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">):</span>
+        <span class="k">continue</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">rss</span><span class="p">,</span> <span class="s">&#39;item&#39;</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s">&#39;title&#39;</span><span class="p">)</span>
+    <span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">mp3filename</span>
+    <span class="n">encl</span> <span class="o">=</span> <span class="n">SubElement</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s">&#39;enclosure&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;type&#39;</span><span class="p">:</span><span class="s">&#39;audio/mpeg&#39;</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">:</span><span class="n">mp3filename</span><span class="p">})</span>
+        
+<span class="n">rough_string</span> <span class="o">=</span> <span class="n">tostring</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+<span class="n">reparsed</span> <span class="o">=</span> <span class="n">minidom</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">rough_string</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">reparsed</span><span class="o">.</span><span class="n">toprettyxml</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="s">&quot;  &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and its output:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python fileinput_example.py sample_data.m3u
+
+&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;rss version=&quot;2.0&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;
+  &lt;channel&gt;
+    &lt;title&gt;
+      Sample podcast feed
+    &lt;/title&gt;
+    &lt;description&gt;
+      Generated for PyMOTW
+    &lt;/description&gt;
+    &lt;pubDate&gt;
+      Thu Feb 21 06:35:49 2013
+    &lt;/pubDate&gt;
+    &lt;generator&gt;
+      http://www.doughellmann.com/PyMOTW/
+    &lt;/generator&gt;
+  &lt;/channel&gt;
+  &lt;item&gt;
+    &lt;title&gt;
+      episode-one.mp3
+    &lt;/title&gt;
+    &lt;enclosure type=&quot;audio/mpeg&quot; url=&quot;episode-one.mp3&quot;/&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;title&gt;
+      episode-two.mp3
+    &lt;/title&gt;
+    &lt;enclosure type=&quot;audio/mpeg&quot; url=&quot;episode-two.mp3&quot;/&gt;
+  &lt;/item&gt;
+&lt;/rss&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="progress-meta-data">
+<h2>Progress Meta-data<a class="headerlink" href="#progress-meta-data" title="Permalink to this headline">¶</a></h2>
+<p>In the previous example, I did not care what file or line number we
+are processing in the input. For other tools (grep-like searching, for
+example) you might. The fileinput module includes functions for
+accessing that information (<tt class="docutils literal"><span class="pre">filename()</span></tt>, <tt class="docutils literal"><span class="pre">filelineno()</span></tt>,
+<tt class="docutils literal"><span class="pre">lineno()</span></tt>, etc.).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]):</span>
+    <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">isstdin</span><span class="p">():</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;{lineno}:{line}&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;{filename:&lt;20}:{lineno}:{line}&#39;</span>
+        <span class="k">print</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">fileinput</span><span class="o">.</span><span class="n">filename</span><span class="p">(),</span>
+                         <span class="n">lineno</span><span class="o">=</span><span class="n">fileinput</span><span class="o">.</span><span class="n">filelineno</span><span class="p">(),</span>
+                         <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>We can use this basic pattern matching loop to find the occurances of
+&#8220;fileinput&#8221; in the source for the examples.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python fileinput_grep.py fileinput *.py
+
+fileinput_change_subnet.py:10:import fileinput
+fileinput_change_subnet.py:17:for line in fileinput.input(files, inplace=True):
+fileinput_change_subnet_noisy.py:10:import fileinput
+fileinput_change_subnet_noisy.py:18:for line in fileinput.input(files, inplace=True):
+fileinput_change_subnet_noisy.py:19:    if fileinput.isfirstline():
+fileinput_change_subnet_noisy.py:20:        sys.stderr.write(&#39;Started processing %s\n&#39; % fileinput.filename())
+fileinput_example.py:6:&quot;&quot;&quot;Example for fileinput module.
+fileinput_example.py:10:import fileinput
+fileinput_example.py:30:for line in fileinput.input(sys.argv[1:]):
+fileinput_grep.py   :10:import fileinput
+fileinput_grep.py   :16:for line in fileinput.input(sys.argv[2:]):
+fileinput_grep.py   :18:        if fileinput.isstdin():
+fileinput_grep.py   :22:        print fmt.format(filename=fileinput.filename(),
+fileinput_grep.py   :23:                         lineno=fileinput.filelineno(),
+</pre></div>
+</div>
+<p>We can also pass input to it through stdin.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat *.py | python fileinput_grep.py fileinput
+
+10:import fileinput
+17:for line in fileinput.input(files, inplace=True):
+29:import fileinput
+37:for line in fileinput.input(files, inplace=True):
+38:    if fileinput.isfirstline():
+39:        sys.stderr.write(&#39;Started processing %s\n&#39; % fileinput.filename())
+51:&quot;&quot;&quot;Example for fileinput module.
+55:import fileinput
+75:for line in fileinput.input(sys.argv[1:]):
+96:import fileinput
+102:for line in fileinput.input(sys.argv[2:]):
+104:        if fileinput.isstdin():
+108:        print fmt.format(filename=fileinput.filename(),
+109:                         lineno=fileinput.filelineno(),
+</pre></div>
+</div>
+</div>
+<div class="section" id="in-place-filtering">
+<h2>In-place Filtering<a class="headerlink" href="#in-place-filtering" title="Permalink to this headline">¶</a></h2>
+<p>Another common file processing operation is to modify the contents.
+For example, a Unix hosts file might need to be updated if a subnet
+range changes.</p>
+<div class="highlight-python"><div class="highlight"><pre>##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+255.255.255.255 broadcasthost
+::1             localhost 
+fe80::1%lo0     localhost
+172.16.177.128  hubert hubert.hellfly.net
+172.16.177.132  cubert cubert.hellfly.net
+172.16.177.136  zoidberg zoidberg.hellfly.net
+</pre></div>
+</div>
+<p>The safe way to make the change automatically is to create a new file
+based on the input and then replace the original with the edited copy.
+fileinput supports this automatically using the <em>inplace</em> option.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">from_base</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">to_base</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">from_base</span><span class="p">,</span> <span class="n">to_base</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python fileinput_change_subnet.py 172.16.177 172.16.178 etc_hosts.txt
+</pre></div>
+</div>
+<p>Although the script uses <tt class="docutils literal"><span class="pre">print</span></tt>, no output is produced to stdout
+because fileinput maps stdout to the file being overwritten.</p>
+<div class="highlight-python"><div class="highlight"><pre>##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+255.255.255.255 broadcasthost
+::1             localhost
+fe80::1%lo0     localhost
+172.16.178.128  hubert hubert.hellfly.net
+172.16.178.132  cubert cubert.hellfly.net
+172.16.178.136  zoidberg zoidberg.hellfly.net
+</pre></div>
+</div>
+<p>Before processing begins, a backup file is created using the original
+name plus <tt class="docutils literal"><span class="pre">.bak</span></tt>.  The backup file is removed when the input is
+closed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">from_base</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">to_base</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">isfirstline</span><span class="p">():</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Started processing </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">filename</span><span class="p">())</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Directory contains: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;etc_hosts.txt*&#39;</span><span class="p">))</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">from_base</span><span class="p">,</span> <span class="n">to_base</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">line</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Finished processing</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Directory contains: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;etc_hosts.txt*&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python fileinput_change_subnet_noisy.py 172.16.177 172.16.178 etc_host\
+s.txt
+
+Started processing etc_hosts.txt
+Directory contains: [&#39;etc_hosts.txt&#39;, &#39;etc_hosts.txt.bak&#39;]
+Finished processing
+Directory contains: [&#39;etc_hosts.txt&#39;]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/fileinput.html">fileinput</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://events.mediumloud.com/">Patrick Bryant</a></dt>
+<dd>Atlanta-based singer/song-writer.</dd>
+<dt><a class="reference external" href="http://www.doughellmann.com/projects/m3utorss">m3utorss</a></dt>
+<dd>Script to convert m3u files listing MP3s to an RSS file
+suitable for use as a podcast feed.</dd>
+<dt><a class="reference internal" href="../xml/etree/ElementTree/create.html#xml-etree-elementtree-creating"><em>Creating XML Documents</em></a></dt>
+<dd>More details of using ElementTree to produce XML.</dd>
+<dt><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></dt>
+<dd>Other modules for working with files.</dd>
+<dt><a class="reference internal" href="../articles/text_processing.html#article-text-processing"><em>Text Processing Tools</em></a></dt>
+<dd>Other modules for working with text.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../filecmp/index.html" title="filecmp – Compare files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ospath/index.html" title="os.path – Platform-independent manipulation of file names."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>copy &#8211; Duplicate objects - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="pprint – Pretty-print data structures" href="../pprint/index.html" />
+    <link rel="prev" title="weakref – Garbage-collectable references to objects" href="../weakref/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">copy &#8211; Duplicate objects</a><ul>
+<li><a class="reference internal" href="#shallow-copies">Shallow Copies</a></li>
+<li><a class="reference internal" href="#deep-copies">Deep Copies</a></li>
+<li><a class="reference internal" href="#controlling-copy-behavior">Controlling Copy Behavior</a></li>
+<li><a class="reference internal" href="#recursion-in-deep-copy">Recursion in Deep Copy</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../weakref/index.html" title="previous chapter"><strong>Previous:</strong> weakref &#8211; Garbage-collectable references to objects</a><br/>
+          <a href="../pprint/index.html" title="next chapter"><strong>Next:</strong> pprint &#8211; Pretty-print data structures</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/copy/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pprint/index.html" title="pprint – Pretty-print data structures"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../weakref/index.html" title="weakref – Garbage-collectable references to objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-copy">
+<span id="copy-duplicate-objects"></span><h1>copy &#8211; Duplicate objects<a class="headerlink" href="#module-copy" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Provides functions for duplicating objects using shallow or deep copy semantics.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The copy module includes 2 functions, copy() and deepcopy(), for duplicating
+existing objects.</p>
+<div class="section" id="shallow-copies">
+<h2>Shallow Copies<a class="headerlink" href="#shallow-copies" title="Permalink to this headline">¶</a></h2>
+<p>The shallow copy created by copy() is a new container populated with
+references to the contents of the original object. For example, a new list is
+constructed and the elements of the original list are appended to it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span> <span class="n">a</span> <span class="p">]</span>
+<span class="n">dup</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;l  :&#39;</span><span class="p">,</span> <span class="n">l</span>
+<span class="k">print</span> <span class="s">&#39;dup:&#39;</span><span class="p">,</span> <span class="n">dup</span>
+<span class="k">print</span> <span class="s">&#39;dup is l:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">dup</span> <span class="ow">is</span> <span class="n">l</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;dup == l:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">dup</span> <span class="o">==</span> <span class="n">l</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;dup[0] is l[0]:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">dup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span> <span class="s">&#39;dup[0] == l[0]:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">dup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For a shallow copy, the MyClass instance is not duplicated so the reference in
+the dup list is to the same object that is in the l list.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python copy_shallow.py
+
+l  : [&lt;__main__.MyClass instance at 0x100467d88&gt;]
+dup: [&lt;__main__.MyClass instance at 0x100467d88&gt;]
+dup is l: False
+dup == l: True
+dup[0] is l[0]: True
+dup[0] == l[0]: True
+</pre></div>
+</div>
+</div>
+<div class="section" id="deep-copies">
+<h2>Deep Copies<a class="headerlink" href="#deep-copies" title="Permalink to this headline">¶</a></h2>
+<p>The deep copy created by deepcopy() is a new container populated with copies
+of the contents of the original object. For example, a new list is constructed
+and the elements of the original list are copied, then the copies are appended
+to the new list.</p>
+<p>By replacing the call to copy() with deepcopy(), the difference becomes
+apparent.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dup</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that the first element of the list is no longer the same object
+reference, but the two objects still evaluate as being equal.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python copy_deep.py
+
+l  : [&lt;__main__.MyClass instance at 0x100467d88&gt;]
+dup: [&lt;__main__.MyClass instance at 0x100467dd0&gt;]
+dup is l: False
+dup == l: True
+dup[0] is l[0]: False
+dup[0] == l[0]: True
+</pre></div>
+</div>
+</div>
+<div class="section" id="controlling-copy-behavior">
+<h2>Controlling Copy Behavior<a class="headerlink" href="#controlling-copy-behavior" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to control how copies are made using the __copy__ and
+__deepcopy__ hooks.</p>
+<ul class="simple">
+<li>__copy__() is called without any arguments and should return a shallow copy
+of the object.</li>
+<li>__deepcopy__() is called with a memo dictionary, and should return a
+deep copy of the object. Any member attributes that need to be
+deep-copied should be passed to copy.deepcopy(), along with the memo
+dictionary, to control for recursion (see below).</li>
+</ul>
+<p>This example illustrates how the methods are called:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;__copy__()&#39;</span>
+        <span class="k">return</span> <span class="n">MyClass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;__deepcopy__(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">memo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+
+<span class="n">sc</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">dc</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python copy_hooks.py
+
+__copy__()
+__deepcopy__({})
+</pre></div>
+</div>
+</div>
+<div class="section" id="recursion-in-deep-copy">
+<h2>Recursion in Deep Copy<a class="headerlink" href="#recursion-in-deep-copy" title="Permalink to this headline">¶</a></h2>
+<p>To avoid problems with duplicating recursive data structures, <tt class="docutils literal"><span class="pre">deepcopy()</span></tt> uses
+a dictionary to track objects that have already been copied. This dictionary
+is passed to the <tt class="docutils literal"><span class="pre">__deepcopy__()</span></tt> method so it can be used there as well.</p>
+<p>This example shows how an interconnected data structure such as a Digraph
+might assist with protecting against recursion by implementing a
+<tt class="docutils literal"><span class="pre">__deepcopy__()</span></tt> method. This particular example is just for illustration
+purposes, since the default implementation of <tt class="docutils literal"><span class="pre">deepcopy()</span></tt> already handles the
+recursion cases correctly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">connections</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">connections</span>
+    <span class="k">def</span> <span class="nf">addConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;&lt;Graph(</span><span class="si">%s</span><span class="s">) id=</span><span class="si">%s</span><span class="s">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">not_there</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">existing</span> <span class="o">=</span> <span class="n">memo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">not_there</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">not_there</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;  ALREADY COPIED TO&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">existing</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">existing</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">memo</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+        <span class="n">dup</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">memo</span><span class="p">),</span> <span class="p">[])</span>
+        <span class="k">print</span> <span class="s">&#39;  COPYING TO&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+        <span class="n">memo</span><span class="p">[</span><span class="bp">self</span><span class="p">]</span> <span class="o">=</span> <span class="n">dup</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">:</span>
+            <span class="n">dup</span><span class="o">.</span><span class="n">addConnection</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dup</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;root&#39;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">root</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">root</span><span class="p">])</span>
+<span class="n">root</span><span class="o">.</span><span class="n">addConnection</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">addConnection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="n">dup</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>First, some basic directed graph methods: A graph can be initialized with a
+name and a list of existing nodes to which it is connected. The
+addConnection() method is used to set up bi-directional connections. It is
+also used by the deepcopy operator.</p>
+<p>The <tt class="docutils literal"><span class="pre">__deepcopy__()</span></tt> method prints messages to show how it is called, and
+manages the memo dictionary contents as needed. Instead of copying the
+connection list wholesale, it creates a new list and appends copies of the
+individual connections to it. That ensures that the memo dictionary is updated
+as each new node is duplicated, and avoids recursion issues or extra copies of
+nodes. As before, it returns the copied object when it is done.</p>
+<p>Next we can set up a graph with a nodes <em>root</em>, <em>a</em>, and <em>b</em>. The
+graph looks like:</p>
+<p class="graphviz">
+<img src="../_images/graphviz-a88f86ddde8c68806194453171f860b6db5ea298.png" alt="digraph copy_example {
+&quot;root&quot;;
+&quot;a&quot; -&gt; &quot;root&quot;;
+&quot;b&quot; -&gt; &quot;root&quot;;
+&quot;b&quot; -&gt; &quot;a&quot;;
+&quot;root&quot; -&gt; &quot;a&quot;;
+&quot;root&quot; -&gt; &quot;b&quot;;
+}" />
+</p>
+<p>There are several cycles in the graph, but by handling the recursion
+with the memo dictionary we can avoid having the traversal cause a
+stack overflow error.  When the <em>root</em> node is copied, we see:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python copy_recursion.py
+
+
+&lt;Graph(root) id=4299639696&gt;
+{   }
+  COPYING TO &lt;Graph(root) id=4299640056&gt;
+
+&lt;Graph(a) id=4299639768&gt;
+{   &lt;Graph(root) id=4299639696&gt;: &lt;Graph(root) id=4299640056&gt;,
+    4298517936: [&#39;root&#39;],
+    4299576592: &#39;root&#39;}
+  COPYING TO &lt;Graph(a) id=4299640128&gt;
+
+&lt;Graph(root) id=4299639696&gt;
+  ALREADY COPIED TO &lt;Graph(root) id=4299640056&gt;
+
+&lt;Graph(b) id=4299639840&gt;
+{   &lt;Graph(root) id=4299639696&gt;: &lt;Graph(root) id=4299640056&gt;,
+    &lt;Graph(a) id=4299639768&gt;: &lt;Graph(a) id=4299640128&gt;,
+    4297844216: &#39;a&#39;,
+    4298517936: [   &#39;root&#39;,
+                    &#39;a&#39;,
+                    &lt;Graph(root) id=4299639696&gt;,
+                    &lt;Graph(a) id=4299639768&gt;],
+    4299576592: &#39;root&#39;,
+    4299639696: &lt;Graph(root) id=4299640056&gt;,
+    4299639768: &lt;Graph(a) id=4299640128&gt;}
+  COPYING TO &lt;Graph(b) id=4299640632&gt;
+</pre></div>
+</div>
+<p>The second time the <em>root</em> node is encountered, while the <em>a</em> node is
+being copied, <tt class="docutils literal"><span class="pre">__deepcopy__</span></tt> detects the recursion and re-uses the
+existing value from the memo dictionary instead of creating a new
+object.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/copy.html">copy</a></dt>
+<dd>The standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pprint/index.html" title="pprint – Pretty-print data structures"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../weakref/index.html" title="weakref – Garbage-collectable references to objects"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

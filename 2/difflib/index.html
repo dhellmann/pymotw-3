@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>difflib &#8211; Compare sequences - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="String Services" href="../string_services.html" />
+    <link rel="next" title="string – Working with text" href="../string/index.html" />
+    <link rel="prev" title="codecs – String encoding and decoding" href="../codecs/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">difflib &#8211; Compare sequences</a><ul>
+<li><a class="reference internal" href="#comparing-bodies-of-text">Comparing Bodies of Text</a><ul>
+<li><a class="reference internal" href="#other-output-formats">Other Output Formats</a></li>
+<li><a class="reference internal" href="#html-output">HTML Output</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#junk-data">Junk Data</a></li>
+<li><a class="reference internal" href="#comparing-arbitrary-types">Comparing Arbitrary Types</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../codecs/index.html" title="previous chapter"><strong>Previous:</strong> codecs &#8211; String encoding and decoding</a><br/>
+          <a href="../string/index.html" title="next chapter"><strong>Next:</strong> string &#8211; Working with text</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/difflib/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../string/index.html" title="string – Working with text"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../codecs/index.html" title="codecs – String encoding and decoding"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" accesskey="U">String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-difflib">
+<span id="difflib-compare-sequences"></span><h1>difflib &#8211; Compare sequences<a class="headerlink" href="#module-difflib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Compare sequences, especially lines of text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-difflib" title="difflib: Compare sequences, especially lines of text."><tt class="xref py py-mod docutils literal"><span class="pre">difflib</span></tt></a> module contains tools for computing and working
+with differences between sequences.  It is especially useful for
+comparing text, and includes functions that produce reports using
+several common difference formats.</p>
+<p>The examples below will all use this common test data in the
+<tt class="docutils literal"><span class="pre">difflib_data.py</span></tt> module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">text1</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer</span>
+<span class="s">eu lacus accumsan arcu fermentum euismod. Donec pulvinar porttitor</span>
+<span class="s">tellus. Aliquam venenatis. Donec facilisis pharetra tortor.  In nec</span>
+<span class="s">mauris eget magna consequat convallis. Nam sed sem vitae odio</span>
+<span class="s">pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu</span>
+<span class="s">metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris</span>
+<span class="s">urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,</span>
+<span class="s">suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta</span>
+<span class="s">adipiscing. Suspendisse eu lectus. In nunc. Duis vulputate tristique</span>
+<span class="s">enim. Donec quis lectus a justo imperdiet tempus.&quot;&quot;&quot;</span>
+<span class="n">text1_lines</span> <span class="o">=</span> <span class="n">text1</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+<span class="n">text2</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer</span>
+<span class="s">eu lacus accumsan arcu fermentum euismod. Donec pulvinar, porttitor</span>
+<span class="s">tellus. Aliquam venenatis. Donec facilisis pharetra tortor. In nec</span>
+<span class="s">mauris eget magna consequat convallis. Nam cras vitae mi vitae odio</span>
+<span class="s">pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu</span>
+<span class="s">metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris</span>
+<span class="s">urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,</span>
+<span class="s">suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta</span>
+<span class="s">adipiscing. Duis vulputate tristique enim. Donec quis lectus a justo</span>
+<span class="s">imperdiet tempus. Suspendisse eu lectus. In nunc. &quot;&quot;&quot;</span>
+<span class="n">text2_lines</span> <span class="o">=</span> <span class="n">text2</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="comparing-bodies-of-text">
+<h2>Comparing Bodies of Text<a class="headerlink" href="#comparing-bodies-of-text" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">Differ</span></tt> class works on sequences of text lines and
+produces human-readable <em>deltas</em>, or change instructions, including
+differences within individual lines.</p>
+<p>The default output produced by <tt class="xref py py-class docutils literal"><span class="pre">Differ</span></tt> is similar to the
+<strong class="command">diff</strong> command line tool is simple with the <tt class="xref py py-class docutils literal"><span class="pre">Differ</span></tt>
+class.  It includes the original input values from both lists,
+including common values, and markup data to indicate what changes were
+made.</p>
+<ul class="simple">
+<li>Lines prefixed with <tt class="docutils literal"><span class="pre">-</span></tt> indicate that they were in the first
+sequence, but not the second.</li>
+<li>Lines prefixed with <tt class="docutils literal"><span class="pre">+</span></tt> were in the second sequence, but not the
+first.</li>
+<li>If a line has an incremental difference between versions, an extra
+line prefixed with <tt class="docutils literal"><span class="pre">?</span></tt> is used to highlight the change within the
+new version.</li>
+<li>If a line has not changed, it is printed with an extra blank space
+on the left column so that it it lines up with the other lines that
+may have differences.</li>
+</ul>
+<p>To compare text, break it up into a sequence of individual lines and
+pass the sequences to <tt class="xref py py-func docutils literal"><span class="pre">compare()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">from</span> <span class="nn">difflib_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">Differ</span><span class="p">()</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="n">text1_lines</span><span class="p">,</span> <span class="n">text2_lines</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The beginning of both text segments in the sample data is the same, so
+the first line is printed without any extra annotation.</p>
+<div class="highlight-python"><div class="highlight"><pre>1:   Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+</pre></div>
+</div>
+<p>The second line of the data has been changed to include a comma in the
+modified text. Both versions of the line are printed, with the extra
+information on line 4 showing the column where the text was modified,
+including the fact that the <tt class="docutils literal"><span class="pre">,</span></tt> character was added.</p>
+<div class="highlight-python"><div class="highlight"><pre>2: - eu lacus accumsan arcu fermentum euismod. Donec pulvinar porttitor
+3: + eu lacus accumsan arcu fermentum euismod. Donec pulvinar, porttitor
+4: ?                                                         +
+5:
+</pre></div>
+</div>
+<p>Lines 6-9 of the output shows where an extra space was removed.</p>
+<div class="highlight-python"><div class="highlight"><pre>6: - tellus. Aliquam venenatis. Donec facilisis pharetra tortor.  In nec
+7: ?                                                             -
+8:
+9: + tellus. Aliquam venenatis. Donec facilisis pharetra tortor. In nec
+</pre></div>
+</div>
+<p>Next a more complex change was made, replacing several words in a phrase.</p>
+<div class="highlight-python"><div class="highlight"><pre>10: - mauris eget magna consequat convallis. Nam sed sem vitae odio
+11: ?                                              - --
+12:
+13: + mauris eget magna consequat convallis. Nam cras vitae mi vitae odio
+14: ?                                            +++ +++++   +
+15:
+</pre></div>
+</div>
+<p>The last sentence in the paragraph was changed significantly, so the
+difference is represented by simply removing the old version and adding the
+new (lines 20-23).</p>
+<div class="highlight-python"><div class="highlight"><pre>16:   pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu
+17:   metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris
+18:   urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,
+19:   suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta
+20: - adipiscing. Suspendisse eu lectus. In nunc. Duis vulputate tristique
+21: - enim. Donec quis lectus a justo imperdiet tempus.
+22: + adipiscing. Duis vulputate tristique enim. Donec quis lectus a justo
+23: + imperdiet tempus. Suspendisse eu lectus. In nunc.
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">ndiff()</span></tt> function produces essentially the same output.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">from</span> <span class="nn">difflib_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">diff</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">ndiff</span><span class="p">(</span><span class="n">text1_lines</span><span class="p">,</span> <span class="n">text2_lines</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The processing is specifically tailored for working with text data and
+eliminating &#8220;noise&#8221; in the input.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python difflib_ndiff.py
+
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+- eu lacus accumsan arcu fermentum euismod. Donec pulvinar porttitor
++ eu lacus accumsan arcu fermentum euismod. Donec pulvinar, porttitor
+?                                                         +
+
+- tellus. Aliquam venenatis. Donec facilisis pharetra tortor.  In nec
+?                                                             -
+
++ tellus. Aliquam venenatis. Donec facilisis pharetra tortor. In nec
+- mauris eget magna consequat convallis. Nam sed sem vitae odio
+?                                             ------
+
++ mauris eget magna consequat convallis. Nam cras vitae mi vitae odio
+?                                            +++        +++++++++
+
+  pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu
+  metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris
+  urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,
+  suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta
+- adipiscing. Suspendisse eu lectus. In nunc. Duis vulputate tristique
+- enim. Donec quis lectus a justo imperdiet tempus.
++ adipiscing. Duis vulputate tristique enim. Donec quis lectus a justo
++ imperdiet tempus. Suspendisse eu lectus. In nunc.
+</pre></div>
+</div>
+<div class="section" id="other-output-formats">
+<h3>Other Output Formats<a class="headerlink" href="#other-output-formats" title="Permalink to this headline">¶</a></h3>
+<p>While the <tt class="xref py py-class docutils literal"><span class="pre">Differ</span></tt> class shows all of the input lines, a
+<em>unified diff</em> only includes modified lines and a bit of context. In
+Python 2.3, the <tt class="xref py py-func docutils literal"><span class="pre">unified_diff()</span></tt> function was added to produce
+this sort of output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">from</span> <span class="nn">difflib_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">diff</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">unified_diff</span><span class="p">(</span><span class="n">text1_lines</span><span class="p">,</span> <span class="n">text2_lines</span><span class="p">,</span> <span class="n">lineterm</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The output should look familiar to users of subversion or other
+version control tools:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python difflib_unified.py
+
+---
++++
+@@ -1,10 +1,10 @@
+ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+-eu lacus accumsan arcu fermentum euismod. Donec pulvinar porttitor
+-tellus. Aliquam venenatis. Donec facilisis pharetra tortor.  In nec
+-mauris eget magna consequat convallis. Nam sed sem vitae odio
++eu lacus accumsan arcu fermentum euismod. Donec pulvinar, porttitor
++tellus. Aliquam venenatis. Donec facilisis pharetra tortor. In nec
++mauris eget magna consequat convallis. Nam cras vitae mi vitae odio
+ pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu
+ metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris
+ urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,
+ suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta
+-adipiscing. Suspendisse eu lectus. In nunc. Duis vulputate tristique
+-enim. Donec quis lectus a justo imperdiet tempus.
++adipiscing. Duis vulputate tristique enim. Donec quis lectus a justo
++imperdiet tempus. Suspendisse eu lectus. In nunc.
+</pre></div>
+</div>
+<p>Using <tt class="xref py py-func docutils literal"><span class="pre">context_diff()</span></tt> produces similar readable output:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python difflib_context.py
+
+***
+---
+***************
+*** 1,10 ****
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+! eu lacus accumsan arcu fermentum euismod. Donec pulvinar porttitor
+! tellus. Aliquam venenatis. Donec facilisis pharetra tortor.  In nec
+! mauris eget magna consequat convallis. Nam sed sem vitae odio
+  pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu
+  metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris
+  urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,
+  suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta
+! adipiscing. Suspendisse eu lectus. In nunc. Duis vulputate tristique
+! enim. Donec quis lectus a justo imperdiet tempus.
+--- 1,10 ----
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+! eu lacus accumsan arcu fermentum euismod. Donec pulvinar, porttitor
+! tellus. Aliquam venenatis. Donec facilisis pharetra tortor. In nec
+! mauris eget magna consequat convallis. Nam cras vitae mi vitae odio
+  pellentesque interdum. Sed consequat viverra nisl. Suspendisse arcu
+  metus, blandit quis, rhoncus ac, pharetra eget, velit. Mauris
+  urna. Morbi nonummy molestie orci. Praesent nisi elit, fringilla ac,
+  suscipit non, tristique vel, mauris. Curabitur vel lorem id nisl porta
+! adipiscing. Duis vulputate tristique enim. Donec quis lectus a justo
+! imperdiet tempus. Suspendisse eu lectus. In nunc.
+</pre></div>
+</div>
+</div>
+<div class="section" id="html-output">
+<h3>HTML Output<a class="headerlink" href="#html-output" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref py py-class docutils literal"><span class="pre">HtmlDiff</span></tt> produces HTML output with the same information as
+<tt class="xref py py-class docutils literal"><span class="pre">Diff</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">from</span> <span class="nn">difflib_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">HtmlDiff</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">make_table</span><span class="p">(</span><span class="n">text1_lines</span><span class="p">,</span> <span class="n">text2_lines</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example uses <tt class="xref py py-func docutils literal"><span class="pre">make_table()</span></tt>, which only returns the
+<tt class="xref py py-const docutils literal"><span class="pre">table</span></tt> tag containing the difference information.  The
+<tt class="xref py py-func docutils literal"><span class="pre">make_file()</span></tt> method produces a fully-formed HTML file as output.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The output is not included here because it is very verbose.</p>
+</div>
+</div>
+</div>
+<div class="section" id="junk-data">
+<h2>Junk Data<a class="headerlink" href="#junk-data" title="Permalink to this headline">¶</a></h2>
+<p>All of the functions that produce difference sequences accept
+arguments to indicate which lines should be ignored, and which
+characters within a line should be ignored. These parameters can be
+used to skip over markup or whitespace changes in two versions of a
+file, for example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># This example is taken from the source for difflib.py.</span>
+
+<span class="kn">from</span> <span class="nn">difflib</span> <span class="kn">import</span> <span class="n">SequenceMatcher</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="s">&quot; abcd&quot;</span>
+<span class="n">B</span> <span class="o">=</span> <span class="s">&quot;abcd abcd&quot;</span>
+
+<span class="k">print</span> <span class="s">&#39;A = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">A</span>
+<span class="k">print</span> <span class="s">&#39;B = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">B</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Without junk detection:&#39;</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">SequenceMatcher</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">find_longest_match</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  i = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+<span class="k">print</span> <span class="s">&#39;  j = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">j</span>
+<span class="k">print</span> <span class="s">&#39;  k = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">k</span>
+<span class="k">print</span> <span class="s">&#39;  A[i:i+k] = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;  B[j:j+k] = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Treat spaces as junk:&#39;</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">SequenceMatcher</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">==</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">find_longest_match</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  i = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+<span class="k">print</span> <span class="s">&#39;  j = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">j</span>
+<span class="k">print</span> <span class="s">&#39;  k = </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">k</span>
+<span class="k">print</span> <span class="s">&#39;  A[i:i+k] = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;  B[j:j+k] = </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The default for <tt class="xref py py-class docutils literal"><span class="pre">Differ</span></tt> is to not ignore any lines or
+characters explicitly, but to rely on the ability of
+<tt class="xref py py-class docutils literal"><span class="pre">SequenceMatcher</span></tt> to detect noise. The default for
+<tt class="xref py py-func docutils literal"><span class="pre">ndiff()</span></tt> is to ignore space and tab characters.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python difflib_junk.py
+
+A = &#39; abcd&#39;
+B = &#39;abcd abcd&#39;
+
+Without junk detection:
+  i = 0
+  j = 4
+  k = 5
+  A[i:i+k] = &#39; abcd&#39;
+  B[j:j+k] = &#39; abcd&#39;
+
+Treat spaces as junk:
+  i = 1
+  j = 0
+  k = 4
+  A[i:i+k] = &#39;abcd&#39;
+  B[j:j+k] = &#39;abcd&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-arbitrary-types">
+<h2>Comparing Arbitrary Types<a class="headerlink" href="#comparing-arbitrary-types" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">SequenceMatcher</span></tt> class compares two sequences of any
+types, as long as the values are hashable. It uses an algorithm to
+identify the longest contiguous matching blocks from the sequences,
+eliminating &#8220;junk&#8221; values that do not contribute to the real data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">from</span> <span class="nn">difflib_data</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span> <span class="p">]</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span> <span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;Initial data:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;s1 =&#39;</span><span class="p">,</span> <span class="n">s1</span>
+<span class="k">print</span> <span class="s">&#39;s2 =&#39;</span><span class="p">,</span> <span class="n">s2</span>
+<span class="k">print</span> <span class="s">&#39;s1 == s2:&#39;</span><span class="p">,</span> <span class="n">s1</span><span class="o">==</span><span class="n">s2</span>
+<span class="k">print</span>
+
+<span class="n">matcher</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">SequenceMatcher</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">j1</span><span class="p">,</span> <span class="n">j2</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">matcher</span><span class="o">.</span><span class="n">get_opcodes</span><span class="p">()):</span>
+
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;delete&#39;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Remove </span><span class="si">%s</span><span class="s"> from positions [</span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">],</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">s1</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;equal&#39;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;The sections [</span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">] of s1 and [</span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">] of s2 are the same&#39;</span> <span class="o">%</span> \
+            <span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">j1</span><span class="p">,</span> <span class="n">j2</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;insert&#39;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Insert </span><span class="si">%s</span><span class="s"> from [</span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">] of s2 into s1 at </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> \
+            <span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">j1</span><span class="p">:</span><span class="n">j2</span><span class="p">],</span> <span class="n">j1</span><span class="p">,</span> <span class="n">j2</span><span class="p">,</span> <span class="n">i1</span><span class="p">)</span>
+        <span class="n">s1</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="n">j1</span><span class="p">:</span><span class="n">j2</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;replace&#39;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Replace </span><span class="si">%s</span><span class="s"> from [</span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">] of s1 with </span><span class="si">%s</span><span class="s"> from [</span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">] of s2&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">s1</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">],</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">s2</span><span class="p">[</span><span class="n">j1</span><span class="p">:</span><span class="n">j2</span><span class="p">],</span> <span class="n">j1</span><span class="p">,</span> <span class="n">j2</span><span class="p">)</span>
+        <span class="n">s1</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="n">j1</span><span class="p">:</span><span class="n">j2</span><span class="p">]</span>
+
+    <span class="k">print</span> <span class="s">&#39;s1 =&#39;</span><span class="p">,</span> <span class="n">s1</span>
+    <span class="k">print</span> <span class="s">&#39;s2 =&#39;</span><span class="p">,</span> <span class="n">s2</span>
+    <span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;s1 == s2:&#39;</span><span class="p">,</span> <span class="n">s1</span><span class="o">==</span><span class="n">s2</span>
+</pre></div>
+</div>
+<p>This example compares two lists of integers and uses
+<tt class="xref py py-func docutils literal"><span class="pre">get_opcodes()</span></tt> to derive the instructions for converting the
+original list into the newer version.  The modifications are applied
+in reverse order so that the list indexes remain accurate after items
+are added and removed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python difflib_seq.py
+
+Initial data:
+s1 = [1, 2, 3, 5, 6, 4]
+s2 = [2, 3, 5, 4, 6, 1]
+s1 == s2: False
+
+Replace [4] from [5:6] of s1 with [1] from [5:6] of s2
+s1 = [1, 2, 3, 5, 6, 1]
+s2 = [2, 3, 5, 4, 6, 1]
+
+The sections [4:5] of s1 and [4:5] of s2 are the same
+s1 = [1, 2, 3, 5, 6, 1]
+s2 = [2, 3, 5, 4, 6, 1]
+
+Insert [4] from [3:4] of s2 into s1 at 4
+s1 = [1, 2, 3, 5, 4, 6, 1]
+s2 = [2, 3, 5, 4, 6, 1]
+
+The sections [1:4] of s1 and [0:3] of s2 are the same
+s1 = [1, 2, 3, 5, 4, 6, 1]
+s2 = [2, 3, 5, 4, 6, 1]
+
+Remove [1] from positions [0:1]
+s1 = [2, 3, 5, 4, 6, 1]
+s2 = [2, 3, 5, 4, 6, 1]
+
+s1 == s2: True
+</pre></div>
+</div>
+<p><tt class="xref py py-class docutils literal"><span class="pre">SequenceMatcher</span></tt> works with custom classes, as well as
+built-in types, as long as they are hashable.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/difflib.html">difflib</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.ddj.com/documents/s=1103/ddj8807c/">Pattern Matching: The Gestalt Approach</a></dt>
+<dd>Discussion of a similar algorithm by John W. Ratcliff and D. E. Metzener published in Dr. Dobb’s Journal in July, 1988.</dd>
+</dl>
+<p class="last"><a class="reference internal" href="../articles/text_processing.html#article-text-processing"><em>Text Processing Tools</em></a></p>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../string/index.html" title="string – Working with text"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../codecs/index.html" title="codecs – String encoding and decoding"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" >String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

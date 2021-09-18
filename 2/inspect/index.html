@@ -1,0 +1,845 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>inspect &#8211; Inspect live objects - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="next" title="site – Site-wide configuration" href="../site/index.html" />
+    <link rel="prev" title="gc – Garbage Collector" href="../gc/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">inspect &#8211; Inspect live objects</a><ul>
+<li><a class="reference internal" href="#module-information">Module Information</a></li>
+<li><a class="reference internal" href="#example-module">Example Module</a></li>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#documentation-strings">Documentation Strings</a></li>
+<li><a class="reference internal" href="#retrieving-source">Retrieving Source</a></li>
+<li><a class="reference internal" href="#method-and-function-arguments">Method and Function Arguments</a></li>
+<li><a class="reference internal" href="#class-hierarchies">Class Hierarchies</a></li>
+<li><a class="reference internal" href="#method-resolution-order">Method Resolution Order</a></li>
+<li><a class="reference internal" href="#the-stack-and-frames">The Stack and Frames</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../gc/index.html" title="previous chapter"><strong>Previous:</strong> gc &#8211; Garbage Collector</a><br/>
+          <a href="../site/index.html" title="next chapter"><strong>Next:</strong> site &#8211; Site-wide configuration</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/inspect/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../site/index.html" title="site – Site-wide configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../gc/index.html" title="gc – Garbage Collector"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" accesskey="U">Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-inspect">
+<span id="inspect-inspect-live-objects"></span><h1>inspect &#8211; Inspect live objects<a class="headerlink" href="#module-inspect" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The inspect module provides functions for introspecting on live
+objects and their source code.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">added in 2.1, with updates in 2.3 and 2.5</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a> module provides functions for learning about live
+objects, including modules, classes, instances, functions, and
+methods. You can use functions in this module to retrieve the original
+source code for a function, look at the arguments to a method on the
+stack, and extract the sort of information useful for producing
+library documentation for your source code.  My own <a class="reference external" href="http://www.doughellmann.com/projects/CommandLineApp/">CommandLineApp</a>
+module uses inspect to determine the valid options to a command line
+program, as well as any arguments and their names so command line
+programs are self-documenting and the help text is generated
+automatically.</p>
+<div class="section" id="module-information">
+<h2>Module Information<a class="headerlink" href="#module-information" title="Permalink to this headline">¶</a></h2>
+<p>The first kind of introspection supported lets you probe live objects
+to learn about them. For example, it is possible to discover the
+classes and functions in a module, the methods of a class, etc. Let&#8217;s
+start with the module-level details and work our way down to the
+function level.</p>
+<p>To determine how the interpreter will treat and load a file as a
+module, use <tt class="xref py py-func docutils literal"><span class="pre">getmoduleinfo()</span></tt>. Pass a filename as the only
+argument, and the return value is a tuple including the module base
+name, the suffix of the file, the mode that will be used for reading
+the file, and the module type as defined in the <a class="reference internal" href="../imp/index.html#module-imp" title="imp: Interface to module import mechanism."><tt class="xref py py-mod docutils literal"><span class="pre">imp</span></tt></a> module. It
+is important to note that the function looks only at the file&#8217;s name,
+and does not actually check if the file exists or try to read the
+file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;example.py&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">mtype</span><span class="p">)</span>  <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmoduleinfo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Could not determine module type of </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">mtype_name</span> <span class="o">=</span> <span class="p">{</span> <span class="n">imp</span><span class="o">.</span><span class="n">PY_SOURCE</span><span class="p">:</span><span class="s">&#39;source&#39;</span><span class="p">,</span>
+                   <span class="n">imp</span><span class="o">.</span><span class="n">PY_COMPILED</span><span class="p">:</span><span class="s">&#39;compiled&#39;</span><span class="p">,</span>
+                   <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mtype</span><span class="p">,</span> <span class="n">mtype</span><span class="p">)</span>
+
+    <span class="n">mode_description</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;rb&#39;</span><span class="p">:</span><span class="s">&#39;(read-binary)&#39;</span><span class="p">,</span>
+                         <span class="s">&#39;U&#39;</span><span class="p">:</span><span class="s">&#39;(universal newline)&#39;</span><span class="p">,</span>
+                         <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&#39;NAME   :&#39;</span><span class="p">,</span> <span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;SUFFIX :&#39;</span><span class="p">,</span> <span class="n">suffix</span>
+    <span class="k">print</span> <span class="s">&#39;MODE   :&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">mode_description</span>
+    <span class="k">print</span> <span class="s">&#39;MTYPE  :&#39;</span><span class="p">,</span> <span class="n">mtype_name</span>
+</pre></div>
+</div>
+<p>Here are a few sample runs:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmoduleinfo.py example.py
+
+NAME   : example
+SUFFIX : .py
+MODE   : U (universal newline)
+MTYPE  : source
+
+$ python inspect_getmoduleinfo.py readme.txt
+
+Could not determine module type of readme.txt
+
+$ python inspect_getmoduleinfo.py notthere.pyc
+
+NAME   : notthere
+SUFFIX : .pyc
+MODE   : rb (read-binary)
+MTYPE  : compiled
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-module">
+<h2>Example Module<a class="headerlink" href="#example-module" title="Permalink to this headline">¶</a></h2>
+<p>The rest of the examples for this tutorial use a single example file
+source file, found in <tt class="docutils literal"><span class="pre">PyMOTW/inspect/example.py</span></tt> and which is
+included below.  The file is also available as part of the source
+distribution associated with this series of articles.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Sample file to serve as the basis for inspect examples.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">module_level_function</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="s">&#39;default&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function is declared in the module.&quot;&quot;&quot;</span>
+    <span class="n">local_variable</span> <span class="o">=</span> <span class="n">arg1</span>
+    <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The A class.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Returns the name of the instance.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="n">instance_of_a</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="s">&#39;sample_instance&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the B class.</span>
+<span class="sd">    It is derived from A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># This method is not part of A.</span>
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Does some work&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Overrides version from A&quot;</span>
+        <span class="k">return</span> <span class="s">&#39;B(&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to probe live objects to determine their components
+using <tt class="xref py py-func docutils literal"><span class="pre">getmembers()</span></tt>. The arguments to <tt class="xref py py-func docutils literal"><span class="pre">getmembers()</span></tt> are
+an object to scan (a module, class, or instance) and an optional
+predicate function that is used to filter the objects returned. The
+return value is a list of tuples with 2 values: the name of the
+member, and the type of the member. The inspect module includes
+several such predicate functions with names like <tt class="xref py py-func docutils literal"><span class="pre">ismodule()</span></tt>,
+<tt class="xref py py-func docutils literal"><span class="pre">isclass()</span></tt>, etc.  You can provide your own predicate function
+as well.</p>
+<p>The types of members that might be returned depend on the type of
+object scanned. Modules can contain classes and functions; classes can
+contain methods and attributes; and so on.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">example</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;__builtins__&#39;</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> :&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This sample prints the members of the example module. Modules have a
+set of <tt class="docutils literal"><span class="pre">__builtins__</span></tt>, which are ignored in the output for this
+example because they are not actually part of the module and the list
+is long.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmembers_module.py
+A : &lt;class &#39;example.A&#39;&gt;
+B : &lt;class &#39;example.B&#39;&gt;
+__doc__ : &#39;Sample file to serve as the basis for inspect examples.\n&#39;
+__file__ : &#39;/Users/dhellmann/Documents/PyMOTW/branches/inspect/example.pyc&#39;
+__name__ : &#39;example&#39;
+instance_of_a : &lt;example.A object at 0xbb810&gt;
+module_level_function : &lt;function module_level_function at 0xc8230&gt;
+</pre></div>
+</div>
+<p>The predicate argument can be used to filter the types of objects returned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> :&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that only classes are included in the output, now:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmembers_module_class.py
+
+A : &lt;class &#39;example.A&#39;&gt;
+B : &lt;class &#39;example.B&#39;&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<p>Classes are scanned using <tt class="xref py py-func docutils literal"><span class="pre">getmembers()</span></tt> in the same way as
+modules, though the types of members are different.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Since no filtering is applied, the output shows the attributes, methods,
+slots, and other members of the class:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmembers_class.py
+[(&#39;__class__&#39;, &lt;type &#39;type&#39;&gt;),
+ (&#39;__delattr__&#39;, &lt;slot wrapper &#39;__delattr__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__dict__&#39;, &lt;dictproxy object at 0xca090&gt;),
+ (&#39;__doc__&#39;, &#39;The A class.&#39;),
+ (&#39;__getattribute__&#39;, &lt;slot wrapper &#39;__getattribute__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__hash__&#39;, &lt;slot wrapper &#39;__hash__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__init__&#39;, &lt;unbound method A.__init__&gt;),
+ (&#39;__module__&#39;, &#39;example&#39;),
+ (&#39;__new__&#39;, &lt;built-in method __new__ of type object at 0x32ff38&gt;),
+ (&#39;__reduce__&#39;, &lt;method &#39;__reduce__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__reduce_ex__&#39;, &lt;method &#39;__reduce_ex__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__repr__&#39;, &lt;slot wrapper &#39;__repr__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__setattr__&#39;, &lt;slot wrapper &#39;__setattr__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__str__&#39;, &lt;slot wrapper &#39;__str__&#39; of &#39;object&#39; objects&gt;),
+ (&#39;__weakref__&#39;, &lt;attribute &#39;__weakref__&#39; of &#39;A&#39; objects&gt;),
+ (&#39;get_name&#39;, &lt;unbound method A.get_name&gt;)]
+</pre></div>
+</div>
+<p>To find the methods of a class, use the <tt class="xref py py-func docutils literal"><span class="pre">ismethod()</span></tt> predicate:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmembers_class_methods.py
+
+[(&#39;__init__&#39;, &lt;unbound method A.__init__&gt;),
+ (&#39;get_name&#39;, &lt;unbound method A.get_name&gt;)]
+</pre></div>
+</div>
+<p>If we look at class B, we see the over-ride for <tt class="xref py py-func docutils literal"><span class="pre">get_name()</span></tt> as
+well as the new method, and the inherited <tt class="xref py py-func docutils literal"><span class="pre">__init__()</span></tt> method
+implented in A.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Notice that even though <tt class="xref py py-func docutils literal"><span class="pre">__init__()</span></tt> is inherited from
+<tt class="xref py py-class docutils literal"><span class="pre">A</span></tt>, it is identified as a method of <tt class="xref py py-class docutils literal"><span class="pre">B</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmembers_class_methods_b.py
+
+[(&#39;__init__&#39;, &lt;unbound method B.__init__&gt;),
+ (&#39;do_something&#39;, &lt;unbound method B.do_something&gt;),
+ (&#39;get_name&#39;, &lt;unbound method B.get_name&gt;)]
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation-strings">
+<h2>Documentation Strings<a class="headerlink" href="#documentation-strings" title="Permalink to this headline">¶</a></h2>
+<p>The docstring for an object can be retrieved with
+<tt class="xref py py-func docutils literal"><span class="pre">getdoc()</span></tt>. The return value is the <tt class="docutils literal"><span class="pre">__doc__</span></tt> attribute with
+tabs expanded to spaces and with indentation made uniform.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">print</span> <span class="s">&#39;B.__doc__:&#39;</span>
+<span class="k">print</span> <span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;getdoc(B):&#39;</span>
+<span class="k">print</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getdoc</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice the difference in indentation on the second line of the
+doctring:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getdoc.py
+
+B.__doc__:
+This is the B class.
+    It is derived from A.
+
+
+getdoc(B):
+This is the B class.
+It is derived from A.
+</pre></div>
+</div>
+<p>In addition to the actual docstring, it is possible to retrieve the
+comments from the source file where an object is implemented, if the
+source is available. The <tt class="xref py py-func docutils literal"><span class="pre">getcomments()</span></tt> function looks at the
+source of the object and finds comments on lines preceding the
+implementation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">print</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getcomments</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">do_something</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The lines returned include the comment prefix, but any whitespace
+prefix is stripped off.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getcomments_method.py
+
+# This method is not part of A.
+</pre></div>
+</div>
+<p>When a module is passed to <tt class="xref py py-func docutils literal"><span class="pre">getcomments()</span></tt>, the return value is
+always the first comment in the module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">print</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getcomments</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that contiguous lines from the example file are included as a single
+comment, but as soon as a blank line appears the comment is stopped.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getcomments_module.py
+
+# This comment appears first
+# and spans 2 lines.
+</pre></div>
+</div>
+</div>
+<div class="section" id="retrieving-source">
+<h2>Retrieving Source<a class="headerlink" href="#retrieving-source" title="Permalink to this headline">¶</a></h2>
+<p>If the <tt class="docutils literal"><span class="pre">.py</span></tt> file is available for a module, the original source
+code for the class or method can be retrieved using
+<tt class="xref py py-func docutils literal"><span class="pre">getsource()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">getsourcelines()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">print</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">get_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The original indent level is retained in this case.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getsource_method.py
+
+    def get_name(self):
+        &quot;Returns the name of the instance.&quot;
+        return self.name
+</pre></div>
+</div>
+<p>When a class is passed in, all of the methods for the class are included in
+the output.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">print</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getsource_class.py
+
+class A(object):
+    &quot;&quot;&quot;The A class.&quot;&quot;&quot;
+    def __init__(self, name):
+        self.name = name
+
+    def get_name(self):
+        &quot;Returns the name of the instance.&quot;
+        return self.name
+</pre></div>
+</div>
+<p>If you need the lines of source split up, it can be easier to use
+<tt class="xref py py-func docutils literal"><span class="pre">getsourcelines()</span></tt> instead of <tt class="xref py py-func docutils literal"><span class="pre">getsource()</span></tt>. The return
+value from <tt class="xref py py-func docutils literal"><span class="pre">getsourcelines()</span></tt> is a tuple containing a list of
+strings (the lines from the source file), and a starting line number
+in the file where the source appears.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsourcelines</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">get_name</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getsourcelines_method.py
+
+([&#39;    def get_name(self):\n&#39;,
+  &#39;        &quot;Returns the name of the instance.&quot;\n&#39;,
+  &#39;        return self.name\n&#39;],
+ 48)
+</pre></div>
+</div>
+<p>If the source file is not available, <tt class="xref py py-func docutils literal"><span class="pre">getsource()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">getsourcelines()</span></tt> raise an <a class="reference internal" href="../exceptions/index.html#exceptions-ioerror"><em>IOError</em></a>.</p>
+</div>
+<div class="section" id="method-and-function-arguments">
+<h2>Method and Function Arguments<a class="headerlink" href="#method-and-function-arguments" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the documentation for a function or method, it is
+possible to ask for a complete specification of the arguments the
+callable takes, including default values. The <tt class="xref py py-func docutils literal"><span class="pre">getargspec()</span></tt>
+function returns a tuple containing the list of positional argument
+names, the name of any variable positional arguments (e.g.,
+<tt class="docutils literal"><span class="pre">*args</span></tt>), the names of any variable named arguments (e.g.,
+<tt class="docutils literal"><span class="pre">**kwds</span></tt>), and default values for the arguments. If there are
+default values, they match up with the end of the positional argument
+list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">arg_spec</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">module_level_function</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;NAMES   :&#39;</span><span class="p">,</span> <span class="n">arg_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;*       :&#39;</span><span class="p">,</span> <span class="n">arg_spec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;**      :&#39;</span><span class="p">,</span> <span class="n">arg_spec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;defaults:&#39;</span><span class="p">,</span> <span class="n">arg_spec</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">args_with_defaults</span> <span class="o">=</span> <span class="n">arg_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">arg_spec</span><span class="p">[</span><span class="mi">3</span><span class="p">]):]</span>
+<span class="k">print</span> <span class="s">&#39;args &amp; defaults:&#39;</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">args_with_defaults</span><span class="p">,</span> <span class="n">arg_spec</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Note that the first argument, <em>arg1</em>, does not have a default
+value. The single default therefore is matched up with <em>arg2</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getargspec_function.py
+
+NAMES   : [&#39;arg1&#39;, &#39;arg2&#39;]
+*       : args
+**      : kwargs
+defaults: (&#39;default&#39;,)
+args &amp; defaults: [(&#39;arg2&#39;, &#39;default&#39;)]
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-hierarchies">
+<h2>Class Hierarchies<a class="headerlink" href="#class-hierarchies" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a> includes two methods for working directly with class
+hierarchies. The first, <tt class="xref py py-func docutils literal"><span class="pre">getclasstree()</span></tt>, creates a tree-like
+data structure using nested lists and tuples based on the classes it
+is given and their base classes. Each element in the list returned is
+either a tuple with a class and its base classes, or another list
+containing tuples for subclasses.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">print_class_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">indent</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">:</span>
+            <span class="n">print_class_tree</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="n">indent</span><span class="p">,</span> <span class="n">tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;A, B, C, D:&#39;</span>
+    <span class="n">print_class_tree</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getclasstree</span><span class="p">([</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>The output from this example is the &#8220;tree&#8221; of inheritance for the A, B, C, and
+D classes. Note that D appears twice, since it inherits from both C and A.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getclasstree.py
+
+A, B, C, D:
+ object
+   A
+     D
+     B
+       C
+         D
+</pre></div>
+</div>
+<p>If we call <tt class="xref py py-func docutils literal"><span class="pre">getclasstree()</span></tt> with <tt class="docutils literal"><span class="pre">unique=True</span></tt>, the output is
+different.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+<span class="kn">from</span> <span class="nn">inspect_getclasstree</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">print_class_tree</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getclasstree</span><span class="p">([</span><span class="n">example</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span>
+                                      <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                      <span class="p">))</span>
+</pre></div>
+</div>
+<p>This time, D only appears in the output once:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getclasstree_unique.py
+
+ object
+   A
+     B
+       C
+         D
+</pre></div>
+</div>
+</div>
+<div class="section" id="method-resolution-order">
+<h2>Method Resolution Order<a class="headerlink" href="#method-resolution-order" title="Permalink to this headline">¶</a></h2>
+<p>The other function for working with class hierarchies is
+<tt class="xref py py-func docutils literal"><span class="pre">getmro()</span></tt>, which returns a tuple of classes in the order they
+should be scanned when resolving an attribute that might be inherited
+from a base class. Each class in the sequence appears only once.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">C_First</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">B_First</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">print</span> <span class="s">&#39;B_First:&#39;</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmro</span><span class="p">(</span><span class="n">B_First</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">__name__</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;C_First:&#39;</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmro</span><span class="p">(</span><span class="n">C_First</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">__name__</span>
+</pre></div>
+</div>
+<p>This output demonstrates the &#8220;depth-first&#8221; nature of the <a class="reference external" href="http://www.python.org/download/releases/2.3/mro/">MRO</a>
+search. For B_First, A also comes before C in the search order,
+because B is derived from A.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getmro.py
+
+B_First:
+        B_First
+        B
+        A
+        C
+        object
+
+C_First:
+        C_First
+        C
+        B
+        A
+        object
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-stack-and-frames">
+<h2>The Stack and Frames<a class="headerlink" href="#the-stack-and-frames" title="Permalink to this headline">¶</a></h2>
+<p>In addition to introspection of code objects, <a class="reference internal" href="#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a> includes
+functions for inspecting the runtime environment while a program is
+running. Most of these functions work with the call stack, and operate
+on &#8220;call frames&#8221;. Each frame record in the stack is a 6 element tuple
+containing the frame object, the filename where the code exists, the
+line number in that file for the current line being run, the function
+name being called, a list of lines of context from the source file,
+and the index into that list of the current line. Typically such
+information is used to build tracebacks when exceptions are raised. It
+can also be useful when debugging programs, since the stack frames can
+be interrogated to discover the argument values passed into the
+functions.</p>
+<p><tt class="xref py py-func docutils literal"><span class="pre">currentframe()</span></tt> returns the frame at the top of the stack (for
+the current function). <tt class="xref py py-func docutils literal"><span class="pre">getargvalues()</span></tt> returns a tuple with
+argument names, the names of the variable arguments, and a dictionary
+with local values from the frame. By combining them, we can see the
+arguments to functions and local variables at different points in the
+call stack.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+    <span class="n">local_variable</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span> <span class="o">*</span> <span class="n">limit</span>
+    <span class="k">print</span> <span class="n">limit</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargvalues</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="n">limit</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The value for <tt class="docutils literal"><span class="pre">local_variable</span></tt> is included in the frame&#8217;s local
+variables even though it is not an argument to the function.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_getargvalues.py
+
+3 ArgInfo(args=[&#39;limit&#39;], varargs=None, keywords=None, locals={&#39;local_variable&#39;: &#39;...&#39;, &#39;limit&#39;: 3})
+2 ArgInfo(args=[&#39;limit&#39;], varargs=None, keywords=None, locals={&#39;local_variable&#39;: &#39;..&#39;, &#39;limit&#39;: 2})
+1 ArgInfo(args=[&#39;limit&#39;], varargs=None, keywords=None, locals={&#39;local_variable&#39;: &#39;.&#39;, &#39;limit&#39;: 1})
+0 ArgInfo(args=[&#39;limit&#39;], varargs=None, keywords=None, locals={&#39;local_variable&#39;: &#39;&#39;, &#39;limit&#39;: 0})
+</pre></div>
+</div>
+<p>Using <tt class="xref py py-func docutils literal"><span class="pre">stack()</span></tt>, it is also possible to access all of the stack
+frames from the current frame to the first caller. This example is
+similar to the one above, except it waits until reaching the end of
+the recursion to print the stack information.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+    <span class="n">local_variable</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span> <span class="o">*</span> <span class="n">limit</span>
+    <span class="k">if</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">line_num</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">source_code</span><span class="p">,</span> <span class="n">source_index</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">():</span>
+            <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">[</span><span class="si">%d</span><span class="s">]</span><span class="se">\n</span><span class="s">  -&gt; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">line_num</span><span class="p">,</span> <span class="n">source_code</span><span class="p">[</span><span class="n">source_index</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">print</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargvalues</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+            <span class="k">print</span>
+        <span class="k">return</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="n">limit</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The last part of the output represents the main program, outside of the
+recurse function.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python inspect_stack.py
+inspect_stack.py[37]
+  -&gt; for frame, filename, line_num, func, source_code, source_index in inspect.stack():
+([&#39;limit&#39;], None, None, {&#39;local_variable&#39;: &#39;&#39;, &#39;line_num&#39;: 37, &#39;frame&#39;: &lt;frame object at 0x61ba30&gt;,
+&#39;filename&#39;: &#39;inspect_stack.py&#39;, &#39;limit&#39;: 0, &#39;func&#39;: &#39;recurse&#39;, &#39;source_index&#39;: 0,
+&#39;source_code&#39;: [&#39;        for frame, filename, line_num, func, source_code, source_index in inspect.stack():\n&#39;]})
+
+inspect_stack.py[42]
+  -&gt; recurse(limit - 1)
+([&#39;limit&#39;], None, None, {&#39;local_variable&#39;: &#39;.&#39;, &#39;limit&#39;: 1})
+
+inspect_stack.py[42]
+  -&gt; recurse(limit - 1)
+([&#39;limit&#39;], None, None, {&#39;local_variable&#39;: &#39;..&#39;, &#39;limit&#39;: 2})
+
+inspect_stack.py[42]
+  -&gt; recurse(limit - 1)
+([&#39;limit&#39;], None, None, {&#39;local_variable&#39;: &#39;...&#39;, &#39;limit&#39;: 3})
+
+inspect_stack.py[46]
+  -&gt; recurse(3)
+([], None, None, {&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;,
+&#39;__file__&#39;: &#39;inspect_stack.py&#39;,
+&#39;inspect&#39;: &lt;module &#39;inspect&#39; from &#39;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/inspect.pyc&#39;&gt;,
+&#39;recurse&#39;: &lt;function recurse at 0xc81b0&gt;, &#39;__name__&#39;: &#39;__main__&#39;,
+&#39;__doc__&#39;: &#39;Inspecting the call stack.\n\n&#39;})
+</pre></div>
+</div>
+<p>There are other functions for building lists of frames in different
+contexts, such as when an exception is being processed. See the
+documentation for <a class="reference internal" href="../trace/index.html#module-trace" title="trace: Follow Python statements as they are executed."><tt class="xref py py-func docutils literal"><span class="pre">trace()</span></tt></a>, <tt class="xref py py-func docutils literal"><span class="pre">getouterframes()</span></tt>, and
+<tt class="xref py py-func docutils literal"><span class="pre">getinnerframes()</span></tt> for more details.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/inspect.html">inspect</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.doughellmann.com/projects/CommandLineApp/">CommandLineApp</a></dt>
+<dd>Base class for object-oriented command line applications</dd>
+<dt><a class="reference external" href="http://www.python.org/download/releases/2.3/mro/">Python 2.3 Method Resolution Order</a></dt>
+<dd>Documentation for the C3 Method Resolution order used by
+Python 2.3 and later.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../site/index.html" title="site – Site-wide configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../gc/index.html" title="gc – Garbage Collector"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

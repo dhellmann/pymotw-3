@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>getpass &#8211; Prompt the user for a password without echoing. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Generic Operating System Services" href="../generic_os.html" />
+    <link rel="next" title="platform – Access system version information" href="../platform/index.html" />
+    <link rel="prev" title="logging – Report status, error, and informational messages." href="../logging/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">getpass &#8211; Prompt the user for a password without echoing.</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#using-getpass-without-a-terminal">Using getpass Without a Terminal</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../logging/index.html" title="previous chapter"><strong>Previous:</strong> logging &#8211; Report status, error, and informational messages.</a><br/>
+          <a href="../platform/index.html" title="next chapter"><strong>Next:</strong> platform &#8211; Access system version information</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/getpass/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../platform/index.html" title="platform – Access system version information"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../logging/index.html" title="logging – Report status, error, and informational messages."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" accesskey="U">Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-getpass">
+<span id="getpass-prompt-the-user-for-a-password-without-echoing"></span><h1>getpass &#8211; Prompt the user for a password without echoing.<a class="headerlink" href="#module-getpass" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Prompt the user for a value, usually a password, without echoing what they type to the console.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2</td>
+</tr>
+</tbody>
+</table>
+<p>Many programs that interact with the user via the terminal need to ask
+the user for password values without showing what the user types on
+the screen.  The <a class="reference internal" href="#module-getpass" title="getpass: Prompt the user for a value, usually a password, without echoing what they type to the console."><tt class="xref py py-mod docutils literal"><span class="pre">getpass</span></tt></a> module provides a portable way to
+handle such password prompts securely.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-getpass" title="getpass: Prompt the user for a value, usually a password, without echoing what they type to the console."><tt class="xref py py-func docutils literal"><span class="pre">getpass()</span></tt></a> function prints a prompt then reads input from
+the user until they press return. The input is passed back as a string
+to the caller.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getpass</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;You entered:&#39;</span><span class="p">,</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>The default prompt, if none is specified by the caller, is
+&#8220;<tt class="docutils literal"><span class="pre">Password:</span></tt>&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getpass_defaults.py
+Password:
+You entered: sekret
+</pre></div>
+</div>
+<p>The prompt can be changed to any value your program needs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getpass</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s">&#39;What is your favorite color? &#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;blue&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Right.  Off you go.&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Auuuuugh!&#39;</span>
+</pre></div>
+</div>
+<p>I don&#8217;t recommend such an insecure authentication scheme, but it illustrates
+the point.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getpass_prompt.py
+What is your favorite color?
+Right.  Off you go.
+$ python getpass_prompt.py
+What is your favorite color?
+Auuuuugh!
+</pre></div>
+</div>
+<p>By default, <a class="reference internal" href="#module-getpass" title="getpass: Prompt the user for a value, usually a password, without echoing what they type to the console."><tt class="xref py py-func docutils literal"><span class="pre">getpass()</span></tt></a> uses stdout to print the prompt
+string. For a program which may produce useful output on
+<a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stdout</em></a>, it is frequently better to send
+the prompt to another stream such as <a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stderr</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;You entered:&#39;</span><span class="p">,</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>This way standard output can be redirected (to a pipe or file) without seeing
+the password prompt. The value entered by the user is still not echoed back to
+the screen.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getpass_stream.py &gt;/dev/null
+Password:
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-getpass-without-a-terminal">
+<h2>Using getpass Without a Terminal<a class="headerlink" href="#using-getpass-without-a-terminal" title="Permalink to this headline">¶</a></h2>
+<p>Under Unix, <a class="reference internal" href="#module-getpass" title="getpass: Prompt the user for a value, usually a password, without echoing what they type to the console."><tt class="xref py py-func docutils literal"><span class="pre">getpass()</span></tt></a> always requires a tty it can control via
+termios, so echo can be disabled. This means values will not be read
+from a non-terminal stream redirected to standard input.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;sekret&quot; | python getpass_defaults.py
+Traceback (most recent call last):
+ File &quot;getpass_defaults.py&quot;, line 34, in
+   p = getpass.getpass()
+ File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/getpass.py&quot;, line 32, in unix_getpass
+   old = termios.tcgetattr(fd)     # a copy to save
+termios.error: (25, &#39;Inappropriate ioctl for device&#39;)
+</pre></div>
+</div>
+<p>It is up to the caller to detect when the input stream is not a tty and use an
+alternate method for reading in that case.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">isatty</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s">&#39;Using getpass: &#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Using readline&#39;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Read: &#39;</span><span class="p">,</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>With a tty:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ./getpass_noterminal.py
+Using getpass:
+Read:  sekret
+</pre></div>
+</div>
+<p>Without a tty:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;sekret&quot; | python ./getpass_noterminal.py
+Using readline
+Read:  sekret
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/getpass.html">getpass</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a></dt>
+<dd>Interactive prompt library.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../platform/index.html" title="platform – Access system version information"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../logging/index.html" title="logging – Report status, error, and informational messages."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" >Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

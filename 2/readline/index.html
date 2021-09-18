@@ -1,0 +1,766 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>readline &#8211; Interface to the GNU readline library - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Optional Operating System Services" href="../optional_os.html" />
+    <link rel="next" title="rlcompleter – Adds tab-completion to the interactive interpreter" href="../rlcompleter/index.html" />
+    <link rel="prev" title="Implementing MapReduce with multiprocessing" href="../multiprocessing/mapreduce.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">readline &#8211; Interface to the GNU readline library</a><ul>
+<li><a class="reference internal" href="#configuring">Configuring</a></li>
+<li><a class="reference internal" href="#completing-text">Completing Text</a></li>
+<li><a class="reference internal" href="#accessing-the-completion-buffer">Accessing the Completion Buffer</a></li>
+<li><a class="reference internal" href="#input-history">Input History</a></li>
+<li><a class="reference internal" href="#hooks">Hooks</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../multiprocessing/mapreduce.html" title="previous chapter"><strong>Previous:</strong> Implementing MapReduce with multiprocessing</a><br/>
+          <a href="../rlcompleter/index.html" title="next chapter"><strong>Next:</strong> rlcompleter &#8211; Adds tab-completion to the interactive interpreter</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/readline/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../rlcompleter/index.html" title="rlcompleter – Adds tab-completion to the interactive interpreter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../multiprocessing/mapreduce.html" title="Implementing MapReduce with multiprocessing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../optional_os.html" accesskey="U">Optional Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-readline">
+<span id="readline-interface-to-the-gnu-readline-library"></span><h1>readline &#8211; Interface to the GNU readline library<a class="headerlink" href="#module-readline" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Provides an interface to the GNU readline library for interacting with the user at a command prompt.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> module can be used to enhance interactive command
+line programs to make them easier to use.  It is primarily used to
+provide command line text completion, or &#8220;tab completion&#8221;.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Because <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> interacts with the console content,
+printing debug messages makes it difficult to see what it
+happening in the sample code versus what readline is doing for
+free.  The examples below use the <a class="reference internal" href="../logging/index.html#module-logging" title="logging: Report status, error, and informational messages."><tt class="xref py py-mod docutils literal"><span class="pre">logging</span></tt></a> module to write
+debug information to a separate file.  The log output is shown
+with each example.</p>
+</div>
+<div class="section" id="configuring">
+<h2>Configuring<a class="headerlink" href="#configuring" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to configure the underlying readline library, using
+a configuration file or the <tt class="docutils literal"><span class="pre">parse_and_bind()</span></tt> function.
+Configuration options include the keybinding to invoke completion,
+editing modes (vi or emacs), and many other values.  Refer to the <a class="reference external" href="http://tiswww.case.edu/php/chet/readline/readline.html#SEC10">GNU
+readline library documentation</a> for
+details.</p>
+<p>The easiest way to enable tab-completion is through a call to
+<tt class="docutils literal"><span class="pre">parse_and_bind()</span></tt>.  Other options can be set at the same time.
+This example changes the editing controls to use &#8220;vi&#8221; mode instead of
+the default of &#8220;emacs&#8221;.  To edit the current input line, press <tt class="docutils literal"><span class="pre">ESC</span></tt>
+then use normal vi navigation keys such as <tt class="docutils literal"><span class="pre">j</span></tt>, <tt class="docutils literal"><span class="pre">k</span></tt>, <tt class="docutils literal"><span class="pre">l</span></tt>, and
+<tt class="docutils literal"><span class="pre">h</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">readline</span>
+
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&#39;tab: complete&#39;</span><span class="p">)</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&#39;set editing-mode vi&#39;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Prompt (&quot;stop&quot; to quit): &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;stop&#39;</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">print</span> <span class="s">&#39;ENTERED: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>The same configuration can be stored as instructions in a file read by
+the library with a single call.  If <tt class="docutils literal"><span class="pre">myreadline.rc</span></tt> contains:</p>
+<div class="highlight-python"><div class="highlight"><pre># Turn on tab completion
+tab: complete
+
+# Use vi editing mode instead of emacs
+set editing-mode vi
+</pre></div>
+</div>
+<p>the file can be read with <tt class="docutils literal"><span class="pre">read_init_file()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">readline</span>
+
+<span class="n">readline</span><span class="o">.</span><span class="n">read_init_file</span><span class="p">(</span><span class="s">&#39;myreadline.rc&#39;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Prompt (&quot;stop&quot; to quit): &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;stop&#39;</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">print</span> <span class="s">&#39;ENTERED: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="completing-text">
+<h2>Completing Text<a class="headerlink" href="#completing-text" title="Permalink to this headline">¶</a></h2>
+<p>As an example of how to build command line completion, we can look at
+a program that has a built-in set of possible commands and uses
+tab-completion when the user is entering instructions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">readline</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">LOG_FILENAME</span> <span class="o">=</span> <span class="s">&#39;/tmp/completer.log&#39;</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">LOG_FILENAME</span><span class="p">,</span>
+                    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SimpleCompleter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># This is the first time for this text, so build a match list.</span>
+            <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> 
+                                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+                                <span class="k">if</span> <span class="n">s</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">text</span><span class="p">)]</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> matches: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[:]</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;(empty input) matches: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">)</span>
+        
+        <span class="c"># Return the state&#39;th item from the match list,</span>
+        <span class="c"># if we have that many.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;complete(</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">) =&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> 
+                      <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">state</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+<span class="k">def</span> <span class="nf">input_loop</span><span class="p">():</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s">&#39;stop&#39;</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Prompt (&quot;stop&quot; to quit): &#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Dispatch </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">line</span>
+
+<span class="c"># Register our completer function</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">set_completer</span><span class="p">(</span><span class="n">SimpleCompleter</span><span class="p">([</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;print&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">complete</span><span class="p">)</span>
+
+<span class="c"># Use the tab key for completion</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&#39;tab: complete&#39;</span><span class="p">)</span>
+
+<span class="c"># Prompt the user for text</span>
+<span class="n">input_loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">input_loop()</span></tt> function simply reads one line after another
+until the input value is <tt class="docutils literal"><span class="pre">&quot;stop&quot;</span></tt>.  A more sophisticated program
+could actually parse the input line and run the command.</p>
+<p>The <tt class="docutils literal"><span class="pre">SimpleCompleter</span></tt> class keeps a list of &#8220;options&#8221; that are
+candidates for auto-completion.  The <tt class="docutils literal"><span class="pre">complete()</span></tt> method for an
+instance is designed to be registered with <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> as the
+source of completions.  The arguments are a &#8220;text&#8221; string to complete
+and a &#8220;state&#8221; value, indicating how many times the function has been
+called with the same text.  The function is called repeatedly with the
+state incremented each time.  It should return a string if there is a
+candidate for that state value or <tt class="docutils literal"><span class="pre">None</span></tt> if there are no more
+candidates.  The implementation of <tt class="docutils literal"><span class="pre">complete()</span></tt> here looks for a set
+of matches when state is <tt class="docutils literal"><span class="pre">0</span></tt>, and then returns all of the candidate
+matches one at a time on subsequent calls.</p>
+<p>When run, the initial output looks something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python readline_completer.py
+Prompt (&quot;stop&quot; to quit):
+</pre></div>
+</div>
+<p>If you press <tt class="docutils literal"><span class="pre">TAB</span></tt> twice, a list of options are printed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python readline_completer.py
+Prompt (&quot;stop&quot; to quit):
+list   print  start  stop
+Prompt (&quot;stop&quot; to quit):
+</pre></div>
+</div>
+<p>The log file shows that <tt class="docutils literal"><span class="pre">complete()</span></tt> was called with two separate
+sequences of state values.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ tail -f /tmp/completer.log
+DEBUG:root:(empty input) matches: [&#39;list&#39;, &#39;print&#39;, &#39;start&#39;, &#39;stop&#39;]
+DEBUG:root:complete(&#39;&#39;, 0) =&gt; &#39;list&#39;
+DEBUG:root:complete(&#39;&#39;, 1) =&gt; &#39;print&#39;
+DEBUG:root:complete(&#39;&#39;, 2) =&gt; &#39;start&#39;
+DEBUG:root:complete(&#39;&#39;, 3) =&gt; &#39;stop&#39;
+DEBUG:root:complete(&#39;&#39;, 4) =&gt; None
+DEBUG:root:(empty input) matches: [&#39;list&#39;, &#39;print&#39;, &#39;start&#39;, &#39;stop&#39;]
+DEBUG:root:complete(&#39;&#39;, 0) =&gt; &#39;list&#39;
+DEBUG:root:complete(&#39;&#39;, 1) =&gt; &#39;print&#39;
+DEBUG:root:complete(&#39;&#39;, 2) =&gt; &#39;start&#39;
+DEBUG:root:complete(&#39;&#39;, 3) =&gt; &#39;stop&#39;
+DEBUG:root:complete(&#39;&#39;, 4) =&gt; None
+</pre></div>
+</div>
+<p>The first sequence is from the first TAB key-press.  The completion
+algorithm asks for all candidates but does not expand the empty input
+line.  Then on the second TAB, the list of candidates is recalculated
+so it can be printed for the user.</p>
+<p>If next we type &#8220;<tt class="docutils literal"><span class="pre">l</span></tt>&#8221; and press TAB again, the screen shows:</p>
+<div class="highlight-python"><div class="highlight"><pre>Prompt (&quot;stop&quot; to quit): list
+</pre></div>
+</div>
+<p>and the log reflects the different arguments to <tt class="docutils literal"><span class="pre">complete()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>DEBUG:root:&#39;l&#39; matches: [&#39;list&#39;]
+DEBUG:root:complete(&#39;l&#39;, 0) =&gt; &#39;list&#39;
+DEBUG:root:complete(&#39;l&#39;, 1) =&gt; None
+</pre></div>
+</div>
+<p>Pressing RETURN now causes <tt class="docutils literal"><span class="pre">raw_input()</span></tt> to return the value, and
+the <tt class="docutils literal"><span class="pre">while</span></tt> loop cycles.</p>
+<div class="highlight-python"><div class="highlight"><pre>Dispatch list
+Prompt (&quot;stop&quot; to quit):
+</pre></div>
+</div>
+<p>There are two possible completions for a command beginning with
+&#8220;<tt class="docutils literal"><span class="pre">s</span></tt>&#8221;.  Typing &#8220;<tt class="docutils literal"><span class="pre">s</span></tt>&#8221;, then pressing TAB finds that &#8220;<tt class="docutils literal"><span class="pre">start</span></tt>&#8221; and
+&#8220;<tt class="docutils literal"><span class="pre">stop</span></tt>&#8221; are candidates, but only partially completes the text on
+the screen by adding a &#8220;<tt class="docutils literal"><span class="pre">t</span></tt>&#8221;.</p>
+<p>The log file shows:</p>
+<div class="highlight-python"><div class="highlight"><pre>DEBUG:root:&#39;s&#39; matches: [&#39;start&#39;, &#39;stop&#39;]
+DEBUG:root:complete(&#39;s&#39;, 0) =&gt; &#39;start&#39;
+DEBUG:root:complete(&#39;s&#39;, 1) =&gt; &#39;stop&#39;
+DEBUG:root:complete(&#39;s&#39;, 2) =&gt; None
+</pre></div>
+</div>
+<p>and the screen:</p>
+<div class="highlight-python"><div class="highlight"><pre>Prompt (&quot;stop&quot; to quit): st
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If your completer function raises an exception, it is ignored
+silently and <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> assumes there are no matching
+completions.</p>
+</div>
+</div>
+<div class="section" id="accessing-the-completion-buffer">
+<h2>Accessing the Completion Buffer<a class="headerlink" href="#accessing-the-completion-buffer" title="Permalink to this headline">¶</a></h2>
+<p>The completion algorithm above is simplistic because it only looks the
+text argument passed to the function, but does not use any more of
+readline&#8217;s internal state.  It is also possible to use <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a>
+functions to manipulate the text of the input buffer.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">readline</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">LOG_FILENAME</span> <span class="o">=</span> <span class="s">&#39;/tmp/completer.log&#39;</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">LOG_FILENAME</span><span class="p">,</span>
+                    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">BufferAwareCompleter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># This is the first time for this text, so build a match list.</span>
+            
+            <span class="n">origline</span> <span class="o">=</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_line_buffer</span><span class="p">()</span>
+            <span class="n">begin</span> <span class="o">=</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_begidx</span><span class="p">()</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_endidx</span><span class="p">()</span>
+            <span class="n">being_completed</span> <span class="o">=</span> <span class="n">origline</span><span class="p">[</span><span class="n">begin</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="n">origline</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;origline=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">origline</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;begin=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">begin</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;end=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;being_completed=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">being_completed</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;words=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">words</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">begin</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c"># first word</span>
+                        <span class="n">candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c"># later word</span>
+                        <span class="n">first</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">first</span><span class="p">]</span>
+                    
+                    <span class="k">if</span> <span class="n">being_completed</span><span class="p">:</span>
+                        <span class="c"># match options with portion of input</span>
+                        <span class="c"># being completed</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">candidates</span>
+                                                    <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">being_completed</span><span class="p">)</span> <span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c"># matching empty string so use all candidates</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span> <span class="o">=</span> <span class="n">candidates</span>
+
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;candidates=</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span><span class="p">)</span>
+                    
+                <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">),</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;completion error: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_candidates</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;complete(</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">) =&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">state</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+            
+
+<span class="k">def</span> <span class="nf">input_loop</span><span class="p">():</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="s">&#39;stop&#39;</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Prompt (&quot;stop&quot; to quit): &#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Dispatch </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">line</span>
+
+<span class="c"># Register our completer function</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">set_completer</span><span class="p">(</span><span class="n">BufferAwareCompleter</span><span class="p">(</span>
+    <span class="p">{</span><span class="s">&#39;list&#39;</span><span class="p">:[</span><span class="s">&#39;files&#39;</span><span class="p">,</span> <span class="s">&#39;directories&#39;</span><span class="p">],</span>
+     <span class="s">&#39;print&#39;</span><span class="p">:[</span><span class="s">&#39;byname&#39;</span><span class="p">,</span> <span class="s">&#39;bysize&#39;</span><span class="p">],</span>
+     <span class="s">&#39;stop&#39;</span><span class="p">:[],</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">complete</span><span class="p">)</span>
+
+<span class="c"># Use the tab key for completion</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&#39;tab: complete&#39;</span><span class="p">)</span>
+
+<span class="c"># Prompt the user for text</span>
+<span class="n">input_loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example, commands with sub-options are are being completed.
+The <tt class="docutils literal"><span class="pre">complete()</span></tt> method needs to look at the position of the
+completion within the input buffer to determine whether it is part of
+the first word or a later word.  If the target is the first word, the
+keys of the options dictionary are used as candidates.  If it is not
+the first word, then the first word is used to find candidates from
+the options dictionary.</p>
+<p>There are three top-level commands, two of which have subcommands:</p>
+<ul class="simple">
+<li>list<ul>
+<li>files</li>
+<li>directories</li>
+</ul>
+</li>
+<li>print<ul>
+<li>byname</li>
+<li>bysize</li>
+</ul>
+</li>
+<li>stop</li>
+</ul>
+<p>Following the same sequence of actions as before, pressing TAB twice
+gives us the three top-level commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python readline_buffer.py
+Prompt (&quot;stop&quot; to quit):
+list   print  stop
+Prompt (&quot;stop&quot; to quit):
+</pre></div>
+</div>
+<p>and in the log:</p>
+<div class="highlight-python"><div class="highlight"><pre>DEBUG:root:origline=&#39;&#39;
+DEBUG:root:begin=0
+DEBUG:root:end=0
+DEBUG:root:being_completed=
+DEBUG:root:words=[]
+DEBUG:root:complete(&#39;&#39;, 0) =&gt; list
+DEBUG:root:complete(&#39;&#39;, 1) =&gt; print
+DEBUG:root:complete(&#39;&#39;, 2) =&gt; stop
+DEBUG:root:complete(&#39;&#39;, 3) =&gt; None
+DEBUG:root:origline=&#39;&#39;
+DEBUG:root:begin=0
+DEBUG:root:end=0
+DEBUG:root:being_completed=
+DEBUG:root:words=[]
+DEBUG:root:complete(&#39;&#39;, 0) =&gt; list
+DEBUG:root:complete(&#39;&#39;, 1) =&gt; print
+DEBUG:root:complete(&#39;&#39;, 2) =&gt; stop
+DEBUG:root:complete(&#39;&#39;, 3) =&gt; None
+</pre></div>
+</div>
+<p>If the first word is <tt class="docutils literal"><span class="pre">&quot;list</span> <span class="pre">&quot;</span></tt> (with a space after the word), the
+candidates for completion are different:</p>
+<div class="highlight-python"><div class="highlight"><pre>Prompt (&quot;stop&quot; to quit): list
+directories  files
+</pre></div>
+</div>
+<p>The log shows that the text being completed is <em>not</em> the full line,
+but the portion after</p>
+<div class="highlight-python"><div class="highlight"><pre>DEBUG:root:origline=&#39;list &#39;
+DEBUG:root:begin=5
+DEBUG:root:end=5
+DEBUG:root:being_completed=
+DEBUG:root:words=[&#39;list&#39;]
+DEBUG:root:candidates=[&#39;files&#39;, &#39;directories&#39;]
+DEBUG:root:complete(&#39;&#39;, 0) =&gt; files
+DEBUG:root:complete(&#39;&#39;, 1) =&gt; directories
+DEBUG:root:complete(&#39;&#39;, 2) =&gt; None
+DEBUG:root:origline=&#39;list &#39;
+DEBUG:root:begin=5
+DEBUG:root:end=5
+DEBUG:root:being_completed=
+DEBUG:root:words=[&#39;list&#39;]
+DEBUG:root:candidates=[&#39;files&#39;, &#39;directories&#39;]
+DEBUG:root:complete(&#39;&#39;, 0) =&gt; files
+DEBUG:root:complete(&#39;&#39;, 1) =&gt; directories
+DEBUG:root:complete(&#39;&#39;, 2) =&gt; None
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-history">
+<h2>Input History<a class="headerlink" href="#input-history" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> tracks the input history automatically.  There are two
+different sets of functions for working with the history.  The history
+for the current session can be accessed with
+<tt class="docutils literal"><span class="pre">get_current_history_length()</span></tt> and <tt class="docutils literal"><span class="pre">get_history_item()</span></tt>.  That
+same history can be saved to a file to be reloaded later using
+<tt class="docutils literal"><span class="pre">write_history_file()</span></tt> and <tt class="docutils literal"><span class="pre">read_history_file()</span></tt>.  By default the
+entire history is saved but the maximum length of the file can be set
+with <tt class="docutils literal"><span class="pre">set_history_length()</span></tt>.  A length of -1 means no limit.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">readline</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">LOG_FILENAME</span> <span class="o">=</span> <span class="s">&#39;/tmp/completer.log&#39;</span>
+<span class="n">HISTORY_FILENAME</span> <span class="o">=</span> <span class="s">&#39;/tmp/completer.hist&#39;</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">LOG_FILENAME</span><span class="p">,</span>
+                    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_history_items</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_history_item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_current_history_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+             <span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">HistoryCompleter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">history_values</span> <span class="o">=</span> <span class="n">get_history_items</span><span class="p">()</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;history: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">history_values</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">matches</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">h</span> 
+                                      <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">history_values</span> 
+                                      <span class="k">if</span> <span class="n">h</span> <span class="ow">and</span> <span class="n">h</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;matches: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;complete(</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="s">) =&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> 
+                      <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">state</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+<span class="k">def</span> <span class="nf">input_loop</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">HISTORY_FILENAME</span><span class="p">):</span>
+        <span class="n">readline</span><span class="o">.</span><span class="n">read_history_file</span><span class="p">(</span><span class="n">HISTORY_FILENAME</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Max history file length:&#39;</span><span class="p">,</span> <span class="n">readline</span><span class="o">.</span><span class="n">get_history_length</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Startup history:&#39;</span><span class="p">,</span> <span class="n">get_history_items</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Prompt (&quot;stop&quot; to quit): &#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;stop&#39;</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;Adding &quot;</span><span class="si">%s</span><span class="s">&quot; to the history&#39;</span> <span class="o">%</span> <span class="n">line</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Final history:&#39;</span><span class="p">,</span> <span class="n">get_history_items</span><span class="p">()</span>
+        <span class="n">readline</span><span class="o">.</span><span class="n">write_history_file</span><span class="p">(</span><span class="n">HISTORY_FILENAME</span><span class="p">)</span>
+
+<span class="c"># Register our completer function</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">set_completer</span><span class="p">(</span><span class="n">HistoryCompleter</span><span class="p">()</span><span class="o">.</span><span class="n">complete</span><span class="p">)</span>
+
+<span class="c"># Use the tab key for completion</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&#39;tab: complete&#39;</span><span class="p">)</span>
+
+<span class="c"># Prompt the user for text</span>
+<span class="n">input_loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <strong>HistoryCompleter</strong> remembers everything you type and uses those
+values when completing subsequent inputs.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python readline_history.py
+Max history file length: -1
+Startup history: []
+Prompt (&quot;stop&quot; to quit): foo
+Adding &quot;foo&quot; to the history
+Prompt (&quot;stop&quot; to quit): bar
+Adding &quot;bar&quot; to the history
+Prompt (&quot;stop&quot; to quit): blah
+Adding &quot;blah&quot; to the history
+Prompt (&quot;stop&quot; to quit): b
+bar   blah
+Prompt (&quot;stop&quot; to quit): b
+Prompt (&quot;stop&quot; to quit): stop
+Final history: [&#39;foo&#39;, &#39;bar&#39;, &#39;blah&#39;, &#39;stop&#39;]
+</pre></div>
+</div>
+<p>The log shows this output when the &#8220;<tt class="docutils literal"><span class="pre">b</span></tt>&#8221; is followed by two TABs.</p>
+<div class="highlight-python"><div class="highlight"><pre>DEBUG:root:history: [&#39;foo&#39;, &#39;bar&#39;, &#39;blah&#39;]
+DEBUG:root:matches: [&#39;bar&#39;, &#39;blah&#39;]
+DEBUG:root:complete(&#39;b&#39;, 0) =&gt; &#39;bar&#39;
+DEBUG:root:complete(&#39;b&#39;, 1) =&gt; &#39;blah&#39;
+DEBUG:root:complete(&#39;b&#39;, 2) =&gt; None
+DEBUG:root:history: [&#39;foo&#39;, &#39;bar&#39;, &#39;blah&#39;]
+DEBUG:root:matches: [&#39;bar&#39;, &#39;blah&#39;]
+DEBUG:root:complete(&#39;b&#39;, 0) =&gt; &#39;bar&#39;
+DEBUG:root:complete(&#39;b&#39;, 1) =&gt; &#39;blah&#39;
+DEBUG:root:complete(&#39;b&#39;, 2) =&gt; None
+</pre></div>
+</div>
+<p>When the script is run the second time, all of the history is read
+from the file.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python readline_history.py
+Max history file length: -1
+Startup history: [&#39;foo&#39;, &#39;bar&#39;, &#39;blah&#39;, &#39;stop&#39;]
+Prompt (&quot;stop&quot; to quit):
+</pre></div>
+</div>
+<p>There are functions for removing individual history items and clearing
+the entire history, as well.</p>
+</div>
+<div class="section" id="hooks">
+<h2>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h2>
+<p>There are several hooks available for triggering actions as part of
+the interaction sequence.  The <em>startup</em> hook is invoked immediately
+before printing the prompt, and the <em>pre-input</em> hook is run after the
+prompt, but before reading text from the user.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">readline</span>
+
+<span class="k">def</span> <span class="nf">startup_hook</span><span class="p">():</span>
+    <span class="n">readline</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="s">&#39;from startup_hook&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pre_input_hook</span><span class="p">():</span>
+    <span class="n">readline</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="s">&#39; from pre_input_hook&#39;</span><span class="p">)</span>
+    <span class="n">readline</span><span class="o">.</span><span class="n">redisplay</span><span class="p">()</span>
+
+<span class="n">readline</span><span class="o">.</span><span class="n">set_startup_hook</span><span class="p">(</span><span class="n">startup_hook</span><span class="p">)</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">set_pre_input_hook</span><span class="p">(</span><span class="n">pre_input_hook</span><span class="p">)</span>
+<span class="n">readline</span><span class="o">.</span><span class="n">parse_and_bind</span><span class="p">(</span><span class="s">&#39;tab: complete&#39;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Prompt (&quot;stop&quot; to quit): &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;stop&#39;</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">print</span> <span class="s">&#39;ENTERED: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>Either hook is a potentially good place to use <tt class="docutils literal"><span class="pre">insert_text()</span></tt> to
+modify the input buffer.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python readline_hooks.py
+Prompt (&quot;stop&quot; to quit): from startup_hook from pre_input_hook
+</pre></div>
+</div>
+<p>If the buffer is modified inside the pre-input hook, you need to call
+<tt class="docutils literal"><span class="pre">redisplay()</span></tt> to update the screen.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/readline.html">readline</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://tiswww.case.edu/php/chet/readline/readline.html">GNU readline</a></dt>
+<dd>Documentation for the GNU readline library.</dd>
+<dt><a class="reference external" href="http://tiswww.case.edu/php/chet/readline/readline.html#SEC10">readline init file format</a></dt>
+<dd>The initialization and configuration file format.</dd>
+<dt><a class="reference external" href="http://sandbox.effbot.org/librarybook/readline.htm">effbot: The readline module</a></dt>
+<dd>Effbot&#8217;s guide to the readline module.</dd>
+<dt><a class="reference external" href="https://launchpad.net/pyreadline">pyreadline</a></dt>
+<dd>pyreadline, developed as a Python-based replacement for readline to be
+used in <a class="reference external" href="http://ipython.scipy.org/">iPython</a>.</dd>
+<dt><a class="reference internal" href="../cmd/index.html#module-cmd" title="cmd: Create line-oriented command processors."><tt class="xref py py-mod docutils literal"><span class="pre">cmd</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../cmd/index.html#module-cmd" title="cmd: Create line-oriented command processors."><tt class="xref py py-mod docutils literal"><span class="pre">cmd</span></tt></a> module uses <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> extensively to implement
+tab-completion in the command interface.  Some of the examples here
+were adapted from the code in <a class="reference internal" href="../cmd/index.html#module-cmd" title="cmd: Create line-oriented command processors."><tt class="xref py py-mod docutils literal"><span class="pre">cmd</span></tt></a>.</dd>
+<dt><a class="reference internal" href="../rlcompleter/index.html#module-rlcompleter" title="rlcompleter: Adds tab-completion to the interactive interpreter"><tt class="xref py py-mod docutils literal"><span class="pre">rlcompleter</span></tt></a></dt>
+<dd><a class="reference internal" href="../rlcompleter/index.html#module-rlcompleter" title="rlcompleter: Adds tab-completion to the interactive interpreter"><tt class="xref py py-mod docutils literal"><span class="pre">rlcompleter</span></tt></a> uses <a class="reference internal" href="#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-mod docutils literal"><span class="pre">readline</span></tt></a> to add tab-completion to the interactive
+Python interpreter.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../rlcompleter/index.html" title="rlcompleter – Adds tab-completion to the interactive interpreter"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../multiprocessing/mapreduce.html" title="Implementing MapReduce with multiprocessing"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../optional_os.html" >Optional Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

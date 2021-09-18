@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Deque - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="collections – Container data types" href="index.html" />
+    <link rel="next" title="namedtuple" href="namedtuple.html" />
+    <link rel="prev" title="defaultdict" href="defaultdict.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Deque</a><ul>
+<li><a class="reference internal" href="#populating">Populating</a></li>
+<li><a class="reference internal" href="#consuming">Consuming</a></li>
+<li><a class="reference internal" href="#rotating">Rotating</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="defaultdict.html" title="previous chapter"><strong>Previous:</strong> defaultdict</a><br/>
+          <a href="namedtuple.html" title="next chapter"><strong>Next:</strong> namedtuple</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/collections/deque.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="namedtuple.html" title="namedtuple"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="defaultdict.html" title="defaultdict"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">collections &#8211; Container data types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="deque">
+<span id="id1"></span><h1>Deque<a class="headerlink" href="#deque" title="Permalink to this headline">¶</a></h1>
+<p>A double-ended queue, or <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt>, supports adding and removing
+elements from either end. The more commonly used stacks and queues are
+degenerate forms of deques, where the inputs and outputs are
+restricted to a single end.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="s">&#39;abcdefg&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Deque:&#39;</span><span class="p">,</span> <span class="n">d</span>
+<span class="k">print</span> <span class="s">&#39;Length:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Left end:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;Right end:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;remove(c):&#39;</span><span class="p">,</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Since deques are a type of sequence container, they support some of
+the same operations that lists support, such as examining the contents
+with <tt class="xref py py-func docutils literal"><span class="pre">__getitem__()</span></tt>, determining length, and removing elements
+from the middle by matching identity.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python collections_deque.py
+
+Deque: deque([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;])
+Length: 7
+Left end: a
+Right end: g
+remove(c): deque([&#39;a&#39;, &#39;b&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;])
+</pre></div>
+</div>
+<div class="section" id="populating">
+<h2>Populating<a class="headerlink" href="#populating" title="Permalink to this headline">¶</a></h2>
+<p>A deque can be populated from either end, termed &#8220;left&#8221; and &#8220;right&#8221; in the
+Python implementation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="c"># Add to the right</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s">&#39;abcdefg&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;extend    :&#39;</span><span class="p">,</span> <span class="n">d</span>
+<span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;append    :&#39;</span><span class="p">,</span> <span class="n">d</span>
+
+<span class="c"># Add to the left</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">extendleft</span><span class="p">(</span><span class="s">&#39;abcdefg&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;extendleft:&#39;</span><span class="p">,</span> <span class="n">d</span>
+<span class="n">d</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;appendleft:&#39;</span><span class="p">,</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Notice that <tt class="xref py py-func docutils literal"><span class="pre">extendleft()</span></tt> iterates over its input and performs
+the equivalent of an <tt class="xref py py-func docutils literal"><span class="pre">appendleft()</span></tt> for each item. The end result
+is the <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> contains the input sequence in reverse order.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python collections_deque_populating.py
+
+extend    : deque([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;])
+append    : deque([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;])
+extendleft: deque([&#39;g&#39;, &#39;f&#39;, &#39;e&#39;, &#39;d&#39;, &#39;c&#39;, &#39;b&#39;, &#39;a&#39;])
+appendleft: deque([&#39;h&#39;, &#39;g&#39;, &#39;f&#39;, &#39;e&#39;, &#39;d&#39;, &#39;c&#39;, &#39;b&#39;, &#39;a&#39;])
+</pre></div>
+</div>
+</div>
+<div class="section" id="consuming">
+<h2>Consuming<a class="headerlink" href="#consuming" title="Permalink to this headline">¶</a></h2>
+<p>Similarly, the elements of the <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> can be consumed from
+both or either end, depending on the algorithm being applied.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="k">print</span> <span class="s">&#39;From the right:&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="s">&#39;abcdefg&#39;</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">From the left:&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="s">&#39;abcdefg&#39;</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<p>Use <tt class="xref py py-func docutils literal"><span class="pre">pop()</span></tt> to remove an item from the &#8220;right&#8221; end of the
+<tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">popleft()</span></tt> to take from the &#8220;left&#8221; end.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python collections_deque_consuming.py
+
+From the right:
+g
+f
+e
+d
+c
+b
+a
+
+From the left:
+a
+b
+c
+d
+e
+f
+g
+</pre></div>
+</div>
+<p>Since deques are thread-safe, the contents can even be consumed from
+both ends at the same time from separate threads.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">candle</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">11</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">burn</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">nextSource</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="n">nextSource</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;</span><span class="si">%8s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="nb">next</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%8s</span><span class="s"> done&#39;</span> <span class="o">%</span> <span class="n">direction</span>
+    <span class="k">return</span>
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">burn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;Left&#39;</span><span class="p">,</span> <span class="n">candle</span><span class="o">.</span><span class="n">popleft</span><span class="p">))</span>
+<span class="n">right</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">burn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;Right&#39;</span><span class="p">,</span> <span class="n">candle</span><span class="o">.</span><span class="n">pop</span><span class="p">))</span>
+
+<span class="n">left</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">right</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">left</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="n">right</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The threads in this example alternate between each end, removing items
+until the <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> is empty.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python collections_deque_both_ends.py
+
+    Left: 0
+   Right: 10
+   Right: 9
+     Left: 1
+   Right: 8
+    Left: 2
+   Right: 7
+    Left: 3
+   Right: 6
+    Left: 4
+   Right: 5
+    Left done
+   Right done
+</pre></div>
+</div>
+</div>
+<div class="section" id="rotating">
+<h2>Rotating<a class="headerlink" href="#rotating" title="Permalink to this headline">¶</a></h2>
+<p>Another useful capability of the <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> is to rotate it in
+either direction, to skip over some items.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;Normal        :&#39;</span><span class="p">,</span> <span class="n">d</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Right rotation:&#39;</span><span class="p">,</span> <span class="n">d</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Left rotation :&#39;</span><span class="p">,</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Rotating the <tt class="xref py py-class docutils literal"><span class="pre">deque</span></tt> to the right (using a positive rotation)
+takes items from the right end and moves them to the left
+end. Rotating to the left (with a negative value) takes items from the
+left end and moves them to the right end.  It may help to visualize
+the items in the deque as being engraved along the edge of a dial.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python collections_deque_rotate.py
+
+Normal        : deque([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Right rotation: deque([8, 9, 0, 1, 2, 3, 4, 5, 6, 7])
+Left rotation : deque([2, 3, 4, 5, 6, 7, 8, 9, 0, 1])
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Deque">WikiPedia: Deque</a></dt>
+<dd>A discussion of the deque data structure.</dd>
+<dt><a class="reference external" href="http://docs.python.org/lib/deque-recipes.html">Deque Recipes</a></dt>
+<dd>Examples of using deques in algorithms from the standard library documentation.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="namedtuple.html" title="namedtuple"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="defaultdict.html" title="defaultdict"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li>
+          <li><a href="index.html" >collections &#8211; Container data types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

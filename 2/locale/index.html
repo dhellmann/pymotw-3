@@ -1,0 +1,618 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>locale &#8211; POSIX cultural localization API - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internationalization" href="../i18n.html" />
+    <link rel="next" title="Program Frameworks" href="../frameworks.html" />
+    <link rel="prev" title="gettext – Message Catalogs" href="../gettext/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">locale &#8211; POSIX cultural localization API</a><ul>
+<li><a class="reference internal" href="#probing-the-current-locale">Probing the Current Locale</a></li>
+<li><a class="reference internal" href="#currency">Currency</a></li>
+<li><a class="reference internal" href="#formatting-numbers">Formatting Numbers</a></li>
+<li><a class="reference internal" href="#parsing-numbers">Parsing Numbers</a></li>
+<li><a class="reference internal" href="#dates-and-times">Dates and Times</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../gettext/index.html" title="previous chapter"><strong>Previous:</strong> gettext &#8211; Message Catalogs</a><br/>
+          <a href="../frameworks.html" title="next chapter"><strong>Next:</strong> Program Frameworks</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/locale/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../frameworks.html" title="Program Frameworks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../gettext/index.html" title="gettext – Message Catalogs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../i18n.html" accesskey="U">Internationalization</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-locale">
+<span id="locale-posix-cultural-localization-api"></span><h1>locale &#8211; POSIX cultural localization API<a class="headerlink" href="#module-locale" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Format and parse values that depend on location or language.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a> module is part of Python&#8217;s internationalization and
+localization support library. It provides a standard way to handle
+operations that may depend on the language or location of a user. For
+example, it handles formatting numbers as currency, comparing strings
+for sorting, and working with dates. It does not cover translation
+(see the <a class="reference internal" href="../gettext/index.html#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a> module) or Unicode encoding.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Changing the locale can have application-wide ramifications, so the
+recommended practice is to avoid changing the value in a library and
+to let the application set it one time. In the examples below, the
+locale is changed several times within a short program to highlight
+the differences in the settings of various locales. It is far more
+likely that your application will set the locale once at startup and
+not change it.</p>
+</div>
+<div class="section" id="probing-the-current-locale">
+<h2>Probing the Current Locale<a class="headerlink" href="#probing-the-current-locale" title="Permalink to this headline">¶</a></h2>
+<p>The most common way to let the user change the locale settings for an
+application is through an environment variable (<tt class="xref py py-data docutils literal"><span class="pre">LC_ALL</span></tt>,
+<tt class="xref py py-data docutils literal"><span class="pre">LC_CTYPE</span></tt>, <tt class="xref py py-data docutils literal"><span class="pre">LANG</span></tt>, or <tt class="xref py py-data docutils literal"><span class="pre">LANGUAGE</span></tt>, depending on the
+platform). The application then calls <tt class="xref py py-func docutils literal"><span class="pre">setlocale()</span></tt> without a
+hard-coded value, and the environment value is used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+<span class="c"># Default settings based on the user&#39;s environment.</span>
+<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Environment settings:&#39;</span>
+<span class="k">for</span> <span class="n">env_name</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;LC_ALL&#39;</span><span class="p">,</span> <span class="s">&#39;LC_CTYPE&#39;</span><span class="p">,</span> <span class="s">&#39;LANG&#39;</span><span class="p">,</span> <span class="s">&#39;LANGUAGE&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="si">%s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">env_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env_name</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+
+<span class="c"># What is the locale?</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Locale from environment:&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">.</span><span class="n">getlocale</span><span class="p">()</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">Numeric formatting:</span>
+
+<span class="s">  Decimal point      : &quot;</span><span class="si">%(decimal_point)s</span><span class="s">&quot;</span>
+<span class="s">  Grouping positions : </span><span class="si">%(grouping)s</span><span class="s"></span>
+<span class="s">  Thousands separator: &quot;</span><span class="si">%(thousands_sep)s</span><span class="s">&quot;</span>
+
+<span class="s">Monetary formatting:</span>
+
+<span class="s">  International currency symbol             : &quot;</span><span class="si">%(int_curr_symbol)r</span><span class="s">&quot;</span>
+<span class="s">  Local currency symbol                     : </span><span class="si">%(currency_symbol)r</span><span class="s"> (</span><span class="si">%(currency_symbol_u)s</span><span class="s">)</span>
+<span class="s">  Symbol precedes positive value            : </span><span class="si">%(p_cs_precedes)s</span><span class="s"></span>
+<span class="s">  Symbol precedes negative value            : </span><span class="si">%(n_cs_precedes)s</span><span class="s"></span>
+<span class="s">  Decimal point                             : &quot;</span><span class="si">%(mon_decimal_point)s</span><span class="s">&quot;</span>
+<span class="s">  Digits in fractional values               : </span><span class="si">%(frac_digits)s</span><span class="s"></span>
+<span class="s">  Digits in fractional values, international: </span><span class="si">%(int_frac_digits)s</span><span class="s"></span>
+<span class="s">  Grouping positions                        : </span><span class="si">%(mon_grouping)s</span><span class="s"></span>
+<span class="s">  Thousands separator                       : &quot;</span><span class="si">%(mon_thousands_sep)s</span><span class="s">&quot;</span>
+<span class="s">  Positive sign                             : &quot;</span><span class="si">%(positive_sign)s</span><span class="s">&quot;</span>
+<span class="s">  Positive sign position                    : </span><span class="si">%(p_sign_posn)s</span><span class="s"></span>
+<span class="s">  Negative sign                             : &quot;</span><span class="si">%(negative_sign)s</span><span class="s">&quot;</span>
+<span class="s">  Negative sign position                    : </span><span class="si">%(n_sign_posn)s</span><span class="s"></span>
+
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">sign_positions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span> <span class="p">:</span> <span class="s">&#39;Surrounded by parentheses&#39;</span><span class="p">,</span>
+    <span class="mi">1</span> <span class="p">:</span> <span class="s">&#39;Before value and symbol&#39;</span><span class="p">,</span>
+    <span class="mi">2</span> <span class="p">:</span> <span class="s">&#39;After value and symbol&#39;</span><span class="p">,</span>
+    <span class="mi">3</span> <span class="p">:</span> <span class="s">&#39;Before value&#39;</span><span class="p">,</span>
+    <span class="mi">4</span> <span class="p">:</span> <span class="s">&#39;After value&#39;</span><span class="p">,</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">CHAR_MAX</span> <span class="p">:</span> <span class="s">&#39;Unspecified&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">localeconv</span><span class="p">())</span>
+<span class="n">info</span><span class="p">[</span><span class="s">&#39;p_sign_posn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sign_positions</span><span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s">&#39;p_sign_posn&#39;</span><span class="p">]]</span>
+<span class="n">info</span><span class="p">[</span><span class="s">&#39;n_sign_posn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sign_positions</span><span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s">&#39;n_sign_posn&#39;</span><span class="p">]]</span>
+<span class="c"># convert the currency symbol to unicode</span>
+<span class="n">info</span><span class="p">[</span><span class="s">&#39;currency_symbol_u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;currency_symbol&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="n">template</span> <span class="o">%</span> <span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">localeconv()</span></tt> method returns a dictionary containing the
+locale&#8217;s conventions.  The full list of value names and definitions is
+covered in the standard library documentation.</p>
+<p>A Mac running OS X 10.6 with all of the variables unset produces this output:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export LANG=; export LC_CTYPE=; python locale_env_example.py
+
+Environment settings:
+        LC_ALL =
+        LC_CTYPE =
+        LANG =
+        LANGUAGE =
+
+Locale from environment: (None, None)
+
+Numeric formatting:
+
+  Decimal point      : &quot;.&quot;
+  Grouping positions : []
+  Thousands separator: &quot;&quot;
+
+Monetary formatting:
+
+  International currency symbol             : &quot;&#39;&#39;&quot;
+  Local currency symbol                     : &#39;&#39; ()
+  Symbol precedes positive value            : 127
+  Symbol precedes negative value            : 127
+  Decimal point                             : &quot;&quot;
+  Digits in fractional values               : 127
+  Digits in fractional values, international: 127
+  Grouping positions                        : []
+  Thousands separator                       : &quot;&quot;
+  Positive sign                             : &quot;&quot;
+  Positive sign position                    : Unspecified
+  Negative sign                             : &quot;&quot;
+  Negative sign position                    : Unspecified
+</pre></div>
+</div>
+<p>Running the same script with the <tt class="xref py py-data docutils literal"><span class="pre">LANG</span></tt> variable set shows how
+the locale and default encoding change:</p>
+<p>France (<tt class="docutils literal"><span class="pre">fr_FR</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ LANG=fr_FR LC_CTYPE=fr_FR LC_ALL=fr_FR python locale_env_example.py
+
+Environment settings:
+        LC_ALL = fr_FR
+        LC_CTYPE = fr_FR
+        LANG = fr_FR
+        LANGUAGE =
+
+Locale from environment: (&#39;fr_FR&#39;, &#39;ISO8859-1&#39;)
+
+Numeric formatting:
+
+  Decimal point      : &quot;,&quot;
+  Grouping positions : [127]
+  Thousands separator: &quot;&quot;
+
+Monetary formatting:
+
+  International currency symbol             : &quot;&#39;EUR &#39;&quot;
+  Local currency symbol                     : &#39;Eu&#39; (Eu)
+  Symbol precedes positive value            : 0
+  Symbol precedes negative value            : 0
+  Decimal point                             : &quot;,&quot;
+  Digits in fractional values               : 2
+  Digits in fractional values, international: 2
+  Grouping positions                        : [3, 3, 0]
+  Thousands separator                       : &quot; &quot;
+  Positive sign                             : &quot;&quot;
+  Positive sign position                    : Before value and symbol
+  Negative sign                             : &quot;-&quot;
+  Negative sign position                    : After value and symbol
+</pre></div>
+</div>
+<p>Spain (<tt class="docutils literal"><span class="pre">es_ES</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ LANG=es_ES LC_CTYPE=es_ES LC_ALL=es_ES python locale_env_example.py
+
+Environment settings:
+        LC_ALL = es_ES
+        LC_CTYPE = es_ES
+        LANG = es_ES
+        LANGUAGE =
+
+Locale from environment: (&#39;es_ES&#39;, &#39;ISO8859-1&#39;)
+
+Numeric formatting:
+
+  Decimal point      : &quot;,&quot;
+  Grouping positions : [127]
+  Thousands separator: &quot;&quot;
+
+Monetary formatting:
+
+  International currency symbol             : &quot;&#39;EUR &#39;&quot;
+  Local currency symbol                     : &#39;Eu&#39; (Eu)
+  Symbol precedes positive value            : 1
+  Symbol precedes negative value            : 1
+  Decimal point                             : &quot;,&quot;
+  Digits in fractional values               : 2
+  Digits in fractional values, international: 2
+  Grouping positions                        : [3, 3, 0]
+  Thousands separator                       : &quot;.&quot;
+  Positive sign                             : &quot;&quot;
+  Positive sign position                    : Before value and symbol
+  Negative sign                             : &quot;-&quot;
+  Negative sign position                    : Before value and symbol
+</pre></div>
+</div>
+<p>Portgual (<tt class="docutils literal"><span class="pre">pt_PT</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ LANG=pt_PT LC_CTYPE=pt_PT LC_ALL=pt_PT python locale_env_example.py
+
+Environment settings:
+        LC_ALL = pt_PT
+        LC_CTYPE = pt_PT
+        LANG = pt_PT
+        LANGUAGE =
+
+Locale from environment: (&#39;pt_PT&#39;, &#39;ISO8859-1&#39;)
+
+Numeric formatting:
+
+  Decimal point      : &quot;,&quot;
+  Grouping positions : []
+  Thousands separator: &quot; &quot;
+
+Monetary formatting:
+
+  International currency symbol             : &quot;&#39;EUR &#39;&quot;
+  Local currency symbol                     : &#39;Eu&#39; (Eu)
+  Symbol precedes positive value            : 0
+  Symbol precedes negative value            : 0
+  Decimal point                             : &quot;.&quot;
+  Digits in fractional values               : 2
+  Digits in fractional values, international: 2
+  Grouping positions                        : [3, 3, 0]
+  Thousands separator                       : &quot;.&quot;
+  Positive sign                             : &quot;&quot;
+  Positive sign position                    : Before value and symbol
+  Negative sign                             : &quot;-&quot;
+  Negative sign position                    : Before value and symbol
+</pre></div>
+</div>
+<p>Poland (<tt class="docutils literal"><span class="pre">pl_PL</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ LANG=pl_PL LC_CTYPE=pl_PL LC_ALL=pl_PL python locale_env_example.py
+
+Environment settings:
+        LC_ALL = pl_PL
+        LC_CTYPE = pl_PL
+        LANG = pl_PL
+        LANGUAGE =
+
+Locale from environment: (&#39;pl_PL&#39;, &#39;ISO8859-2&#39;)
+
+Numeric formatting:
+
+  Decimal point      : &quot;,&quot;
+  Grouping positions : [3, 3, 0]
+  Thousands separator: &quot; &quot;
+
+Monetary formatting:
+
+  International currency symbol             : &quot;&#39;PLN &#39;&quot;
+  Local currency symbol                     : &#39;z\xc5\x82&#39; (zł)
+  Symbol precedes positive value            : 1
+  Symbol precedes negative value            : 1
+  Decimal point                             : &quot;,&quot;
+  Digits in fractional values               : 2
+  Digits in fractional values, international: 2
+  Grouping positions                        : [3, 3, 0]
+  Thousands separator                       : &quot; &quot;
+  Positive sign                             : &quot;&quot;
+  Positive sign position                    : After value
+  Negative sign                             : &quot;-&quot;
+  Negative sign position                    : After value
+</pre></div>
+</div>
+</div>
+<div class="section" id="currency">
+<h2>Currency<a class="headerlink" href="#currency" title="Permalink to this headline">¶</a></h2>
+<p>The example output above shows that changing the locale updates the
+currency symbol setting and the character to separate whole numbers
+from decimal fractions.  This example loops through several different
+locales to print a positive and negative currency value formatted for
+each locale:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="n">sample_locales</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>      <span class="s">&#39;en_US&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;France&#39;</span><span class="p">,</span>   <span class="s">&#39;fr_FR&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Spain&#39;</span><span class="p">,</span>    <span class="s">&#39;es_ES&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Portugal&#39;</span><span class="p">,</span> <span class="s">&#39;pt_PT&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Poland&#39;</span><span class="p">,</span>   <span class="s">&#39;pl_PL&#39;</span><span class="p">),</span>
+                   <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">loc</span> <span class="ow">in</span> <span class="n">sample_locales</span><span class="p">:</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">: </span><span class="si">%10s</span><span class="s">  </span><span class="si">%10s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">locale</span><span class="o">.</span><span class="n">currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">),</span> <span class="n">locale</span><span class="o">.</span><span class="n">currency</span><span class="p">(</span><span class="o">-</span><span class="mf">1234.56</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The output is this small table:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python locale_currency_example.py
+
+                 USA:   $1234.56   -$1234.56
+              France: 1234,56 Eu  1234,56 Eu-
+               Spain: Eu 1234,56  -Eu 1234,56
+            Portugal: 1234.56 Eu  -1234.56 Eu
+              Poland: zł 1234,56  zł 1234,56-
+</pre></div>
+</div>
+</div>
+<div class="section" id="formatting-numbers">
+<h2>Formatting Numbers<a class="headerlink" href="#formatting-numbers" title="Permalink to this headline">¶</a></h2>
+<p>Numbers not related to currency are also formatted differently
+depending on the locale.  In particular, the <em>grouping</em> character used
+to separate large numbers into readable chunks is changed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="n">sample_locales</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>      <span class="s">&#39;en_US&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;France&#39;</span><span class="p">,</span>   <span class="s">&#39;fr_FR&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Spain&#39;</span><span class="p">,</span>    <span class="s">&#39;es_ES&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Portugal&#39;</span><span class="p">,</span> <span class="s">&#39;pt_PT&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Poland&#39;</span><span class="p">,</span>   <span class="s">&#39;pl_PL&#39;</span><span class="p">),</span>
+                   <span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s"> </span><span class="si">%15s</span><span class="s"> </span><span class="si">%20s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;Locale&#39;</span><span class="p">,</span> <span class="s">&#39;Integer&#39;</span><span class="p">,</span> <span class="s">&#39;Float&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">loc</span> <span class="ow">in</span> <span class="n">sample_locales</span><span class="p">:</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span>
+    <span class="k">print</span> <span class="n">locale</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%15d</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">123456</span><span class="p">,</span> <span class="n">grouping</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+    <span class="k">print</span> <span class="n">locale</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%20.2f</span><span class="s">&#39;</span><span class="p">,</span> <span class="mf">123456.78</span><span class="p">,</span> <span class="n">grouping</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To format numbers without the currency symbol, use <tt class="xref py py-func docutils literal"><span class="pre">format()</span></tt>
+instead of <tt class="xref py py-func docutils literal"><span class="pre">currency()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python locale_grouping.py
+
+              Locale         Integer                Float
+                 USA         123,456           123,456.78
+              France          123456            123456,78
+               Spain          123456            123456,78
+            Portugal          123456            123456,78
+              Poland         123 456           123 456,78
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-numbers">
+<h2>Parsing Numbers<a class="headerlink" href="#parsing-numbers" title="Permalink to this headline">¶</a></h2>
+<p>Besides generating output in different formats, the <a class="reference internal" href="#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a>
+module helps with parsing input. It includes <tt class="xref py py-func docutils literal"><span class="pre">atoi()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">atof()</span></tt> functions for converting the strings to integer and
+floating point values based on the locale&#8217;s numerical formatting
+conventions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="n">sample_data</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>      <span class="s">&#39;en_US&#39;</span><span class="p">,</span> <span class="s">&#39;1,234.56&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;France&#39;</span><span class="p">,</span>   <span class="s">&#39;fr_FR&#39;</span><span class="p">,</span> <span class="s">&#39;1234,56&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;Spain&#39;</span><span class="p">,</span>    <span class="s">&#39;es_ES&#39;</span><span class="p">,</span> <span class="s">&#39;1234,56&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;Portugal&#39;</span><span class="p">,</span> <span class="s">&#39;pt_PT&#39;</span><span class="p">,</span> <span class="s">&#39;1234.56&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;Poland&#39;</span><span class="p">,</span>   <span class="s">&#39;pl_PL&#39;</span><span class="p">,</span> <span class="s">&#39;1 234,56&#39;</span><span class="p">),</span>
+                <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sample_data</span><span class="p">:</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">atof</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">: </span><span class="si">%9s</span><span class="s"> =&gt; </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>The grouping and decimal separator values</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python locale_atof_example.py
+
+                 USA:  1,234.56 =&gt; 1234.560000
+              France:   1234,56 =&gt; 1234.560000
+               Spain:   1234,56 =&gt; 1234.560000
+            Portugal:   1234.56 =&gt; 1234.560000
+              Poland:  1 234,56 =&gt; 1234.560000
+</pre></div>
+</div>
+</div>
+<div class="section" id="dates-and-times">
+<h2>Dates and Times<a class="headerlink" href="#dates-and-times" title="Permalink to this headline">¶</a></h2>
+<p>Another important aspect of localization is date and time formatting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">sample_locales</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s">&#39;USA&#39;</span><span class="p">,</span>      <span class="s">&#39;en_US&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;France&#39;</span><span class="p">,</span>   <span class="s">&#39;fr_FR&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Spain&#39;</span><span class="p">,</span>    <span class="s">&#39;es_ES&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Portugal&#39;</span><span class="p">,</span> <span class="s">&#39;pt_PT&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;Poland&#39;</span><span class="p">,</span>   <span class="s">&#39;pl_PL&#39;</span><span class="p">),</span>
+                   <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">loc</span> <span class="ow">in</span> <span class="n">sample_locales</span><span class="p">:</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">nl_langinfo</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">D_T_FMT</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python locale_date_example.py
+
+                 USA: Thu Feb 21 06:35:54 2013
+              France: Jeu 21 fév 06:35:54 2013
+               Spain: jue 21 feb 06:35:54 2013
+            Portugal: Qui 21 Fev 06:35:54 2013
+              Poland: czw 21 lut 06:35:54 2013
+</pre></div>
+</div>
+<p>This discussion only covers some of the high-level functions in the
+<a class="reference internal" href="#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a> module. There are others which are lower level
+(<tt class="xref py py-func docutils literal"><span class="pre">format_string()</span></tt>) or which relate to managing the locale for
+your application (<tt class="xref py py-func docutils literal"><span class="pre">resetlocale()</span></tt>).</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/locale.html">locale</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../gettext/index.html#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a></dt>
+<dd>Message catalogs for translations.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../frameworks.html" title="Program Frameworks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../gettext/index.html" title="gettext – Message Catalogs"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../i18n.html" >Internationalization</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

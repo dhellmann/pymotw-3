@@ -1,0 +1,804 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>random &#8211; Pseudorandom number generators - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Numeric and Mathematical Modules" href="../numeric.html" />
+    <link rel="next" title="Internet Data Handling" href="../internet_data.html" />
+    <link rel="prev" title="operator – Functional interface to built-in operators" href="../operator/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">random &#8211; Pseudorandom number generators</a><ul>
+<li><a class="reference internal" href="#generating-random-numbers">Generating Random Numbers</a></li>
+<li><a class="reference internal" href="#seeding">Seeding</a></li>
+<li><a class="reference internal" href="#saving-state">Saving State</a></li>
+<li><a class="reference internal" href="#random-integers">Random Integers</a></li>
+<li><a class="reference internal" href="#picking-random-items">Picking Random Items</a></li>
+<li><a class="reference internal" href="#permutations">Permutations</a></li>
+<li><a class="reference internal" href="#multiple-simultaneous-generators">Multiple Simultaneous Generators</a></li>
+<li><a class="reference internal" href="#systemrandom">SystemRandom</a></li>
+<li><a class="reference internal" href="#non-uniform-distributions">Non-uniform Distributions</a><ul>
+<li><a class="reference internal" href="#normal">Normal</a></li>
+<li><a class="reference internal" href="#approximation">Approximation</a></li>
+<li><a class="reference internal" href="#exponential">Exponential</a></li>
+<li><a class="reference internal" href="#angular">Angular</a></li>
+<li><a class="reference internal" href="#sizes">Sizes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../operator/index.html" title="previous chapter"><strong>Previous:</strong> operator &#8211; Functional interface to built-in operators</a><br/>
+          <a href="../internet_data.html" title="next chapter"><strong>Next:</strong> Internet Data Handling</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/random/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../internet_data.html" title="Internet Data Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../operator/index.html" title="operator – Functional interface to built-in operators"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../numeric.html" accesskey="U">Numeric and Mathematical Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-random">
+<span id="random-pseudorandom-number-generators"></span><h1>random &#8211; Pseudorandom number generators<a class="headerlink" href="#module-random" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Implements several types of pseudorandom number generators.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> module provides a fast pseudorandom number generator
+based on the <em>Mersenne Twister</em> algorithm.  Originally developed to
+produce inputs for Monte Carlo simulations, Mersenne Twister generates
+numbers with nearly uniform distribution and a large period, making it
+suited for a wide range of applications.</p>
+<div class="section" id="generating-random-numbers">
+<h2>Generating Random Numbers<a class="headerlink" href="#generating-random-numbers" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-func docutils literal"><span class="pre">random()</span></tt></a> function returns the next random floating point
+value from the generated sequence.  All of the return values fall
+within the range <tt class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Running the program repeatedly produces different sequences of
+numbers.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_random.py
+
+0.182
+0.155
+0.097
+0.175
+0.008
+
+$ python random_random.py
+
+0.851
+0.607
+0.700
+0.922
+0.496
+</pre></div>
+</div>
+<p>To generate numbers in a specific numerical range, use <tt class="xref py py-func docutils literal"><span class="pre">uniform()</span></tt>
+instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pass minimum and maximum values, and <tt class="xref py py-func docutils literal"><span class="pre">uniform()</span></tt> adjusts the
+return values from <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-func docutils literal"><span class="pre">random()</span></tt></a> using the formula <tt class="docutils literal"><span class="pre">min</span> <span class="pre">+</span> <span class="pre">(max</span> <span class="pre">-</span>
+<span class="pre">min)</span> <span class="pre">*</span> <span class="pre">random()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_uniform.py
+
+6.899
+14.411
+96.792
+18.219
+63.386
+</pre></div>
+</div>
+</div>
+<div class="section" id="seeding">
+<h2>Seeding<a class="headerlink" href="#seeding" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-func docutils literal"><span class="pre">random()</span></tt></a> produces different values each time it is called, and
+has a very large period before it repeats any numbers.  This is useful
+for producing unique values or variations, but there are times when
+having the same dataset available to be processed in different ways is
+useful.  One technique is to use a program to generate random values
+and save them to be processed by a separate step.  That may not be
+practical for large amounts of data, though, so <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> includes
+the <tt class="xref py py-func docutils literal"><span class="pre">seed()</span></tt> function for initializing the pseudorandom generator
+so that it produces an expected set of values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The seed value controls the first value produced by the formula used
+to produce pseudorandom numbers, and since the formula is
+deterministic it also sets the full sequence produced after the seed
+is changed.  The argument to <tt class="xref py py-func docutils literal"><span class="pre">seed()</span></tt> can be any hashable object.
+The default is to use a platform-specific source of randomness, if one
+is available.  Otherwise the current time is used.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_seed.py
+
+0.134
+0.847
+0.764
+0.255
+0.495
+
+$ python random_seed.py
+
+0.134
+0.847
+0.764
+0.255
+0.495
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-state">
+<h2>Saving State<a class="headerlink" href="#saving-state" title="Permalink to this headline">¶</a></h2>
+<p>Another technique useful for controlling the number sequence is to
+save the internal state of the generator between test runs.  Restoring
+the previous state before continuing reduces the likelyhood of
+repeating values or sequences of values from the earlier input.  The
+<tt class="xref py py-func docutils literal"><span class="pre">getstate()</span></tt> function returns data that can be used to
+re-initialize the random number generator later with <tt class="xref py py-func docutils literal"><span class="pre">setstate()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;state.dat&#39;</span><span class="p">):</span>
+    <span class="c"># Restore the previously saved sate</span>
+    <span class="k">print</span> <span class="s">&#39;Found state.dat, initializing random module&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;state.dat&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">setstate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># Use a well-known start state</span>
+    <span class="k">print</span> <span class="s">&#39;No state.dat, seeding&#39;</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># Produce random values</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+
+<span class="c"># Save state for next time</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;state.dat&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">getstate</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="c"># Produce more random values</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">After saving state:&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The data returned by <tt class="xref py py-func docutils literal"><span class="pre">getstate()</span></tt> is an implementation detail, so
+this example saves the data to a file with <a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> but otherwise
+treats it as a black box.  If the file exists when the program starts,
+it loads the old state and continues.  Each run produces a few numbers
+before and after saving the state, to show that restoring the state
+causes the generator to produce the same values again.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_state.py
+
+No state.dat, seeding
+0.134
+0.847
+0.764
+
+After saving state:
+0.255
+0.495
+0.449
+
+$ python random_state.py
+
+Found state.dat, initializing random module
+0.255
+0.495
+0.449
+
+After saving state:
+0.652
+0.789
+0.094
+</pre></div>
+</div>
+</div>
+<div class="section" id="random-integers">
+<h2>Random Integers<a class="headerlink" href="#random-integers" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-func docutils literal"><span class="pre">random()</span></tt></a> generates floating point numbers.  It is possible to
+convert the results to integers, but using <tt class="xref py py-func docutils literal"><span class="pre">randint()</span></tt> to generate
+integers directly is more convenient.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">print</span> <span class="s">&#39;[1, 100]:&#39;</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;[-5, 5]:&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The arguments to <tt class="xref py py-func docutils literal"><span class="pre">randint()</span></tt> are the ends of the inclusive range
+for the values.  The numbers can be positive or negative, but the
+first value should be less than the second.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_randint.py
+
+[1, 100]:
+3
+47
+72
+
+[-5, 5]:
+4
+1
+-3
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">randrange()</span></tt> is a more general form of selecting values from a
+range.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">randrange()</span></tt> supports a <em>step</em> argument, in addition to start and
+stop values, so it is fully equivalent to selecting a random value
+from <tt class="docutils literal"><span class="pre">range(start,</span> <span class="pre">stop,</span> <span class="pre">step)</span></tt>.  It is more efficient, because the
+range is not actually constructed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_randrange.py
+
+50
+55
+45
+</pre></div>
+</div>
+</div>
+<div class="section" id="picking-random-items">
+<h2>Picking Random Items<a class="headerlink" href="#picking-random-items" title="Permalink to this headline">¶</a></h2>
+<p>One common use for random number generators is to select a random item
+from a sequence of enumerated values, even if those values are not
+numbers.  <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> includes the <tt class="xref py py-func docutils literal"><span class="pre">choice()</span></tt> function for
+making a random selection from a sequence.  This example simulates
+flipping a coin 10,000 times to count how many times it comes up heads
+and how many times tails.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">outcomes</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;heads&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+             <span class="s">&#39;tails&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+             <span class="p">}</span>
+<span class="n">sides</span> <span class="o">=</span> <span class="n">outcomes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">outcomes</span><span class="p">[</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sides</span><span class="p">)</span> <span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">print</span> <span class="s">&#39;Heads:&#39;</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">[</span><span class="s">&#39;heads&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;Tails:&#39;</span><span class="p">,</span> <span class="n">outcomes</span><span class="p">[</span><span class="s">&#39;tails&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>There are only two outcomes allowed, so rather than use numbers and
+convert them the words &#8220;heads&#8221; and &#8220;tails&#8221; are used with
+<tt class="xref py py-func docutils literal"><span class="pre">choice()</span></tt>.  The results are tabulated in a dictionary using the
+outcome names as keys.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_choice.py
+
+Heads: 5069
+Tails: 4931
+</pre></div>
+</div>
+</div>
+<div class="section" id="permutations">
+<h2>Permutations<a class="headerlink" href="#permutations" title="Permalink to this headline">¶</a></h2>
+<p>A simulation of a card game needs to mix up the deck of cards and then
+&#8220;deal&#8221; them to the players, without using the same card more than
+once.  Using <tt class="xref py py-func docutils literal"><span class="pre">choice()</span></tt> could result in the same card being dealt
+twice, so instead the deck can be mixed up with <tt class="xref py py-func docutils literal"><span class="pre">shuffle()</span></tt> and
+then individual cards removed as they are dealt.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="k">def</span> <span class="nf">new_deck</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;J&#39;</span><span class="p">,</span> <span class="s">&#39;Q&#39;</span><span class="p">,</span> <span class="s">&#39;K&#39;</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">)),</span>
+            <span class="p">(</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">),</span>
+            <span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">show_deck</span><span class="p">(</span><span class="n">deck</span><span class="p">):</span>
+    <span class="n">p_deck</span> <span class="o">=</span> <span class="n">deck</span><span class="p">[:]</span>
+    <span class="k">while</span> <span class="n">p_deck</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">p_deck</span><span class="p">[:</span><span class="mi">13</span><span class="p">]</span>
+        <span class="n">p_deck</span> <span class="o">=</span> <span class="n">p_deck</span><span class="p">[</span><span class="mi">13</span><span class="p">:]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;</span><span class="si">%2s%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">j</span><span class="p">,</span>
+        <span class="k">print</span>
+
+<span class="c"># Get a new deck, with the cards in order</span>
+<span class="n">deck</span> <span class="o">=</span> <span class="n">new_deck</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Initial deck:&#39;</span>
+<span class="n">show_deck</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+
+<span class="c"># Shuffle the deck to randomize the order</span>
+<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Shuffled deck:&#39;</span>
+<span class="n">show_deck</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+
+<span class="c"># Deal 4 hands of 5 cards each</span>
+<span class="n">hands</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span> <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hands</span><span class="p">:</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deck</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+<span class="c"># Show the hands</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Hands:&#39;</span>
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hands</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s">:&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%2s%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">c</span><span class="p">,</span>
+    <span class="k">print</span>
+    
+<span class="c"># Show the remaining deck</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Remaining deck:&#39;</span>
+<span class="n">show_deck</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The cards are represented as tuples with the face value and a letter
+indicating the suit.  The dealt &#8220;hands&#8221; are created by adding one card
+at a time to each of four lists, and removing it from the deck so it
+cannot be dealt again.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_shuffle.py
+
+Initial deck:
+ 2H  2D  2C  2S  3H  3D  3C  3S  4H  4D  4C  4S  5H
+ 5D  5C  5S  6H  6D  6C  6S  7H  7D  7C  7S  8H  8D
+ 8C  8S  9H  9D  9C  9S 10H 10D 10C 10S  JH  JD  JC
+ JS  QH  QD  QC  QS  KH  KD  KC  KS  AH  AD  AC  AS
+
+Shuffled deck:
+ 4C  3H  AD  JH  7D  3D  5C  6D  5D  7S  5S  KH  8S
+ QC  5H  7C  4D  4S  2H  JD  KD  AH 10S  KC  6C  6H
+ 8H 10H  QD  AC  2S  7H  JC  9S  AS  8C  QH  9D  4H
+ 8D  JS  2D  3S  9C 10D  3C  6S  2C  QS  KS 10C  9H
+
+Hands:
+1:  9H  2C  9C  8D  8C
+2: 10C  6S  3S  4H  AS
+3:  KS  3C  2D  9D  9S
+4:  QS 10D  JS  QH  JC
+
+Remaining deck:
+ 4C  3H  AD  JH  7D  3D  5C  6D  5D  7S  5S  KH  8S
+ QC  5H  7C  4D  4S  2H  JD  KD  AH 10S  KC  6C  6H
+ 8H 10H  QD  AC  2S  7H
+</pre></div>
+</div>
+<p>Many simulations need random samples from a population of input
+values.  The <tt class="xref py py-func docutils literal"><span class="pre">sample()</span></tt> function generates samples without
+repeating values and without modifying the input sequence.  This
+example prints a random sample of words from the system dictionary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/usr/share/dict/words&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span> <span class="n">w</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span> <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">w</span>
+    
+</pre></div>
+</div>
+<p>The algorithm for producing the result set takes into account the
+sizes of the input and the sample requested to produce the result as
+efficiently as possible.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_sample.py
+
+pleasureman
+consequency
+docibility
+youdendrift
+Ituraean
+
+$ python random_sample.py
+
+jigamaree
+readingdom
+sporidium
+pansylike
+foraminiferan
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-simultaneous-generators">
+<h2>Multiple Simultaneous Generators<a class="headerlink" href="#multiple-simultaneous-generators" title="Permalink to this headline">¶</a></h2>
+<p>In addition to module-level functions, <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> includes a
+<tt class="xref py py-class docutils literal"><span class="pre">Random</span></tt> class to manage the internal state for several random
+number generators.  All of the functions described above are available
+as methods of the <tt class="xref py py-class docutils literal"><span class="pre">Random</span></tt> instances, and each instance can be
+initialized and used separately, without interfering with the values
+returned by other instances.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;Default initializiation:</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">  </span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">r2</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Same seed:</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">  </span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">r2</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>On a system with good native random value seeding, the instances start
+out in unique states.  However, if there is no good platform random
+value generator, the instances are likely to have been seeded with the
+current time, and therefore produce the same values.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_random_class.py
+
+Default initializiation:
+
+0.171  0.711
+0.184  0.558
+0.818  0.113
+
+Same seed:
+
+0.857  0.857
+0.925  0.925
+0.040  0.040
+</pre></div>
+</div>
+<p>To ensure that the generators produce values from different parts of
+the random period, use <tt class="xref py py-func docutils literal"><span class="pre">jumpahead()</span></tt> to shift one of them away
+from its initial state.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>
+
+<span class="c"># Force r2 to a different part of the random period than r1.</span>
+<span class="n">r2</span><span class="o">.</span><span class="n">setstate</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">getstate</span><span class="p">())</span>
+<span class="n">r2</span><span class="o">.</span><span class="n">jumpahead</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">  </span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">r2</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The argument to <tt class="xref py py-func docutils literal"><span class="pre">jumpahead()</span></tt> should be a non-negative integer
+based the number of values needed from each generator.  The internal
+state of the generator is scrambled based on the input value, but not
+simply by incrementing it by the number of steps given.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_jumpahead.py
+
+0.405  0.159
+0.592  0.765
+0.501  0.764
+</pre></div>
+</div>
+</div>
+<div class="section" id="systemrandom">
+<h2>SystemRandom<a class="headerlink" href="#systemrandom" title="Permalink to this headline">¶</a></h2>
+<p>Some operating systems provide a random number generator that has
+access to more sources of entropy that can be introduced into the
+generator.  <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> exposes this feature through the
+<tt class="xref py py-class docutils literal"><span class="pre">SystemRandom</span></tt> class, which has the same API as <tt class="xref py py-class docutils literal"><span class="pre">Random</span></tt>
+but uses <tt class="xref py py-func docutils literal"><span class="pre">os.urandom()</span></tt> to generate the values that form the basis
+of all of the other algorithms.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;Default initializiation:</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="n">r1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">()</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">  </span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">r2</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Same seed:</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%04.3f</span><span class="s">  </span><span class="si">%04.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">r2</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Sequences produced by <tt class="xref py py-class docutils literal"><span class="pre">SystemRandom</span></tt> are not reproducable
+because the randomness is coming from the system, rather than software
+state (in fact, <tt class="xref py py-func docutils literal"><span class="pre">seed()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">setstate()</span></tt> have no effect at
+all).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python random_system_random.py
+
+Default initializiation:
+
+0.374  0.932
+0.002  0.022
+0.692  1.000
+
+Same seed:
+
+0.182  0.939
+0.154  0.430
+0.649  0.970
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-uniform-distributions">
+<h2>Non-uniform Distributions<a class="headerlink" href="#non-uniform-distributions" title="Permalink to this headline">¶</a></h2>
+<p>While the uniform distribution of the values produced by
+<a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-func docutils literal"><span class="pre">random()</span></tt></a> is useful for a lot of purposes, other distributions
+more accurately model specific situations.  The <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> module
+includes functions to produce values in those distributions, too.
+They are listed here, but not covered in detail because their uses
+tend to be specialized and require more complex examples.</p>
+<div class="section" id="normal">
+<h3>Normal<a class="headerlink" href="#normal" title="Permalink to this headline">¶</a></h3>
+<p>The <em>normal</em> distribution is commonly used for non-uniform continuous
+values such as grades, heights, weights, etc.  The curve produced by
+the distribution has a distinctive shape which has lead to it being
+nicknamed a &#8220;bell curve.&#8221;  <a class="reference internal" href="#module-random" title="random: Pseudorandom number generators"><tt class="xref py py-mod docutils literal"><span class="pre">random</span></tt></a> includes two functions for
+generating values with a normal distribution, <tt class="xref py py-func docutils literal"><span class="pre">normalvariate()</span></tt>
+and the slightly faster <tt class="xref py py-func docutils literal"><span class="pre">gauss()</span></tt> (the normal distribution is also
+called the Gaussian distribution).</p>
+<p>The related function, <tt class="xref py py-func docutils literal"><span class="pre">lognormvariate()</span></tt> produces pseudorandom
+values where the logarithm of the values is distributed normally.
+Log-normal distributions are useful for values that are the product of
+several random variables which do not interact.</p>
+</div>
+<div class="section" id="approximation">
+<h3>Approximation<a class="headerlink" href="#approximation" title="Permalink to this headline">¶</a></h3>
+<p>The <em>triangular</em> distribution is used as an approximate distribution
+for small sample sizes.  The &#8220;curve&#8221; of a triangular distribution has
+low points at known minimum and maximum values, and a high point at
+and the mode, which is estimated based on a &#8220;most likely&#8221; outcome
+(reflected by the mode argument to <tt class="xref py py-func docutils literal"><span class="pre">triangular()</span></tt>).</p>
+</div>
+<div class="section" id="exponential">
+<h3>Exponential<a class="headerlink" href="#exponential" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref py py-func docutils literal"><span class="pre">expovariate()</span></tt> produces an exponential distribution useful for
+simulating arrival or interval time values for in homogeneous Poisson
+processes such as the rate of radioactive decay or requests coming
+into a web server.</p>
+<p>The Pareto, or power law, distribution matches many observable
+phenomena and was popularized by Chris Anderon&#8217;s book, <em>The Long
+Tail</em>.  The <tt class="xref py py-func docutils literal"><span class="pre">paretovariate()</span></tt> function is useful for simulating
+allocation of resources to individuals (wealth to people, demand for
+musicians, attention to blogs, etc.).</p>
+</div>
+<div class="section" id="angular">
+<h3>Angular<a class="headerlink" href="#angular" title="Permalink to this headline">¶</a></h3>
+<p>The von Mises, or circular normal, distribution (produced by
+<tt class="xref py py-func docutils literal"><span class="pre">vonmisesvariate()</span></tt>) is used for computing probabilities of cyclic
+values such as angles, calendar days, and times.</p>
+</div>
+<div class="section" id="sizes">
+<h3>Sizes<a class="headerlink" href="#sizes" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref py py-func docutils literal"><span class="pre">betavariate()</span></tt> generates values with the Beta distribution, which
+is commonly used in Bayesian statistics and applications such as task
+duration modeling.</p>
+<p>The Gamma distribution produced by <tt class="xref py py-func docutils literal"><span class="pre">gammavariate()</span></tt> is used for
+modeling the sizes of things such as waiting times, rainfall, and
+computational errors.</p>
+<p>The Weibull distribution computed by <tt class="xref py py-func docutils literal"><span class="pre">weibullvariate()</span></tt> is used in
+failure analysis, industrial engineering, and weather forecasting.  It
+describes the distribution of sizes of particles or other discrete
+objects.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/random.html">random</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt>Mersenne Twister: A 623-dimensionally equidistributed uniform pseudorandom number generator</dt>
+<dd>Article by M. Matsumoto and T. Nishimura from <em>ACM
+Transactions on Modeling and Computer Simulation</em> Vol. 8,
+No. 1, January pp.3-30 1998.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Mersenne_twister">Wikipedia: Mersenne Twister</a></dt>
+<dd>Article about the pseudorandom generator algorithm used by Python.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Uniform_distribution_(continuous)">Wikipedia: Uniform distribution</a></dt>
+<dd>Article about continuous uniform distributions in statistics.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../internet_data.html" title="Internet Data Handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../operator/index.html" title="operator – Functional interface to built-in operators"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../numeric.html" >Numeric and Mathematical Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

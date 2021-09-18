@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pwd &#8211; Unix Password Database - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Unix-specific Services" href="../unix.html" />
+    <link rel="next" title="resource – System resource management" href="../resource/index.html" />
+    <link rel="prev" title="pipes – Unix shell command pipeline templates" href="../pipes/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">pwd &#8211; Unix Password Database</a><ul>
+<li><a class="reference internal" href="#querying-all-users">Querying All Users</a></li>
+<li><a class="reference internal" href="#querying-user-by-name">Querying User By Name</a></li>
+<li><a class="reference internal" href="#querying-user-by-uid">Querying User By UID</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../pipes/index.html" title="previous chapter"><strong>Previous:</strong> pipes &#8211; Unix shell command pipeline templates</a><br/>
+          <a href="../resource/index.html" title="next chapter"><strong>Next:</strong> resource &#8211; System resource management</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/pwd/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../resource/index.html" title="resource – System resource management"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../pipes/index.html" title="pipes – Unix shell command pipeline templates"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" accesskey="U">Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-pwd">
+<span id="pwd-unix-password-database"></span><h1>pwd &#8211; Unix Password Database<a class="headerlink" href="#module-pwd" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read user data from Unix password database.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The pwd module can be used to read user information from the Unix
+password database (usually <tt class="docutils literal"><span class="pre">/etc/passwd</span></tt>).  The read-only interface
+returns tuple-like objects with named attributes for the standard
+fields of a password record.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="12%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Index</th>
+<th class="head">Attribute</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>pw_name</td>
+<td>The user&#8217;s login name</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>pw_passwd</td>
+<td>Encrypted password (optional)</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>pw_uid</td>
+<td>User id (integer)</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>pw_gid</td>
+<td>Group id (integer)</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>pw_gecos</td>
+<td>Comment/full name</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>pw_dir</td>
+<td>Home directory</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>pw_shell</td>
+<td>Application started on login, usually a command interpreter</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="querying-all-users">
+<h2>Querying All Users<a class="headerlink" href="#querying-all-users" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you need to print a report of all of the &#8220;real&#8221; users on a
+system, including their home directories (for our purposes, &#8220;real&#8221; is
+defined as having a name not starting with &#8220;<tt class="docutils literal"><span class="pre">_</span></tt>&#8221;).  To load the
+entire password database, you would use <tt class="docutils literal"><span class="pre">getpwall()</span></tt>.  The return
+value is a list with an undefined order, so you will need to sort it
+before printing the report.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pwd</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="c"># Load all of the user data, sorted by username</span>
+<span class="n">all_user_data</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwall</span><span class="p">()</span>
+<span class="n">interesting_users</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">u</span> 
+                            <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">all_user_data</span> 
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">u</span><span class="o">.</span><span class="n">pw_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">)),</span>
+                            <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s">&#39;pw_name&#39;</span><span class="p">))</span>
+
+<span class="c"># Find the longest lengths for a few fields</span>
+<span class="n">username_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">pw_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">interesting_users</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">home_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">pw_dir</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">interesting_users</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c"># Print report headers</span>
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%-*s</span><span class="s"> </span><span class="si">%4s</span><span class="s"> </span><span class="si">%-*s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">username_length</span><span class="p">,</span> <span class="s">&#39;User&#39;</span><span class="p">,</span> 
+             <span class="s">&#39;UID&#39;</span><span class="p">,</span> 
+             <span class="n">home_length</span><span class="p">,</span> <span class="s">&#39;Home Dir&#39;</span><span class="p">,</span> 
+             <span class="s">&#39;Description&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="n">username_length</span><span class="p">,</span> <span class="s">&#39;----&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="n">home_length</span><span class="p">,</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+
+<span class="c"># Print the data</span>
+<span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">interesting_users</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">username_length</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">pw_name</span><span class="p">,</span> 
+                 <span class="n">u</span><span class="o">.</span><span class="n">pw_uid</span><span class="p">,</span> 
+                 <span class="n">home_length</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">pw_dir</span><span class="p">,</span> 
+                 <span class="n">u</span><span class="o">.</span><span class="n">pw_gecos</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Most of the example code above deals with formatting the results
+nicely.  The <tt class="docutils literal"><span class="pre">for</span></tt> loop at the end shows how to access fields from
+the records by name.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pwd_getpwall.py
+
+User        UID Home Dir                 Description
+---------- ---- ------------------------ ------------------------------
+daemon        1 /var/root                System Services
+daemon        1 /var/root                System Services
+dhellmann   527 /Users/dhellmann         Doug Hellmann
+nobody     4294967294 /var/empty               Unprivileged User
+nobody     4294967294 /var/empty               Unprivileged User
+postgres    528 /Library/PostgreSQL/9.0  PostgreSQL
+root          0 /var/root                System Administrator
+root          0 /var/root                System Administrator
+</pre></div>
+</div>
+</div>
+<div class="section" id="querying-user-by-name">
+<h2>Querying User By Name<a class="headerlink" href="#querying-user-by-name" title="Permalink to this headline">¶</a></h2>
+<p>If you need information about one user, it is not necessary to read
+the entire password database.  Using <tt class="docutils literal"><span class="pre">getpwnam()</span></tt>, you can retrieve
+the information about a user by name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pwd</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">user_info</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwnam</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Username:&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_name</span>
+<span class="k">print</span> <span class="s">&#39;Password:&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_passwd</span>
+<span class="k">print</span> <span class="s">&#39;Comment :&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_gecos</span>
+<span class="k">print</span> <span class="s">&#39;UID/GID :&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_uid</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_gid</span>
+<span class="k">print</span> <span class="s">&#39;Home    :&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_dir</span>
+<span class="k">print</span> <span class="s">&#39;Shell   :&#39;</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_shell</span>
+</pre></div>
+</div>
+<p>The passwords on my system are stored outside of the main user
+database in a shadow file, so the password field, when set, is
+reported as all <tt class="docutils literal"><span class="pre">*</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pwd_getpwnam.py dhellmann
+
+Username: dhellmann
+Password: ********
+Comment : Doug Hellmann
+UID/GID : 527 / 501
+Home    : /Users/dhellmann
+Shell   : /bin/bash
+
+$ python pwd_getpwnam.py nobody
+
+Username: nobody
+Password: *
+Comment : Unprivileged User
+UID/GID : 4294967294 / 4294967294
+Home    : /var/empty
+Shell   : /usr/bin/false
+</pre></div>
+</div>
+</div>
+<div class="section" id="querying-user-by-uid">
+<h2>Querying User By UID<a class="headerlink" href="#querying-user-by-uid" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to look up a user by their numerical user id.
+This is useful to find the owner of a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pwd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;pwd_getpwuid_fileowner.py&#39;</span>
+<span class="n">stat_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">owner</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_uid</span><span class="p">)</span><span class="o">.</span><span class="n">pw_name</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is owned by </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_uid</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python pwd_getpwuid_fileowner.py
+
+pwd_getpwuid_fileowner.py is owned by dhellmann (527)
+</pre></div>
+</div>
+<p>The numeric user id is can also be used to find information about the
+user currently running a process:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pwd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">uid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span>
+<span class="n">user_info</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Currently running with UID=</span><span class="si">%s</span><span class="s"> username=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">user_info</span><span class="o">.</span><span class="n">pw_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python pwd_getpwuid_process.py
+
+Currently running with UID=527 username=dhellmann
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/pwd.html">pwd</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">spwd</span></tt></dt>
+<dd>Secure password database access for systems using shadow passwords.</dd>
+<dt><a class="reference internal" href="../grp/index.html#module-grp" title="grp: Unix Group Database"><tt class="xref py py-mod docutils literal"><span class="pre">grp</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../grp/index.html#module-grp" title="grp: Unix Group Database"><tt class="xref py py-mod docutils literal"><span class="pre">grp</span></tt></a> module reads Unix group information.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../resource/index.html" title="resource – System resource management"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../pipes/index.html" title="pipes – Unix shell command pipeline templates"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" >Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

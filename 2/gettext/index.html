@@ -1,0 +1,623 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>gettext &#8211; Message Catalogs - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internationalization" href="../i18n.html" />
+    <link rel="next" title="locale – POSIX cultural localization API" href="../locale/index.html" />
+    <link rel="prev" title="Internationalization" href="../i18n.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">gettext &#8211; Message Catalogs</a><ul>
+<li><a class="reference internal" href="#translation-workflow-overview">Translation Workflow Overview</a></li>
+<li><a class="reference internal" href="#creating-message-catalogs-from-source-code">Creating Message Catalogs from Source Code</a></li>
+<li><a class="reference internal" href="#finding-message-catalogs-at-runtime">Finding Message Catalogs at Runtime</a></li>
+<li><a class="reference internal" href="#plural-values">Plural Values</a></li>
+<li><a class="reference internal" href="#application-vs-module-localization">Application vs. Module Localization</a><ul>
+<li><a class="reference internal" href="#application-localization">Application Localization</a></li>
+<li><a class="reference internal" href="#module-localization">Module Localization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../i18n.html" title="previous chapter"><strong>Previous:</strong> Internationalization</a><br/>
+          <a href="../locale/index.html" title="next chapter"><strong>Next:</strong> locale &#8211; POSIX cultural localization API</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/gettext/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../locale/index.html" title="locale – POSIX cultural localization API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../i18n.html" title="Internationalization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../i18n.html" accesskey="U">Internationalization</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-gettext">
+<span id="gettext-message-catalogs"></span><h1>gettext &#8211; Message Catalogs<a class="headerlink" href="#module-gettext" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Message catalog API for internationalization.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a> module provides a pure-Python implementation
+compatible with the <a class="reference external" href="http://www.gnu.org/software/gettext/">GNU gettext</a> library for message translation and
+catalog management.  The tools available with the Python source
+distribution enable you to extract messages from your source, build a
+message catalog containing translations, and use that message catalog
+to print an appropriate message for the user at runtime.</p>
+<p>Message catalogs can be used to provide internationalized interfaces
+for your program, showing messages in a language appropriate to the
+user.  They can also be used for other message customizations,
+including &#8220;skinning&#8221; an interface for different wrappers or partners.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although the standard library documentation says everything you
+need is included with Python, I found that <tt class="docutils literal"><span class="pre">pygettext.py</span></tt>
+refused to extract messages wrapped in the <tt class="docutils literal"><span class="pre">ungettext</span></tt> call,
+even when I used what seemed to be the appropriate command line
+options. I ended up installing the <a class="reference external" href="http://www.gnu.org/software/gettext/">GNU gettext</a> tools from
+source and using <tt class="docutils literal"><span class="pre">xgettext</span></tt> instead.</p>
+</div>
+<div class="section" id="translation-workflow-overview">
+<h2>Translation Workflow Overview<a class="headerlink" href="#translation-workflow-overview" title="Permalink to this headline">¶</a></h2>
+<p>The process for setting up and using translations includes five steps:</p>
+<ol class="arabic">
+<li><p class="first">Mark up literal strings in your code that contain messages to translate.</p>
+<p>Start by identifying the messages within your program source that
+need to be translated, and marking the literal strings so the
+extraction program can find them.</p>
+</li>
+<li><p class="first">Extract the messages.</p>
+<p>After you have identified the translatable strings in your program
+source, use <tt class="docutils literal"><span class="pre">xgettext</span></tt> to pull the strings out and create a
+<tt class="docutils literal"><span class="pre">.pot</span></tt> file, or translation template. The template is a text file
+with copies of all of the strings you identified and placeholders
+for their translations.</p>
+</li>
+<li><p class="first">Translate the messages.</p>
+<p>Give a copy of the <tt class="docutils literal"><span class="pre">.pot</span></tt> file to the translator, changing the
+extension to <tt class="docutils literal"><span class="pre">.po</span></tt>. The <tt class="docutils literal"><span class="pre">.po</span></tt> file is an editable source file
+used as input for the compilation step. The translator should
+update the header text in the file and provide translations for all
+of the strings.</p>
+</li>
+<li><p class="first">&#8220;Compile&#8221; the message catalog from the translation.</p>
+<p>When the translator gives you back the completed <tt class="docutils literal"><span class="pre">.po</span></tt> file,
+compile the text file to the binary catalog format using
+<tt class="docutils literal"><span class="pre">msgfmt</span></tt>. The binary format is used by the runtime catalog lookup
+code.</p>
+</li>
+<li><p class="first">Load and activate the appropriate message catalog at runtime.</p>
+<p>The final step is to add a few lines to your application to
+configure and load the message catalog and install the translation
+function. There are a couple of ways to do that, with associated
+trade-offs, and each is covered below.</p>
+</li>
+</ol>
+<p>Let&#8217;s go through those steps in a little more detail, starting with
+the modifications you need to make to your code.</p>
+</div>
+<div class="section" id="creating-message-catalogs-from-source-code">
+<h2>Creating Message Catalogs from Source Code<a class="headerlink" href="#creating-message-catalogs-from-source-code" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a> works by finding literal strings embedded in your
+program in a database of translations, and pulling out the appropriate
+translated string.  There are several variations of the functions for
+accessing the catalog, depending on whether you are working with
+Unicode strings or not.  The usual pattern is to bind the lookup
+function you want to use to the name <tt class="docutils literal"><span class="pre">_</span></tt> so that your code is not
+cluttered with lots of calls to functions with longer names.</p>
+<p>The message extraction program, <tt class="docutils literal"><span class="pre">xgettext</span></tt>, looks for messages
+embedded in calls to the catalog lookup functions.  It understands
+different source languages, and uses an appropriate parser for each.
+If you use aliases for the lookup functions or need to add extra
+functions, you can give <tt class="docutils literal"><span class="pre">xgettext</span></tt> the names of additional symbols
+to consider when extracting messages.</p>
+<p>Here&#8217;s a simple script with a single message ready to be translated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gettext</span>
+
+<span class="c"># Set up message catalog access</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="s">&#39;gettext_example&#39;</span><span class="p">,</span> <span class="s">&#39;locale&#39;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ugettext</span>
+
+<span class="k">print</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;This message is in the script.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case I am using the Unicode version of the lookup function,
+<tt class="docutils literal"><span class="pre">ugettext()</span></tt>.  The text <tt class="docutils literal"><span class="pre">&quot;This</span> <span class="pre">message</span> <span class="pre">is</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">script.&quot;</span></tt> is the
+message to be substituted from the catalog.  I&#8217;ve enabled fallback
+mode, so if we run the script without a message catalog, the in-lined
+message is printed:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gettext_example.py
+
+This message is in the script.
+</pre></div>
+</div>
+<p>The next step is to extract the message(s) and create the <tt class="docutils literal"><span class="pre">.pot</span></tt>
+file, using <tt class="docutils literal"><span class="pre">pygettext.py</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ xgettext -d gettext_example -o gettext_example.pot gettext_example.py
+</pre></div>
+</div>
+<p>The output file produced looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre># SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE&#39;S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.
+#
+#, fuzzy
+msgid &quot;&quot;
+msgstr &quot;&quot;
+&quot;Project-Id-Version: PACKAGE VERSION\n&quot;
+&quot;Report-Msgid-Bugs-To: \n&quot;
+&quot;POT-Creation-Date: 2014-08-23 17:12-0400\n&quot;
+&quot;PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n&quot;
+&quot;Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n&quot;
+&quot;Language-Team: LANGUAGE &lt;LL@li.org&gt;\n&quot;
+&quot;Language: \n&quot;
+&quot;MIME-Version: 1.0\n&quot;
+&quot;Content-Type: text/plain; charset=CHARSET\n&quot;
+&quot;Content-Transfer-Encoding: 8bit\n&quot;
+
+#: gettext_example.py:16
+msgid &quot;This message is in the script.&quot;
+msgstr &quot;&quot;
+</pre></div>
+</div>
+<p>Message catalogs are installed into directories organized by <em>domain</em>
+and <em>language</em>.  The domain is usually a unique value like your
+application name.  In this case, I used <tt class="docutils literal"><span class="pre">gettext_example</span></tt>.  The
+language value is provided by the user&#8217;s environment at runtime,
+through one of the environment variables <tt class="docutils literal"><span class="pre">LANGUAGE</span></tt>, <tt class="docutils literal"><span class="pre">LC_ALL</span></tt>,
+<tt class="docutils literal"><span class="pre">LC_MESSAGES</span></tt>, or <tt class="docutils literal"><span class="pre">LANG</span></tt>, depending on their configuration and
+platform.  My language is set to <tt class="docutils literal"><span class="pre">en_US</span></tt> so that&#8217;s what I&#8217;ll be
+using in all of the examples below.</p>
+<p>Now that we have the template, the next step is to create the required
+directory structure and copy the template in to the right spot.  I&#8217;m
+going to use the <tt class="docutils literal"><span class="pre">locale</span></tt> directory inside the PyMOTW source tree as
+the root of my message catalog directory, but you would typically want
+to use a directory accessible system-wide.  The full path to the
+catalog input source is
+<tt class="docutils literal"><span class="pre">$localedir/$language/LC_MESSAGES/$domain.po</span></tt>, and the actual
+catalog has the filename extension <tt class="docutils literal"><span class="pre">.mo</span></tt>.</p>
+<p>For my configuration, I need to copy <tt class="docutils literal"><span class="pre">gettext_example.pot</span></tt> to
+<tt class="docutils literal"><span class="pre">locale/en_US/LC_MESSAGES/gettext_example.po</span></tt> and edit it to change
+the values in the header and add my alternate messages.  The result
+looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre># Messages from gettext_example.py.
+# Copyright (C) 2009 Doug Hellmann
+# Doug Hellmann &lt;doug.hellmann@gmail.com&gt;, 2009.
+#
+msgid &quot;&quot;
+msgstr &quot;&quot;
+&quot;Project-Id-Version: PyMOTW 1.92\n&quot;
+&quot;Report-Msgid-Bugs-To: Doug Hellmann &lt;doug.hellmann@gmail.com&gt;\n&quot;
+&quot;POT-Creation-Date: 2009-06-07 10:31+EDT\n&quot;
+&quot;PO-Revision-Date: 2009-06-07 10:31+EDT\n&quot;
+&quot;Last-Translator: Doug Hellmann &lt;doug.hellmann@gmail.com&gt;\n&quot;
+&quot;Language-Team: US English &lt;doug.hellmann@gmail.com&gt;\n&quot;
+&quot;MIME-Version: 1.0\n&quot;
+&quot;Content-Type: text/plain; charset=UTF-8\n&quot;
+&quot;Content-Transfer-Encoding: 8bit\n&quot;
+
+
+#: gettext_example.py:16
+msgid &quot;This message is in the script.&quot;
+msgstr &quot;This message is in the en_US catalog.&quot;
+</pre></div>
+</div>
+<p>The catalog is built from the <tt class="docutils literal"><span class="pre">.po</span></tt> file using <tt class="docutils literal"><span class="pre">msgformat</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd locale/en_US/LC_MESSAGES/; msgfmt -o gettext_example.mo gettext_exa\
+mple.po
+</pre></div>
+</div>
+<p>And now when we run the script, the message from the catalog is
+printed instead of the in-line string:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gettext_example.py
+
+This message is in the en_US catalog.
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-message-catalogs-at-runtime">
+<h2>Finding Message Catalogs at Runtime<a class="headerlink" href="#finding-message-catalogs-at-runtime" title="Permalink to this headline">¶</a></h2>
+<p>As described above, the <em>locale directory</em> containing the message
+catalogs is organized based on the language with catalogs named for
+the <em>domain</em> of the program.  Different operating systems define their
+own default value, but <a class="reference internal" href="#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a> does not know all of these
+defaults.  Iut uses a default locale directory of <tt class="docutils literal"><span class="pre">sys.prefix</span> <span class="pre">+</span>
+<span class="pre">'/share/locale'</span></tt>, but most of the time it is safer for you to always
+explicitly give a <tt class="docutils literal"><span class="pre">localedir</span></tt> value than to depend on this default
+being valid.</p>
+<p>The language portion of the path is taken from one of several
+environment variables that can be used to configure localization
+features (<tt class="docutils literal"><span class="pre">LANGUAGE</span></tt>, <tt class="docutils literal"><span class="pre">LC_ALL</span></tt>, <tt class="docutils literal"><span class="pre">LC_MESSAGES</span></tt>, and <tt class="docutils literal"><span class="pre">LANG</span></tt>).
+The first variable found to be set is used.  Multiple languages can be
+selected by separating the values with a colon (<tt class="docutils literal"><span class="pre">:</span></tt>).  We can
+illustrate how that works by creating a second message catalog and
+running a few experiments.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd locale/en_CA/LC_MESSAGES/; msgfmt -o gettext_example.mo gettext_exa\
+mple.po
+$ python gettext_find.py
+
+Catalogs: [&#39;locale/en_US/LC_MESSAGES/gettext_example.mo&#39;]
+$ LANGUAGE=en_CA python gettext_find.py
+
+Catalogs: [&#39;locale/en_CA/LC_MESSAGES/gettext_example.mo&#39;]
+$ LANGUAGE=en_CA:en_US python gettext_find.py
+
+Catalogs: [&#39;locale/en_CA/LC_MESSAGES/gettext_example.mo&#39;, &#39;locale/en_US/LC_MESSAGES/gettext_example.mo&#39;]
+$ LANGUAGE=en_US:en_CA python gettext_find.py
+
+Catalogs: [&#39;locale/en_US/LC_MESSAGES/gettext_example.mo&#39;, &#39;locale/en_CA/LC_MESSAGES/gettext_example.mo&#39;]
+</pre></div>
+</div>
+<p>Although <tt class="docutils literal"><span class="pre">find()</span></tt> shows the complete list of catalogs, only the
+first one in the sequence is actually loaded for message lookups.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python gettext_example.py
+
+This message is in the en_US catalog.
+$ LANGUAGE=en_CA python gettext_example.py
+
+This message is in the en_CA catalog.
+$ LANGUAGE=en_CA:en_US python gettext_example.py
+
+This message is in the en_CA catalog.
+$ LANGUAGE=en_US:en_CA python gettext_example.py
+
+This message is in the en_US catalog.
+</pre></div>
+</div>
+</div>
+<div class="section" id="plural-values">
+<h2>Plural Values<a class="headerlink" href="#plural-values" title="Permalink to this headline">¶</a></h2>
+<p>While simple message substitution will handle most of your translation
+needs, <a class="reference internal" href="#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a> treats pluralization as a special case.
+Depending on the language, the difference between the singular and
+plural forms of a message may vary only by the ending of a single
+word, or the entire sentence structure may be different.  There may
+also be <a class="reference external" href="http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms">different forms depending on the level of plurality</a>.
+To make managing plurals easier (and possible), there is a separate
+set of functions for asking for the plural form of a message.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gettext</span> <span class="kn">import</span> <span class="n">translation</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">translation</span><span class="p">(</span><span class="s">&#39;gettext_plural&#39;</span><span class="p">,</span> <span class="s">&#39;locale&#39;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ungettext</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%(num)d</span><span class="s"> means singular.&#39;</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%(num)d</span><span class="s"> means plural.&#39;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+
+<span class="c"># Still need to add the values to the message ourself.</span>
+<span class="k">print</span> <span class="n">msg</span> <span class="o">%</span> <span class="p">{</span><span class="s">&#39;num&#39;</span><span class="p">:</span><span class="n">num</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ xgettext -L Python -d gettext_plural -o gettext_plural.pot gettext_plu\
+ral.py
+</pre></div>
+</div>
+<p>Since there are alternate forms to be translated, the replacements are
+listed in an array.  Using an array allows translations for languages
+with multiple plural forms (Polish, <a class="reference external" href="http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms">for example</a>,
+has different forms indicating the relative quantity).</p>
+<div class="highlight-python"><div class="highlight"><pre># SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE&#39;S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.
+#
+#, fuzzy
+msgid &quot;&quot;
+msgstr &quot;&quot;
+&quot;Project-Id-Version: PACKAGE VERSION\n&quot;
+&quot;Report-Msgid-Bugs-To: \n&quot;
+&quot;POT-Creation-Date: 2014-08-23 17:12-0400\n&quot;
+&quot;PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n&quot;
+&quot;Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n&quot;
+&quot;Language-Team: LANGUAGE &lt;LL@li.org&gt;\n&quot;
+&quot;Language: \n&quot;
+&quot;MIME-Version: 1.0\n&quot;
+&quot;Content-Type: text/plain; charset=CHARSET\n&quot;
+&quot;Content-Transfer-Encoding: 8bit\n&quot;
+&quot;Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n&quot;
+
+#: gettext_plural.py:15
+#, python-format
+msgid &quot;%(num)d means singular.&quot;
+msgid_plural &quot;%(num)d means plural.&quot;
+msgstr[0] &quot;&quot;
+msgstr[1] &quot;&quot;
+</pre></div>
+</div>
+<p>In addition to filling in the translation strings, you will also need
+to describe the way plurals are formed so the library knows how to
+index into the array for any given count value.  The line
+<tt class="docutils literal"><span class="pre">&quot;Plural-Forms:</span> <span class="pre">nplurals=INTEGER;</span> <span class="pre">plural=EXPRESSION;\n&quot;</span></tt> includes
+two values to replace manually.  <tt class="docutils literal"><span class="pre">nplurals</span></tt> is an integer indicating
+the size of the array (the number of translations used) and <tt class="docutils literal"><span class="pre">plural</span></tt>
+is a C language expression for converting the incoming quantity to an
+index in the array when looking up the translation.  The literal
+string <tt class="docutils literal"><span class="pre">n</span></tt> is replaced with the quantity passed to <tt class="docutils literal"><span class="pre">ungettext()</span></tt>.</p>
+<p>For example, English includes two plural forms.  A quantity of <tt class="docutils literal"><span class="pre">0</span></tt>
+is treated as plural (&#8220;0 bananas&#8221;).  The Plural-Forms entry should
+look like:</p>
+<div class="highlight-python"><div class="highlight"><pre>Plural-Forms: nplurals=2; plural=n != 1;
+</pre></div>
+</div>
+<p>The singular translation would then go in position 0, and the plural
+translation in position 1.</p>
+<div class="highlight-python"><div class="highlight"><pre># Messages from gettext_plural.py
+# Copyright (C) 2009 Doug Hellmann
+# This file is distributed under the same license as the PyMOTW package.
+# Doug Hellmann &lt;doug.hellmann@gmail.com&gt;, 2009.
+#
+#, fuzzy
+msgid &quot;&quot;
+msgstr &quot;&quot;
+&quot;Project-Id-Version: PyMOTW 1.92\n&quot;
+&quot;Report-Msgid-Bugs-To: Doug Hellmann &lt;doug.hellmann@gmail.com&gt;\n&quot;
+&quot;POT-Creation-Date: 2009-06-14 09:29-0400\n&quot;
+&quot;PO-Revision-Date: 2009-06-14 09:29-0400\n&quot;
+&quot;Last-Translator: Doug Hellmann &lt;doug.hellmann@gmail.com&gt;\n&quot;
+&quot;Language-Team: en_US &lt;doug.hellmann@gmail.com&gt;\n&quot;
+&quot;MIME-Version: 1.0\n&quot;
+&quot;Content-Type: text/plain; charset=UTF-8\n&quot;
+&quot;Content-Transfer-Encoding: 8bit\n&quot;
+&quot;Plural-Forms: nplurals=2; plural=n != 1;&quot;
+
+#: gettext_plural.py:15
+#, python-format
+msgid &quot;%(num)d means singular.&quot;
+msgid_plural &quot;%(num)d means plural.&quot;
+msgstr[0] &quot;In en_US, %(num)d is singular.&quot;
+msgstr[1] &quot;In en_US, %(num)d is plural.&quot;
+</pre></div>
+</div>
+<p>If we run the test script a few times after the catalog is compiled,
+you can see how different values of N are converted to indexes for the
+translation strings.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd locale/en_US/LC_MESSAGES/; msgfmt -o gettext_plural.mo gettext_plur\
+al.po
+$ python gettext_plural.py 0
+
+In en_US, 0 is plural.
+$ python gettext_plural.py 1
+
+In en_US, 1 is singular.
+$ python gettext_plural.py 2
+
+In en_US, 2 is plural.
+</pre></div>
+</div>
+</div>
+<div class="section" id="application-vs-module-localization">
+<h2>Application vs. Module Localization<a class="headerlink" href="#application-vs-module-localization" title="Permalink to this headline">¶</a></h2>
+<p>The scope of your translation effort defines how you install and use
+the <a class="reference internal" href="#module-gettext" title="gettext: Message Catalogs"><tt class="xref py py-mod docutils literal"><span class="pre">gettext</span></tt></a> functions in your code.</p>
+<div class="section" id="application-localization">
+<h3>Application Localization<a class="headerlink" href="#application-localization" title="Permalink to this headline">¶</a></h3>
+<p>For application-wide translations, it would be acceptable to install a
+function like <tt class="docutils literal"><span class="pre">ungettext()</span></tt> globally using the <tt class="docutils literal"><span class="pre">__builtins__</span></tt>
+namespace because you have control over the top-level of the
+application&#8217;s code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gettext</span>
+<span class="n">gettext</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&#39;gettext_example&#39;</span><span class="p">,</span> <span class="s">&#39;locale&#39;</span><span class="p">,</span> <span class="nb">unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;ngettext&#39;</span><span class="p">])</span>
+
+<span class="k">print</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;This message is in the script.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">install()</span></tt> function binds <tt class="docutils literal"><span class="pre">gettext()</span></tt> to the name <tt class="docutils literal"><span class="pre">_()</span></tt> in
+the <tt class="docutils literal"><span class="pre">__builtins__</span></tt> namespace.  It also adds <tt class="docutils literal"><span class="pre">ngettext()</span></tt> and other
+functions listed in <em>names</em>.  If <em>unicode</em> is true, the Unicode
+versions of the functions are used instead of the default ASCII
+versions.</p>
+</div>
+<div class="section" id="module-localization">
+<h3>Module Localization<a class="headerlink" href="#module-localization" title="Permalink to this headline">¶</a></h3>
+<p>For a library, or individual module, modifying <tt class="docutils literal"><span class="pre">__builtins__</span></tt> is not
+a good idea because you don&#8217;t know what conflicts you might introduce
+with an application global value.  You can import or re-bind the names
+of translation functions by hand at the top of your module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gettext</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span><span class="s">&#39;gettext_example&#39;</span><span class="p">,</span> <span class="s">&#39;locale&#39;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ugettext</span>
+<span class="n">ngettext</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ungettext</span>
+
+<span class="k">print</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;This message is in the script.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/gettext.html">gettext</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../locale/index.html#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a></dt>
+<dd>Other localization tools.</dd>
+<dt><a class="reference external" href="http://www.gnu.org/software/gettext/">GNU gettext</a></dt>
+<dd>The message catalog formats, API, etc. for this module are all
+based on the original gettext package from GNU.  The catalog
+file formats are compatible, and the command line scripts have
+similar options (if not identical).  The <a class="reference external" href="http://www.gnu.org/software/gettext/manual/gettext.html">GNU gettext manual</a>
+has a detailed description of the file formats and describes
+GNU versions of the tools for working with them.</dd>
+<dt><a class="reference external" href="http://www.python.org/workshops/1997-10/proceedings/loewis.html">Internationalizing Python</a></dt>
+<dd>A paper by Martin von Löwis about techniques for
+internationalization of Python applications.</dd>
+<dt><a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/i18n/">Django Internationalization</a></dt>
+<dd>Another good source of information on using gettext, including
+real-life examples.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../locale/index.html" title="locale – POSIX cultural localization API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../i18n.html" title="Internationalization"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../i18n.html" >Internationalization</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

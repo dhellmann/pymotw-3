@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python Module of the Week - Python Module of the Week</title>
+
+<link rel="stylesheet" href="_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+<style>
+    #content h2 {
+        border-bottom: 0;
+    }
+</style>
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    './',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="_static/jquery.js"></script>
+<script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="contents" title="Global table of contents" href="contents.html" />
+    <link rel="index" title="Global index" href="genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="#" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="#">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar"><h3>Subscribe</h3>
+
+<p>
+<a href="http://feeds.feedburner.com/PyMOTW" title="Subscribe to my feed" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon32x32.png" alt="" style="border:0"/></a> <a href="http://feeds.feedburner.com/PyMOTW" title="Subscribe to my feed" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></p>
+
+<p><a target="_blank" href="http://www.feedburner.com/fb/a/emailverifySubmit?feedId=806224&amp;loc=en_US" title="Receive email notification of posts"><img src="_static/images/mail-icon-32x32.png" alt="" style="border:0" /></a> <a target="_blank" href="http://www.feedburner.com/fb/a/emailverifySubmit?feedId=806224&amp;loc=en_US" title="Receive email notification of posts">Subscribe by Email</a></p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="contents.html">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <h1>Python Module of the Week</h1>
+<div class="section">
+  <p>
+      The <a alt="Python Module of the Week" href="http://www.doughellmann.com/PyMOTW/">Python Module of the Week</a> series, or PyMOTW, is a tour of the <a alt="Python" href="http://www.python.org/">Python</a> standard library through short examples. This is version 1.133, last updated Jul 11, 2020 to cover the <a href="ConfigParser/index.html">ConfigParser</a> module.
+  </p>
+  
+  <table class="contentstable" align="center" valign="top"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="contents.html">Complete Table of Contents</a><br>
+         <span class="linkdescr">lists all articles and subsections</span></p>
+     <p class="biglink"><a class="biglink" href="about.html">About PyMOTW</a><br>
+         <span class="linkdescr">background on the project</span></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="py-modindex.html">Global Module Index</a><br>
+         <span class="linkdescr">quick access to all modules</span></p>
+      <p class="biglink"><a class="biglink" href="genindex.html">General Index</a><br>
+         <span class="linkdescr">all functions, classes, terms</span></p>
+    </td></tr>
+  </table>
+  
+  <h3>Download</h3>
+  <p>Download <a href="/downloads/PyMOTW-1.133.tar.gz">version 1.133</a>, including all source files with examples and HTML versions of the documentation.</p>
+  
+  <p>There is also a PDF of this entire document <a href="PyMOTW-1.133.pdf">available for download</a>.</p>
+
+  <p>Finally, the source history is available in
+  the <a href="https://github.com/dhellmann/pymotw">git
+  repository</a>.</p>
+
+  <h3>Translations</h3>
+  <p><a href="about.html#translations-and-other-versions">Several translations</a> are in process.</p>
+  
+  <h3>Recent Blog Posts</h3>
+  <script src="http://feeds.feedburner.com/PyMOTW?format=sigpro" type="text/javascript" ></script><noscript><p>Subscribe to RSS headline updates from: <a href="http://feeds.feedburner.com/PyMOTW"></a><br/>Powered by FeedBurner</p> </noscript>
+
+  </div>
+
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="contents.html">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

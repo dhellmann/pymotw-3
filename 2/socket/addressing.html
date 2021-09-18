@@ -1,0 +1,660 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Addressing, Protocol Families and Socket Types - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="socket – Network Communication" href="index.html" />
+    <link rel="next" title="TCP/IP Client and Server" href="tcp.html" />
+    <link rel="prev" title="socket – Network Communication" href="index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Addressing, Protocol Families and Socket Types</a><ul>
+<li><a class="reference internal" href="#looking-up-hosts-on-the-network">Looking up Hosts on the Network</a></li>
+<li><a class="reference internal" href="#finding-service-information">Finding Service Information</a></li>
+<li><a class="reference internal" href="#looking-up-server-addresses">Looking Up Server Addresses</a></li>
+<li><a class="reference internal" href="#ip-address-representations">IP Address Representations</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="index.html" title="previous chapter"><strong>Previous:</strong> socket &#8211; Network Communication</a><br/>
+          <a href="tcp.html" title="next chapter"><strong>Next:</strong> TCP/IP Client and Server</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/socket/addressing.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tcp.html" title="TCP/IP Client and Server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="socket – Network Communication"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="addressing-protocol-families-and-socket-types">
+<h1>Addressing, Protocol Families and Socket Types<a class="headerlink" href="#addressing-protocol-families-and-socket-types" title="Permalink to this headline">¶</a></h1>
+<p>A <em>socket</em> is one endpoint of a communication channel used by programs
+to pass data back and forth locally or across the Internet.  Sockets
+have two primary properties controlling the way they send data: the
+<em>address family</em> controls the OSI network layer protocol used and the
+<em>socket type</em> controls the transport layer protocol.</p>
+<p>Python supports three address families.  The most common,
+<tt class="xref py py-const docutils literal"><span class="pre">AF_INET</span></tt>, is used for IPv4 Internet addressing.  IPv4
+addresses are made up of four octal values separated by dots (e.g.,
+<tt class="docutils literal"><span class="pre">10.1.1.5</span></tt> and <tt class="docutils literal"><span class="pre">127.0.0.1</span></tt>).  These values are more commonly
+referred to as &#8220;IP addresses.&#8221;  Almost all Internet networking is done
+using IP version 4 at this time.</p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">AF_INET6</span></tt> is used for IPv6 Internet addressing.  IPv6 is the
+&#8220;next generation&#8221; version of the Internet protocol, and supports
+128-bit addresses, traffic shaping, and routing features not available
+under IPv4.  Adoption of IPv6 is still limited, but continues to grow.</p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">AF_UNIX</span></tt> is the address family for Unix Domain Sockets (UDS),
+an interprocess communication protocol available on POSIX-compliant
+systems.  The implementation of UDS typically allows the operating
+system to pass data directly from process to process, without going
+through the network stack.  This is more efficient than using
+<tt class="xref py py-const docutils literal"><span class="pre">AF_INET</span></tt>, but because the filesystem is used as the namespace
+for addressing, UDS is restricted to processes on the same system.
+The appeal of using UDS over other IPC mechanisms such as named pipes
+or shared memory is that the programming interface is the same as for
+IP networking, so the application can take advantage of efficient
+communication when running on a single host, but use the same code
+when sending data across the network.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="xref py py-const docutils literal"><span class="pre">AF_UNIX</span></tt> constant is only defined on systems where UDS
+is supported.</p>
+</div>
+<p>The socket type is usually either <tt class="xref py py-const docutils literal"><span class="pre">SOCK_DGRAM</span></tt> for
+<em>user datagram protocol</em> (UDP) or <tt class="xref py py-const docutils literal"><span class="pre">SOCK_STREAM</span></tt> for
+<em>transmission control protocol</em> (TCP).  UDP does not require
+transmission handshaking or other setup, but offers lower reliability
+of delivery.  UDP messages may be delivered out of order, more than
+once, or not at all.  TCP, by contrast, ensures that each message is
+delivered exactly once, and in the correct order.  Most application
+protocols that deliver a large amount of data, such as HTTP, are built
+on top of TCP.  UDP is commonly used for protocols where order is less
+important (since the message fits in a single packet, i.e., DNS), or
+for <em>multicasting</em> (sending the same data to several hosts).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Python&#8217;s <a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-mod docutils literal"><span class="pre">socket</span></tt></a> module supports other socket types but they
+are less commonly used, so are not covered here.  Refer to the
+standard library documentation for more details.</p>
+</div>
+<div class="section" id="looking-up-hosts-on-the-network">
+<h2>Looking up Hosts on the Network<a class="headerlink" href="#looking-up-hosts-on-the-network" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-mod docutils literal"><span class="pre">socket</span></tt></a> includes functions to interface with the domain name
+services on the network, to convert the host name of a server into its
+numerical network address.  Applications do not need to convert
+addresses explicitly before using them to connect to a server, but it
+can be useful when reporting errors to include the numerical address
+as well as the name value being used.</p>
+<p>To find the official name of the current host, use
+<tt class="xref py py-func docutils literal"><span class="pre">gethostname()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">print</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The name returned will depend on the network settings for the current
+system, and may change if it is on a different network (such as a
+laptop attached to a wireless LAN).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_gethostname.py
+
+farnsworth.hellfly.net
+</pre></div>
+</div>
+<p>Use <tt class="xref py py-func docutils literal"><span class="pre">gethostbyname()</span></tt> to convert the name of a server to its
+numerical address:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;homer&#39;</span><span class="p">,</span> <span class="s">&#39;www&#39;</span><span class="p">,</span> <span class="s">&#39;www.python.org&#39;</span><span class="p">,</span> <span class="s">&#39;nosuchname&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%15s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="n">host</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%15s</span><span class="s"> : ERROR: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The name argument does not need to be a fully qualified name (i.e., it
+does not need to include the domain name as well as the base
+hostname).  If the name cannot be found, an exception of type
+<tt class="xref py py-class docutils literal"><span class="pre">socket.error</span></tt> is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_gethostbyname.py
+
+          homer : ERROR: [Errno 8] nodename nor servname provided, or not known
+            www : ERROR: [Errno 8] nodename nor servname provided, or not known
+ www.python.org : 82.94.164.162
+     nosuchname : ERROR: [Errno 8] nodename nor servname provided, or not known
+</pre></div>
+</div>
+<p>For access to more naming information about a server, use
+<tt class="xref py py-func docutils literal"><span class="pre">gethostbyname_ex()</span></tt>.  It returns the canonical hostname of the
+server, any aliases, and all of the available IP addresses that can be
+used to reach it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;homer&#39;</span><span class="p">,</span> <span class="s">&#39;www&#39;</span><span class="p">,</span> <span class="s">&#39;www.python.org&#39;</span><span class="p">,</span> <span class="s">&#39;nosuchname&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="n">host</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">hostname</span><span class="p">,</span> <span class="n">aliases</span><span class="p">,</span> <span class="n">addresses</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname_ex</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;  Hostname:&#39;</span><span class="p">,</span> <span class="n">hostname</span>
+        <span class="k">print</span> <span class="s">&#39;  Aliases :&#39;</span><span class="p">,</span> <span class="n">aliases</span>
+        <span class="k">print</span> <span class="s">&#39; Addresses:&#39;</span><span class="p">,</span> <span class="n">addresses</span>
+    <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%15s</span><span class="s"> : ERROR: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Having all known IP addresses for a server lets a client implement its
+own load balancing or fail-over algorithms.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_gethostbyname_ex.py
+
+homer
+          homer : ERROR: [Errno 8] nodename nor servname provided, or not known
+
+www
+            www : ERROR: [Errno 8] nodename nor servname provided, or not known
+
+www.python.org
+  Hostname: www.python.org
+  Aliases : []
+ Addresses: [&#39;82.94.164.162&#39;]
+
+nosuchname
+     nosuchname : ERROR: [Errno 8] nodename nor servname provided, or not known
+</pre></div>
+</div>
+<p>Use <tt class="xref py py-func docutils literal"><span class="pre">getfqdn()</span></tt> to convert a partial name to a fully qualified
+domain name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;homer&#39;</span><span class="p">,</span> <span class="s">&#39;www&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%6s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">host</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The name returned will not necessarily match the input argument in any
+way if the input is an alias, such as <tt class="docutils literal"><span class="pre">www</span></tt> is here.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_getfqdn.py
+
+ homer : homer
+   www : www
+</pre></div>
+</div>
+<p>When the address of a server is available, use <tt class="xref py py-func docutils literal"><span class="pre">gethostbyaddr()</span></tt>
+to do a &#8220;reverse&#8221; lookup for the name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">hostname</span><span class="p">,</span> <span class="n">aliases</span><span class="p">,</span> <span class="n">addresses</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="s">&#39;192.168.1.8&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Hostname :&#39;</span><span class="p">,</span> <span class="n">hostname</span>
+<span class="k">print</span> <span class="s">&#39;Aliases  :&#39;</span><span class="p">,</span> <span class="n">aliases</span>
+<span class="k">print</span> <span class="s">&#39;Addresses:&#39;</span><span class="p">,</span> <span class="n">addresses</span>
+</pre></div>
+</div>
+<p>The return value is a tuple containing the full hostname, any aliases,
+and all IP addresses associated with the name.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_gethostbyaddr.py
+
+Hostname : homer.hellfly.net
+Aliases  : [&#39;8.1.168.192.in-addr.arpa&#39;]
+Addresses: [&#39;192.168.1.8&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-service-information">
+<h2>Finding Service Information<a class="headerlink" href="#finding-service-information" title="Permalink to this headline">¶</a></h2>
+<p>In addition to an IP address, each socket address includes an integer
+<em>port number</em>.  Many applications can run on the same host, listening
+on a single IP address, but only one socket at a time can use a port
+at that address.  The combination of IP address, protocol, and port
+number uniquely identify a communication channel and ensure that
+messages sent through a socket arrive at the correct destination.</p>
+<p>Some of the port numbers are pre-allocated for a specific protocol.
+For example, communication between email servers using SMTP occurs
+over port number 25 using TCP, and web clients and servers use port 80
+for HTTP.  The port numbers for network services with standardized
+names can be looked up with <tt class="xref py py-func docutils literal"><span class="pre">getservbyname()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;http://www.python.org&#39;</span><span class="p">,</span>
+             <span class="s">&#39;https://www.mybank.com&#39;</span><span class="p">,</span>
+             <span class="s">&#39;ftp://prep.ai.mit.edu&#39;</span><span class="p">,</span>
+             <span class="s">&#39;gopher://gopher.micro.umn.edu&#39;</span><span class="p">,</span>
+             <span class="s">&#39;smtp://mail.example.com&#39;</span><span class="p">,</span>
+             <span class="s">&#39;imap://mail.example.com&#39;</span><span class="p">,</span>
+             <span class="s">&#39;imaps://mail.example.com&#39;</span><span class="p">,</span>
+             <span class="s">&#39;pop3://pop.example.com&#39;</span><span class="p">,</span>
+             <span class="s">&#39;pop3s://pop.example.com&#39;</span><span class="p">,</span>
+             <span class="p">]:</span>
+    <span class="n">parsed_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getservbyname</span><span class="p">(</span><span class="n">parsed_url</span><span class="o">.</span><span class="n">scheme</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%6s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parsed_url</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Although a standardized service is unlikely to change ports, looking
+up the value with a system call instead of hard-coding it is more
+flexible when new services are added in the future.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_getservbyname.py
+
+  http : 80
+ https : 443
+   ftp : 21
+gopher : 70
+  smtp : 25
+  imap : 143
+ imaps : 993
+  pop3 : 110
+ pop3s : 995
+</pre></div>
+</div>
+<p>To reverse the service port lookup, use <tt class="xref py py-func docutils literal"><span class="pre">getservbyport()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+<span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="p">[</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">443</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">143</span><span class="p">,</span> <span class="mi">993</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">995</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlunparse</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">getservbyport</span><span class="p">(</span><span class="n">port</span><span class="p">),</span> <span class="s">&#39;example.com&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>The reverse lookup is useful for constructing URLs to services from
+arbitrary addresses.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_getservbyport.py
+
+http://example.com/
+https://example.com/
+ftp://example.com/
+gopher://example.com/
+smtp://example.com/
+imap://example.com/
+imaps://example.com/
+pop3://example.com/
+pop3s://example.com/
+</pre></div>
+</div>
+<p>The number assigned to a transport protocol can be retrieved with
+<tt class="xref py py-func docutils literal"><span class="pre">getprotobyname()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">def</span> <span class="nf">get_constants</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a dictionary mapping socket module constants to their names.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+                 <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+                 <span class="p">)</span>
+
+<span class="n">protocols</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;IPPROTO_&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;icmp&#39;</span><span class="p">,</span> <span class="s">&#39;udp&#39;</span><span class="p">,</span> <span class="s">&#39;tcp&#39;</span> <span class="p">]:</span>
+    <span class="n">proto_num</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getprotobyname</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">const_name</span> <span class="o">=</span> <span class="n">protocols</span><span class="p">[</span><span class="n">proto_num</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%4s</span><span class="s"> -&gt; </span><span class="si">%2d</span><span class="s"> (socket.</span><span class="si">%-12s</span><span class="s"> = </span><span class="si">%2d</span><span class="s">)&#39;</span> <span class="o">%</span> \
+        <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">proto_num</span><span class="p">,</span> <span class="n">const_name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">const_name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The values for protocol numbers are standardized, and defined as
+constants in <a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-mod docutils literal"><span class="pre">socket</span></tt></a> with the prefix <tt class="docutils literal"><span class="pre">IPPROTO_</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_getprotobyname.py
+
+icmp -&gt;  1 (socket.IPPROTO_ICMP =  1)
+ udp -&gt; 17 (socket.IPPROTO_UDP  = 17)
+ tcp -&gt;  6 (socket.IPPROTO_TCP  =  6)
+</pre></div>
+</div>
+</div>
+<div class="section" id="looking-up-server-addresses">
+<h2>Looking Up Server Addresses<a class="headerlink" href="#looking-up-server-addresses" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-func docutils literal"><span class="pre">getaddrinfo()</span></tt> converts the basic address of a service into a
+list of tuples with all of the information necessary to make a
+connection.  The contents of each tuple will vary, containing
+different network families or protocols.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">def</span> <span class="nf">get_constants</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a dictionary mapping socket module constants to their names.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+                 <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+                 <span class="p">)</span>
+
+<span class="n">families</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;AF_&#39;</span><span class="p">)</span>
+<span class="n">types</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;SOCK_&#39;</span><span class="p">)</span>
+<span class="n">protocols</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;IPPROTO_&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s">&#39;www.python.org&#39;</span><span class="p">,</span> <span class="s">&#39;http&#39;</span><span class="p">):</span>
+
+    <span class="c"># Unpack the response tuple</span>
+    <span class="n">family</span><span class="p">,</span> <span class="n">socktype</span><span class="p">,</span> <span class="n">proto</span><span class="p">,</span> <span class="n">canonname</span><span class="p">,</span> <span class="n">sockaddr</span> <span class="o">=</span> <span class="n">response</span>
+
+    <span class="k">print</span> <span class="s">&#39;Family        :&#39;</span><span class="p">,</span> <span class="n">families</span><span class="p">[</span><span class="n">family</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Type          :&#39;</span><span class="p">,</span> <span class="n">types</span><span class="p">[</span><span class="n">socktype</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Protocol      :&#39;</span><span class="p">,</span> <span class="n">protocols</span><span class="p">[</span><span class="n">proto</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Canonical name:&#39;</span><span class="p">,</span> <span class="n">canonname</span>
+    <span class="k">print</span> <span class="s">&#39;Socket address:&#39;</span><span class="p">,</span> <span class="n">sockaddr</span>
+    <span class="k">print</span> 
+</pre></div>
+</div>
+<p>This program demonstrates how to look up the connection information
+for <tt class="docutils literal"><span class="pre">www.python.org</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_getaddrinfo.py
+
+Family        : AF_INET
+Type          : SOCK_DGRAM
+Protocol      : IPPROTO_UDP
+Canonical name:
+Socket address: (&#39;82.94.164.162&#39;, 80)
+
+Family        : AF_INET
+Type          : SOCK_STREAM
+Protocol      : IPPROTO_TCP
+Canonical name:
+Socket address: (&#39;82.94.164.162&#39;, 80)
+
+Family        : AF_INET6
+Type          : SOCK_DGRAM
+Protocol      : IPPROTO_UDP
+Canonical name:
+Socket address: (&#39;2001:888:2000:d::a2&#39;, 80, 0, 0)
+
+Family        : AF_INET6
+Type          : SOCK_STREAM
+Protocol      : IPPROTO_TCP
+Canonical name:
+Socket address: (&#39;2001:888:2000:d::a2&#39;, 80, 0, 0)
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">getaddrinfo()</span></tt> takes several arguments to filter the result
+list. The <em>host</em> and <em>port</em> values given in the example are required
+arguments.  The optional arguments are <em>family</em>, <em>socktype</em>, <em>proto</em>,
+and <em>flags</em>.  The family, socktype, and proto values should be <tt class="docutils literal"><span class="pre">0</span></tt>
+or one of the constants defined by <a class="reference internal" href="index.html#module-socket" title="socket: Network communication"><tt class="xref py py-mod docutils literal"><span class="pre">socket</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="k">def</span> <span class="nf">get_constants</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a dictionary mapping socket module constants to their names.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+                 <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+                 <span class="p">)</span>
+
+<span class="n">families</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;AF_&#39;</span><span class="p">)</span>
+<span class="n">types</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;SOCK_&#39;</span><span class="p">)</span>
+<span class="n">protocols</span> <span class="o">=</span> <span class="n">get_constants</span><span class="p">(</span><span class="s">&#39;IPPROTO_&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s">&#39;www.doughellmann.com&#39;</span><span class="p">,</span> <span class="s">&#39;http&#39;</span><span class="p">,</span>
+                                   <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span>      <span class="c"># family</span>
+                                   <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">,</span>  <span class="c"># socktype</span>
+                                   <span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_TCP</span><span class="p">,</span>  <span class="c"># protocol</span>
+                                   <span class="n">socket</span><span class="o">.</span><span class="n">AI_CANONNAME</span><span class="p">,</span> <span class="c"># flags</span>
+                                   <span class="p">):</span>
+    
+    <span class="c"># Unpack the response tuple</span>
+    <span class="n">family</span><span class="p">,</span> <span class="n">socktype</span><span class="p">,</span> <span class="n">proto</span><span class="p">,</span> <span class="n">canonname</span><span class="p">,</span> <span class="n">sockaddr</span> <span class="o">=</span> <span class="n">response</span>
+
+    <span class="k">print</span> <span class="s">&#39;Family        :&#39;</span><span class="p">,</span> <span class="n">families</span><span class="p">[</span><span class="n">family</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Type          :&#39;</span><span class="p">,</span> <span class="n">types</span><span class="p">[</span><span class="n">socktype</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Protocol      :&#39;</span><span class="p">,</span> <span class="n">protocols</span><span class="p">[</span><span class="n">proto</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">&#39;Canonical name:&#39;</span><span class="p">,</span> <span class="n">canonname</span>
+    <span class="k">print</span> <span class="s">&#39;Socket address:&#39;</span><span class="p">,</span> <span class="n">sockaddr</span>
+    <span class="k">print</span> 
+</pre></div>
+</div>
+<p>Since <em>flags</em> includes <tt class="xref py py-const docutils literal"><span class="pre">AI_CANONNAME</span></tt> the canonical name of the
+server (different from the value used for the lookup) is included in
+the results this time.  Without the flag, the canonical name value is
+left empty.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_getaddrinfo_extra_args.py
+
+Family        : AF_INET
+Type          : SOCK_STREAM
+Protocol      : IPPROTO_TCP
+Canonical name: homer.doughellmann.com
+Socket address: (&#39;192.168.1.8&#39;, 80)
+</pre></div>
+</div>
+</div>
+<div class="section" id="ip-address-representations">
+<h2>IP Address Representations<a class="headerlink" href="#ip-address-representations" title="Permalink to this headline">¶</a></h2>
+<p>Network programs written in C use the data type <tt class="xref py py-class docutils literal"><span class="pre">struct</span>
+<span class="pre">sockaddr</span></tt> to represent IP addresses as binary values (instead of the
+string addresses usually found in Python programs).  Convert IPv4
+addresses between the Python representation and the C representation
+with <tt class="xref py py-func docutils literal"><span class="pre">inet_aton()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">inet_ntoa()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">string_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">packed</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_aton</span><span class="p">(</span><span class="n">string_address</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">string_address</span>
+<span class="k">print</span> <span class="s">&#39;Packed  :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">packed</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Unpacked:&#39;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_ntoa</span><span class="p">(</span><span class="n">packed</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The four bytes in the packed format can be passed to C libraries,
+transmitted safely over the network, or saved to a database compactly.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_address_packing.py 192.168.1.1
+
+Original: 192.168.1.1
+Packed  : c0a80101
+Unpacked: 192.168.1.1
+
+$ python socket_address_packing.py 127.0.0.1
+
+Original: 127.0.0.1
+Packed  : 7f000001
+Unpacked: 127.0.0.1
+</pre></div>
+</div>
+<p>The related functions <tt class="xref py py-func docutils literal"><span class="pre">inet_pton()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">inet_ntop()</span></tt> work
+with both IPv4 and IPv6 addresses, producing the appropriate format
+based on the address family parameter passed in.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">string_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">packed</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_pton</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span> <span class="n">string_address</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">string_address</span>
+<span class="k">print</span> <span class="s">&#39;Packed  :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">packed</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Unpacked:&#39;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_ntop</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span> <span class="n">packed</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An IPv6 address is already a hexadecimal value, so converting the
+packed version to a series of hex digits produces a string similar to
+the original value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python socket_ipv6_address_packing.py 2002:ac10:10a:1234:21e:52ff:fe74\
+:40e
+
+Original: 2002:ac10:10a:1234:21e:52ff:fe74:40e
+Packed  : 2002ac10010a1234021e52fffe74040e
+Unpacked: 2002:ac10:10a:1234:21e:52ff:fe74:40e
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/IPv6">Wikipedia: IPv6</a></dt>
+<dd>Article discussing Internet Protocol Version 6 (IPv6).</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/OSI_model">Wikipedia: OSI Networking Model</a></dt>
+<dd>Article describing the seven layer model of networking implementation.</dd>
+<dt><a class="reference external" href="http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml">Assigned Internet Protocol Numbers</a></dt>
+<dd>List of standard protocol names and numbers.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tcp.html" title="TCP/IP Client and Server"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="socket – Network Communication"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li>
+          <li><a href="index.html" >socket &#8211; Network Communication</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

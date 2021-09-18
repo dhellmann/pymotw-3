@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hmac &#8211; Cryptographic signature and verification of messages. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Cryptographic Services" href="../cryptographic.html" />
+    <link rel="next" title="File and Directory Access" href="../file_access.html" />
+    <link rel="prev" title="hashlib – Cryptographic hashes and message digests" href="../hashlib/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">hmac &#8211; Cryptographic signature and verification of messages.</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#sha-vs-md5">SHA vs. MD5</a></li>
+<li><a class="reference internal" href="#binary-digests">Binary Digests</a></li>
+<li><a class="reference internal" href="#applications">Applications</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../hashlib/index.html" title="previous chapter"><strong>Previous:</strong> hashlib &#8211; Cryptographic hashes and message digests</a><br/>
+          <a href="../file_access.html" title="next chapter"><strong>Next:</strong> File and Directory Access</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/hmac/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../file_access.html" title="File and Directory Access"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../hashlib/index.html" title="hashlib – Cryptographic hashes and message digests"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../cryptographic.html" accesskey="U">Cryptographic Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-hmac">
+<span id="hmac-cryptographic-signature-and-verification-of-messages"></span><h1>hmac &#8211; Cryptographic signature and verification of messages.<a class="headerlink" href="#module-hmac" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The hmac module implements keyed-hashing for message authentication, as
+described in <span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2104.html"><strong>RFC 2104</strong></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.2</td>
+</tr>
+</tbody>
+</table>
+<p>The HMAC algorithm can be used to verify the integrity of information
+passed between applications or stored in a potentially vulnerable
+location. The basic idea is to generate a cryptographic hash of the
+actual data combined with a shared secret key. The resulting hash can
+then be used to check the transmitted or stored message to determine a
+level of trust, without transmitting the secret key.</p>
+<p>Disclaimer: I&#8217;m not a security expert. For the full details on HMAC,
+check out <span class="target" id="index-1"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2104.html"><strong>RFC 2104</strong></a>.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Creating the hash is not complex. Here&#8217;s a simple example which uses
+the default MD5 hash algorithm:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hmac</span>
+
+<span class="n">digest_maker</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;secret-shared-key-goes-here&#39;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">digest_maker</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">digest</span> <span class="o">=</span> <span class="n">digest_maker</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">digest</span>
+</pre></div>
+</div>
+<p>When run, the code reads its source file and computes an HMAC
+signature for it:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python hmac_simple.py
+
+4bcb287e284f8c21e87e14ba2dc40b16
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If I haven&#8217;t changed the file by the time I release the example
+source for this week, the copy you download should produce the same
+hash.</p>
+</div>
+</div>
+<div class="section" id="sha-vs-md5">
+<h2>SHA vs. MD5<a class="headerlink" href="#sha-vs-md5" title="Permalink to this headline">¶</a></h2>
+<p>Although the default cryptographic algorithm for <a class="reference internal" href="#module-hmac" title="hmac: Cryptographic signature and verification of messages."><tt class="xref py py-mod docutils literal"><span class="pre">hmac</span></tt></a> is MD5,
+that is not the most secure method to use. MD5 hashes have some
+weaknesses, such as collisions (where two different messages produce
+the same hash). The SHA-1 algorithm is considered to be stronger, and
+should be used instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">digest_maker</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;secret-shared-key-goes-here&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;hmac_sha.py&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">digest_maker</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">digest</span> <span class="o">=</span> <span class="n">digest_maker</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">digest</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">hmac.new()</span></tt> takes 3 arguments. The first is the secret key, which
+should be shared between the two endpoints which are communicating so
+both ends can use the same value. The second value is an initial
+message. If the message content that needs to be authenticated is
+small, such as a timestamp or HTTP POST, the entire body of the
+message can be passed to <tt class="docutils literal"><span class="pre">new()</span></tt> instead of using the update()
+method. The last argument is the digest module to be used. The default
+is <tt class="docutils literal"><span class="pre">hashlib.md5</span></tt>. The previous example substitutes <tt class="docutils literal"><span class="pre">hashlib.sha1</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python hmac_sha.py
+
+69b26d1731a0a5f0fc7a92fc6c540823ec210759
+</pre></div>
+</div>
+</div>
+<div class="section" id="binary-digests">
+<h2>Binary Digests<a class="headerlink" href="#binary-digests" title="Permalink to this headline">¶</a></h2>
+<p>The first few examples used the <tt class="docutils literal"><span class="pre">hexdigest()</span></tt> method to produce
+printable digests. The hexdigest is is a different representation of
+the value calculated by the <tt class="docutils literal"><span class="pre">digest()</span></tt> method, which is a binary
+value that may include unprintable or non-ASCII characters, including
+NULs. Some web services (Google checkout, Amazon S3) use the
+<tt class="docutils literal"><span class="pre">base64</span></tt> encoded version of the binary digest instead of the
+hexdigest.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">digest</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;secret-shared-key-goes-here&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">base64</span><span class="o">.</span><span class="n">encodestring</span><span class="p">(</span><span class="n">digest</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The base64 encoded string ends in a newline, which frequently needs to be
+stripped off when embedding the string in HTTP headers or other
+formatting-sensitive contexts.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python hmac_base64.py
+
+olW2DoXHGJEKGU0aE9fOwSVE/o4=
+</pre></div>
+</div>
+</div>
+<div class="section" id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+<p>HMAC authentication should be used for any public network service, and
+any time data is stored where security is important. For example, when
+sending data through a pipe or socket, that data should be signed and
+then the signature should be tested before the data is used. The
+extended example below is available in the <tt class="docutils literal"><span class="pre">hmac_pickle.py</span></tt> file as
+part of the PyMOTW source package.</p>
+<p>First, let&#8217;s establish a function to calculate a digest for a string,
+and a simple class to be instantiated and passed through a
+communication channel.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+
+<span class="k">def</span> <span class="nf">make_digest</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="s">&quot;Return a digest for the message.&quot;</span>
+    <span class="k">return</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;secret-shared-key-goes-here&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">&quot;A very simple class to demonstrate checking digests before unpickling.&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>Next, create a <a class="reference internal" href="../StringIO/index.html#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">StringIO</span></tt></a> buffer to represent the socket or
+pipe. We will using a naive, but easy to parse, format for the data
+stream. The digest and length of the data are written, followed by a
+new line. The serialized representation of the object, generated by
+<a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>, follows. In a real system, we would not want to depend
+on a length value, since if the digest is wrong the length is probably
+wrong as well. Some sort of terminator sequence not likely to appear
+in the real data would be more appropriate.</p>
+<p>For this example, we will write two objects to the stream. The first is
+written using the correct digest value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Simulate a writable socket or pipe with StringIO</span>
+<span class="n">out_s</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+
+<span class="c"># Write a valid object to the stream:</span>
+<span class="c">#  digest\nlength\npickle</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;digest matches&#39;</span><span class="p">)</span>
+<span class="n">pickled_data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">digest</span> <span class="o">=</span> <span class="n">make_digest</span><span class="p">(</span><span class="n">pickled_data</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pickled_data</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">WRITING:&#39;</span><span class="p">,</span> <span class="n">header</span>
+<span class="n">out_s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">out_s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pickled_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The second object is written to the stream with an invalid digest, produced by
+calculating the digest for some other data instead of the pickle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Write an invalid object to the stream</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;digest does not match&#39;</span><span class="p">)</span>
+<span class="n">pickled_data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">digest</span> <span class="o">=</span> <span class="n">make_digest</span><span class="p">(</span><span class="s">&#39;not the pickled data at all&#39;</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">digest</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pickled_data</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">WRITING:&#39;</span><span class="p">,</span> <span class="n">header</span>
+<span class="n">out_s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">out_s</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pickled_data</span><span class="p">)</span>
+
+<span class="n">out_s</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now that the data is in the <a class="reference internal" href="../StringIO/index.html#module-StringIO" title="StringIO: Work with text buffers using file-like API"><tt class="xref py py-mod docutils literal"><span class="pre">StringIO</span></tt></a> buffer, we can read it
+back out again.  The first step is to read the line of data with the
+digest and data length.  Then the remaining data is read (using the
+length value). We could use <tt class="docutils literal"><span class="pre">pickle.load()</span></tt> to read directly from
+the stream, but that assumes a trusted data stream and we do not yet
+trust the data enough to unpickle it. Reading the pickle as a string
+collect the data from the stream, without actually unpickling the
+object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Simulate a readable socket or pipe with StringIO</span>
+<span class="n">in_s</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">out_s</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+<span class="c"># Read the data</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">first_line</span> <span class="o">=</span> <span class="n">in_s</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">first_line</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">incoming_digest</span><span class="p">,</span> <span class="n">incoming_length</span> <span class="o">=</span> <span class="n">first_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">incoming_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">incoming_length</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">READ:&#39;</span><span class="p">,</span> <span class="n">incoming_digest</span><span class="p">,</span> <span class="n">incoming_length</span>
+    <span class="n">incoming_pickled_data</span> <span class="o">=</span> <span class="n">in_s</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">incoming_length</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once we have the pickled data, we can recalculate the digest value and
+compare it against what we read. If the digests match, we know it is
+safe to trust the data and unpickle it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">actual_digest</span> <span class="o">=</span> <span class="n">make_digest</span><span class="p">(</span><span class="n">incoming_pickled_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;ACTUAL:&#39;</span><span class="p">,</span> <span class="n">actual_digest</span>
+
+<span class="k">if</span> <span class="n">incoming_digest</span> <span class="o">!=</span> <span class="n">actual_digest</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;WARNING: Data corruption&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">incoming_pickled_data</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;OK:&#39;</span><span class="p">,</span> <span class="n">obj</span>
+</pre></div>
+</div>
+<p>The output shows that the first object is verified and the second is deemed
+&#8220;corrupted&#8221;, as expected:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python hmac_pickle.py
+
+
+WRITING: 387632cfa3d18cd19bdfe72b61ac395dfcdc87c9 124
+
+WRITING: b01b209e28d7e053408ebe23b90fe5c33bc6a0ec 131
+
+READ: 387632cfa3d18cd19bdfe72b61ac395dfcdc87c9 124
+ACTUAL: 387632cfa3d18cd19bdfe72b61ac395dfcdc87c9
+OK: digest matches
+
+READ: b01b209e28d7e053408ebe23b90fe5c33bc6a0ec 131
+ACTUAL: dec53ca1ad3f4b657dd81d514f17f735628b6828
+WARNING: Data corruption
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/hmac.html">hmac</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><span class="target" id="index-2"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2104.html"><strong>RFC 2104</strong></a></dt>
+<dd>HMAC: Keyed-Hashing for Message Authentication</dd>
+<dt><a class="reference internal" href="../hashlib/index.html#module-hashlib" title="hashlib: Cryptographic hashes and message digests"><tt class="xref py py-mod docutils literal"><span class="pre">hashlib</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../hashlib/index.html#module-hashlib" title="hashlib: Cryptographic hashes and message digests"><tt class="xref py py-mod docutils literal"><span class="pre">hashlib</span></tt></a> module.</dd>
+<dt><a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a></dt>
+<dd>Serialization library.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/MD5">WikiPedia: MD5</a></dt>
+<dd>Description of the MD5 hashing algorithm.</dd>
+<dt><a class="reference external" href="http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?S3_Authentication.html">Authenticating to Amazon S3 Web Service</a></dt>
+<dd>Instructions for authenticating to S3 using HMAC-SHA1 signed credentials.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../file_access.html" title="File and Directory Access"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../hashlib/index.html" title="hashlib – Cryptographic hashes and message digests"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../cryptographic.html" >Cryptographic Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

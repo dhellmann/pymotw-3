@@ -1,0 +1,718 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>multiprocessing Basics - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="multiprocessing – Manage processes like threads" href="index.html" />
+    <link rel="next" title="Communication Between Processes" href="communication.html" />
+    <link rel="prev" title="multiprocessing – Manage processes like threads" href="index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">multiprocessing Basics</a><ul>
+<li><a class="reference internal" href="#importable-target-functions">Importable Target Functions</a></li>
+<li><a class="reference internal" href="#determining-the-current-process">Determining the Current Process</a></li>
+<li><a class="reference internal" href="#daemon-processes">Daemon Processes</a></li>
+<li><a class="reference internal" href="#waiting-for-processes">Waiting for Processes</a></li>
+<li><a class="reference internal" href="#terminating-processes">Terminating Processes</a></li>
+<li><a class="reference internal" href="#process-exit-status">Process Exit Status</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#subclassing-process">Subclassing Process</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="index.html" title="previous chapter"><strong>Previous:</strong> multiprocessing &#8211; Manage processes like threads</a><br/>
+          <a href="communication.html" title="next chapter"><strong>Next:</strong> Communication Between Processes</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/multiprocessing/basics.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="communication.html" title="Communication Between Processes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="multiprocessing – Manage processes like threads"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../optional_os.html" >Optional Operating System Services</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">multiprocessing &#8211; Manage processes like threads</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="multiprocessing-basics">
+<h1>multiprocessing Basics<a class="headerlink" href="#multiprocessing-basics" title="Permalink to this headline">¶</a></h1>
+<p>The simplest way to spawn a second is to instantiate a
+<tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt> object with a target function and call <tt class="xref py py-func docutils literal"><span class="pre">start()</span></tt>
+to let it begin working.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Worker&#39;</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output includes the word &#8220;Worker&#8221; printed five times, although it
+may not be entirely clean depending on the order of execution.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_simple.py
+
+Worker
+Worker
+Worker
+Worker
+Worker
+</pre></div>
+</div>
+<p>It usually more useful to be able to spawn a process with arguments to
+tell it what work to do.  Unlike with <a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage several concurrent threads of execution."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a>, to pass
+arguments to a <a class="reference internal" href="index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a> <tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt> the argument
+must be able to be serialized using <a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>.  This example
+passes each worker a number so the output is a little more interesting.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;thread worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Worker:&#39;</span><span class="p">,</span> <span class="n">num</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The integer argument is now included in the message printed by each worker:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_simpleargs.py
+
+Worker: 0
+Worker: 1
+Worker: 2
+Worker: 3
+Worker: 4
+</pre></div>
+</div>
+<div class="section" id="importable-target-functions">
+<h2>Importable Target Functions<a class="headerlink" href="#importable-target-functions" title="Permalink to this headline">¶</a></h2>
+<p>One difference between the <a class="reference internal" href="../threading/index.html#module-threading" title="threading: Manage several concurrent threads of execution."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a> and <a class="reference internal" href="index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a>
+examples is the extra protection for <tt class="docutils literal"><span class="pre">__main__</span></tt> used in the
+<a class="reference internal" href="index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a> examples.  Due to the way the new processes are
+started, the child process needs to be able to import the script
+containing the target function.  Wrapping the main part of the
+application in a check for <tt class="docutils literal"><span class="pre">__main__</span></tt> ensures that it is not run
+recursively in each child as the module is imported.  Another approach
+is to import the target function from a separate script.</p>
+<p>For example, this main program:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">multiprocessing_import_worker</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">multiprocessing_import_worker</span><span class="o">.</span><span class="n">worker</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>uses this worker function, defined in a separate module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Worker&#39;</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>and produces output like the first example above:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_import_main.py
+
+Worker
+Worker
+Worker
+Worker
+Worker
+</pre></div>
+</div>
+</div>
+<div class="section" id="determining-the-current-process">
+<h2>Determining the Current Process<a class="headerlink" href="#determining-the-current-process" title="Permalink to this headline">¶</a></h2>
+<p>Passing arguments to identify or name the process is cumbersome, and
+unnecessary.  Each <tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt> instance has a name with a default
+value that can be changed as the process is created. Naming processes
+is useful for keeping track of them, especially in applications with
+multiple types of processes running simultaneously.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Starting&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Exiting&#39;</span>
+
+<span class="k">def</span> <span class="nf">my_service</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Starting&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Exiting&#39;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;my_service&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">my_service</span><span class="p">)</span>
+    <span class="n">worker_1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;worker 1&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+    <span class="n">worker_2</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span> <span class="c"># use default name</span>
+
+    <span class="n">worker_1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">worker_2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The debug output includes the name of the current process on each
+line. The lines with <tt class="docutils literal"><span class="pre">Process-3</span></tt> in the name column correspond to
+the unnamed process <tt class="docutils literal"><span class="pre">worker_1</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_names.py
+
+worker 1 Starting
+worker 1 Exiting
+Process-3 Starting
+Process-3 Exiting
+my_service Starting
+my_service Exiting
+</pre></div>
+</div>
+</div>
+<div class="section" id="daemon-processes">
+<h2>Daemon Processes<a class="headerlink" href="#daemon-processes" title="Permalink to this headline">¶</a></h2>
+<p>By default the main program will not exit until all of the children
+have exited. There are times when starting a background process that
+runs without blocking the main program from exiting is useful, such as
+in services where there may not be an easy way to interrupt the
+worker, or where letting it die in the middle of its work does not
+lose or corrupt data (for example, a task that generates &#8220;heart beats&#8221;
+for a service monitoring tool).</p>
+<p>To mark a process as a daemon, set its <tt class="xref py py-attr docutils literal"><span class="pre">daemon</span></tt> attribute with a
+boolean value. The default is for processes to not be daemons, so
+passing True turns the daemon mode on.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">daemon</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">non_daemon</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;non-daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">non_daemon</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output does not include the &#8220;Exiting&#8221; message from the daemon
+process, since all of the non-daemon processes (including the main
+program) exit before the daemon process wakes up from its 2 second
+sleep.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_daemon.py
+
+Starting: daemon 13866
+Starting: non-daemon 13867
+Exiting : non-daemon 13867
+</pre></div>
+</div>
+<p>The daemon process is terminated automatically before the main program
+exits, to avoid leaving orphaned processes running.  You can verify
+this by looking for the process id value printed when you run the
+program, and then checking for that process with a command like
+<tt class="docutils literal"><span class="pre">ps</span></tt>.</p>
+</div>
+<div class="section" id="waiting-for-processes">
+<h2>Waiting for Processes<a class="headerlink" href="#waiting-for-processes" title="Permalink to this headline">¶</a></h2>
+<p>To wait until a process has completed its work and exited, use the
+<tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">def</span> <span class="nf">non_daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;non-daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">non_daemon</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Since the main process waits for the daemon to exit using
+<tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt>, the &#8220;Exiting&#8221; message is printed this time.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_daemon_join.py
+
+Starting: non-daemon
+Exiting : non-daemon
+Starting: daemon
+Exiting : daemon
+</pre></div>
+</div>
+<p>By default, <tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt> blocks indefinitely. It is also possible to
+pass a timeout argument (a float representing the number of seconds to
+wait for the process to become inactive). If the process does not
+complete within the timeout period, <tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt> returns anyway.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">def</span> <span class="nf">non_daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;non-daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">non_daemon</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;d.is_alive()&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Since the timeout passed is less than the amount of time the daemon
+sleeps, the process is still &#8220;alive&#8221; after <tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt> returns.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_daemon_join_timeout.py
+
+Starting: non-daemon
+Exiting : non-daemon
+d.is_alive() True
+</pre></div>
+</div>
+</div>
+<div class="section" id="terminating-processes">
+<h2>Terminating Processes<a class="headerlink" href="#terminating-processes" title="Permalink to this headline">¶</a></h2>
+<p>Although it is better to use the <em>poison pill</em> method of signaling to
+a process that it should exit (see <a class="reference internal" href="communication.html#multiprocessing-queues"><em>Passing Messages to Processes</em></a>), if
+a process appears hung or deadlocked it can be useful to be able to
+kill it forcibly.  Calling <tt class="xref py py-func docutils literal"><span class="pre">terminate()</span></tt> on a process object kills
+the child process.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">slow_worker</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting worker&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Finished worker&#39;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">slow_worker</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+    
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;DURING:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+    
+    <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;TERMINATED:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;JOINED:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is important to <tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt> the process after terminating it
+in order to give the background machinery time to update the
+status of the object to reflect the termination.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_terminate.py
+
+BEFORE: &lt;Process(Process-1, initial)&gt; False
+DURING: &lt;Process(Process-1, started)&gt; True
+TERMINATED: &lt;Process(Process-1, started)&gt; True
+JOINED: &lt;Process(Process-1, stopped[SIGTERM])&gt; False
+</pre></div>
+</div>
+</div>
+<div class="section" id="process-exit-status">
+<h2>Process Exit Status<a class="headerlink" href="#process-exit-status" title="Permalink to this headline">¶</a></h2>
+<p>The status code produced when the process exits can be accessed via
+the <tt class="xref py py-attr docutils literal"><span class="pre">exitcode</span></tt> attribute.</p>
+<p>For <tt class="xref py py-attr docutils literal"><span class="pre">exitcode</span></tt> values</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">==</span> <span class="pre">0</span></tt> &#8211; no error was produced</li>
+<li><tt class="docutils literal"><span class="pre">&gt;</span> <span class="pre">0</span></tt> &#8211; the process had an error, and exited with that code</li>
+<li><tt class="docutils literal"><span class="pre">&lt;</span> <span class="pre">0</span></tt> &#8211; the process was killed with a signal of <tt class="docutils literal"><span class="pre">-1</span> <span class="pre">*</span> <span class="pre">exitcode</span></tt></li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">exit_error</span><span class="p">():</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">exit_ok</span><span class="p">():</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">return_value</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">raises</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;There was an error!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">terminated</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">exit_error</span><span class="p">,</span> <span class="n">exit_ok</span><span class="p">,</span> <span class="n">return_value</span><span class="p">,</span> <span class="n">raises</span><span class="p">,</span> <span class="n">terminated</span><span class="p">]:</span>
+        <span class="k">print</span> <span class="s">&#39;Starting process for&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">func_name</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">func_name</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        
+    <span class="n">jobs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.exitcode = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">j</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Processes that raise an exception automatically get an
+<tt class="xref py py-attr docutils literal"><span class="pre">exitcode</span></tt> of 1.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_exitcode.py
+
+Starting process for exit_error
+Starting process for exit_ok
+Starting process for return_value
+Starting process for raises
+Starting process for terminated
+Process raises:
+Traceback (most recent call last):
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python
+2.7/multiprocessing/process.py&quot;, line 258, in _bootstrap
+    self.run()
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python
+2.7/multiprocessing/process.py&quot;, line 114, in run
+    self._target(*self._args, **self._kwargs)
+  File &quot;multiprocessing_exitcode.py&quot;, line 24, in raises
+    raise RuntimeError(&#39;There was an error!&#39;)
+RuntimeError: There was an error!
+exit_error.exitcode = 1
+exit_ok.exitcode = 0
+return_value.exitcode = 0
+raises.exitcode = 1
+terminated.exitcode = -15
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>When debugging concurrency issues, it can be useful to have access to
+the internals of the objects provided by <a class="reference internal" href="index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a>.
+There is a convenient module-level function to enable logging called
+<tt class="xref py py-func docutils literal"><span class="pre">log_to_stderr()</span></tt>.  It sets up a logger object using
+<a class="reference internal" href="../logging/index.html#module-logging" title="logging: Report status, error, and informational messages."><tt class="xref py py-mod docutils literal"><span class="pre">logging</span></tt></a> and adds a handler so that log messages are sent to the
+standard error channel.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Doing some work&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">multiprocessing</span><span class="o">.</span><span class="n">log_to_stderr</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    
+</pre></div>
+</div>
+<p>By default the logging level is set to <tt class="docutils literal"><span class="pre">NOTSET</span></tt> so no messages are
+produced.  Pass a different level to initialize the logger to the
+level of detail you want.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_log_to_stderr.py
+
+[INFO/Process-1] child process calling self.run()
+Doing some work
+[INFO/Process-1] process shutting down
+[DEBUG/Process-1] running all &quot;atexit&quot; finalizers with priority &gt;= 0
+[DEBUG/Process-1] running the remaining &quot;atexit&quot; finalizers
+[INFO/Process-1] process exiting with exitcode 0
+[INFO/MainProcess] process shutting down
+[DEBUG/MainProcess] running all &quot;atexit&quot; finalizers with priority &gt;= 0
+[DEBUG/MainProcess] running the remaining &quot;atexit&quot; finalizers
+</pre></div>
+</div>
+<p>To manipulate the logger directly (change its level setting or add
+handlers), use <tt class="xref py py-func docutils literal"><span class="pre">get_logger()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Doing some work&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">multiprocessing</span><span class="o">.</span><span class="n">log_to_stderr</span><span class="p">()</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The logger can also be configured through the <a class="reference internal" href="../logging/index.html#module-logging" title="logging: Report status, error, and informational messages."><tt class="xref py py-mod docutils literal"><span class="pre">logging</span></tt></a>
+configuration file API, using the name <tt class="docutils literal"><span class="pre">multiprocessing</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_get_logger.py
+
+[INFO/Process-1] child process calling self.run()
+Doing some work
+[INFO/Process-1] process shutting down
+[INFO/Process-1] process exiting with exitcode 0
+[INFO/MainProcess] process shutting down
+</pre></div>
+</div>
+</div>
+<div class="section" id="subclassing-process">
+<h2>Subclassing Process<a class="headerlink" href="#subclassing-process" title="Permalink to this headline">¶</a></h2>
+<p>Although the simplest way to start a job in a separate process is to
+use <tt class="xref py py-class docutils literal"><span class="pre">Process</span></tt> and pass a target function, it is also possible
+to use a custom subclass.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">class</span> <span class="nc">Worker</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;In </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">()</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The derived class should override <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> to do its work.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python multiprocessing_subclass.py
+
+In Worker-1
+In Worker-2
+In Worker-3
+In Worker-4
+In Worker-5
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="communication.html" title="Communication Between Processes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="multiprocessing – Manage processes like threads"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../optional_os.html" >Optional Operating System Services</a> &raquo;</li>
+          <li><a href="index.html" >multiprocessing &#8211; Manage processes like threads</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

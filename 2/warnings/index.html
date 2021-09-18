@@ -1,0 +1,525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>warnings &#8211; Non-fatal alerts - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="next" title="Python Language Services" href="../language.html" />
+    <link rel="prev" title="traceback – Extract, format, and print exceptions and stack traces." href="../traceback/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">warnings &#8211; Non-fatal alerts</a><ul>
+<li><a class="reference internal" href="#categories-and-filtering">Categories and Filtering</a></li>
+<li><a class="reference internal" href="#generating-warnings">Generating Warnings</a></li>
+<li><a class="reference internal" href="#filtering-with-patterns">Filtering with Patterns</a></li>
+<li><a class="reference internal" href="#repeated-warnings">Repeated Warnings</a></li>
+<li><a class="reference internal" href="#alternate-message-delivery-functions">Alternate Message Delivery Functions</a></li>
+<li><a class="reference internal" href="#formatting">Formatting</a></li>
+<li><a class="reference internal" href="#stack-level-in-warnings">Stack Level in Warnings</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../traceback/index.html" title="previous chapter"><strong>Previous:</strong> traceback &#8211; Extract, format, and print exceptions and stack traces.</a><br/>
+          <a href="../language.html" title="next chapter"><strong>Next:</strong> Python Language Services</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/warnings/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../language.html" title="Python Language Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../traceback/index.html" title="traceback – Extract, format, and print exceptions and stack traces."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" accesskey="U">Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-warnings">
+<span id="warnings-non-fatal-alerts"></span><h1>warnings &#8211; Non-fatal alerts<a class="headerlink" href="#module-warnings" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Deliver non-fatal alerts to the user about issues encountered when running a program.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-warnings" title="warnings: Deliver non-fatal alerts to the user about issues encountered when running a program."><tt class="xref py py-mod docutils literal"><span class="pre">warnings</span></tt></a> module was introduced in <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0230"><strong>PEP 230</strong></a> as a way to
+warn programmers about changes in language or library features in
+anticipation of backwards incompatible changes coming with Python
+3.0. Since warnings are not fatal, a program may encounter the same
+warn-able situation many times in the course of running. The
+<a class="reference internal" href="#module-warnings" title="warnings: Deliver non-fatal alerts to the user about issues encountered when running a program."><tt class="xref py py-mod docutils literal"><span class="pre">warnings</span></tt></a> module suppresses repeated warnings from the same
+source to cut down on the annoyance of seeing the same message over
+and over.  You can control the messages printed on a case-by-case
+basis using the <em class="xref std std-option">-W</em> option to the interpreter or by calling
+functions found in <a class="reference internal" href="#module-warnings" title="warnings: Deliver non-fatal alerts to the user about issues encountered when running a program."><tt class="xref py py-mod docutils literal"><span class="pre">warnings</span></tt></a> from your code.</p>
+<div class="section" id="categories-and-filtering">
+<h2>Categories and Filtering<a class="headerlink" href="#categories-and-filtering" title="Permalink to this headline">¶</a></h2>
+<p>Warnings are categorized using subclasses of the built-in exception
+class <tt class="xref py py-class docutils literal"><span class="pre">Warning</span></tt>. Several standard values are <a class="reference internal" href="../exceptions/index.html#exceptions-warning"><em>described in
+the documentation</em></a>, and you can add your own by
+subclassing from <tt class="xref py py-class docutils literal"><span class="pre">Warning</span></tt> to create a new class.</p>
+<p>Messages are filtered using settings controlled through the
+<em class="xref std std-option">-W</em> option to the interpreter. A filter consists of 5 parts,
+the <em>action</em>, <em>message</em>, <em>category</em>, <em>module</em>, and <em>line number</em>. When
+a warning is generated, it is compared against all of the registered
+filters. The first filter that matches controls the action taken for
+the warning. If no filter matches, the default action is taken.</p>
+<p>The actions understood by the filtering mechanism are:</p>
+<ul class="simple">
+<li>error: Turn the warning into an exception.</li>
+<li>ignore: Discard the warning.</li>
+<li>always: Always emit a warning.</li>
+<li>default: Print the warning the first time it is generated from each location.</li>
+<li>module: Print the warning the first time it is generated from each module.</li>
+<li>once: Print the warning the first time it is generated.</li>
+</ul>
+<p>The <em>message</em> portion of the filter is a regular expression that is
+used to match the warning text.</p>
+<p>The <em>category</em> is a name of an exception class, as described above.</p>
+<p>The <em>module</em> contains a regular expression to be matched against the
+module name generating the warning.</p>
+<p>And the <em>line number</em> can be used to change the handling on specific
+occurrences of a warning. Use <tt class="docutils literal"><span class="pre">0</span></tt> to have the filter apply to all
+occurrences.</p>
+</div>
+<div class="section" id="generating-warnings">
+<h2>Generating Warnings<a class="headerlink" href="#generating-warnings" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to emit a warning from your own code is to just call
+<tt class="xref py py-func docutils literal"><span class="pre">warn()</span></tt> with the message as an argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="k">print</span> <span class="s">&#39;Before the warning&#39;</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning message&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;After the warning&#39;</span>
+</pre></div>
+</div>
+<p>Then when your program runs, the message is printed:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_warn.py
+
+warnings_warn.py:13: UserWarning: This is a warning message
+  warnings.warn(&#39;This is a warning message&#39;)
+Before the warning
+After the warning
+</pre></div>
+</div>
+<p>Even though the warning is printed, the default behavior is to continue past
+the warning and run the rest of the program. We can change that behavior with
+a filter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Before the warning&#39;</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning message&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;After the warning&#39;</span>
+</pre></div>
+</div>
+<p>This filter tells the warnings module to raise an exception when the warning
+is issued.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_warn_raise.py
+
+Before the warning
+Traceback (most recent call last):
+  File &quot;warnings_warn_raise.py&quot;, line 15, in &lt;module&gt;
+    warnings.warn(&#39;This is a warning message&#39;)
+UserWarning: This is a warning message
+</pre></div>
+</div>
+<p>We can also control the filter behavior from the command line. For
+example, if we go back to <tt class="docutils literal"><span class="pre">warnings_warn.py</span></tt> and set the filter to
+raise an error on <tt class="xref py py-class docutils literal"><span class="pre">UserWarning</span></tt>, we see the exception:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -W &quot;error::UserWarning::0&quot; warnings_warn.py
+
+Before the warning
+Traceback (most recent call last):
+  File &quot;warnings_warn.py&quot;, line 13, in &lt;module&gt;
+    warnings.warn(&#39;This is a warning message&#39;)
+UserWarning: This is a warning message
+</pre></div>
+</div>
+<p>Since I left the fields for <em>message</em> and <em>module</em> blank, they were
+interpreted as matching anything.</p>
+</div>
+<div class="section" id="filtering-with-patterns">
+<h2>Filtering with Patterns<a class="headerlink" href="#filtering-with-patterns" title="Permalink to this headline">¶</a></h2>
+<p>To filter on more complex rules programmatically, use
+<tt class="xref py py-func docutils literal"><span class="pre">filterwarnings()</span></tt>. For example, to filter based on the content
+of the message text:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="s">&#39;.*do not.*&#39;</span><span class="p">,)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;Show this message&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;Do not show this message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The pattern contains &#8220;<tt class="docutils literal"><span class="pre">do</span> <span class="pre">not</span></tt>&#8221;, but the actual message uses &#8220;<tt class="docutils literal"><span class="pre">Do</span>
+<span class="pre">not</span></tt>&#8221;. The pattern matches because the regular expression is always
+compiled to look for case insensitive matches.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_filterwarnings_message.py
+
+warnings_filterwarnings_message.py:14: UserWarning: Show this message
+  warnings.warn(&#39;Show this message&#39;)
+</pre></div>
+</div>
+<p>Running this source from the command line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;Show this message&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;Do not show this message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>yields:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -W &quot;ignore:do not:UserWarning::0&quot; warnings_filtering.py
+
+warnings_filtering.py:12: UserWarning: Show this message
+  warnings.warn(&#39;Show this message&#39;)
+</pre></div>
+</div>
+<p>The same pattern matching rules apply to the name of the source module
+containing the warning call. To suppress all warnings from the
+<tt class="docutils literal"><span class="pre">warnings_filtering</span></tt> module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> 
+                        <span class="s">&#39;.*&#39;</span><span class="p">,</span> 
+                        <span class="ne">UserWarning</span><span class="p">,</span>
+                        <span class="s">&#39;warnings_filtering&#39;</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">warnings_filtering</span>
+</pre></div>
+</div>
+<p>Since the filter is in place, no warnings are emitted when
+<tt class="docutils literal"><span class="pre">warnings_filtering</span></tt> is imported:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_filterwarnings_module.py
+</pre></div>
+</div>
+<p>To suppress only the warning on line 14 of <tt class="docutils literal"><span class="pre">warnings_filtering</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> 
+                        <span class="s">&#39;.*&#39;</span><span class="p">,</span> 
+                        <span class="ne">UserWarning</span><span class="p">,</span>
+                        <span class="s">&#39;warnings_filtering&#39;</span><span class="p">,</span>
+                        <span class="mi">14</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">warnings_filtering</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_filterwarnings_lineno.py
+
+/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/warnings/warnings_filtering.py:12: UserWarning: Show this message
+  warnings.warn(&#39;Show this message&#39;)
+/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/warnings/warnings_filtering.py:13: UserWarning: Do not show this message
+  warnings.warn(&#39;Do not show this message&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="repeated-warnings">
+<h2>Repeated Warnings<a class="headerlink" href="#repeated-warnings" title="Permalink to this headline">¶</a></h2>
+<p>By default, most types of warnings are only printed the first time they occur
+in a given location, where location is defined as the combination of module
+and line number.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="k">def</span> <span class="nf">function_with_warning</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning!&#39;</span><span class="p">)</span>
+    
+<span class="n">function_with_warning</span><span class="p">()</span>
+<span class="n">function_with_warning</span><span class="p">()</span>
+<span class="n">function_with_warning</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_repeated.py
+
+warnings_repeated.py:13: UserWarning: This is a warning!
+  warnings.warn(&#39;This is a warning!&#39;)
+</pre></div>
+</div>
+<p>The &#8220;once&#8221; action can be used to suppress instances of the same message from
+different locations.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s">&#39;once&#39;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning!&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning!&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_once.py
+
+warnings_once.py:14: UserWarning: This is a warning!
+  warnings.warn(&#39;This is a warning!&#39;)
+</pre></div>
+</div>
+<p>Similarly, &#8220;module&#8221; will suppress repeated messages from the same module, no
+matter what line number.</p>
+</div>
+<div class="section" id="alternate-message-delivery-functions">
+<h2>Alternate Message Delivery Functions<a class="headerlink" href="#alternate-message-delivery-functions" title="Permalink to this headline">¶</a></h2>
+<p>Normally warnings are printed to <a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stderr</em></a>. You can change that behavior by replacing the
+<tt class="xref py py-func docutils literal"><span class="pre">showwarning()</span></tt> function inside the <a class="reference internal" href="#module-warnings" title="warnings: Deliver non-fatal alerts to the user about issues encountered when running a program."><tt class="xref py py-mod docutils literal"><span class="pre">warnings</span></tt></a> module. For
+example, if you wanted warnings to go to a log file instead of stderr,
+you could replace <tt class="xref py py-func docutils literal"><span class="pre">showwarning()</span></tt> with a function like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">send_warnings_to_log</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+        <span class="s">&#39;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> 
+        <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">category</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="k">return</span>
+
+<span class="n">old_showwarning</span> <span class="o">=</span> <span class="n">warnings</span><span class="o">.</span><span class="n">showwarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">showwarning</span> <span class="o">=</span> <span class="n">send_warnings_to_log</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning message&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So that when <tt class="xref py py-func docutils literal"><span class="pre">warn()</span></tt> is called, the warnings are emitted with
+the rest of the log messages.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_showwarning.py
+
+WARNING:root:warnings_showwarning.py:24: UserWarning:This is a warning message
+</pre></div>
+</div>
+</div>
+<div class="section" id="formatting">
+<h2>Formatting<a class="headerlink" href="#formatting" title="Permalink to this headline">¶</a></h2>
+<p>If it is OK for warnings to go to stderr, but you don&#8217;t like the
+formatting, you can replace <tt class="xref py py-func docutils literal"><span class="pre">formatwarning()</span></tt> instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="k">def</span> <span class="nf">warning_on_one_line</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&#39; </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">category</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning message, before&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="n">warning_on_one_line</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;This is a warning message, after&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_formatwarning.py
+
+warnings_formatwarning.py:15: UserWarning: This is a warning message, before
+  warnings.warn(&#39;This is a warning message, before&#39;)
+ warnings_formatwarning.py:17: UserWarning:This is a warning message, after
+</pre></div>
+</div>
+</div>
+<div class="section" id="stack-level-in-warnings">
+<h2>Stack Level in Warnings<a class="headerlink" href="#stack-level-in-warnings" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ll notice that by default the warning message includes the source
+line that generated it, when available. It&#8217;s not all that useful to
+see the line of code with the actual warning message, though. Instead,
+you can tell <tt class="xref py py-func docutils literal"><span class="pre">warn()</span></tt> how far up the stack it has to go to find
+the line the called the function containing the warning. That way
+users of a deprecated function see where the function is called,
+instead of the implementation of the function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="k">def</span> <span class="nf">old_function</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="s">&#39;old_function() is deprecated, use new_function() instead&#39;</span><span class="p">,</span> 
+        <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">caller_of_old_function</span><span class="p">():</span>
+    <span class="n">old_function</span><span class="p">()</span>
+    
+<span class="n">caller_of_old_function</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice that in this example <tt class="xref py py-func docutils literal"><span class="pre">warn()</span></tt> needs to go up the stack 2
+levels, one for itself and one for <tt class="xref py py-func docutils literal"><span class="pre">old_function()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python warnings_warn_stacklevel.py
+
+warnings_warn_stacklevel.py:18: UserWarning: old_function() is deprecated, use new_function() instead
+  old_function()
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/warnings.html">warnings</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0230"><strong>PEP 230</strong></a></dt>
+<dd>Warning Framework</dd>
+<dt><a class="reference internal" href="../exceptions/index.html#module-exceptions" title="exceptions: Built-in error classes"><tt class="xref py py-mod docutils literal"><span class="pre">exceptions</span></tt></a></dt>
+<dd>Base classes for exceptions and warnings.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../language.html" title="Python Language Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../traceback/index.html" title="traceback – Extract, format, and print exceptions and stack traces."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

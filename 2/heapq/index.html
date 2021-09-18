@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>heapq &#8211; In-place heap sort algorithm - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="bisect – Maintain lists in sorted order" href="../bisect/index.html" />
+    <link rel="prev" title="OrderedDict" href="../collections/ordereddict.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">heapq &#8211; In-place heap sort algorithm</a><ul>
+<li><a class="reference internal" href="#example-data">Example Data</a></li>
+<li><a class="reference internal" href="#creating-a-heap">Creating a Heap</a></li>
+<li><a class="reference internal" href="#accessing-contents-of-a-heap">Accessing Contents of a Heap</a></li>
+<li><a class="reference internal" href="#data-extremes">Data Extremes</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../collections/ordereddict.html" title="previous chapter"><strong>Previous:</strong> OrderedDict</a><br/>
+          <a href="../bisect/index.html" title="next chapter"><strong>Next:</strong> bisect &#8211; Maintain lists in sorted order</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/heapq/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../bisect/index.html" title="bisect – Maintain lists in sorted order"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../collections/ordereddict.html" title="OrderedDict"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-heapq">
+<span id="heapq-in-place-heap-sort-algorithm"></span><h1>heapq &#8211; In-place heap sort algorithm<a class="headerlink" href="#module-heapq" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The heapq implements a min-heap sort algorithm suitable for use with
+Python&#8217;s lists.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">New in 2.3 with additions in 2.5</td>
+</tr>
+</tbody>
+</table>
+<p>A <em>heap</em> is a tree-like data structure where the child nodes have a
+sort-order relationship with the parents. <em>Binary heaps</em> can be
+represented using a list or array organized so that the children of
+element N are at positions 2*N+1 and 2*N+2 (for zero-based
+indexes). This layout makes it possible to rearrange heaps in place,
+so it is not necessary to reallocate as much memory when adding or
+removing items.</p>
+<p>A max-heap ensures that the parent is larger than or equal to both of
+its children. A min-heap requires that the parent be less than or
+equal to its children. Python&#8217;s heapq module implements a min-heap.</p>
+<div class="section" id="example-data">
+<h2>Example Data<a class="headerlink" href="#example-data" title="Permalink to this headline">¶</a></h2>
+<p>The examples below use this sample data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># This data was generated with the random module.</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">19</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The heap output is printed using <tt class="docutils literal"><span class="pre">heapq_showtree.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="k">def</span> <span class="nf">show_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">total_width</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pretty-print a tree.&quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">last_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="o">!=</span> <span class="n">last_row</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">row</span>
+        <span class="n">col_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">total_width</span> <span class="o">*</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">columns</span><span class="p">))</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="n">col_width</span><span class="p">,</span> <span class="n">fill</span><span class="p">))</span>
+        <span class="n">last_row</span> <span class="o">=</span> <span class="n">row</span>
+    <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="n">total_width</span>
+    <span class="k">print</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-heap">
+<h2>Creating a Heap<a class="headerlink" href="#creating-a-heap" title="Permalink to this headline">¶</a></h2>
+<p>There are 2 basic ways to create a heap, <tt class="docutils literal"><span class="pre">heappush()</span></tt> and
+<tt class="docutils literal"><span class="pre">heapify()</span></tt>.</p>
+<p>Using <tt class="docutils literal"><span class="pre">heappush()</span></tt>, the heap sort order of the elements is
+maintained as new items are added from a data source.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">from</span> <span class="nn">heapq_showtree</span> <span class="kn">import</span> <span class="n">show_tree</span>
+<span class="kn">from</span> <span class="nn">heapq_heapdata</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">heap</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">print</span> <span class="s">&#39;random :&#39;</span><span class="p">,</span> <span class="n">data</span>
+<span class="k">print</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;add </span><span class="si">%3d</span><span class="s">:&#39;</span> <span class="o">%</span> <span class="n">n</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">show_tree</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python heapq_heappush.py
+
+random : [19, 9, 4, 10, 11, 8, 2]
+
+add  19:
+
+                 19
+------------------------------------
+
+add   9:
+
+                 9
+        19
+------------------------------------
+
+add   4:
+
+                 4
+        19                9
+------------------------------------
+
+add  10:
+
+                 4
+        10                9
+    19
+------------------------------------
+
+add  11:
+
+                 4
+        10                9
+    19       11
+------------------------------------
+
+add   8:
+
+                 4
+        10                8
+    19       11       9
+------------------------------------
+
+add   2:
+
+                 2
+        10                4
+    19       11       9        8
+------------------------------------
+</pre></div>
+</div>
+<p>If the data is already in memory, it is more efficient to use
+<tt class="docutils literal"><span class="pre">heapify()</span></tt> to rearrange the items of the list in place.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">from</span> <span class="nn">heapq_showtree</span> <span class="kn">import</span> <span class="n">show_tree</span>
+<span class="kn">from</span> <span class="nn">heapq_heapdata</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="k">print</span> <span class="s">&#39;random    :&#39;</span><span class="p">,</span> <span class="n">data</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;heapified :&#39;</span>
+<span class="n">show_tree</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python heapq_heapify.py
+
+random    : [19, 9, 4, 10, 11, 8, 2]
+heapified :
+
+                 2
+        9                 4
+    10       11       8        19
+------------------------------------
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-contents-of-a-heap">
+<h2>Accessing Contents of a Heap<a class="headerlink" href="#accessing-contents-of-a-heap" title="Permalink to this headline">¶</a></h2>
+<p>Once the heap is organized correctly, use <tt class="docutils literal"><span class="pre">heappop()</span></tt> to remove the
+element with the lowest value. In this example, adapted from the
+stdlib documentation, <tt class="docutils literal"><span class="pre">heapify()</span></tt> and <tt class="docutils literal"><span class="pre">heappop()</span></tt> are used to sort
+a list of numbers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">from</span> <span class="nn">heapq_showtree</span> <span class="kn">import</span> <span class="n">show_tree</span>
+<span class="kn">from</span> <span class="nn">heapq_heapdata</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="k">print</span> <span class="s">&#39;random    :&#39;</span><span class="p">,</span> <span class="n">data</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;heapified :&#39;</span>
+<span class="n">show_tree</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="n">inorder</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">smallest</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;pop    </span><span class="si">%3d</span><span class="s">:&#39;</span> <span class="o">%</span> <span class="n">smallest</span>
+    <span class="n">show_tree</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">inorder</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">smallest</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;inorder   :&#39;</span><span class="p">,</span> <span class="n">inorder</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python heapq_heappop.py
+
+random    : [19, 9, 4, 10, 11, 8, 2]
+heapified :
+
+                 2
+        9                 4
+    10       11       8        19
+------------------------------------
+
+
+pop      2:
+
+                 4
+        9                 8
+    10       11       19
+------------------------------------
+
+pop      4:
+
+                 8
+        9                 19
+    10       11
+------------------------------------
+
+pop      8:
+
+                 9
+        10                19
+    11
+------------------------------------
+
+pop      9:
+
+                 10
+        11                19
+------------------------------------
+
+pop     10:
+
+                 11
+        19
+------------------------------------
+
+pop     11:
+
+                 19
+------------------------------------
+
+pop     19:
+
+------------------------------------
+
+inorder   : [2, 4, 8, 9, 10, 11, 19]
+</pre></div>
+</div>
+<p>To remove existing elements and replace them with new values in a
+single operation, use <tt class="docutils literal"><span class="pre">heapreplace()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">from</span> <span class="nn">heapq_showtree</span> <span class="kn">import</span> <span class="n">show_tree</span>
+<span class="kn">from</span> <span class="nn">heapq_heapdata</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;start:&#39;</span>
+<span class="n">show_tree</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="n">smallest</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heapreplace</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;replace </span><span class="si">%2d</span><span class="s"> with </span><span class="si">%2d</span><span class="s">:&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">smallest</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">show_tree</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Replacing elements in place lets you maintain a fixed size heap, such
+as a queue of jobs ordered by priority.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python heapq_heapreplace.py
+
+start:
+
+                 2
+        9                 4
+    10       11       8        19
+------------------------------------
+
+replace  2 with  0:
+
+                 0
+        9                 4
+    10       11       8        19
+------------------------------------
+
+replace  0 with  7:
+
+                 4
+        9                 7
+    10       11       8        19
+------------------------------------
+
+replace  4 with 13:
+
+                 7
+        9                 8
+    10       11       13       19
+------------------------------------
+
+replace  7 with  9:
+
+                 8
+        9                 9
+    10       11       13       19
+------------------------------------
+
+replace  8 with  5:
+
+                 5
+        9                 9
+    10       11       13       19
+------------------------------------
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-extremes">
+<h2>Data Extremes<a class="headerlink" href="#data-extremes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-heapq" title="heapq: In-place heap sort algorithm"><tt class="xref py py-mod docutils literal"><span class="pre">heapq</span></tt></a> also includes 2 functions to examine an iterable to find
+a range of the largest or smallest values it contains. Using
+<tt class="docutils literal"><span class="pre">nlargest()</span></tt> and <tt class="docutils literal"><span class="pre">nsmallest()</span></tt> are really only efficient for
+relatively small values of n &gt; 1, but can still come in handy in a few
+cases.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">from</span> <span class="nn">heapq_heapdata</span> <span class="kn">import</span> <span class="n">data</span>
+
+<span class="k">print</span> <span class="s">&#39;all       :&#39;</span><span class="p">,</span> <span class="n">data</span>
+<span class="k">print</span> <span class="s">&#39;3 largest :&#39;</span><span class="p">,</span> <span class="n">heapq</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;from sort :&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]))</span>
+<span class="k">print</span> <span class="s">&#39;3 smallest:&#39;</span><span class="p">,</span> <span class="n">heapq</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;from sort :&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python heapq_extremes.py
+
+all       : [19, 9, 4, 10, 11, 8, 2]
+3 largest : [19, 11, 10]
+from sort : [19, 11, 10]
+3 smallest: [2, 4, 8]
+from sort : [2, 4, 8]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/heapq.html">heapq</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Heap_(data_structure)">WikiPedia: Heap (data structure)</a></dt>
+<dd>A general description of heap data structures.</dd>
+<dt><a class="reference internal" href="../articles/data_structures.html#article-data-structures"><em>In-Memory Data Structures</em></a></dt>
+<dd>Other Python data structures.</dd>
+<dt><a class="reference internal" href="../Queue/index.html#queue-priorityqueue"><em>Priority Queue</em></a></dt>
+<dd>A priority queue implementation from <a class="reference internal" href="../Queue/index.html#module-Queue" title="Queue: Provides a thread-safe FIFO implementation"><tt class="xref py py-mod docutils literal"><span class="pre">Queue</span></tt></a> in the
+standard library.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../bisect/index.html" title="bisect – Maintain lists in sorted order"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../collections/ordereddict.html" title="OrderedDict"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

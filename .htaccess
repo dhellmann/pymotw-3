@@ -1,0 +1,7 @@
+# Force SSL
+# http://wiki.dreamhost.com/Transport_Layer_Security#Automatic_Redirection_from_HTTP_to_HTTPS
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</IfModule>

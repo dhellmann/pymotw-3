@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BaseHTTPServer &#8211; base classes for implementing web servers - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="cgitb – Detailed traceback reports" href="../cgitb/index.html" />
+    <link rel="prev" title="Internet Protocols and Support" href="../internet_protocols.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">BaseHTTPServer &#8211; base classes for implementing web servers</a><ul>
+<li><a class="reference internal" href="#http-get">HTTP GET</a></li>
+<li><a class="reference internal" href="#http-post">HTTP POST</a></li>
+<li><a class="reference internal" href="#threading-and-forking">Threading and Forking</a></li>
+<li><a class="reference internal" href="#handling-errors">Handling Errors</a></li>
+<li><a class="reference internal" href="#setting-headers">Setting Headers</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../internet_protocols.html" title="previous chapter"><strong>Previous:</strong> Internet Protocols and Support</a><br/>
+          <a href="../cgitb/index.html" title="next chapter"><strong>Next:</strong> cgitb &#8211; Detailed traceback reports</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/BaseHTTPServer/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../cgitb/index.html" title="cgitb – Detailed traceback reports"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../internet_protocols.html" title="Internet Protocols and Support"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-BaseHTTPServer">
+<span id="basehttpserver-base-classes-for-implementing-web-servers"></span><h1>BaseHTTPServer &#8211; base classes for implementing web servers<a class="headerlink" href="#module-BaseHTTPServer" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">BaseHTTPServer includes classes that can form the basis of a web server.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-BaseHTTPServer" title="BaseHTTPServer: Provides base classes for implementing web servers."><tt class="xref py py-mod docutils literal"><span class="pre">BaseHTTPServer</span></tt></a> uses classes from <a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a> to create
+base classes for making HTTP servers. <tt class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></tt> can be used
+directly, but the <tt class="xref py py-class docutils literal"><span class="pre">BaseHTTPRequestHandler</span></tt> is intended to be
+extended to handle each protocol method (GET, POST, etc.).</p>
+<div class="section" id="http-get">
+<h2>HTTP GET<a class="headerlink" href="#http-get" title="Permalink to this headline">¶</a></h2>
+<p>To add support for an HTTP method in your request handler class,
+implement the method <tt class="xref py py-func docutils literal"><span class="pre">do_METHOD()</span></tt>, replacing <em>METHOD</em> with the
+name of the HTTP method. For example, <tt class="xref py py-func docutils literal"><span class="pre">do_GET()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">do_POST()</span></tt>,
+etc. For consistency, the method takes no arguments. All of the
+parameters for the request are parsed by
+<tt class="xref py py-class docutils literal"><span class="pre">BaseHTTPRequestHandler</span></tt> and stored as instance attributes of
+the request instance.</p>
+<p>This example request handler illustrates how to return a response to the
+client and some of the local attributes which can be useful in building the
+response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+<span class="k">class</span> <span class="nc">GetHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parsed_path</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">message_parts</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s">&#39;CLIENT VALUES:&#39;</span><span class="p">,</span>
+                <span class="s">&#39;client_address=</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">address_string</span><span class="p">()),</span>
+                <span class="s">&#39;command=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span>
+                <span class="s">&#39;path=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                <span class="s">&#39;real path=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">parsed_path</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+                <span class="s">&#39;query=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">parsed_path</span><span class="o">.</span><span class="n">query</span><span class="p">,</span>
+                <span class="s">&#39;request_version=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_version</span><span class="p">,</span>
+                <span class="s">&#39;&#39;</span><span class="p">,</span>
+                <span class="s">&#39;SERVER VALUES:&#39;</span><span class="p">,</span>
+                <span class="s">&#39;server_version=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span><span class="p">,</span>
+                <span class="s">&#39;sys_version=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_version</span><span class="p">,</span>
+                <span class="s">&#39;protocol_version=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">protocol_version</span><span class="p">,</span>
+                <span class="s">&#39;&#39;</span><span class="p">,</span>
+                <span class="s">&#39;HEADERS RECEIVED:&#39;</span><span class="p">,</span>
+                <span class="p">]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">message_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()))</span>
+        <span class="n">message_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">message_parts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">GetHandler</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The message text is assembled and then written to <tt class="xref py py-attr docutils literal"><span class="pre">wfile</span></tt>, the
+file handle wrapping the response socket. Each response needs a
+response code, set via <tt class="xref py py-func docutils literal"><span class="pre">send_response()</span></tt>. If an error code is used
+(404, 501, etc.), an appropriate default error message is included in
+the header, or a message can be passed with the error code.</p>
+<p>To run the request handler in a server, pass it to the constructor of
+HTTPServer, as in the <tt class="docutils literal"><span class="pre">__main__</span></tt> processing portion of the sample script.</p>
+<p>Then start the server:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python BaseHTTPServer_GET.py
+Starting server, use &lt;Ctrl-C&gt; to stop
+</pre></div>
+</div>
+<p>In a separate terminal, use <strong class="command">curl</strong> to access it:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ curl -i http://localhost:8080/?foo=barHTTP/1.0 200 OK
+Server: BaseHTTP/0.3 Python/2.5.1
+Date: Sun, 09 Dec 2007 16:00:34 GMT
+
+CLIENT VALUES:
+client_address=(&#39;127.0.0.1&#39;, 51275) (localhost)
+command=GET
+path=/?foo=bar
+real path=/
+query=foo=bar
+request_version=HTTP/1.1
+
+SERVER VALUES:
+server_version=BaseHTTP/0.3
+sys_version=Python/2.5.1
+protocol_version=HTTP/1.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="http-post">
+<h2>HTTP POST<a class="headerlink" href="#http-post" title="Permalink to this headline">¶</a></h2>
+<p>Supporting POST requests is a little more work, because the base class
+does not parse the form data for us. The <tt class="xref py py-mod docutils literal"><span class="pre">cgi</span></tt> module provides
+the <tt class="xref py py-class docutils literal"><span class="pre">FieldStorage</span></tt> class which knows how to parse the form, if
+it is given the correct inputs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">import</span> <span class="nn">cgi</span>
+
+<span class="k">class</span> <span class="nc">PostHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">do_POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Parse the form data posted</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">cgi</span><span class="o">.</span><span class="n">FieldStorage</span><span class="p">(</span>
+            <span class="n">fp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="p">,</span> 
+            <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">environ</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;REQUEST_METHOD&#39;</span><span class="p">:</span><span class="s">&#39;POST&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;CONTENT_TYPE&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Content-Type&#39;</span><span class="p">],</span>
+                     <span class="p">})</span>
+
+        <span class="c"># Begin the response</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Client: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;User-agent: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;user-agent&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Path: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Form data:</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+        <span class="c"># Echo back information about what was posted in the form</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">field_item</span> <span class="o">=</span> <span class="n">form</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">field_item</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
+                <span class="c"># The field contains an uploaded file</span>
+                <span class="n">file_data</span> <span class="o">=</span> <span class="n">field_item</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">file_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">file_data</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">Uploaded </span><span class="si">%s</span><span class="s"> as &quot;</span><span class="si">%s</span><span class="s">&quot; (</span><span class="si">%d</span><span class="s"> bytes)</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> \
+                        <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">field_item</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">file_len</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># Regular form value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">form</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">PostHandler</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong class="command">curl</strong> can include form data in the message it posts to the
+server. The last argument, <tt class="docutils literal"><span class="pre">-F</span> <span class="pre">datafile=&#64;BaseHTTPServer_GET.py</span></tt>,
+posts the contents of the file <tt class="docutils literal"><span class="pre">BaseHTTPServer_GET.py</span></tt> to illustrate
+reading file data from the form.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ curl http://localhost:8080/ -F name=dhellmann -F foo=bar -F  datafile=@BaseHTTPServer_GET.py
+Client: (&#39;127.0.0.1&#39;, 51128)
+Path: /
+Form data:
+        name=dhellmann
+        foo=bar
+        Uploaded datafile (2222 bytes)
+</pre></div>
+</div>
+</div>
+<div class="section" id="threading-and-forking">
+<h2>Threading and Forking<a class="headerlink" href="#threading-and-forking" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">HTTPServer</span></tt> is a simple subclass of
+<tt class="xref py py-class docutils literal"><span class="pre">SocketServer.TCPServer</span></tt>, and does not use multiple threads or
+processes to handle requests. To add threading or forking, create a
+new class using the appropriate mix-in from <a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">HTTPServer</span><span class="p">,</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">from</span> <span class="nn">SocketServer</span> <span class="kn">import</span> <span class="n">ThreadingMixIn</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span>  <span class="n">threading</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">ThreadedHTTPServer</span><span class="p">(</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">HTTPServer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handle requests in a separate thread.&quot;&quot;&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">ThreadedHTTPServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">Handler</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Each time a request comes in, a new thread or process is created to
+handle it:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ curl http://localhost:8080/
+Thread-1
+$ curl http://localhost:8080/
+Thread-2
+$ curl http://localhost:8080/
+Thread-3
+</pre></div>
+</div>
+<p>Swapping <tt class="xref py py-class docutils literal"><span class="pre">ForkingMixIn</span></tt> for <tt class="xref py py-class docutils literal"><span class="pre">ThreadingMixIn</span></tt> above would
+achieve similar results, using separate processes instead of threads.</p>
+</div>
+<div class="section" id="handling-errors">
+<h2>Handling Errors<a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h2>
+<p>Error handling is made easy with <tt class="xref py py-meth docutils literal"><span class="pre">send_error()</span></tt>. Simply pass the
+appropriate error code and an optional error message, and the entire
+response (with headers, status code, and body) is generated
+automatically.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">BaseHTTPRequestHandler</span>
+
+<span class="k">class</span> <span class="nc">ErrorHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_error</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">ErrorHandler</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this case, a 404 error is always returned.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ curl -i http://localhost:8080/
+HTTP/1.0 404 Not Found
+Server: BaseHTTP/0.3 Python/2.5.1
+Date: Sun, 09 Dec 2007 15:49:44 GMT
+Content-Type: text/html
+Connection: close
+
+&lt;head&gt;
+&lt;title&gt;Error response&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Error response&lt;/h1&gt;
+&lt;p&gt;Error code 404.
+&lt;p&gt;Message: Not Found.
+&lt;p&gt;Error code explanation: 404 = Nothing matches the given URI.
+&lt;/body&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-headers">
+<h2>Setting Headers<a class="headerlink" href="#setting-headers" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-mod docutils literal"><span class="pre">send_header</span></tt> method adds header data to the HTTP response.
+It takes two arguments, the name of the header and the value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">BaseHTTPRequestHandler</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">GetHandler</span><span class="p">(</span><span class="n">BaseHTTPRequestHandler</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_header</span><span class="p">(</span><span class="s">&#39;Last-Modified&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_time_string</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Response body</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">BaseHTTPServer</span> <span class="kn">import</span> <span class="n">HTTPServer</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">GetHandler</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting server, use &lt;Ctrl-C&gt; to stop&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example sets the <tt class="docutils literal"><span class="pre">Last-Modified</span></tt> header to the current
+timestamp formatted according to <span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ curl -i http://localhost:8080/
+HTTP/1.0 200 OK
+Server: BaseHTTP/0.3 Python/2.7
+Date: Sun, 10 Oct 2010 13:58:32 GMT
+Last-Modified: Sun, 10 Oct 2010 13:58:32 -0000
+
+Response body
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/basehttpserver.html">BaseHTTPServer</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a></dt>
+<dd>The SocketServer module provides the base class which handles
+the raw socket connection.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../cgitb/index.html" title="cgitb – Detailed traceback reports"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../internet_protocols.html" title="Internet Protocols and Support"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zipfile &#8211; Read and write ZIP archive files - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Compression and Archiving" href="../compression.html" />
+    <link rel="next" title="zlib – Low-level access to GNU zlib compression library" href="../zlib/index.html" />
+    <link rel="prev" title="tarfile – Tar archive access" href="../tarfile/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">zipfile &#8211; Read and write ZIP archive files</a><ul>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+<li><a class="reference internal" href="#testing-zip-files">Testing ZIP Files</a></li>
+<li><a class="reference internal" href="#reading-meta-data-from-a-zip-archive">Reading Meta-data from a ZIP Archive</a></li>
+<li><a class="reference internal" href="#extracting-archived-files-from-a-zip-archive">Extracting Archived Files From a ZIP Archive</a></li>
+<li><a class="reference internal" href="#creating-new-archives">Creating New Archives</a></li>
+<li><a class="reference internal" href="#using-alternate-archive-member-names">Using Alternate Archive Member Names</a></li>
+<li><a class="reference internal" href="#writing-data-from-sources-other-than-files">Writing Data from Sources Other Than Files</a></li>
+<li><a class="reference internal" href="#writing-with-a-zipinfo-instance">Writing with a ZipInfo Instance</a></li>
+<li><a class="reference internal" href="#appending-to-files">Appending to Files</a></li>
+<li><a class="reference internal" href="#python-zip-archives">Python ZIP Archives</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../tarfile/index.html" title="previous chapter"><strong>Previous:</strong> tarfile &#8211; Tar archive access</a><br/>
+          <a href="../zlib/index.html" title="next chapter"><strong>Next:</strong> zlib &#8211; Low-level access to GNU zlib compression library</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/zipfile/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../zlib/index.html" title="zlib – Low-level access to GNU zlib compression library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../tarfile/index.html" title="tarfile – Tar archive access"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" accesskey="U">Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-zipfile">
+<span id="zipfile-read-and-write-zip-archive-files"></span><h1>zipfile &#8211; Read and write ZIP archive files<a class="headerlink" href="#module-zipfile" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read and write ZIP archive files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.6 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-zipfile" title="zipfile: Read and write ZIP archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a> module can be used to manipulate ZIP archive files.</p>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-zipfile" title="zipfile: Read and write ZIP archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a> module does not support ZIP files with appended
+comments, or multi-disk ZIP files. It does support ZIP files larger
+than 4 GB that use the ZIP64 extensions.</p>
+</div>
+<div class="section" id="testing-zip-files">
+<h2>Testing ZIP Files<a class="headerlink" href="#testing-zip-files" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">is_zipfile()</span></tt> function returns a boolean indicating whether
+or not the filename passed as an argument refers to a valid ZIP file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;example.zip&#39;</span><span class="p">,</span> 
+                  <span class="s">&#39;bad_example.zip&#39;</span><span class="p">,</span> <span class="s">&#39;notthere.zip&#39;</span> <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%20s</span><span class="s">  </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">is_zipfile</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Notice that if the file does not exist at all, <tt class="xref py py-func docutils literal"><span class="pre">is_zipfile()</span></tt>
+returns False.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_is_zipfile.py
+
+          README.txt  False
+         example.zip  True
+     bad_example.zip  False
+        notthere.zip  False
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-meta-data-from-a-zip-archive">
+<h2>Reading Meta-data from a ZIP Archive<a class="headerlink" href="#reading-meta-data-from-a-zip-archive" title="Permalink to this headline">¶</a></h2>
+<p>Use the <tt class="xref py py-class docutils literal"><span class="pre">ZipFile</span></tt> class to work directly with a ZIP archive. It
+supports methods for reading data about existing archives as well as
+modifying the archives by adding additional files.</p>
+<p>To read the names of the files in an existing archive, use
+<tt class="xref py py-func docutils literal"><span class="pre">namelist()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;example.zip&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">zf</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The return value is a list of strings with the names of the archive
+contents:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_namelist.py
+
+[&#39;README.txt&#39;]
+</pre></div>
+</div>
+<p>The list of names is only part of the information available from the
+archive, though. To access all of the meta-data about the ZIP
+contents, use the <tt class="xref py py-func docutils literal"><span class="pre">infolist()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">getinfo()</span></tt> methods.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">def</span> <span class="nf">print_info</span><span class="p">(</span><span class="n">archive_name</span><span class="p">):</span>
+    <span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">archive_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">zf</span><span class="o">.</span><span class="n">infolist</span><span class="p">():</span>
+        <span class="k">print</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Comment:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">comment</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Modified:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="o">*</span><span class="n">info</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">System:</span><span class="se">\t\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">create_system</span><span class="p">,</span> <span class="s">&#39;(0 = Windows, 3 = Unix)&#39;</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">ZIP version:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">create_version</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Compressed:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">compress_size</span><span class="p">,</span> <span class="s">&#39;bytes&#39;</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Uncompressed:</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">file_size</span><span class="p">,</span> <span class="s">&#39;bytes&#39;</span>
+        <span class="k">print</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">print_info</span><span class="p">(</span><span class="s">&#39;example.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are additional fields other than those printed here, but
+deciphering the values into anything useful requires careful reading
+of the <a class="reference external" href="http://www.pkware.com/documents/casestudies/APPNOTE.TXT">PKZIP Application Note</a> with the ZIP file specification.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_infolist.py
+
+README.txt
+        Comment:
+        Modified:       2007-12-16 10:08:52
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    23
+        Compressed:     63 bytes
+        Uncompressed:   75 bytes
+</pre></div>
+</div>
+<p>If you know in advance the name of the archive member, you can
+retrieve its <tt class="xref py py-class docutils literal"><span class="pre">ZipInfo</span></tt> object with <tt class="xref py py-func docutils literal"><span class="pre">getinfo()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;example.zip&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;notthere.txt&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">getinfo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;ERROR: Did not find </span><span class="si">%s</span><span class="s"> in zip file&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is </span><span class="si">%d</span><span class="s"> bytes&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">file_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the archive member is not present, <tt class="xref py py-func docutils literal"><span class="pre">getinfo()</span></tt> raises a
+<a class="reference internal" href="../exceptions/index.html#exceptions-keyerror"><em>KeyError</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_getinfo.py
+
+README.txt is 75 bytes
+ERROR: Did not find notthere.txt in zip file
+</pre></div>
+</div>
+</div>
+<div class="section" id="extracting-archived-files-from-a-zip-archive">
+<h2>Extracting Archived Files From a ZIP Archive<a class="headerlink" href="#extracting-archived-files-from-a-zip-archive" title="Permalink to this headline">¶</a></h2>
+<p>To access the data from an archive member, use the <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt>
+method, passing the member&#8217;s name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;example.zip&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="s">&#39;notthere.txt&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;ERROR: Did not find </span><span class="si">%s</span><span class="s"> in zip file&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">filename</span><span class="p">,</span> <span class="s">&#39;:&#39;</span>
+        <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>The data is automatically decompressed for you, if necessary.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_read.py
+
+README.txt :
+&#39;The examples for the zipfile module use this file and example.zip as data.\n&#39;
+
+ERROR: Did not find notthere.txt in zip file
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-new-archives">
+<h2>Creating New Archives<a class="headerlink" href="#creating-new-archives" title="Permalink to this headline">¶</a></h2>
+<p>To create a new archive, simple instantiate the <tt class="xref py py-class docutils literal"><span class="pre">ZipFile</span></tt> with
+a mode of <tt class="docutils literal"><span class="pre">'w'</span></tt>.  Any existing file is truncated and a new archive
+is started. To add files, use the <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zipfile_infolist</span> <span class="kn">import</span> <span class="n">print_info</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">print</span> <span class="s">&#39;creating archive&#39;</span>
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_write.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;adding README.txt&#39;</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;closing&#39;</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_write.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, the contents of the archive are not compressed:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_write.py
+creating archive
+adding README.txt
+closing
+
+README.txt
+        Comment:
+        Modified:       2007-12-16 10:08:50
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     75 bytes
+        Uncompressed:   75 bytes
+</pre></div>
+</div>
+<p>To add compression, the <a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a> module is required. If <a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a>
+is available, you can set the compression mode for individual files or
+for the archive as a whole using <tt class="docutils literal"><span class="pre">zipfile.ZIP_DEFLATED</span></tt>. The default
+compression mode is <tt class="docutils literal"><span class="pre">zipfile.ZIP_STORED</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zipfile_infolist</span> <span class="kn">import</span> <span class="n">print_info</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">zlib</span>
+    <span class="n">compression</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">compression</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_STORED</span>
+
+<span class="n">modes</span> <span class="o">=</span> <span class="p">{</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">:</span> <span class="s">&#39;deflated&#39;</span><span class="p">,</span>
+          <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_STORED</span><span class="p">:</span>   <span class="s">&#39;stored&#39;</span><span class="p">,</span>
+          <span class="p">}</span>
+
+<span class="k">print</span> <span class="s">&#39;creating archive&#39;</span>
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_write_compression.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;adding README.txt with compression mode&#39;</span><span class="p">,</span> <span class="n">modes</span><span class="p">[</span><span class="n">compression</span><span class="p">]</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="n">compress_type</span><span class="o">=</span><span class="n">compression</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;closing&#39;</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_write_compression.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This time the archive member is compressed:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_write_compression.py
+creating archive
+adding README.txt with compression mode deflated
+closing
+
+README.txt
+        Comment:
+        Modified:       2007-12-16 10:08:50
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     63 bytes
+        Uncompressed:   75 bytes
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-alternate-archive-member-names">
+<h2>Using Alternate Archive Member Names<a class="headerlink" href="#using-alternate-archive-member-names" title="Permalink to this headline">¶</a></h2>
+<p>It is easy to add a file to an archive using a name other than the original
+file name, by passing the arcname argument to <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zipfile_infolist</span> <span class="kn">import</span> <span class="n">print_info</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_write_arcname.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">&#39;NOT_README.txt&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_write_arcname.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There is no sign of the original filename in the archive:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_write_arcname.py
+NOT_README.txt
+        Comment:
+        Modified:       2007-12-16 10:08:50
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     75 bytes
+        Uncompressed:   75 bytes
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-data-from-sources-other-than-files">
+<h2>Writing Data from Sources Other Than Files<a class="headerlink" href="#writing-data-from-sources-other-than-files" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is necessary to write to a ZIP archive using data that
+did not come from an existing file. Rather than writing the data to a
+file, then adding that file to the ZIP archive, you can use the
+<tt class="xref py py-func docutils literal"><span class="pre">writestr()</span></tt> method to add a string of bytes to the archive
+directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zipfile_infolist</span> <span class="kn">import</span> <span class="n">print_info</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;This data did not exist in a file before being added to the ZIP file&#39;</span>
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_writestr.zip&#39;</span><span class="p">,</span> 
+                     <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">,</span>
+                     <span class="n">compression</span><span class="o">=</span><span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">,</span> 
+                     <span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="s">&#39;from_string.txt&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_writestr.zip&#39;</span><span class="p">)</span>
+
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_writestr.zip&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">zf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;from_string.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, I used the compress argument to <tt class="xref py py-class docutils literal"><span class="pre">ZipFile</span></tt> to
+compress the data, since <tt class="xref py py-func docutils literal"><span class="pre">writestr()</span></tt> does not take compress as
+an argument.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_writestr.py
+from_string.txt
+        Comment:
+        Modified:       2007-12-16 11:38:14
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     62 bytes
+        Uncompressed:   68 bytes
+</pre></div>
+</div>
+<p>This data did not exist in a file before being added to the ZIP file</p>
+</div>
+<div class="section" id="writing-with-a-zipinfo-instance">
+<h2>Writing with a ZipInfo Instance<a class="headerlink" href="#writing-with-a-zipinfo-instance" title="Permalink to this headline">¶</a></h2>
+<p>Normally, the modification date is computed for you when you add a
+file or string to the archive. When using <tt class="xref py py-func docutils literal"><span class="pre">writestr()</span></tt>, you can
+also pass a <tt class="xref py py-class docutils literal"><span class="pre">ZipInfo</span></tt> instance to define the modification date
+and other meta-data yourself.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">from</span> <span class="nn">zipfile_infolist</span> <span class="kn">import</span> <span class="n">print_info</span>
+
+<span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;This data did not exist in a file before being added to the ZIP file&#39;</span>
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_writestr_zipinfo.zip&#39;</span><span class="p">,</span> 
+                     <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">,</span>
+                     <span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipInfo</span><span class="p">(</span><span class="s">&#39;from_string.txt&#39;</span><span class="p">,</span> 
+                           <span class="n">date_time</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span>
+                           <span class="p">)</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">compress_type</span><span class="o">=</span><span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">comment</span><span class="o">=</span><span class="s">&#39;Remarks go here&#39;</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">create_system</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_writestr_zipinfo.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, I set the modified time to the current time, compress the
+data, provide a false value for <tt class="docutils literal"><span class="pre">create_system</span></tt>, and add a comment.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_writestr_zipinfo.py
+from_string.txt
+        Comment:        Remarks go here
+        Modified:       2007-12-16 11:44:14
+        System:         0 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     62 bytes
+        Uncompressed:   68 bytes
+</pre></div>
+</div>
+</div>
+<div class="section" id="appending-to-files">
+<h2>Appending to Files<a class="headerlink" href="#appending-to-files" title="Permalink to this headline">¶</a></h2>
+<p>In addition to creating new archives, it is possible to append to an
+existing archive or add an archive at the end of an existing file
+(such as a .exe file for a self-extracting archive). To open a file to
+append to it, use mode <tt class="docutils literal"><span class="pre">'a'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zipfile_infolist</span> <span class="kn">import</span> <span class="n">print_info</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">print</span> <span class="s">&#39;creating archive&#39;</span>
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_append.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_append.zip&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;appending to the archive&#39;</span>
+<span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_append.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;README.txt&#39;</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="s">&#39;README2.txt&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="n">print_info</span><span class="p">(</span><span class="s">&#39;zipfile_append.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The resulting archive ends up with 2 members:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_append.py
+creating archive
+
+README.txt
+        Comment:
+        Modified:       2007-12-16 10:08:50
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     75 bytes
+        Uncompressed:   75 bytes
+
+appending to the archive
+
+README.txt
+        Comment:
+        Modified:       2007-12-16 10:08:50
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     75 bytes
+        Uncompressed:   75 bytes
+
+README2.txt
+        Comment:
+        Modified:       2007-12-16 10:08:50
+        System:         3 (0 = Windows, 3 = Unix)
+        ZIP version:    20
+        Compressed:     75 bytes
+        Uncompressed:   75 bytes
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-zip-archives">
+<h2>Python ZIP Archives<a class="headerlink" href="#python-zip-archives" title="Permalink to this headline">¶</a></h2>
+<p>Since version 2.3 Python has had the ability to <a class="reference internal" href="../zipimport/index.html#zipimport-ref"><em>import modules
+from inside ZIP archives</em></a> if those archives appear in
+<a class="reference internal" href="../sys/imports.html#sys-path"><em>sys.path</em></a>. The <tt class="xref py py-class docutils literal"><span class="pre">PyZipFile</span></tt> class can be used
+to construct a module suitable for use in this way. When you use the
+extra method <tt class="xref py py-func docutils literal"><span class="pre">writepy()</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">PyZipFile</span></tt> scans a directory
+for <tt class="docutils literal"><span class="pre">.py</span></tt> files and adds the corresponding <tt class="docutils literal"><span class="pre">.pyo</span></tt> or <tt class="docutils literal"><span class="pre">.pyc</span></tt> file
+to the archive. If neither compiled form exists, a <tt class="docutils literal"><span class="pre">.pyc</span></tt> file is
+created and added.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">zf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">PyZipFile</span><span class="p">(</span><span class="s">&#39;zipfile_pyzipfile.zip&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">zf</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">print</span> <span class="s">&#39;Adding python files&#39;</span>
+        <span class="n">zf</span><span class="o">.</span><span class="n">writepy</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">zf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">zf</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+        <span class="k">print</span> <span class="n">name</span>
+
+    <span class="k">print</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;zipfile_pyzipfile.zip&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">zipfile_pyzipfile</span>
+    <span class="k">print</span> <span class="s">&#39;Imported from:&#39;</span><span class="p">,</span> <span class="n">zipfile_pyzipfile</span><span class="o">.</span><span class="n">__file__</span>
+</pre></div>
+</div>
+<p>With the debug attribute of the <tt class="xref py py-class docutils literal"><span class="pre">PyZipFile</span></tt> set to 3, verbose
+debugging is enabled and you can observe as it compiles each <tt class="docutils literal"><span class="pre">.py</span></tt>
+file it finds.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python zipfile_pyzipfile.py
+Adding python files
+Adding package in . as .
+Compiling ./__init__.py
+Adding ./__init__.pyc
+Compiling ./zipfile_append.py
+Adding ./zipfile_append.pyc
+Compiling ./zipfile_getinfo.py
+Adding ./zipfile_getinfo.pyc
+Compiling ./zipfile_infolist.py
+Adding ./zipfile_infolist.pyc
+Compiling ./zipfile_is_zipfile.py
+Adding ./zipfile_is_zipfile.pyc
+Compiling ./zipfile_namelist.py
+Adding ./zipfile_namelist.pyc
+Compiling ./zipfile_printdir.py
+Adding ./zipfile_printdir.pyc
+Compiling ./zipfile_pyzipfile.py
+Adding ./zipfile_pyzipfile.pyc
+Compiling ./zipfile_read.py
+Adding ./zipfile_read.pyc
+Compiling ./zipfile_write.py
+Adding ./zipfile_write.pyc
+Compiling ./zipfile_write_arcname.py
+Adding ./zipfile_write_arcname.pyc
+Compiling ./zipfile_write_compression.py
+Adding ./zipfile_write_compression.pyc
+Compiling ./zipfile_writestr.py
+Adding ./zipfile_writestr.pyc
+Compiling ./zipfile_writestr_zipinfo.py
+Adding ./zipfile_writestr_zipinfo.pyc
+__init__.pyc
+zipfile_append.pyc
+zipfile_getinfo.pyc
+zipfile_infolist.pyc
+zipfile_is_zipfile.pyc
+zipfile_namelist.pyc
+zipfile_printdir.pyc
+zipfile_pyzipfile.pyc
+zipfile_read.pyc
+zipfile_write.pyc
+zipfile_write_arcname.pyc
+zipfile_write_compression.pyc
+zipfile_writestr.pyc
+zipfile_writestr_zipinfo.pyc
+
+Imported from: zipfile_pyzipfile.zip/zipfile_pyzipfile.pyc
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/zipfile.html">zipfile</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a></dt>
+<dd>ZIP compression library</dd>
+<dt><a class="reference internal" href="../tarfile/index.html#module-tarfile" title="tarfile: Tar archive access"><tt class="xref py py-mod docutils literal"><span class="pre">tarfile</span></tt></a></dt>
+<dd>Read and write tar archives</dd>
+<dt><a class="reference internal" href="../zipimport/index.html#module-zipimport" title="zipimport: Load Python code from inside ZIP archives."><tt class="xref py py-mod docutils literal"><span class="pre">zipimport</span></tt></a></dt>
+<dd>Import Python modules from ZIP archive.</dd>
+<dt><a class="reference external" href="http://www.pkware.com/documents/casestudies/APPNOTE.TXT">PKZIP Application Note</a></dt>
+<dd>Official specification for the ZIP archive format.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../zlib/index.html" title="zlib – Low-level access to GNU zlib compression library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../tarfile/index.html" title="tarfile – Tar archive access"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" >Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

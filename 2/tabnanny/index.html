@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>tabnanny &#8211; Indentation validator - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Language Services" href="../language.html" />
+    <link rel="next" title="Importing Modules" href="../importing.html" />
+    <link rel="prev" title="pyclbr – Python class browser support" href="../pyclbr/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">tabnanny &#8211; Indentation validator</a><ul>
+<li><a class="reference internal" href="#running-from-the-command-line">Running from the Command Line</a></li>
+<li><a class="reference internal" href="#using-within-your-program">Using within Your Program</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../pyclbr/index.html" title="previous chapter"><strong>Previous:</strong> pyclbr &#8211; Python class browser support</a><br/>
+          <a href="../importing.html" title="next chapter"><strong>Next:</strong> Importing Modules</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/tabnanny/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../importing.html" title="Importing Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../pyclbr/index.html" title="pyclbr – Python class browser support"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../language.html" accesskey="U">Python Language Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-tabnanny">
+<span id="tabnanny-indentation-validator"></span><h1>tabnanny &#8211; Indentation validator<a class="headerlink" href="#module-tabnanny" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Scan Python source code looking for suspicious indentation.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>Consistent use of indentation is important in a langauge like Python,
+where white-space is significant.  The <a class="reference internal" href="#module-tabnanny" title="tabnanny: Scan Python source code looking for suspicious indentation."><tt class="xref py py-mod docutils literal"><span class="pre">tabnanny</span></tt></a> module provides
+a scanner to report on &#8220;ambiguous&#8221; use of indentation.</p>
+<div class="section" id="running-from-the-command-line">
+<h2>Running from the Command Line<a class="headerlink" href="#running-from-the-command-line" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to use <a class="reference internal" href="#module-tabnanny" title="tabnanny: Scan Python source code looking for suspicious indentation."><tt class="xref py py-mod docutils literal"><span class="pre">tabnanny</span></tt></a> is to run it from the command
+line, passing the names of files to check.  If you pass directory
+names, the directories are scanned recursively to find <cite>.py</cite> files to
+check.</p>
+<p>When I ran tabnanny across the PyMOTW source code, I found one old
+module with tabs instead of spaces:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m tabnanny .
+./PyMOTW/Queue/fetch_podcasts.py 78 &quot;\t\tfor enclosure in entry.get(&#39;enclosures&#39;, []):\n&quot;
+</pre></div>
+</div>
+<p>Sure enough, line 78 of <cite>fetch_podcasts.py</cite> had two tabs instead of 8
+spaces.  I didn&#8217;t see this by looking at it in my editor because I
+have my tabstops set to 4 spaces, so visually there was no difference.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">enclosure</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;enclosures&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+    <span class="k">print</span> <span class="s">&#39;Queuing:&#39;</span><span class="p">,</span> <span class="n">enclosure</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span>
+    <span class="n">enclosure_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">enclosure</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Correcting line 78 and running tabnanny again showed another error on
+line 79.  One last problem showed up on line 80.</p>
+<p>If you want to scan files, but not see the details about the error,
+you can use the <cite>-q</cite> option to suppress all information except the
+filename.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m tabnanny -q .
+./PyMOTW/Queue/fetch_podcasts.py
+</pre></div>
+</div>
+<p>To see more information about the files being scanned, use the <cite>-v</cite> option.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m tabnanny -v ./PyMOTW/Queue
+&#39;./PyMOTW/Queue&#39;: listing directory
+&#39;./PyMOTW/Queue/__init__.py&#39;: Clean bill of health.
+&#39;./PyMOTW/Queue/feedparser.py&#39;: Clean bill of health.
+&#39;./PyMOTW/Queue/fetch_podcasts.py&#39;: *** Line 78: trouble in tab city! ***
+offending line: &quot;\t\tfor enclosure in entry.get(&#39;enclosures&#39;, []):\n&quot;
+indent not greater e.g. at tab sizes 1, 2
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-within-your-program">
+<h2>Using within Your Program<a class="headerlink" href="#using-within-your-program" title="Permalink to this headline">¶</a></h2>
+<p>As soon as I discovered the mistake in my Queue example, I decided I
+needed to add an automatic check to my PyMOTW build process.  I
+created a <tt class="docutils literal"><span class="pre">tabcheck</span></tt> task in my <tt class="docutils literal"><span class="pre">pavement.py</span></tt> build script so I
+could run <cite>paver tabcheck</cite> and scan the code I&#8217;m working on for
+PyMOTW.  This is possible because tabnanny exposes its <cite>check()</cite>
+function as a public API.</p>
+<p>Here&#8217;s an example of using tabnanny that doesn&#8217;t require understanding
+Paver&#8217;s task definition decorators.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">tabnanny</span>
+
+<span class="c"># Turn on verbose mode</span>
+<span class="n">tabnanny</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">tabnanny</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And in action:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tabnanny_check.py ../Queue
+&#39;../Queue&#39;: listing directory
+&#39;../Queue/__init__.py&#39;: Clean bill of health.
+&#39;../Queue/feedparser.py&#39;: Clean bill of health.
+&#39;../Queue/fetch_podcasts.py&#39;: *** Line 78: trouble in tab city! ***
+offending line: &quot;\t\tfor enclosure in entry.get(&#39;enclosures&#39;, []):\n&quot;
+indent not greater e.g. at tab sizes 1, 2
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you run these examples against the PyMOTW code it won&#8217;t report
+the same errors, since I have fixed my code in this release.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/tabnanny.html">tabnanny</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">tokenize</span></tt></dt>
+<dd>Lexical scanner for Python source code.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../importing.html" title="Importing Modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../pyclbr/index.html" title="pyclbr – Python class browser support"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../language.html" >Python Language Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>platform &#8211; Access system version information - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Generic Operating System Services" href="../generic_os.html" />
+    <link rel="next" title="Optional Operating System Services" href="../optional_os.html" />
+    <link rel="prev" title="getpass – Prompt the user for a password without echoing." href="../getpass/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">platform &#8211; Access system version information</a><ul>
+<li><a class="reference internal" href="#interpreter">Interpreter</a></li>
+<li><a class="reference internal" href="#platform">Platform</a></li>
+<li><a class="reference internal" href="#operating-system-and-hardware-info">Operating System and Hardware Info</a></li>
+<li><a class="reference internal" href="#executable-architecture">Executable Architecture</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../getpass/index.html" title="previous chapter"><strong>Previous:</strong> getpass &#8211; Prompt the user for a password without echoing.</a><br/>
+          <a href="../optional_os.html" title="next chapter"><strong>Next:</strong> Optional Operating System Services</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/platform/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../optional_os.html" title="Optional Operating System Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../getpass/index.html" title="getpass – Prompt the user for a password without echoing."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" accesskey="U">Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-platform">
+<span id="platform-access-system-version-information"></span><h1>platform &#8211; Access system version information<a class="headerlink" href="#module-platform" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Probe the underlying platform&#8217;s hardware, operating system, and interpreter version information.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>Although Python is often used as a cross-platform language, it is
+occasionally necessary to know what sort of system a program is
+running on. Build tools need that information, but an application
+might also know that some of the libraries or external commands it
+uses have different interfaces on different operating systems. For
+example, a tool to manage the network configuration of an operating
+system can define a portable representation of network interfaces,
+aliases, IP addresses, etc. But once it actually needs to edit the
+configuration files, it must know more about the host so it can use
+the correct operating system configuration commands and files.  The
+<a class="reference internal" href="#module-platform" title="platform: Access system hardware, OS, and interpreter version information."><tt class="xref py py-mod docutils literal"><span class="pre">platform</span></tt></a> module includes the tools for learning about the
+interpreter, operating system, and hardware platform where a program
+is running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The example output below was generated on a MacBook Pro3,1 running
+OS X 10.6.4, a VMware Fusion VM running CentOS 5.5, and a Dell PC
+running Microsoft Windows 2008.  Python was installed on the OS X
+and Windows systems using the pre-compiled installer from
+python.org.  The Linux system is running an interpreter built from
+source locally.</p>
+</div>
+<div class="section" id="interpreter">
+<h2>Interpreter<a class="headerlink" href="#interpreter" title="Permalink to this headline">¶</a></h2>
+<p>There are four functions for getting information about the current
+Python interpreter. <tt class="xref py py-func docutils literal"><span class="pre">python_version()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">python_version_tuple()</span></tt> return different forms of the interpreter
+version with major, minor, and patchlevel components.
+<tt class="xref py py-func docutils literal"><span class="pre">python_compiler()</span></tt> reports on the compiler used to build the
+interpreter. And <tt class="xref py py-func docutils literal"><span class="pre">python_build()</span></tt> gives a version string for the
+build of the interpreter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="k">print</span> <span class="s">&#39;Version      :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Version tuple:&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version_tuple</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Compiler     :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_compiler</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Build        :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_build</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>OS X:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_python.py
+
+Version      : 2.7.2
+Version tuple: (&#39;2&#39;, &#39;7&#39;, &#39;2&#39;)
+Compiler     : GCC 4.2.1 (Apple Inc. build 5666) (dot 3)
+Build        : (&#39;v2.7.2:8527427914a2&#39;, &#39;Jun 11 2011 15:22:34&#39;)
+</pre></div>
+</div>
+<p>Linux:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_python.py
+Version      : 2.7.0
+Version tuple: (&#39;2&#39;, &#39;7&#39;, &#39;0&#39;)
+Compiler     : GCC 4.1.2 20080704 (Red Hat 4.1.2-46)
+Build        : (&#39;r27&#39;, &#39;Aug 20 2010 11:37:51&#39;)
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-python"><div class="highlight"><pre>C:&gt; python.exe platform_python.py
+Version      : 2.7.0
+Version tuple: [&#39;2&#39;, &#39;7&#39;, &#39;0&#39;]
+Compiler     : MSC v.1500 64 bit (AMD64)
+Build        : (&#39;r27:82525&#39;, &#39;Jul  4 2010 07:43:08&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="platform">
+<h2>Platform<a class="headerlink" href="#platform" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-platform" title="platform: Access system hardware, OS, and interpreter version information."><tt class="xref py py-func docutils literal"><span class="pre">platform()</span></tt></a> returns string containing a general purpose platform
+identifier.  The function accepts two optional boolean arguments. If
+<em>aliased</em> is True, the names in the return value are converted from a
+formal name to their more common form. When <em>terse</em> is true, returns a
+minimal value with some parts dropped.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="k">print</span> <span class="s">&#39;Normal :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Aliased:&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">(</span><span class="n">aliased</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Terse  :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">(</span><span class="n">terse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>OS X:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_platform.py
+
+Normal : Darwin-11.4.2-x86_64-i386-64bit
+Aliased: Darwin-11.4.2-x86_64-i386-64bit
+Terse  : Darwin-11.4.2
+</pre></div>
+</div>
+<p>Linux:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_platform.py
+Normal : Linux-2.6.18-194.3.1.el5-i686-with-redhat-5.5-Final
+Aliased: Linux-2.6.18-194.3.1.el5-i686-with-redhat-5.5-Final
+Terse  : Linux-2.6.18-194.3.1.el5-i686-with-glibc2.3
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-python"><div class="highlight"><pre>C:&gt; python.exe platform_platform.py
+Normal : Windows-2008ServerR2-6.1.7600
+Aliased: Windows-2008ServerR2-6.1.7600
+Terse  : Windows-2008ServerR2
+</pre></div>
+</div>
+</div>
+<div class="section" id="operating-system-and-hardware-info">
+<h2>Operating System and Hardware Info<a class="headerlink" href="#operating-system-and-hardware-info" title="Permalink to this headline">¶</a></h2>
+<p>More detailed information about the operating system and hardware the
+interpreter is running under can be retrieved as well. <tt class="docutils literal"><span class="pre">uname()</span></tt>
+returns a tuple containing the system, node, release, version,
+machine, and processor values.  Individual values can be accessed
+through functions of the same names:</p>
+<dl class="docutils">
+<dt><tt class="xref py py-func docutils literal"><span class="pre">system()</span></tt></dt>
+<dd>returns the operating system name</dd>
+<dt><tt class="xref py py-func docutils literal"><span class="pre">node()</span></tt></dt>
+<dd>returns the hostname of the server, not fully qualified</dd>
+<dt><tt class="xref py py-func docutils literal"><span class="pre">release()</span></tt></dt>
+<dd>returns the operating system release number</dd>
+<dt><tt class="xref py py-func docutils literal"><span class="pre">version()</span></tt></dt>
+<dd>returns the more detailed system version</dd>
+<dt><tt class="xref py py-func docutils literal"><span class="pre">machine()</span></tt></dt>
+<dd>gives a hardware-type identifier such as <tt class="docutils literal"><span class="pre">'i386'</span></tt></dd>
+<dt><tt class="xref py py-func docutils literal"><span class="pre">processor()</span></tt></dt>
+<dd>returns a real identifier for the processor, or the same value as
+machine() in many cases</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="k">print</span> <span class="s">&#39;uname:&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">uname</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;system   :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;node     :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">node</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;release  :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;version  :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">version</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;machine  :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">machine</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;processor:&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">processor</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>OS X:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_os_info.py
+
+uname: (&#39;Darwin&#39;, &#39;hubert.local&#39;, &#39;11.4.2&#39;, &#39;Darwin Kernel Version 11.4.2: Thu Aug 23 16:25:48 PDT 2012; root:xnu-1699.32.7~1/RELEASE_X86_64&#39;, &#39;x86_64&#39;, &#39;i386&#39;)
+
+system   : Darwin
+node     : hubert.local
+release  : 11.4.2
+version  : Darwin Kernel Version 11.4.2: Thu Aug 23 16:25:48 PDT 2012; root:xnu-1699.32.7~1/RELEASE_X86_64
+machine  : x86_64
+processor: i386
+</pre></div>
+</div>
+<p>Linux:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_os_info.py
+uname: (&#39;Linux&#39;, &#39;hermes.hellfly.net&#39;, &#39;2.6.18-194.3.1.el5&#39;,
+&#39;#1 SMP Thu May 13 13:09:10 EDT 2010&#39;, &#39;i686&#39;, &#39;i686&#39;)
+
+system   : Linux
+node     : hermes.hellfly.net
+release  : 2.6.18-194.3.1.el5
+version  : #1 SMP Thu May 13 13:09:10 EDT 2010
+machine  : i686
+processor: i686
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-python"><div class="highlight"><pre>C:&gt; python.exe platform_os_info.py
+uname: (&#39;Windows&#39;, &#39;dhellmann&#39;, &#39;2008ServerR2&#39;, &#39;6.1.7600&#39;, &#39;AMD64&#39;,
+&#39;Intel64 Family 6 Model 15 Stepping 11, GenuineIntel&#39;)
+
+system   : Windows
+node     : dhellmann
+release  : 2008ServerR2
+version  : 6.1.7600
+machine  : AMD64
+processor: Intel64 Family 6 Model 15 Stepping 11, GenuineIntel
+</pre></div>
+</div>
+</div>
+<div class="section" id="executable-architecture">
+<h2>Executable Architecture<a class="headerlink" href="#executable-architecture" title="Permalink to this headline">¶</a></h2>
+<p>Individual program architecture information can be probed using the
+<tt class="xref py py-func docutils literal"><span class="pre">architecture()</span></tt> function. The first argument is the path to an
+executable program (defaulting to <tt class="docutils literal"><span class="pre">sys.executable</span></tt>, the Python
+interpreter). The return value is a tuple containing the bit
+architecture and the linkage format used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="k">print</span> <span class="s">&#39;interpreter:&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">architecture</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;/bin/ls    :&#39;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">architecture</span><span class="p">(</span><span class="s">&#39;/bin/ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>OS X:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_architecture.py
+
+interpreter: (&#39;64bit&#39;, &#39;&#39;)
+/bin/ls    : (&#39;64bit&#39;, &#39;&#39;)
+</pre></div>
+</div>
+<p>Linux:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python platform_architecture.py
+interpreter: (&#39;32bit&#39;, &#39;ELF&#39;)
+/bin/ls    : (&#39;32bit&#39;, &#39;ELF&#39;)
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-python"><div class="highlight"><pre>C:&gt; python.exe platform_architecture.py
+interpreter  : (&#39;64bit&#39;, &#39;WindowsPE&#39;)
+iexplore.exe : (&#39;64bit&#39;, &#39;&#39;)
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/platform.html">platform</a></dt>
+<dd>Standard library documentation for this module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../optional_os.html" title="Optional Operating System Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../getpass/index.html" title="getpass – Prompt the user for a password without echoing."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" >Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

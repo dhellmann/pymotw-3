@@ -1,0 +1,728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SimpleXMLRPCServer &#8211; Implements an XML-RPC server. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="smtpd – Sample SMTP Servers" href="../smtpd/index.html" />
+    <link rel="prev" title="imaplib - IMAP4 client library" href="../imaplib/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">SimpleXMLRPCServer &#8211; Implements an XML-RPC server.</a><ul>
+<li><a class="reference internal" href="#a-simple-server">A Simple Server</a></li>
+<li><a class="reference internal" href="#alternate-names">Alternate Names</a></li>
+<li><a class="reference internal" href="#dotted-names">Dotted Names</a></li>
+<li><a class="reference internal" href="#arbitrary-names">Arbitrary Names</a></li>
+<li><a class="reference internal" href="#exposing-methods-of-objects">Exposing Methods of Objects</a></li>
+<li><a class="reference internal" href="#dispatching-calls-yourself">Dispatching Calls Yourself</a></li>
+<li><a class="reference internal" href="#introspection-api">Introspection API</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../imaplib/index.html" title="previous chapter"><strong>Previous:</strong> imaplib - IMAP4 client library</a><br/>
+          <a href="../smtpd/index.html" title="next chapter"><strong>Next:</strong> smtpd &#8211; Sample SMTP Servers</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/SimpleXMLRPCServer/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../smtpd/index.html" title="smtpd – Sample SMTP Servers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../imaplib/index.html" title="imaplib - IMAP4 client library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-SimpleXMLRPCServer">
+<span id="simplexmlrpcserver-implements-an-xml-rpc-server"></span><h1>SimpleXMLRPCServer &#8211; Implements an XML-RPC server.<a class="headerlink" href="#module-SimpleXMLRPCServer" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Implements an XML-RPC server.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-SimpleXMLRPCServer" title="SimpleXMLRPCServer: Implements an XML-RPC server."><tt class="xref py py-mod docutils literal"><span class="pre">SimpleXMLRPCServer</span></tt></a> module contains classes for creating
+your own cross-platform, language-independent server using the XML-RPC
+protocol. Client libraries exist for many other languages, making
+XML-RPC an easy choice for building RPC-style services.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All of the examples provided here include a client module as well to
+interact with the demonstration server. If you want to download the code and
+run the examples, you will want to use 2 separate shell windows, one for the
+server and one for the client.</p>
+</div>
+<div class="section" id="a-simple-server">
+<h2>A Simple Server<a class="headerlink" href="#a-simple-server" title="Permalink to this headline">¶</a></h2>
+<p>This simple server example exposes a single function that takes the
+name of a directory and returns the contents. The first step is to
+create the <a class="reference internal" href="#module-SimpleXMLRPCServer" title="SimpleXMLRPCServer: Implements an XML-RPC server."><tt class="xref py py-class docutils literal"><span class="pre">SimpleXMLRPCServer</span></tt></a> instance and tell it where to
+listen for incoming requests (&#8216;localhost&#8217; port 9000 in this
+case). Then we define a function to be part of the service, and
+register the function so the server knows how to call it. The final
+step is to put the server into an infinite loop receiving and
+responding to requests.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># Set up logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">),</span> <span class="n">logRequests</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Expose a function</span>
+<span class="k">def</span> <span class="nf">list_contents</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;list_contents(</span><span class="si">%s</span><span class="s">)&#39;</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">list_contents</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>The server can be accessed at the URL <a class="reference external" href="http://localhost:9000">http://localhost:9000</a> using
+<a class="reference internal" href="../xmlrpclib/index.html#module-xmlrpclib" title="xmlrpclib: Client-side library for XML-RPC communication."><tt class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></tt></a>.  This client code illustrates how to call the
+<tt class="xref py py-func docutils literal"><span class="pre">list_contents()</span></tt> service from Python.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">proxy</span><span class="o">.</span><span class="n">list_contents</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that we simply connect the <tt class="xref py py-class docutils literal"><span class="pre">ServerProxy</span></tt> to the server
+using its base URL, and then call methods directly on the proxy. Each
+method invoked on the proxy is translated into a request to the
+server. The arguments are formatted using XML, and then POSTed to the
+server. The server unpacks the XML and figures out what function to
+call based on the method name invoked from the client. The arguments
+are passed to the function, and the return value is translated back to
+XML to be returned to the client.</p>
+<p>Starting the server gives:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_function.py
+Use Control-C to exit
+</pre></div>
+</div>
+<p>Running the client in a second window shows the contents of my
+<tt class="docutils literal"><span class="pre">/tmp</span></tt> directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_function_client.py
+[&#39;.s.PGSQL.5432&#39;, &#39;.s.PGSQL.5432.lock&#39;, &#39;.X0-lock&#39;, &#39;.X11-unix&#39;, &#39;ccc_exclude.1mkahl&#39;,
+&#39;ccc_exclude.BKG3gb&#39;, &#39;ccc_exclude.M5jrgo&#39;, &#39;ccc_exclude.SPecwL&#39;, &#39;com.hp.launchport&#39;, &#39;emacs527&#39;,
+&#39;hsperfdata_dhellmann&#39;, &#39;launch-8hGHUp&#39;, &#39;launch-RQnlcc&#39;, &#39;launch-trsdly&#39;, &#39;launchd-242.T5UzTy&#39;,
+&#39;var_backups&#39;]
+</pre></div>
+</div>
+<p>and after the request is finished, log output appears in the server
+window:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_function.py
+Use Control-C to exit
+DEBUG:root:list_contents(/tmp)
+localhost - - [29/Jun/2008 09:32:07] &quot;POST /RPC2 HTTP/1.0&quot; 200 -
+</pre></div>
+</div>
+<p>The first line of output is from the <tt class="docutils literal"><span class="pre">logging.debug()</span></tt> call inside
+<tt class="xref py py-func docutils literal"><span class="pre">list_contents()</span></tt>. The second line is from the server logging
+the request because <em>logRequests</em> is <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+</div>
+<div class="section" id="alternate-names">
+<h2>Alternate Names<a class="headerlink" href="#alternate-names" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the function names you use inside your modules or libraries
+are not the names you want to use in your external API. You might need
+to load a platform-specific implementation, build the service API
+dynamically based on a configuration file, or replace real functions
+with stubs for testing. If you want to register a function with an
+alternate name, pass the name as the second argument to
+<tt class="xref py py-func docutils literal"><span class="pre">register_function()</span></tt>, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">))</span>
+
+<span class="c"># Expose a function with an alternate name</span>
+<span class="k">def</span> <span class="nf">list_contents</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">list_contents</span><span class="p">,</span> <span class="s">&#39;dir&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>The client should now use the name <tt class="docutils literal"><span class="pre">dir()</span></tt> instead of
+<tt class="docutils literal"><span class="pre">list_contents()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;dir():&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;list_contents():&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">list_contents</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Calling <tt class="docutils literal"><span class="pre">list_contents()</span></tt> results in an error, since the server no
+longer has a handler registered by that name.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_alternate_name_client.py
+dir(): [&#39;.s.PGSQL.5432&#39;, &#39;.s.PGSQL.5432.lock&#39;, &#39;.X0-lock&#39;, &#39;.X11-unix&#39;, &#39;ccc_exclude.1mkahl&#39;, &#39;ccc_exclude.BKG3gb&#39;, &#39;ccc_exclude.M5jrgo&#39;, &#39;ccc_exclude.SPecwL&#39;, &#39;com.hp.launchport&#39;, &#39;emacs527&#39;, &#39;hsperfdata_dhellmann&#39;, &#39;launch-8hGHUp&#39;, &#39;launch-RQnlcc&#39;, &#39;launch-trsdly&#39;, &#39;launchd-242.T5UzTy&#39;, &#39;temp_textmate.V6YKzm&#39;, &#39;var_backups&#39;]
+list_contents():
+Traceback (most recent call last):
+  File &quot;/Users/dhellmann/Documents/PyMOTW/in_progress/SimpleXMLRPCServer/SimpleXMLRPCServer_alternate_name_client.py&quot;, line 15, in &lt;module&gt;
+    print &#39;list_contents():&#39;, proxy.list_contents(&#39;/tmp&#39;)
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/xmlrpclib.py&quot;, line 1147, in __call__
+    return self.__send(self.__name, args)
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/xmlrpclib.py&quot;, line 1437, in __request
+    verbose=self.__verbose
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/xmlrpclib.py&quot;, line 1201, in request
+    return self._parse_response(h.getfile(), sock)
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/xmlrpclib.py&quot;, line 1340, in _parse_response
+    return u.close()
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/xmlrpclib.py&quot;, line 787, in close
+    raise Fault(**self._stack[0])
+xmlrpclib.Fault: &lt;Fault 1: &#39;&lt;type \&#39;exceptions.Exception\&#39;&gt;:method &quot;list_contents&quot; is not supported&#39;&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="dotted-names">
+<h2>Dotted Names<a class="headerlink" href="#dotted-names" title="Permalink to this headline">¶</a></h2>
+<p>Individual functions can be registered with names that are not
+normally legal for Python identifiers. For example, you can include
+&#8216;.&#8217; in your names to separate the namespace in the service. This
+example extends our &#8220;directory&#8221; service to add &#8220;create&#8221; and &#8220;remove&#8221;
+calls. All of the functions are registered using the prefix &#8220;<tt class="docutils literal"><span class="pre">dir.</span></tt>&#8221;
+so that the same server can provide other services using a different
+prefix. One other difference in this example is that some of the
+functions return <tt class="docutils literal"><span class="pre">None</span></tt>, so we have to tell the server to translate
+the <tt class="docutils literal"><span class="pre">None</span></tt> values to a nil value (see <a class="reference external" href="http://ontosys.com/xml-rpc/extensions.php">XML-RPC Extensions</a>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">),</span> <span class="n">allow_none</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">server</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">,</span> <span class="s">&#39;dir.list&#39;</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">,</span> <span class="s">&#39;dir.create&#39;</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">,</span> <span class="s">&#39;dir.remove&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>To call the service functions in the client, simply refer to them with the
+dotted name, like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;BEFORE       :&#39;</span><span class="p">,</span> <span class="s">&#39;EXAMPLE&#39;</span> <span class="ow">in</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;CREATE       :&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">&#39;/tmp/EXAMPLE&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;SHOULD EXIST :&#39;</span><span class="p">,</span> <span class="s">&#39;EXAMPLE&#39;</span> <span class="ow">in</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;REMOVE       :&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;/tmp/EXAMPLE&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER        :&#39;</span><span class="p">,</span> <span class="s">&#39;EXAMPLE&#39;</span> <span class="ow">in</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and (assuming you don&#8217;t have a <tt class="docutils literal"><span class="pre">/tmp/EXAMPLE</span></tt> file on your system)
+the output for the sample client script looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_dotted_name_client.py
+BEFORE       : False
+CREATE       : None
+SHOULD EXIST : True
+REMOVE       : None
+AFTER        : False
+</pre></div>
+</div>
+</div>
+<div class="section" id="arbitrary-names">
+<h2>Arbitrary Names<a class="headerlink" href="#arbitrary-names" title="Permalink to this headline">¶</a></h2>
+<p>A less useful, but potentially interesting feature is the ability to register
+functions with names that are otherwise invalid attribute names. This example
+service registers a function with the name &#8220;<tt class="docutils literal"><span class="pre">multiply</span> <span class="pre">args</span></tt>&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">server</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">my_function</span><span class="p">,</span> <span class="s">&#39;multiply args&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>Since the registered name contains a space, we can&#8217;t use dot notation
+to access it directly from the proxy. We can, however, use
+<tt class="docutils literal"><span class="pre">getattr()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">proxy</span><span class="p">,</span> <span class="s">&#39;multiply args&#39;</span><span class="p">)(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You should avoid creating services with names like this, though.  This
+example is provided not necessarily because it is a good idea, but
+because you may encounter existing services with arbitrary names and
+need to be able to call them.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_arbitrary_name_client.py
+25
+</pre></div>
+</div>
+</div>
+<div class="section" id="exposing-methods-of-objects">
+<h2>Exposing Methods of Objects<a class="headerlink" href="#exposing-methods-of-objects" title="Permalink to this headline">¶</a></h2>
+<p>The earlier sections talked about techniques for establishing APIs
+using good naming conventions and namespacing. Another way to
+incorporate namespacing into your API is to use instances of classes
+and expose their methods. We can recreate the first example using an
+instance with a single method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">),</span> <span class="n">logRequests</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DirectoryService</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+<span class="n">server</span><span class="o">.</span><span class="n">register_instance</span><span class="p">(</span><span class="n">DirectoryService</span><span class="p">())</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>A client can call the method directly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">proxy</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and receive output like:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_instance_client.py
+[&#39;.s.PGSQL.5432&#39;, &#39;.s.PGSQL.5432.lock&#39;, &#39;.X0-lock&#39;, &#39;.X11-unix&#39;, &#39;ccc_exclude.1mkahl&#39;,
+&#39;ccc_exclude.BKG3gb&#39;, &#39;ccc_exclude.M5jrgo&#39;, &#39;ccc_exclude.SPecwL&#39;, &#39;com.hp.launchport&#39;,
+&#39;emacs527&#39;, &#39;hsperfdata_dhellmann&#39;, &#39;launch-8hGHUp&#39;, &#39;launch-RQnlcc&#39;, &#39;launch-trsdly&#39;,
+&#39;launchd-242.T5UzTy&#39;, &#39;temp_textmate.XNiIdy&#39;, &#39;var_backups&#39;]
+</pre></div>
+</div>
+<p>We&#8217;ve lost the &#8220;<tt class="docutils literal"><span class="pre">dir.</span></tt>&#8221; prefix for the service, though, so let&#8217;s
+define a class to let us set up a service tree that can be invoked
+from clients.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">),</span> <span class="n">logRequests</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ServiceRoot</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">DirectoryService</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">ServiceRoot</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">DirectoryService</span><span class="p">()</span>
+
+<span class="n">server</span><span class="o">.</span><span class="n">register_instance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">allow_dotted_names</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>By registering the instance of <tt class="xref py py-class docutils literal"><span class="pre">ServiceRoot</span></tt> with
+<em>allow_dotted_names</em> enabled, we give the server permission to walk
+the tree of objects when a request comes in to find the named method
+using <tt class="docutils literal"><span class="pre">getattr()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">proxy</span><span class="o">.</span><span class="n">dir</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_instance_dotted_names_client.py
+[&#39;.s.PGSQL.5432&#39;, &#39;.s.PGSQL.5432.lock&#39;, &#39;.X0-lock&#39;, &#39;.X11-unix&#39;, &#39;ccc_exclude.1mkahl&#39;, &#39;ccc_exclude.BKG3gb&#39;, &#39;ccc_exclude.M5jrgo&#39;, &#39;ccc_exclude.SPecwL&#39;, &#39;com.hp.launchport&#39;, &#39;emacs527&#39;, &#39;hsperfdata_dhellmann&#39;, &#39;launch-8hGHUp&#39;, &#39;launch-RQnlcc&#39;, &#39;launch-trsdly&#39;, &#39;launchd-242.T5UzTy&#39;, &#39;temp_textmate.adghkQ&#39;, &#39;var_backups&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="dispatching-calls-yourself">
+<h2>Dispatching Calls Yourself<a class="headerlink" href="#dispatching-calls-yourself" title="Permalink to this headline">¶</a></h2>
+<p>By default, <tt class="xref py py-func docutils literal"><span class="pre">register_instance()</span></tt> finds all callable attributes
+of the instance with names not starting with &#8216;<tt class="docutils literal"><span class="pre">_</span></tt>&#8216; and registers
+them with their name. If you want to be more careful about the exposed
+methods, you could provide your own dispatching logic. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">),</span> <span class="n">logRequests</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">expose</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="s">&quot;Decorator to set exposed flag on a function.&quot;</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">exposed</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+<span class="k">def</span> <span class="nf">is_exposed</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="s">&quot;Test whether another function should be publicly exposed.&quot;</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">&#39;exposed&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyService</span><span class="p">:</span>
+    <span class="n">PREFIX</span> <span class="o">=</span> <span class="s">&#39;prefix&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c"># Remove our prefix from the method name</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">method</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PREFIX</span> <span class="o">+</span> <span class="s">&#39;.&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;method &quot;</span><span class="si">%s</span><span class="s">&quot; is not supported&#39;</span> <span class="o">%</span> <span class="n">method</span><span class="p">)</span>
+        
+        <span class="n">method_name</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)</span>            
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_exposed</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;method &quot;</span><span class="si">%s</span><span class="s">&quot; is not supported&#39;</span> <span class="o">%</span> <span class="n">method</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="nd">@expose</span>
+    <span class="k">def</span> <span class="nf">public</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;This is public&#39;</span>
+        
+    <span class="k">def</span> <span class="nf">private</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;This is private&#39;</span>
+
+<span class="n">server</span><span class="o">.</span><span class="n">register_instance</span><span class="p">(</span><span class="n">MyService</span><span class="p">())</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">public()</span></tt> method of <tt class="xref py py-class docutils literal"><span class="pre">MyService</span></tt> is marked as exposed
+to the XML-RPC service while <tt class="xref py py-func docutils literal"><span class="pre">private()</span></tt> is not. The
+<tt class="xref py py-func docutils literal"><span class="pre">_dispatch()</span></tt> method is invoked when the client tries to access
+a function that is part of <tt class="xref py py-class docutils literal"><span class="pre">MyService</span></tt>. It first enforces the
+use of a prefix (&#8220;<tt class="docutils literal"><span class="pre">prefix.</span></tt>&#8221; in this case, but you can use any
+string).  Then it requires the function to have an attribute called
+<em>exposed</em> with a true value. The exposed flag is set on a function
+using a decorator for convenience.</p>
+<p>Here are a few sample client calls:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;public():&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">prefix</span><span class="o">.</span><span class="n">public</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;private():&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">prefix</span><span class="o">.</span><span class="n">private</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;public() without prefix:&#39;</span><span class="p">,</span> <span class="n">proxy</span><span class="o">.</span><span class="n">public</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<p>and the resulting output, with the expected error messages trapped and
+reported:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_instance_with_prefix_client.py
+public(): This is public
+private(): ERROR: &lt;Fault 1: &#39;&lt;type \&#39;exceptions.Exception\&#39;&gt;:method &quot;prefix.private&quot; is not supported&#39;&gt;
+public() without prefix: ERROR: &lt;Fault 1: &#39;&lt;type \&#39;exceptions.Exception\&#39;&gt;:method &quot;public&quot; is not supported&#39;&gt;
+</pre></div>
+</div>
+<p>There are several other ways to override the dispatching mechanism, including
+subclassing directly from SimpleXMLRPCServer. Check out the docstrings in the
+module for more details.</p>
+</div>
+<div class="section" id="introspection-api">
+<h2>Introspection API<a class="headerlink" href="#introspection-api" title="Permalink to this headline">¶</a></h2>
+<p>As with many network services, it is possible to query an XML-RPC
+server to ask it what methods it supports and learn how to use
+them. <a class="reference internal" href="#module-SimpleXMLRPCServer" title="SimpleXMLRPCServer: Implements an XML-RPC server."><tt class="xref py py-class docutils literal"><span class="pre">SimpleXMLRPCServer</span></tt></a> includes a set of public methods for
+performing this introspection. By default they are turned off, but can
+be enabled with <tt class="xref py py-func docutils literal"><span class="pre">register_introspection_functions()</span></tt>. You can
+add explicit support for <tt class="xref py py-func docutils literal"><span class="pre">system.listMethods()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">system.methodHelp()</span></tt> by defining <tt class="xref py py-func docutils literal"><span class="pre">_listMethods()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">_methodHelp()</span></tt> on your service class. For example,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">SimpleXMLRPCServer</span> <span class="kn">import</span> <span class="n">SimpleXMLRPCServer</span><span class="p">,</span> <span class="n">list_public_methods</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">SimpleXMLRPCServer</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">),</span> <span class="n">logRequests</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">register_introspection_functions</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">DirectoryService</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="nf">_listMethods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">list_public_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_methodHelp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getdoc</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;list(dir_name) =&gt; [&lt;filenames&gt;]</span>
+<span class="sd">        </span>
+<span class="sd">        Returns a list containing the contents of the named directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+<span class="n">server</span><span class="o">.</span><span class="n">register_instance</span><span class="p">(</span><span class="n">DirectoryService</span><span class="p">())</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Use Control-C to exit&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting&#39;</span>
+</pre></div>
+</div>
+<p>In this case, the convenience function <tt class="xref py py-func docutils literal"><span class="pre">list_public_methods()</span></tt>
+scans an instance to return the names of callable attributes that do
+not start with &#8216;<tt class="docutils literal"><span class="pre">_</span></tt>&#8216;. You can redefine <tt class="xref py py-func docutils literal"><span class="pre">_listMethods()</span></tt> to
+apply whatever rules you like.  Similarly, for this basic example
+<tt class="xref py py-func docutils literal"><span class="pre">_methodHelp()</span></tt> returns the docstring of the function, but could
+be written to build a help string from another source.</p>
+<p>This client queries the server and reports on all of the publicly
+callable methods.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">xmlrpclib</span>
+
+<span class="n">proxy</span> <span class="o">=</span> <span class="n">xmlrpclib</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">(</span><span class="s">&#39;http://localhost:9000&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="n">proxy</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">listMethods</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">60</span>
+    <span class="k">print</span> <span class="n">method_name</span>
+    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">60</span>
+    <span class="k">print</span> <span class="n">proxy</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">methodHelp</span><span class="p">(</span><span class="n">method_name</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Notice that the system methods are included in the results.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python SimpleXMLRPCServer_introspection_client.py
+============================================================
+list
+------------------------------------------------------------
+list(dir_name) =&gt; [&lt;filenames&gt;]
+
+Returns a list containing the contents of the named directory.
+
+============================================================
+system.listMethods
+------------------------------------------------------------
+system.listMethods() =&gt; [&#39;add&#39;, &#39;subtract&#39;, &#39;multiple&#39;]
+
+Returns a list of the methods supported by the server.
+
+============================================================
+system.methodHelp
+------------------------------------------------------------
+system.methodHelp(&#39;add&#39;) =&gt; &quot;Adds two integers together&quot;
+
+Returns a string containing documentation for the specified method.
+
+============================================================
+system.methodSignature
+------------------------------------------------------------
+system.methodSignature(&#39;add&#39;) =&gt; [double, int, int]
+
+Returns a list describing the signature of the method. In the
+above example, the add method takes two integers as arguments
+and returns a double result.
+
+This server does NOT support system.methodSignature.
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/simplexmlrpcserver.html">SimpleXMLRPCServer</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.tldp.org/HOWTO/XML-RPC-HOWTO/index.html">XML-RPC How To</a></dt>
+<dd>Describes how to use XML-RPC to implement clients and servers in
+a variety of languages.</dd>
+<dt><a class="reference external" href="http://ontosys.com/xml-rpc/extensions.php">XML-RPC Extensions</a></dt>
+<dd>Specifies an extension to the XML-RPC protocol.</dd>
+<dt><a class="reference internal" href="../xmlrpclib/index.html#module-xmlrpclib" title="xmlrpclib: Client-side library for XML-RPC communication."><tt class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></tt></a></dt>
+<dd>XML-RPC client library</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../smtpd/index.html" title="smtpd – Sample SMTP Servers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../imaplib/index.html" title="imaplib - IMAP4 client library"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

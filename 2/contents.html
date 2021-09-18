@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python Module of the Week - Python Module of the Week</title>
+
+<link rel="stylesheet" href="_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    './',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="_static/jquery.js"></script>
+<script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="contents" title="Global table of contents" href="#" />
+    <link rel="index" title="Global index" href="genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="index.html" />
+    <link rel="next" title="About Python Module of the Week" href="about.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">    <h3>Navigation</h3>
+      <p>
+    <a href="#"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="about.html" title="next chapter"><strong>Next:</strong> About Python Module of the Week</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="_sources/contents.txt"
+               rel="nofollow">Show Source</a>
+      </p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="about.html" title="About Python Module of the Week"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="python-module-of-the-week">
+<h1>Python Module of the Week<a class="headerlink" href="#python-module-of-the-week" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About Python Module of the Week</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#tools">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#subscribe">Subscribe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#the-motw-command-line-interface">The motw Command Line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#using-pymotw-with-the-interactive-interpreter">Using PyMOTW with the Interactive Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#translations-and-other-versions">Translations and Other Versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#other-contributors">Other Contributors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#copyright-and-licensing">Copyright and Licensing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="articles/index.html">Features of the Standard Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="articles/data_persistence.html">Data Persistence and Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/data_structures.html">In-Memory Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/file_access.html">File Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="articles/text_processing.html">Text Processing Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="builtins.html">Built-in Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions/index.html">exceptions &#8211; Built-in error classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="string_services.html">String Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="codecs/index.html">codecs &#8211; String encoding and decoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="difflib/index.html">difflib &#8211; Compare sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="string/index.html">string &#8211; Working with text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="StringIO/index.html">StringIO and cStringIO &#8211; Work with text buffers using file-like API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="re/index.html">re &#8211; Regular Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct/index.html">struct &#8211; Working with Binary Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="textwrap/index.html">textwrap &#8211; Formatting text paragraphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_types.html">Data Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="array/index.html">array &#8211; Sequence of fixed-type data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datetime/index.html">datetime &#8211; Date/time value manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calendar/index.html">calendar &#8211; Work with dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collections/index.html">collections &#8211; Container data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heapq/index.html">heapq &#8211; In-place heap sort algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bisect/index.html">bisect &#8211; Maintain lists in sorted order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sched/index.html">sched &#8211; Generic event scheduler.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Queue/index.html">Queue &#8211; A thread-safe FIFO implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weakref/index.html">weakref &#8211; Garbage-collectable references to objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copy/index.html">copy &#8211; Duplicate objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pprint/index.html">pprint &#8211; Pretty-print data structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="decimal/index.html">decimal &#8211; Fixed and floating point math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fractions/index.html">fractions &#8211; Rational Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functools/index.html">functools &#8211; Tools for Manipulating Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="itertools/index.html">itertools &#8211; Iterator functions for efficient looping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math/index.html">math &#8211; Mathematical functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator/index.html">operator &#8211; Functional interface to built-in operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random/index.html">random &#8211; Pseudorandom number generators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internet_data.html">Internet Data Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base64/index.html">base64 &#8211; Encode binary data into ASCII characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json/index.html">json &#8211; JavaScript Object Notation Serializer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mailbox/index.html">mailbox &#8211; Access and manipulate email archives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mhlib/index.html">mhlib &#8211; Work with MH mailboxes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_formats.html">File Formats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="csv/index.html">csv &#8211; Comma-separated value files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConfigParser/index.html">ConfigParser &#8211; Work with configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robotparser/index.html">robotparser &#8211; Internet spider access control</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cryptographic.html">Cryptographic Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hashlib/index.html">hashlib &#8211; Cryptographic hashes and message digests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hmac/index.html">hmac &#8211; Cryptographic signature and verification of messages.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_access.html">File and Directory Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ospath/index.html">os.path &#8211; Platform-independent manipulation of file names.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fileinput/index.html">fileinput &#8211; Process lines from input streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filecmp/index.html">filecmp &#8211; Compare files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tempfile/index.html">tempfile &#8211; Create temporary filesystem resources.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="glob/index.html">glob &#8211; Filename pattern matching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fnmatch/index.html">fnmatch &#8211; Compare filenames against Unix-style glob patterns.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linecache/index.html">linecache &#8211; Read text files efficiently</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shutil/index.html">shutil &#8211; High-level file operations.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dircache/index.html">dircache &#8211; Cache directory listings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="compression.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bz2/index.html">bz2 &#8211; bzip2 compression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gzip/index.html">gzip &#8211; Read and write GNU zip files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tarfile/index.html">tarfile &#8211; Tar archive access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zipfile/index.html">zipfile &#8211; Read and write ZIP archive files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zlib/index.html">zlib &#8211; Low-level access to GNU zlib compression library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anydbm/index.html">anydbm &#8211; Access to DBM-style databases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbhash/index.html">dbhash &#8211; DBM-style API for the BSD database library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dbm/index.html">dbm &#8211; Simple database interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dumbdbm/index.html">dumbdbm &#8211; Portable DBM Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdbm/index.html">gdbm &#8211; GNU&#8217;s version of the dbm library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pickle/index.html">pickle and cPickle &#8211; Python object serialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shelve/index.html">shelve &#8211; Persistent storage of arbitrary Python objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whichdb/index.html">whichdb &#8211; Identify DBM-style database formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlite3/index.html">sqlite3 &#8211; Embedded Relational Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generic_os.html">Generic Operating System Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="os/index.html">os &#8211; Portable access to operating system specific features.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time/index.html">time &#8211; Functions for manipulating clock time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getopt/index.html">getopt &#8211; Command line option parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optparse/index.html">optparse &#8211; Command line option parser to replace getopt.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="argparse/index.html">argparse &#8211; Command line option and argument parsing.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging/index.html">logging &#8211; Report status, error, and informational messages.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getpass/index.html">getpass &#8211; Prompt the user for a password without echoing.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="platform/index.html">platform &#8211; Access system version information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="optional_os.html">Optional Operating System Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="threading/index.html">threading &#8211; Manage concurrent threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mmap/index.html">mmap &#8211; Memory-map files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing/index.html">multiprocessing &#8211; Manage processes like threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readline/index.html">readline &#8211; Interface to the GNU readline library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlcompleter/index.html">rlcompleter &#8211; Adds tab-completion to the interactive interpreter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unix.html">Unix-specific Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commands/index.html">commands &#8211; Run external shell commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grp/index.html">grp &#8211; Unix Group Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipes/index.html">pipes &#8211; Unix shell command pipeline templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pwd/index.html">pwd &#8211; Unix Password Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resource/index.html">resource &#8211; System resource management</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ipc.html">Interprocess Communication and Networking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="asynchat/index.html">asynchat &#8211; Asynchronous protocol handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncore/index.html">asyncore &#8211; Asynchronous I/O handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signal/index.html">signal &#8211; Receive notification of asynchronous system events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess/index.html">subprocess &#8211; Work with additional processes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internet_protocols.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BaseHTTPServer/index.html">BaseHTTPServer &#8211; base classes for implementing web servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgitb/index.html">cgitb &#8211; Detailed traceback reports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cookie/index.html">Cookie &#8211; HTTP Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imaplib/index.html">imaplib - IMAP4 client library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SimpleXMLRPCServer/index.html">SimpleXMLRPCServer &#8211; Implements an XML-RPC server.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smtpd/index.html">smtpd &#8211; Sample SMTP Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smtplib/index.html">smtplib &#8211; Simple Mail Transfer Protocol client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="socket/index.html">socket &#8211; Network Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select/index.html">select &#8211; Wait for I/O Efficiently</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SocketServer/index.html">SocketServer &#8211; Creating network servers.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urllib/index.html">urllib &#8211; simple interface for network resource access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urllib2/index.html">urllib2 &#8211; Library for opening URLs.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urlparse/index.html">urlparse &#8211; Split URL into component pieces.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uuid/index.html">uuid &#8211; Universally unique identifiers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webbrowser/index.html">webbrowser &#8211; Displays web pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xmlrpclib/index.html">xmlrpclib &#8211; Client-side library for XML-RPC communication</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="xml/etree/ElementTree/index.html">xml.etree.ElementTree &#8211; XML Manipulation API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gettext/index.html">gettext &#8211; Message Catalogs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locale/index.html">locale &#8211; POSIX cultural localization API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmd/index.html">cmd &#8211; Create line-oriented command processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shlex/index.html">shlex &#8211; Lexical analysis of shell-style syntaxes.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev_tools.html">Development Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doctest/index.html">doctest &#8211; Testing through documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydoc/index.html">pydoc &#8211; Online help for Python modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unittest/index.html">unittest &#8211; Automated testing framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pdb/index.html">pdb &#8211; Interactive Debugger</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="profilers.html">Debugging and Profiling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="profile/index.html">profile, cProfile, and pstats &#8211; Performance analysis of Python programs.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit/index.html">timeit &#8211; Time the execution of small bits of Python code.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trace/index.html">trace &#8211; Follow Python statements as they are executed</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runtime_services.html">Python Runtime Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="abc/index.html">abc &#8211; Abstract Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atexit/index.html">atexit &#8211; Call functions when a program is closing down</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextlib/index.html">contextlib &#8211; Context manager utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc/index.html">gc &#8211; Garbage Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect/index.html">inspect &#8211; Inspect live objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="site/index.html">site &#8211; Site-wide configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sys/index.html">sys &#8211; System-specific Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig/index.html">sysconfig &#8211; Interpreter Compile-time Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traceback/index.html">traceback &#8211; Extract, format, and print exceptions and stack traces.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings/index.html">warnings &#8211; Non-fatal alerts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="compileall/index.html">compileall &#8211; Byte-compile Source Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dis/index.html">dis &#8211; Python Bytecode Disassembler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyclbr/index.html">pyclbr &#8211; Python class browser support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tabnanny/index.html">tabnanny &#8211; Indentation validator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="importing.html">Importing Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imp/index.html">imp &#8211; Interface to module import mechanism.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pkgutil/index.html">pkgutil &#8211; Package Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zipimport/index.html">zipimport &#8211; Load Python code from inside ZIP archives</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="miscelaneous.html">Miscelaneous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EasyDialogs/index.html">EasyDialogs &#8211; Carbon dialogs for Mac OS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plistlib/index.html">plistlib &#8211; Manipulate OS X property list files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="about.html" title="About Python Module of the Week"
+             >next</a> |</li>
+        <li><a href="#">PyMOTW</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

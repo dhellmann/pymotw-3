@@ -1,0 +1,602 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pipes &#8211; Unix shell command pipeline templates - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Unix-specific Services" href="../unix.html" />
+    <link rel="next" title="pwd – Unix Password Database" href="../pwd/index.html" />
+    <link rel="prev" title="grp – Unix Group Database" href="../grp/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">pipes &#8211; Unix shell command pipeline templates</a><ul>
+<li><a class="reference internal" href="#passing-standard-i-o-through-a-pipe">Passing Standard I/O Through a Pipe</a></li>
+<li><a class="reference internal" href="#using-files-instead-of-streams">Using Files Instead of Streams</a></li>
+<li><a class="reference internal" href="#a-more-complex-example">A More Complex Example</a></li>
+<li><a class="reference internal" href="#passing-files-through-pipelines">Passing Files Through Pipelines</a></li>
+<li><a class="reference internal" href="#cloning-templates">Cloning Templates</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../grp/index.html" title="previous chapter"><strong>Previous:</strong> grp &#8211; Unix Group Database</a><br/>
+          <a href="../pwd/index.html" title="next chapter"><strong>Next:</strong> pwd &#8211; Unix Password Database</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/pipes/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pwd/index.html" title="pwd – Unix Password Database"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../grp/index.html" title="grp – Unix Group Database"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" accesskey="U">Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-pipes">
+<span id="pipes-unix-shell-command-pipeline-templates"></span><h1>pipes &#8211; Unix shell command pipeline templates<a class="headerlink" href="#module-pipes" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Create repeatable Unix shell command pipelines.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">Python 1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-pipes" title="pipes: Unix shell command pipeline templates"><tt class="xref py py-mod docutils literal"><span class="pre">pipes</span></tt></a> module implements a class to create arbitrarily
+complex Unix command pipelines.  Inputs and outputs of the commands
+can be chained together as with the shell <tt class="docutils literal"><span class="pre">|</span></tt> operator, even if the
+individual commands need to write to or read from files instead of
+stdin/stdout.</p>
+<div class="section" id="passing-standard-i-o-through-a-pipe">
+<h2>Passing Standard I/O Through a Pipe<a class="headerlink" href="#passing-standard-i-o-through-a-pipe" title="Permalink to this headline">¶</a></h2>
+<p>A very simple example, passing standard input through a pipe and
+receiving the results in a file looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="c"># Establish a very simple pipeline using stdio</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cat -&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Pass some text through the pipeline,</span>
+<span class="c"># saving the output to a temporary file.</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Some text&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># Rewind and read the text written</span>
+<span class="c"># to the temporary file</span>
+<span class="n">t</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The pipeline Template is created and then a single command, <tt class="docutils literal"><span class="pre">cat</span> <span class="pre">-</span></tt>
+is added.  The command reads standard input and writes it to standard
+output, without modification.  The second argument to <tt class="docutils literal"><span class="pre">append()</span></tt>
+encodes the input and output sources for the command in two characters
+(input, then output).  Using <tt class="docutils literal"><span class="pre">-</span></tt> means the command uses standard
+I/O.  Using <tt class="docutils literal"><span class="pre">f</span></tt> means the command needs to read from a file (as may
+be the case with an image processing pipeline).</p>
+<p>The <tt class="docutils literal"><span class="pre">debug()</span></tt> method toggles debugging output on and off.  When
+debugging is enabled, the commands being run are printed and the shell
+is given <tt class="docutils literal"><span class="pre">set</span> <span class="pre">-x</span></tt> so it runs verbosely.</p>
+<p>After the pipeline is set up, a NamedTemporaryFile is created to give
+the pipeline somewhere to write its output.  A file must always be
+specified as argument to <tt class="docutils literal"><span class="pre">open()</span></tt>, whether reading or writing.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_simple_write.py
+
++ cat -
+cat - &gt;/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpLXAYxI
+Some text
+</pre></div>
+</div>
+<p>Reading from a pipeline works basically the same way, with a few
+changes to the arguments.  For our example, we need to set up the
+contents of the input file before opening the pipline.  Then we can
+pass that filename as input to <tt class="docutils literal"><span class="pre">open()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="c"># Establish a very simple pipeline using stdio</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cat -&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Establish an input file</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Some text&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="c"># Pass some text through the pipeline,</span>
+<span class="c"># saving the output to a temporary file.</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">contents</span>
+</pre></div>
+</div>
+<p>We can read the results from the pipeline directly.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_simple_read.py
+
++ cat -
+cat - &lt;/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpeqkbXa
+Some text
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-files-instead-of-streams">
+<h2>Using Files Instead of Streams<a class="headerlink" href="#using-files-instead-of-streams" title="Permalink to this headline">¶</a></h2>
+<p>Some commands need to work on files on the filesystem instead of input
+streams.  Commands that process a large amount of data might perform
+better in this mode, since they will not block on the next command
+reading their output.  Anything that works on non-stream-based data
+requires this capability as well (e.g., databases or other binary file
+manipulation tools).  To support this mode of operation, <tt class="docutils literal"><span class="pre">append()</span></tt>
+lets you specify a <em>kind</em> of <tt class="docutils literal"><span class="pre">f</span></tt>, and the pipeline code will create
+the needed temporary files.  The filenames are passed to the shell as
+<tt class="docutils literal"><span class="pre">$IN</span></tt> and <tt class="docutils literal"><span class="pre">$OUT</span></tt>, so those variable names need to appear in your
+command string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cat $IN &gt; $OUT&#39;</span><span class="p">,</span> <span class="s">&#39;ff&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Some text&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">t</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As you see, several intermediate temporary files are created to hold
+the input and output of the step.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_file_kind.py
+
++ trap &#39;rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D; exit&#39; 1 2 3 13 14 15
++ cat
++ IN=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D
++ OUT=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmp4mLFvP
++ cat /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D
++ rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D
+trap &#39;rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D; exit&#39; 1 2 3 13 14 15
+cat &gt;/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D
+IN=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D; OUT=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmp4mLFvP; cat $IN &gt; $OUT
+rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpMlX74D
+Some text
+</pre></div>
+</div>
+<p>And the input and output <em>kind</em> values can be mixed, so that different
+steps of the pipeline use files or standard I/O as needed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cat $IN&#39;</span><span class="p">,</span> <span class="s">&#39;f-&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cat - &gt; $OUT&#39;</span><span class="p">,</span> <span class="s">&#39;-f&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Some text&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">t</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The trap statements visible in the output here ensure that the
+temporary files created by the pipeline are cleaned up even if a task
+fails in the middle or the shell is killed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_mixed_kinds.py
+
++ trap &#39;rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa; exit&#39; 1 2 3 13 14 15
++ cat
++ IN=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa
++ cat /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa
++ OUT=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpvccJBL
++ cat -
++ rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa
+trap &#39;rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa; exit&#39; 1 2 3 13 14 15
+cat &gt;/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa
+IN=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa; cat $IN |
+{ OUT=/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpvccJBL; cat - &gt; $OUT; }
+rm -f /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpWSCqXa
+Some text
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-more-complex-example">
+<h2>A More Complex Example<a class="headerlink" href="#a-more-complex-example" title="Permalink to this headline">¶</a></h2>
+<p>All of the examples up to this point have been fairly trivial.  They
+were constructed to illustrate how to use <tt class="docutils literal"><span class="pre">pipes.Template()</span></tt> without
+depending on deep knowledge of shell scripting in general.  This
+example is more complex, and shows how several commands can be
+combined to manipulate data before bringing it into Python.</p>
+<p>My <a class="reference external" href="http://www.doughellmann.com/projects/virtualenvwrapper/">virtualenvwrapper</a> script
+includes a shell function for listing all of the virtual environments
+you have created.  The function is used for tab-completion and can be
+called directly to list the environments, in case you forget a name.
+The heart of that function is a small pipeline that looks in
+<tt class="docutils literal"><span class="pre">$WORKON_HOME</span></tt> for directories that look like virtual environments
+(i.e., they have an <tt class="docutils literal"><span class="pre">activate</span></tt> script).  That pipeline is:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cd &quot;$WORKON_HOME&quot;; for f in */bin/activate; do echo $f; done) \
+    | sed &#39;s|^\./||&#39; \
+    | sed &#39;s|/bin/activate||&#39; \
+    | sort
+</pre></div>
+</div>
+<p>Implemented using <a class="reference internal" href="#module-pipes" title="pipes: Unix shell command pipeline templates"><tt class="xref py py-mod docutils literal"><span class="pre">pipes</span></tt></a>, the pipeline looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cd &quot;$WORKON_HOME&quot;; for f in */bin/activate; do echo $f; done&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">r&quot;sed &#39;s|^\./||&#39;&quot;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;sed &#39;s|/bin/activate||&#39;&quot;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;sort&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">sandboxes</span> <span class="o">=</span> <span class="p">[</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span> <span class="p">]</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;SANDBOXES:&#39;</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">sandboxes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since each sandbox name is written to a separate line, parsing the
+output is easy:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_multistep.py
+
+SANDBOXES:
+[&#39;AstronomyPictureOfTheDay&#39;,
+ &#39;aspell&#39;,
+ &#39;athensdocket&#39;,
+ &#39;backups&#39;,
+ &#39;bartender&#39;,
+ &#39;billsapp&#39;,
+ &#39;bpython&#39;,
+ &#39;cliff&#39;,
+ &#39;commandlineapp&#39;,
+ &#39;csvcat&#39;,
+ &#39;d765e36b407a6270&#39;,
+ &#39;dh-akanda&#39;,
+ &#39;dh-betauser-creator&#39;,
+ &#39;dh-ceilometer&#39;,
+ &#39;dh-ceilometerclient&#39;,
+ &#39;dh-keystone&#39;,
+ &#39;dh-openstackclient&#39;,
+ &#39;dictprofilearticle&#39;,
+ &#39;distutils2&#39;,
+ &#39;docket&#39;,
+ &#39;docket-pyparsing&#39;,
+ &#39;dotfiles&#39;,
+ &#39;dreamhost&#39;,
+ &#39;dreamhost-lunch-and-learn&#39;,
+ &#39;emacs_tools&#39;,
+ &#39;extensions&#39;,
+ &#39;feedcache&#39;,
+ &#39;fuzzy&#39;,
+ &#39;git_tools&#39;,
+ &#39;hidden_stdlib&#39;,
+ &#39;ical2org&#39;,
+ &#39;mytweets&#39;,
+ &#39;ndn-billing-usage&#39;,
+ &#39;ndn-datamodels-python&#39;,
+ &#39;ndn-dhc-dude&#39;,
+ &#39;ndn-ndn&#39;,
+ &#39;nose-testconfig&#39;,
+ &#39;openstack&#39;,
+ &#39;personal&#39;,
+ &#39;phonetic-hashing&#39;,
+ &#39;pinboard_tools&#39;,
+ &#39;psfblog&#39;,
+ &#39;psfboard&#39;,
+ &#39;pyatl&#39;,
+ &#39;pyatl-readlines&#39;,
+ &#39;pycon2012&#39;,
+ &#39;pycon2013-plugins&#39;,
+ &#39;pycon2013-sphinx&#39;,
+ &#39;pydotorg&#39;,
+ &#39;pymotw&#39;,
+ &#39;pymotw-book&#39;,
+ &#39;pymotw-ja&#39;,
+ &#39;python-dev&#39;,
+ &#39;pywebdav&#39;,
+ &#39;racemi&#39;,
+ &#39;racemi_status&#39;,
+ &#39;reporting_server&#39;,
+ &#39;rst2blogger&#39;,
+ &#39;rst2marsedit&#39;,
+ &#39;sobell-book&#39;,
+ &#39;sphinxcontrib-bitbucket&#39;,
+ &#39;sphinxcontrib-fulltoc&#39;,
+ &#39;sphinxcontrib-spelling&#39;,
+ &#39;sphinxcontrib-sqltable&#39;,
+ &#39;stevedore&#39;,
+ &#39;summerfield-book&#39;,
+ &#39;svnautobackup&#39;,
+ &#39;virtualenvwrapper&#39;,
+ &#39;website&#39;,
+ &#39;wsme&#39;,
+ &#39;zenofpy&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="passing-files-through-pipelines">
+<h2>Passing Files Through Pipelines<a class="headerlink" href="#passing-files-through-pipelines" title="Permalink to this headline">¶</a></h2>
+<p>If the input to your pipeline already exists in a file on disk,
+there&#8217;s no need to read it into Python simply to pass it to the
+pipeline.  You can use the <tt class="docutils literal"><span class="pre">copy()</span></tt> method to pass the file directly
+through the pipeline and create an output file for reading.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;grep -n tortor $IN&#39;</span><span class="p">,</span> <span class="s">&#39;f-&#39;</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">t</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_copy.py
+
++ IN=lorem.txt
++ grep -n tortor lorem.txt
+IN=lorem.txt; grep -n tortor $IN &gt;/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpjlfxq6
+3:elementum elit tortor eu quam. Duis tincidunt nisi ut ante. Nulla
+6:lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+11:eget velit auctor tortor blandit sollicitudin. Suspendisse imperdiet
+</pre></div>
+</div>
+</div>
+<div class="section" id="cloning-templates">
+<h2>Cloning Templates<a class="headerlink" href="#cloning-templates" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a pipeline template, you may want to use it multiple
+times or create variants without re-constructing the entire object.
+The <tt class="docutils literal"><span class="pre">clone()</span></tt> method makes both of these operations easy.  This
+example constructs a simple word-counter pipeline, then prepends
+commands to a couple of clones to make it look for different words.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pipes</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">count_word_substring</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">Template</span><span class="p">()</span>
+<span class="c">#count_word_substring.debug(True)</span>
+<span class="n">count_word_substring</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;grep -f - /usr/share/dict/words&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">count_word_substring</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;wc -l&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+
+<span class="n">count_py</span> <span class="o">=</span> <span class="n">count_word_substring</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+<span class="n">count_py</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="s">&#39;echo &quot;py&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">count_py</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;  &quot;py&quot;: </span><span class="si">%5s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">count_perl</span> <span class="o">=</span> <span class="n">count_word_substring</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+<span class="n">count_perl</span><span class="o">.</span><span class="n">prepend</span><span class="p">(</span><span class="s">&#39;echo &quot;perl&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">count_perl</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;/dev/null&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;&quot;perl&quot;: </span><span class="si">%5s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>By prepending a custom command to each clone, we can create separate
+pipelines that perform the same basic function with small variations.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pipes_clone.py
+
+  &quot;py&quot;:  1381
+&quot;perl&quot;:    71
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/pipes.html">pipes</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../tempfile/index.html#module-tempfile" title="tempfile: Create temporary filesystem resources."><tt class="xref py py-mod docutils literal"><span class="pre">tempfile</span></tt></a></dt>
+<dd>The tempfile module includes classes for managing temporary files.</dd>
+<dt><a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a></dt>
+<dd>The subprocess module also supports chaining the inputs and
+outputs of processes together.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pwd/index.html" title="pwd – Unix Password Database"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../grp/index.html" title="grp – Unix Group Database"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" >Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

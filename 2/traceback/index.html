@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>traceback &#8211; Extract, format, and print exceptions and stack traces. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="next" title="warnings – Non-fatal alerts" href="../warnings/index.html" />
+    <link rel="prev" title="sysconfig – Interpreter Compile-time Configuration" href="../sysconfig/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">traceback &#8211; Extract, format, and print exceptions and stack traces.</a><ul>
+<li><a class="reference internal" href="#supporting-functions">Supporting Functions</a></li>
+<li><a class="reference internal" href="#working-with-exceptions">Working With Exceptions</a></li>
+<li><a class="reference internal" href="#working-with-the-stack">Working With the Stack</a><ul>
+<li><a class="reference internal" href="#print-stack">print_stack()</a></li>
+<li><a class="reference internal" href="#format-stack">format_stack()</a></li>
+<li><a class="reference internal" href="#extract-stack">extract_stack()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../sysconfig/index.html" title="previous chapter"><strong>Previous:</strong> sysconfig &#8211; Interpreter Compile-time Configuration</a><br/>
+          <a href="../warnings/index.html" title="next chapter"><strong>Next:</strong> warnings &#8211; Non-fatal alerts</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/traceback/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../warnings/index.html" title="warnings – Non-fatal alerts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../sysconfig/index.html" title="sysconfig – Interpreter Compile-time Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" accesskey="U">Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-traceback">
+<span id="traceback-extract-format-and-print-exceptions-and-stack-traces"></span><h1>traceback &#8211; Extract, format, and print exceptions and stack traces.<a class="headerlink" href="#module-traceback" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Extract, format, and print exceptions and stack traces.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later, with modifications over time</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-traceback" title="traceback: Extract, format, and print exceptions and stack traces."><tt class="xref py py-mod docutils literal"><span class="pre">traceback</span></tt></a> module works with the call stack to produce error
+messages. A traceback is a stack trace from the point of an exception
+handler down the call chain to the point where the exception was
+raised. You can also work with the current call stack up from the
+point of a call (and without the context of an error), which is useful
+for finding out the paths being followed into a function.</p>
+<p>The functions in <a class="reference internal" href="#module-traceback" title="traceback: Extract, format, and print exceptions and stack traces."><tt class="xref py py-mod docutils literal"><span class="pre">traceback</span></tt></a> fall into several common categories.
+There are functions for extracting raw tracebacks from the current
+runtime environment (either an exception handler for a traceback, or
+the regular stack). The extracted stack trace is a sequence of tuples
+containing the filename, line number, function name, and text of the
+source line.</p>
+<p>Once extracted, the stack trace can be formatted using functions like
+<tt class="xref py py-func docutils literal"><span class="pre">format_exception()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">format_stack()</span></tt>, etc. The format
+functions return a list of strings with messages formatted to be
+printed. There are shorthand functions for printing the formatted
+values, as well.</p>
+<p>Although the functions in <a class="reference internal" href="#module-traceback" title="traceback: Extract, format, and print exceptions and stack traces."><tt class="xref py py-mod docutils literal"><span class="pre">traceback</span></tt></a> mimic the behavior of the
+interactive interpreter by default, they also are useful for handling
+exceptions in situations where dumping the full stack trace to stderr
+is not desirable. For example, a web application may need to format
+the traceback so it looks good in HTML. An IDE may convert the
+elements of the stack trace into a clickable list that lets the user
+browse the source.</p>
+<div class="section" id="supporting-functions">
+<h2>Supporting Functions<a class="headerlink" href="#supporting-functions" title="Permalink to this headline">¶</a></h2>
+<p>The examples below use the module traceback_example.py (provided in
+the source package for PyMOTW). The contents are:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">produce_exception</span><span class="p">(</span><span class="n">recursion_level</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">recursion_level</span><span class="p">:</span>
+        <span class="n">produce_exception</span><span class="p">(</span><span class="n">recursion_level</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">call_function</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">recursion_level</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">recursion_level</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">call_function</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">recursion_level</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-exceptions">
+<h2>Working With Exceptions<a class="headerlink" href="#working-with-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to handle exception reporting is with
+<tt class="xref py py-func docutils literal"><span class="pre">print_exc()</span></tt>. It uses <tt class="xref py py-func docutils literal"><span class="pre">sys.exc_info()</span></tt> to obtain the
+exception information for the current thread, formats the results, and
+prints the text to a file handle (<tt class="docutils literal"><span class="pre">sys.stderr</span></tt>, by default).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">traceback_example</span> <span class="kn">import</span> <span class="n">produce_exception</span>
+
+<span class="k">print</span> <span class="s">&#39;print_exc() with no exception:&#39;</span>
+<span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">produce_exception</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;print_exc():&#39;</span>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;print_exc(1):&#39;</span>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, the file handle for <tt class="docutils literal"><span class="pre">sys.stdout</span></tt> is substituted so
+the informational and traceback messages are mingled correctly:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python traceback_print_exc.py
+
+print_exc() with no exception:
+None
+
+print_exc():
+Traceback (most recent call last):
+  File &quot;traceback_print_exc.py&quot;, line 20, in &lt;module&gt;
+    produce_exception()
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 16, in produce_exception
+    produce_exception(recursion_level-1)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 16, in produce_exception
+    produce_exception(recursion_level-1)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 18, in produce_exception
+    raise RuntimeError()
+RuntimeError
+
+print_exc(1):
+Traceback (most recent call last):
+  File &quot;traceback_print_exc.py&quot;, line 20, in &lt;module&gt;
+    produce_exception()
+RuntimeError
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">print_exc()</span></tt> is just a shortcut for <tt class="xref py py-func docutils literal"><span class="pre">print_exception()</span></tt>,
+which requires explicit arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">traceback_example</span> <span class="kn">import</span> <span class="n">produce_exception</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">produce_exception</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;print_exception():&#39;</span>
+    <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python traceback_print_exception.py
+
+Traceback (most recent call last):
+  File &quot;traceback_print_exception.py&quot;, line 16, in &lt;module&gt;
+    produce_exception()
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 16, in produce_exception
+    produce_exception(recursion_level-1)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 16, in produce_exception
+    produce_exception(recursion_level-1)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 18, in produce_exception
+    raise RuntimeError()
+RuntimeError
+print_exception():
+</pre></div>
+</div>
+<p>And <tt class="xref py py-func docutils literal"><span class="pre">print_exception()</span></tt> uses <tt class="xref py py-func docutils literal"><span class="pre">format_exception()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">traceback_example</span> <span class="kn">import</span> <span class="n">produce_exception</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">produce_exception</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;format_exception():&#39;</span>
+    <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python traceback_format_exception.py
+
+format_exception():
+[&#39;Traceback (most recent call last):\n&#39;,
+ &#39;  File &quot;traceback_format_exception.py&quot;, line 17, in &lt;module&gt;\n    produce_exception()\n&#39;,
+ &#39;  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 16, in produce_exception\n    produce_exception(recursion_level-1)\n&#39;,
+ &#39;  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 16, in produce_exception\n    produce_exception(recursion_level-1)\n&#39;,
+ &#39;  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 18, in produce_exception\n    raise RuntimeError()\n&#39;,
+ &#39;RuntimeError\n&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-the-stack">
+<h2>Working With the Stack<a class="headerlink" href="#working-with-the-stack" title="Permalink to this headline">¶</a></h2>
+<p>There are a similar set of functions for performing the same operations with
+the current call stack instead of a traceback.</p>
+<div class="section" id="print-stack">
+<h3>print_stack()<a class="headerlink" href="#print-stack" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">traceback_example</span> <span class="kn">import</span> <span class="n">call_function</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_stack</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Calling f() directly:&#39;</span>
+<span class="n">f</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Calling f() from 3 levels deep:&#39;</span>
+<span class="n">call_function</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python traceback_print_stack.py
+
+Calling f() directly:
+  File &quot;traceback_print_stack.py&quot;, line 19, in &lt;module&gt;
+    f()
+  File &quot;traceback_print_stack.py&quot;, line 16, in f
+    traceback.print_stack(file=sys.stdout)
+
+Calling f() from 3 levels deep:
+  File &quot;traceback_print_stack.py&quot;, line 23, in &lt;module&gt;
+    call_function(f)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 22, in call_function
+    return call_function(f, recursion_level-1)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 22, in call_function
+    return call_function(f, recursion_level-1)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 24, in call_function
+    return f()
+  File &quot;traceback_print_stack.py&quot;, line 16, in f
+    traceback.print_stack(file=sys.stdout)
+</pre></div>
+</div>
+</div>
+<div class="section" id="format-stack">
+<h3>format_stack()<a class="headerlink" href="#format-stack" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">traceback_example</span> <span class="kn">import</span> <span class="n">call_function</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_stack</span><span class="p">()</span>
+
+<span class="n">formatted_stack</span> <span class="o">=</span> <span class="n">call_function</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">formatted_stack</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python traceback_format_stack.py
+
+[&#39;  File &quot;traceback_format_stack.py&quot;, line 19, in &lt;module&gt;\n    formatted_stack = call_function(f)\n&#39;,
+ &#39;  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 22, in call_function\n    return call_function(f, recursion_level-1)\n&#39;,
+ &#39;  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 22, in call_function\n    return call_function(f, recursion_level-1)\n&#39;,
+ &#39;  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&quot;, line 24, in call_function\n    return f()\n&#39;,
+ &#39;  File &quot;traceback_format_stack.py&quot;, line 17, in f\n    return traceback.format_stack()\n&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="extract-stack">
+<h3>extract_stack()<a class="headerlink" href="#extract-stack" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">traceback_example</span> <span class="kn">import</span> <span class="n">call_function</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">traceback</span><span class="o">.</span><span class="n">extract_stack</span><span class="p">()</span>
+
+<span class="n">stack</span> <span class="o">=</span> <span class="n">call_function</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python traceback_extract_stack.py
+
+[(&#39;traceback_extract_stack.py&#39;, 19, &#39;&lt;module&gt;&#39;, &#39;stack = call_function(f)&#39;),
+ (&#39;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&#39;,
+  22,
+  &#39;call_function&#39;,
+  &#39;return call_function(f, recursion_level-1)&#39;),
+ (&#39;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&#39;,
+  22,
+  &#39;call_function&#39;,
+  &#39;return call_function(f, recursion_level-1)&#39;),
+ (&#39;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/traceback/traceback_example.py&#39;,
+  24,
+  &#39;call_function&#39;,
+  &#39;return f()&#39;),
+ (&#39;traceback_extract_stack.py&#39;, 17, &#39;f&#39;, &#39;return traceback.extract_stack()&#39;)]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/traceback.html">traceback</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a></dt>
+<dd>The sys module includes singletons that hold the current exception.</dd>
+<dt><a class="reference internal" href="../inspect/index.html#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a></dt>
+<dd>The inspect module includes other functions for probing the frames on the stack.</dd>
+<dt><a class="reference internal" href="../cgitb/index.html#module-cgitb" title="cgitb: Mis-named module that provides extended traceback information."><tt class="xref py py-mod docutils literal"><span class="pre">cgitb</span></tt></a></dt>
+<dd>Another module for formatting tracebacks nicely.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../warnings/index.html" title="warnings – Non-fatal alerts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../sysconfig/index.html" title="sysconfig – Interpreter Compile-time Configuration"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

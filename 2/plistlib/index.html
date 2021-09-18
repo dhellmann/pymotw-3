@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>plistlib &#8211; Manipulate OS X property list files - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Miscelaneous" href="../miscelaneous.html" />
+    <link rel="next" title="History" href="../history.html" />
+    <link rel="prev" title="EasyDialogs – Carbon dialogs for Mac OS X" href="../EasyDialogs/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">plistlib &#8211; Manipulate OS X property list files</a><ul>
+<li><a class="reference internal" href="#reading-plist-files">Reading plist Files</a></li>
+<li><a class="reference internal" href="#writing-plist-files">Writing plist Files</a></li>
+<li><a class="reference internal" href="#binary-property-data">Binary Property Data</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../EasyDialogs/index.html" title="previous chapter"><strong>Previous:</strong> EasyDialogs &#8211; Carbon dialogs for Mac OS X</a><br/>
+          <a href="../history.html" title="next chapter"><strong>Next:</strong> History</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/plistlib/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../history.html" title="History"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../EasyDialogs/index.html" title="EasyDialogs – Carbon dialogs for Mac OS X"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../miscelaneous.html" accesskey="U">Miscelaneous</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-plistlib">
+<span id="plistlib-manipulate-os-x-property-list-files"></span><h1>plistlib &#8211; Manipulate OS X property list files<a class="headerlink" href="#module-plistlib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read and write OS X property list files</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.6</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-plistlib" title="plistlib: Manipulate OS X property list files"><tt class="xref py py-mod docutils literal"><span class="pre">plistlib</span></tt></a> provides an interface for working with property list
+files used under OS X.  plist files are typically XML, sometimes
+compressed.  They are used by the operating system and applications to
+store preferences or other configuration settings.  The contents are
+usually structured as a dictionary containing key value pairs of basic
+built-in types (unicode strings, integers, dates, etc.).  Values can
+also be nested data structures such as other dictionaries or lists.
+Binary data, or strings with control characters, can be encoded using
+the <tt class="docutils literal"><span class="pre">data</span></tt> type.</p>
+<div class="section" id="reading-plist-files">
+<h2>Reading plist Files<a class="headerlink" href="#reading-plist-files" title="Permalink to this headline">¶</a></h2>
+<p>OS X applications such as iCal use plist files to store meta-data
+about objects they manage.  For example, iCal stores the definitions
+of all of your calendars as a series of plist files in the Library
+directory.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+	<span class="nt">&lt;key&gt;</span>AlarmFilter<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;true/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>AlarmsDisabled<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;false/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>AttachmentFilter<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;true/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>AutoRefresh<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;true/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Checked<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;integer&gt;</span>1<span class="nt">&lt;/integer&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Color<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>#808000FF<span class="nt">&lt;/string&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Enabled<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;true/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Key<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>4221BCE5-1017-4EE4-B7FF-311A846C600D<span class="nt">&lt;/string&gt;</span>
+	<span class="nt">&lt;key&gt;</span>NeedsForcedUpdate<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;false/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>NeedsRefresh<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;true/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Order<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;integer&gt;</span>25<span class="nt">&lt;/integer&gt;</span>
+	<span class="nt">&lt;key&gt;</span>RefreshDate<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;date&gt;</span>2009-11-29T16:31:53Z<span class="nt">&lt;/date&gt;</span>
+	<span class="nt">&lt;key&gt;</span>RefreshInterval<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;integer&gt;</span>3600<span class="nt">&lt;/integer&gt;</span>
+	<span class="nt">&lt;key&gt;</span>SubscriptionTitle<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>Athens, GA Weather - By Weather Underground<span class="nt">&lt;/string&gt;</span>
+	<span class="nt">&lt;key&gt;</span>SubscriptionURL<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>http://ical.wunderground.com/auto/ical/GA/Athens.ics?units=both<span class="nt">&lt;/string&gt;</span>
+	<span class="nt">&lt;key&gt;</span>TaskFilter<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;true/&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Title<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>Athens, GA Weather - By Weather Underground<span class="nt">&lt;/string&gt;</span>
+	<span class="nt">&lt;key&gt;</span>Type<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>Subscription<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+</div>
+<p>This sample script finds the calendar defintions, reads
+them, and prints the titles of any calendars being displayed by iCal
+(having the property <tt class="docutils literal"><span class="pre">Checked</span></tt> set to a true value).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plistlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="n">calendar_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/Library/Calendars&#39;</span><span class="p">)</span>
+<span class="n">calendar_directories</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">calendar_root</span><span class="p">,</span> <span class="s">&#39;*.caldav&#39;</span><span class="p">,</span> <span class="s">&#39;*.calendar&#39;</span><span class="p">))</span> <span class="o">+</span>
+    <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">calendar_root</span><span class="p">,</span> <span class="s">&#39;*.calendar&#39;</span><span class="p">))</span>
+    <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">calendar_directories</span><span class="p">:</span>
+    <span class="n">info_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;Info.plist&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">info_filename</span><span class="p">):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">plistlib</span><span class="o">.</span><span class="n">readPlist</span><span class="p">(</span><span class="n">info_filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Checked&#39;</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;Title&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The type of the <tt class="docutils literal"><span class="pre">Checked</span></tt> property is defined by the plist file, so
+our script does not need to convert the string to an integer.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python plistlib_checked_calendars.py
+Doug Hellmann
+Tasks
+Vacation Schedule
+EarthSeasons
+US Holidays
+Athens, GA Weather - By Weather Underground
+Birthdays
+Georgia Bulldogs Calendar (NCAA Football)
+Home
+Meetup: Django
+Meetup: Python
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-plist-files">
+<h2>Writing plist Files<a class="headerlink" href="#writing-plist-files" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use plist files to save your own settings, use
+<tt class="docutils literal"><span class="pre">writePlist()</span></tt> to serialize the data and write it to the filesystem.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plistlib</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;an_int&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+      <span class="s">&#39;a_bool&#39;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span>
+      <span class="s">&#39;the_float&#39;</span><span class="p">:</span><span class="mf">5.9</span><span class="p">,</span>
+      <span class="s">&#39;simple_string&#39;</span><span class="p">:</span><span class="s">&#39;This string has no special characters.&#39;</span><span class="p">,</span>
+      <span class="s">&#39;xml_string&#39;</span><span class="p">:</span><span class="s">&#39;&lt;element attr=&quot;value&quot;&gt;This string includes XML markup &amp;nbsp;&lt;/element&gt;&#39;</span><span class="p">,</span>
+      <span class="s">&#39;nested_list&#39;</span><span class="p">:[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">],</span>
+      <span class="s">&#39;nested_dict&#39;</span><span class="p">:{</span> <span class="s">&#39;key&#39;</span><span class="p">:</span><span class="s">&#39;value&#39;</span> <span class="p">},</span>
+      <span class="s">&#39;timestamp&#39;</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+      <span class="p">}</span>
+
+<span class="n">output_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">plistlib</span><span class="o">.</span><span class="n">writePlist</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
+    <span class="n">output_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">output_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">output_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+</pre></div>
+</div>
+<p>The first argument is the data structure to write out, and the second
+is an open file handle or the name of a file.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python plistlib_write_plist.py
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+        &lt;key&gt;a_bool&lt;/key&gt;
+        &lt;false/&gt;
+        &lt;key&gt;an_int&lt;/key&gt;
+        &lt;integer&gt;2&lt;/integer&gt;
+        &lt;key&gt;nested_dict&lt;/key&gt;
+        &lt;dict&gt;
+                &lt;key&gt;key&lt;/key&gt;
+                &lt;string&gt;value&lt;/string&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;nested_list&lt;/key&gt;
+        &lt;array&gt;
+                &lt;string&gt;a&lt;/string&gt;
+                &lt;string&gt;b&lt;/string&gt;
+                &lt;string&gt;c&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;simple_string&lt;/key&gt;
+        &lt;string&gt;This string has no special characters.&lt;/string&gt;
+        &lt;key&gt;the_float&lt;/key&gt;
+        &lt;real&gt;5.9&lt;/real&gt;
+        &lt;key&gt;timestamp&lt;/key&gt;
+        &lt;date&gt;2013-02-21T06:36:30Z&lt;/date&gt;
+        &lt;key&gt;xml_string&lt;/key&gt;
+        &lt;string&gt;&amp;lt;element attr=&quot;value&quot;&amp;gt;This string includes XML markup &amp;amp;nbsp;&amp;lt;/element&amp;gt;&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="binary-property-data">
+<h2>Binary Property Data<a class="headerlink" href="#binary-property-data" title="Permalink to this headline">¶</a></h2>
+<p>Serializing binary data or strings that may include control characters
+using a plist is not immune to the typical challenges for an XML
+format.  To work around the issues, plist files can store binary data
+in <a class="reference internal" href="../base64/index.html#module-base64" title="base64: Encode binary data into ASCII characters."><tt class="xref py py-mod docutils literal"><span class="pre">base64</span></tt></a> format if the object is wrapped with a <tt class="docutils literal"><span class="pre">Data</span></tt>
+instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plistlib</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;binary_data&#39;</span><span class="p">:</span><span class="n">plistlib</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="s">&#39;This data has an embedded null. </span><span class="se">\0</span><span class="s">&#39;</span><span class="p">),</span>
+      <span class="p">}</span>
+
+<span class="k">print</span> <span class="n">plistlib</span><span class="o">.</span><span class="n">writePlistToString</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example uses the <tt class="docutils literal"><span class="pre">writePlistToString()</span></tt> to create an in-memory
+string, instead of writing to a file.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python plistlib_binary_write.py
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+        &lt;key&gt;binary_data&lt;/key&gt;
+        &lt;data&gt;
+        VGhpcyBkYXRhIGhhcyBhbiBlbWJlZGRlZCBudWxsLiAA
+        &lt;/data&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</pre></div>
+</div>
+<p>Binary data is automatically converted to a <tt class="docutils literal"><span class="pre">Data</span></tt> instance when
+read.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plistlib</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">DATA</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="s">&lt;plist version=&quot;1.0&quot;&gt;</span>
+<span class="s">&lt;dict&gt;</span>
+<span class="s">        &lt;key&gt;binary_data&lt;/key&gt;</span>
+<span class="s">        &lt;data&gt;</span>
+<span class="s">        VGhpcyBkYXRhIGhhcyBhbiBlbWJlZGRlZCBudWxsLiAA</span>
+<span class="s">        &lt;/data&gt;</span>
+<span class="s">&lt;/dict&gt;</span>
+<span class="s">&lt;/plist&gt;</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">plistlib</span><span class="o">.</span><span class="n">readPlistFromString</span><span class="p">(</span><span class="n">DATA</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;binary_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">data</span></tt> attribute of the object contains the decoded data.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python plistlib_binary_read.py
+
+&#39;This data has an embedded null. \x00&#39;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/plistlib.html">plistlib</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man5/plist.5.html">plist manual page</a></dt>
+<dd>Documentation of the plist file format.</dd>
+<dt><a class="reference external" href="http://www.wunderground.com/">Weather Underground</a></dt>
+<dd>Free weather information, including ICS and RSS feeds.</dd>
+<dt><a class="reference external" href="http://www.macosxhints.com/article.php?story=20050430105126392">Convert plist between XML and Binary formats</a></dt>
+<dd>Some plist files are stored in a binary format instead of XML
+because the binary format is faster to parse using Apple&#8217;s
+libraries.  Python&#8217;s plistlib module does not handle the
+binary format, so you may need to convert binary files to XML
+using <tt class="docutils literal"><span class="pre">plutil</span></tt> before reading them.</dd>
+<dt><a class="reference external" href="http://docs.google.com/present/view?id=0AW0cyKASCypUZGczODJ6YjdfMjRobW16dG5mNQ&amp;hl=en">Using Python for System Administration</a></dt>
+<dd>Presentation from Nigel Kersten and Chris Adams, including
+details of using PyObjC to load plists using the native Cocoa
+API, which transparently handles both the XML and binary
+formats.  See slice 27, especially.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../history.html" title="History"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../EasyDialogs/index.html" title="EasyDialogs – Carbon dialogs for Mac OS X"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../miscelaneous.html" >Miscelaneous</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

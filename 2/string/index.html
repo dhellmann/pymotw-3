@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>string &#8211; Working with text - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="String Services" href="../string_services.html" />
+    <link rel="next" title="StringIO and cStringIO – Work with text buffers using file-like API" href="../StringIO/index.html" />
+    <link rel="prev" title="difflib – Compare sequences" href="../difflib/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">string &#8211; Working with text</a><ul>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#templates">Templates</a></li>
+<li><a class="reference internal" href="#advanced-templates">Advanced Templates</a></li>
+<li><a class="reference internal" href="#deprecated-functions">Deprecated Functions</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../difflib/index.html" title="previous chapter"><strong>Previous:</strong> difflib &#8211; Compare sequences</a><br/>
+          <a href="../StringIO/index.html" title="next chapter"><strong>Next:</strong> StringIO and cStringIO &#8211; Work with text buffers using file-like API</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/string/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../StringIO/index.html" title="StringIO and cStringIO – Work with text buffers using file-like API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../difflib/index.html" title="difflib – Compare sequences"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" accesskey="U">String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-string">
+<span id="string-working-with-text"></span><h1>string &#8211; Working with text<a class="headerlink" href="#module-string" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Contains constants and classes for working with text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.5</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-string" title="string: Contains constants and classes for working with text."><tt class="xref py py-mod docutils literal"><span class="pre">string</span></tt></a> module dates from the earliest versions of
+Python. In version 2.0, many of the functions previously implemented
+only in the module were moved to methods of <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> and
+<tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> objects. Legacy versions of those functions are still
+available, but their use is deprecated and they will be dropped in
+Python 3.0. The <a class="reference internal" href="#module-string" title="string: Contains constants and classes for working with text."><tt class="xref py py-mod docutils literal"><span class="pre">string</span></tt></a> module still contains several useful
+constants and classes for working with string and unicode objects, and
+this discussion will concentrate on them.</p>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>The constants in the string module can be used to specify categories
+of characters such as <tt class="docutils literal"><span class="pre">ascii_letters</span></tt> and <tt class="docutils literal"><span class="pre">digits</span></tt>. Some of the
+constants, such as <tt class="docutils literal"><span class="pre">lowercase</span></tt>, are locale-dependent so the value
+changes to reflect the language settings of the user. Others, such as
+<tt class="docutils literal"><span class="pre">hexdigits</span></tt>, do not change when the locale changes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">):</span>
+        <span class="k">continue</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">print</span>
+</pre></div>
+</div>
+<p>Most of the names for the constants are self-explanatory.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_constants.py
+
+ascii_letters=&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;
+
+ascii_lowercase=&#39;abcdefghijklmnopqrstuvwxyz&#39;
+
+ascii_uppercase=&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;
+
+digits=&#39;0123456789&#39;
+
+hexdigits=&#39;0123456789abcdefABCDEF&#39;
+
+letters=&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;
+
+lowercase=&#39;abcdefghijklmnopqrstuvwxyz&#39;
+
+octdigits=&#39;01234567&#39;
+
+printable=&#39;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!&quot;#$%&amp;\&#39;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~ \t\n\r\x0b\x0c&#39;
+
+punctuation=&#39;!&quot;#$%&amp;\&#39;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~&#39;
+
+uppercase=&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;
+
+whitespace=&#39;\t\n\x0b\x0c\r &#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>There are two functions not moving from the string
+module. <tt class="xref py py-func docutils literal"><span class="pre">capwords()</span></tt> capitalizes all of the words in a string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&#39;The quick brown fox jumped over the lazy dog.&#39;</span>
+
+<span class="k">print</span> <span class="n">s</span>
+<span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">capwords</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The results are the same as if you called <tt class="xref py py-func docutils literal"><span class="pre">split()</span></tt>, capitalized
+the words in the resulting list, then called <tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt> to combine
+the results.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_capwords.py
+
+The quick brown fox jumped over the lazy dog.
+The Quick Brown Fox Jumped Over The Lazy Dog.
+</pre></div>
+</div>
+<p>The other function creates translation tables that can be used with
+the <tt class="xref py py-func docutils literal"><span class="pre">translate()</span></tt> method to change one set of characters to
+another.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">leet</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s">&#39;abegiloprstz&#39;</span><span class="p">,</span> <span class="s">&#39;463611092572&#39;</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&#39;The quick brown fox jumped over the lazy dog.&#39;</span>
+
+<span class="k">print</span> <span class="n">s</span>
+<span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">leet</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, some letters are replaced by their <a class="reference external" href="http://en.wikipedia.org/wiki/Leet">l33t</a> number alternatives.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_maketrans.py
+
+The quick brown fox jumped over the lazy dog.
+Th3 qu1ck 620wn f0x jum93d 0v32 7h3 142y d06.
+</pre></div>
+</div>
+</div>
+<div class="section" id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>String templates were added in Python 2.4 as part of <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0292"><strong>PEP 292</strong></a> and
+are intended as an alternative to the built-in interpolation
+syntax. With <tt class="xref py py-class docutils literal"><span class="pre">string.Template</span></tt> interpolation, variables are
+identified by name prefixed with <tt class="docutils literal"><span class="pre">$</span></tt> (e.g., <tt class="docutils literal"><span class="pre">$var</span></tt>) or, if
+necessary to set them off from surrounding text, they can also be
+wrapped with curly braces (e.g., <tt class="docutils literal"><span class="pre">${var}</span></tt>).</p>
+<p>This example compares a simple template with a similar string
+interpolation setup.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;var&#39;</span><span class="p">:</span><span class="s">&#39;foo&#39;</span> <span class="p">}</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">$var</span>
+<span class="s">$$</span>
+<span class="s">${var}iable</span>
+<span class="s">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;TEMPLATE:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="si">%(var)s</span><span class="s"></span>
+<span class="si">%%</span><span class="s"></span>
+<span class="si">%(var)s</span><span class="s">iable</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="k">print</span> <span class="s">&#39;INTERPLOATION:&#39;</span><span class="p">,</span> <span class="n">s</span> <span class="o">%</span> <span class="n">values</span>
+</pre></div>
+</div>
+<p>As you see, in both cases the trigger character (<tt class="docutils literal"><span class="pre">$</span></tt> or <tt class="docutils literal"><span class="pre">%</span></tt>) is
+escaped by repeating it twice.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_template.py
+
+TEMPLATE:
+foo
+$
+fooiable
+
+INTERPLOATION:
+foo
+%
+fooiable
+</pre></div>
+</div>
+<p>One key difference between templates and standard string interpolation
+is that the type of the arguments is not taken into account. The
+values are converted to strings, and the strings are inserted into the
+result. No formatting options are available. For example, there is no
+way to control the number of digits used to represent a floating point
+value.</p>
+<p>A benefit, though, is that by using the <tt class="xref py py-func docutils literal"><span class="pre">safe_substitute()</span></tt>
+method, it is possible to avoid exceptions if not all of the values
+needed by the template are provided as arguments.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;var&#39;</span><span class="p">:</span><span class="s">&#39;foo&#39;</span> <span class="p">}</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="s">&quot;$var is here but $missing is not provided&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;TEMPLATE:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    
+<span class="k">print</span> <span class="s">&#39;TEMPLATE:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">safe_substitute</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since there is no value for missing in the values dictionary, a
+<a class="reference internal" href="../exceptions/index.html#exceptions-keyerror"><em>KeyError</em></a> is raised by
+<tt class="xref py py-func docutils literal"><span class="pre">substitute()</span></tt>. Instead of raising the error,
+<tt class="xref py py-func docutils literal"><span class="pre">safe_substitute()</span></tt> catches it and leaves the variable
+expression alone in the text.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_template_missing.py
+
+TEMPLATE: ERROR: &#39;missing&#39;
+TEMPLATE: foo is here but $missing is not provided
+</pre></div>
+</div>
+</div>
+<div class="section" id="advanced-templates">
+<h2>Advanced Templates<a class="headerlink" href="#advanced-templates" title="Permalink to this headline">¶</a></h2>
+<p>If the default syntax for <tt class="xref py py-class docutils literal"><span class="pre">string.Template</span></tt> is not to your
+liking, you can change the behavior by adjusting the regular
+expression patterns it uses to find the variable names in the template
+body. A simple way to do that is to change the <em>delimiter</em> and
+<em>idpattern</em> class attributes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="k">class</span> <span class="nc">MyTemplate</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">):</span>
+    <span class="n">delimiter</span> <span class="o">=</span> <span class="s">&#39;%&#39;</span>
+    <span class="n">idpattern</span> <span class="o">=</span> <span class="s">&#39;[a-z]+_[a-z]+&#39;</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">MyTemplate</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%%</span><span class="s"> %with_underscore %notunderscored&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;with_underscore&#39;</span><span class="p">:</span><span class="s">&#39;replaced&#39;</span><span class="p">,</span> 
+      <span class="s">&#39;notunderscored&#39;</span><span class="p">:</span><span class="s">&#39;not replaced&#39;</span><span class="p">,</span>
+      <span class="p">}</span>
+
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">safe_substitute</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, variable ids must include an underscore somewhere in
+the middle, so <tt class="docutils literal"><span class="pre">%notunderscored</span></tt> is not replaced by anything.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_template_advanced.py
+
+% replaced %notunderscored
+</pre></div>
+</div>
+<p>For more complex changes, you can override the <em>pattern</em> attribute and
+define an entirely new regular expression. The pattern provided must
+contain four named groups for capturing the escaped delimiter, the
+named variable, a braced version of the variable name, and invalid
+delimiter patterns.</p>
+<p>Let&#8217;s look at the default pattern:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="s">&#39;$var&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">pattern</span>
+</pre></div>
+</div>
+<p>Since <tt class="docutils literal"><span class="pre">t.pattern</span></tt> is a compiled regular expression, we have to
+access its pattern attribute to see the actual string.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_template_defaultpattern.py
+
+
+    \$(?:
+      (?P&lt;escaped&gt;\$) |   # Escape sequence of two delimiters
+      (?P&lt;named&gt;[_a-z][_a-z0-9]*)      |   # delimiter and a Python identifier
+      {(?P&lt;braced&gt;[_a-z][_a-z0-9]*)}   |   # delimiter and a braced identifier
+      (?P&lt;invalid&gt;)              # Other ill-formed delimiter exprs
+    )
+</pre></div>
+</div>
+<p>If we wanted to create a new type of template using, for example,
+<tt class="docutils literal"><span class="pre">{{var}}</span></tt> as the variable syntax, we could use a pattern like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="k">class</span> <span class="nc">MyTemplate</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">Template</span><span class="p">):</span>
+    <span class="n">delimiter</span> <span class="o">=</span> <span class="s">&#39;{{&#39;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&#39;&#39;&#39;</span>
+<span class="s">    \{\{(?:</span>
+<span class="s">    (?P&lt;escaped&gt;\{\{)|</span>
+<span class="s">    (?P&lt;named&gt;[_a-z][_a-z0-9]*)\}\}|</span>
+<span class="s">    (?P&lt;braced&gt;[_a-z][_a-z0-9]*)\}\}|</span>
+<span class="s">    (?P&lt;invalid&gt;)</span>
+<span class="s">    )</span>
+<span class="s">    &#39;&#39;&#39;</span>
+    
+<span class="n">t</span> <span class="o">=</span> <span class="n">MyTemplate</span><span class="p">(</span><span class="s">&#39;&#39;&#39;</span>
+<span class="s">{{{{</span>
+<span class="s">{{var}}</span>
+<span class="s">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;MATCHES:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">template</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;SUBSTITUTED:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">safe_substitute</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="s">&#39;replacement&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We still have to provide both the named and braced patterns, even
+though they are the same. Here&#8217;s the output:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python string_template_newsyntax.py
+
+MATCHES: [(&#39;{{&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;), (&#39;&#39;, &#39;var&#39;, &#39;&#39;, &#39;&#39;)]
+SUBSTITUTED:
+{{
+replacement
+</pre></div>
+</div>
+</div>
+<div class="section" id="deprecated-functions">
+<h2>Deprecated Functions<a class="headerlink" href="#deprecated-functions" title="Permalink to this headline">¶</a></h2>
+<p>For information on the deprecated functions moved to the string and
+unicode classes, refer to <a class="reference external" href="http://docs.python.org/lib/string-methods.html#string-methods">String Methods</a> in
+the manual.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/string.html">string</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0292"><strong>PEP 292</strong></a></dt>
+<dd>Simpler String Substitutions</dd>
+</dl>
+<p class="last"><a class="reference internal" href="../articles/text_processing.html#article-text-processing"><em>Text Processing Tools</em></a></p>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../StringIO/index.html" title="StringIO and cStringIO – Work with text buffers using file-like API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../difflib/index.html" title="difflib – Compare sequences"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" >String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

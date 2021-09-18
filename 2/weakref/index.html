@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>weakref &#8211; Garbage-collectable references to objects - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="copy – Duplicate objects" href="../copy/index.html" />
+    <link rel="prev" title="Queue – A thread-safe FIFO implementation" href="../Queue/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">weakref &#8211; Garbage-collectable references to objects</a><ul>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#reference-callbacks">Reference Callbacks</a></li>
+<li><a class="reference internal" href="#proxies">Proxies</a></li>
+<li><a class="reference internal" href="#cyclic-references">Cyclic References</a></li>
+<li><a class="reference internal" href="#caching-objects">Caching Objects</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../Queue/index.html" title="previous chapter"><strong>Previous:</strong> Queue &#8211; A thread-safe FIFO implementation</a><br/>
+          <a href="../copy/index.html" title="next chapter"><strong>Next:</strong> copy &#8211; Duplicate objects</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/weakref/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../copy/index.html" title="copy – Duplicate objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../Queue/index.html" title="Queue – A thread-safe FIFO implementation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-weakref">
+<span id="weakref-garbage-collectable-references-to-objects"></span><h1>weakref &#8211; Garbage-collectable references to objects<a class="headerlink" href="#module-weakref" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Refer to an &#8220;expensive&#8221; object, but allow it to be garbage collected if there are no other non-weak references.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">Since 2.1</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-weakref" title="weakref: Refer to an &quot;expensive&quot; object, but allow it to be garbage collected if there are no other non-weak references."><tt class="xref py py-mod docutils literal"><span class="pre">weakref</span></tt></a> module supports weak references to objects. A
+normal reference increments the reference count on the object and
+prevents it from being garbage collected. This is not always
+desirable, either when a circular reference might be present or when
+building a cache of objects that should be deleted when memory is
+needed.</p>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>Weak references to your objects are managed through the <tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt>
+class. To retrieve the original object, call the reference object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="k">class</span> <span class="nc">ExpensiveObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;(Deleting </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">ExpensiveObject</span><span class="p">()</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;obj:&#39;</span><span class="p">,</span> <span class="n">obj</span>
+<span class="k">print</span> <span class="s">&#39;ref:&#39;</span><span class="p">,</span> <span class="n">r</span>
+<span class="k">print</span> <span class="s">&#39;r():&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;deleting obj&#39;</span>
+<span class="k">del</span> <span class="n">obj</span>
+<span class="k">print</span> <span class="s">&#39;r():&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this case, since <tt class="docutils literal"><span class="pre">obj</span></tt> is deleted before the second call to the
+reference, the <tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt> returns <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python weakref_ref.py
+
+obj: &lt;__main__.ExpensiveObject object at 0x10046d410&gt;
+ref: &lt;weakref at 0x100467838; to &#39;ExpensiveObject&#39; at 0x10046d410&gt;
+r(): &lt;__main__.ExpensiveObject object at 0x10046d410&gt;
+deleting obj
+(Deleting &lt;__main__.ExpensiveObject object at 0x10046d410&gt;)
+r(): None
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference-callbacks">
+<h2>Reference Callbacks<a class="headerlink" href="#reference-callbacks" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt> constructor takes an optional second argument that
+should be a callback function to invoke when the referenced object is
+deleted.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="k">class</span> <span class="nc">ExpensiveObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;(Deleting </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+        
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">reference</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Invoked when referenced object is deleted&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;callback(&#39;</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="s">&#39;)&#39;</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">ExpensiveObject</span><span class="p">()</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;obj:&#39;</span><span class="p">,</span> <span class="n">obj</span>
+<span class="k">print</span> <span class="s">&#39;ref:&#39;</span><span class="p">,</span> <span class="n">r</span>
+<span class="k">print</span> <span class="s">&#39;r():&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;deleting obj&#39;</span>
+<span class="k">del</span> <span class="n">obj</span>
+<span class="k">print</span> <span class="s">&#39;r():&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The callback receives the reference object as an argument, after the
+reference is &#8220;dead&#8221; and no longer refers to the original object. This
+lets you remove the weak reference object from a cache, for example.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python weakref_ref_callback.py
+
+obj: &lt;__main__.ExpensiveObject object at 0x10046c610&gt;
+ref: &lt;weakref at 0x100468890; to &#39;ExpensiveObject&#39; at 0x10046c610&gt;
+r(): &lt;__main__.ExpensiveObject object at 0x10046c610&gt;
+deleting obj
+callback( &lt;weakref at 0x100468890; dead&gt; )
+(Deleting &lt;__main__.ExpensiveObject object at 0x10046c610&gt;)
+r(): None
+</pre></div>
+</div>
+</div>
+<div class="section" id="proxies">
+<h2>Proxies<a class="headerlink" href="#proxies" title="Permalink to this headline">¶</a></h2>
+<p>Instead of using <tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt> directly, it can be more convenient to
+use a proxy.  Proxies can be used as though they were the original
+object, so you do not need to call the <tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt> first to access
+the object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="k">class</span> <span class="nc">ExpensiveObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;(Deleting </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">ExpensiveObject</span><span class="p">(</span><span class="s">&#39;My Object&#39;</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;via obj:&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span>
+<span class="k">print</span> <span class="s">&#39;via ref:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+<span class="k">print</span> <span class="s">&#39;via proxy:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+<span class="k">del</span> <span class="n">obj</span>
+<span class="k">print</span> <span class="s">&#39;via proxy:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>If the proxy is access after the referent object is removed, a
+<tt class="xref py py-class docutils literal"><span class="pre">ReferenceError</span></tt> exception is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python weakref_proxy.py
+
+via obj: My Object
+via ref: My Object
+via proxy: My Object
+(Deleting &lt;__main__.ExpensiveObject object at 0x10046b490&gt;)
+via proxy:
+Traceback (most recent call last):
+  File &quot;weakref_proxy.py&quot;, line 26, in &lt;module&gt;
+    print &#39;via proxy:&#39;, p.name
+ReferenceError: weakly-referenced object no longer exists
+</pre></div>
+</div>
+</div>
+<div class="section" id="cyclic-references">
+<h2>Cyclic References<a class="headerlink" href="#cyclic-references" title="Permalink to this headline">¶</a></h2>
+<p>One use for weak references is to allow cyclic references without preventing
+garbage collection. This example illustrates the difference between using
+regular objects and proxies when a graph includes a cycle.</p>
+<p>First, we need a <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> class that accepts any object given to
+it as the &#8220;next&#8221; node in the sequence. For the sake of brevity, this
+<tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> supports a single outgoing reference from each node,
+which results in boring graphs but makes it easy to create cycles. The
+function <tt class="xref py py-func docutils literal"><span class="pre">demo()</span></tt> is a utility function to exercise the graph
+class by creating a cycle and then removing various references.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.set_next(</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">))&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other</span> <span class="o">=</span> <span class="n">other</span>
+    <span class="k">def</span> <span class="nf">all_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Generate the nodes in the graph sequence.&quot;</span>
+        <span class="k">yield</span> <span class="bp">self</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other</span>
+        <span class="k">while</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">n</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">n</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">other</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">n</span>
+        <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;-&gt;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">n</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_nodes</span><span class="p">()])</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;(Deleting </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">WeakGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># See if we should replace the reference</span>
+            <span class="c"># to other with a weakref.</span>
+            <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">all_nodes</span><span class="p">():</span>
+                <span class="n">other</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WeakGraph</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">collect_and_show_garbage</span><span class="p">():</span>
+    <span class="s">&quot;Show what garbage is present.&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Collecting...&#39;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Unreachable objects:&#39;</span><span class="p">,</span> <span class="n">n</span>
+    <span class="k">print</span> <span class="s">&#39;Garbage:&#39;</span><span class="p">,</span> 
+    <span class="n">pprint</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">demo</span><span class="p">(</span><span class="n">graph_factory</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Set up graph:&#39;</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">graph_factory</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+    <span class="n">two</span> <span class="o">=</span> <span class="n">graph_factory</span><span class="p">(</span><span class="s">&#39;two&#39;</span><span class="p">)</span>
+    <span class="n">three</span> <span class="o">=</span> <span class="n">graph_factory</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+    <span class="n">one</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+    <span class="n">two</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+    <span class="n">three</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+    
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Graphs:&#39;</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">three</span><span class="p">)</span>
+    <span class="n">collect_and_show_garbage</span><span class="p">()</span>
+
+    <span class="k">print</span>
+    <span class="n">three</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">two</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">print</span> <span class="s">&#39;After 2 references removed:&#39;</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+    <span class="n">collect_and_show_garbage</span><span class="p">()</span>
+
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Removing last reference:&#39;</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">collect_and_show_garbage</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now we can set up a test program using the <a class="reference internal" href="../gc/index.html#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> module to help us
+debug the leak. The <tt class="docutils literal"><span class="pre">DEBUG_LEAK</span></tt> flag causes <a class="reference internal" href="../gc/index.html#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a> to print
+information about objects that cannot be seen other than through the
+reference the garbage collector has to them.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">weakref_graph</span> <span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">demo</span><span class="p">,</span> <span class="n">collect_and_show_garbage</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_LEAK</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Setting up the cycle&#39;</span>
+<span class="k">print</span>
+<span class="n">demo</span><span class="p">(</span><span class="n">Graph</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Breaking the cycle and cleaning up garbage&#39;</span>
+<span class="k">print</span>
+<span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">:</span>
+    <span class="k">del</span> <span class="n">gc</span><span class="o">.</span><span class="n">garbage</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span>
+<span class="n">collect_and_show_garbage</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Even after deleting the local references to the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt>
+instances in <tt class="xref py py-func docutils literal"><span class="pre">demo()</span></tt>, the graphs all show up in the garbage
+list and cannot be collected.  The dictionaries in the garbage list
+hold the attributes of the <tt class="xref py py-class docutils literal"><span class="pre">Graph</span></tt> instances. We can forcibly
+delete the graphs, since we know what they are:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u weakref_cycle.py
+
+Setting up the cycle
+
+Set up graph:
+one.set_next(two (&lt;class &#39;weakref_graph.Graph&#39;&gt;))
+two.set_next(three (&lt;class &#39;weakref_graph.Graph&#39;&gt;))
+three.set_next(one-&gt;two-&gt;three (&lt;class &#39;weakref_graph.Graph&#39;&gt;))
+
+Graphs:
+one-&gt;two-&gt;three-&gt;one
+two-&gt;three-&gt;one-&gt;two
+three-&gt;one-&gt;two-&gt;three
+Collecting...
+Unreachable objects: 0
+Garbage:[]
+
+After 2 references removed:
+one-&gt;two-&gt;three-&gt;one
+Collecting...
+Unreachable objects: 0
+Garbage:[]
+
+Removing last reference:
+Collecting...
+gc: uncollectable &lt;Graph 0x10046ff50&gt;
+gc: uncollectable &lt;Graph 0x10046ff90&gt;
+gc: uncollectable &lt;Graph 0x10046ffd0&gt;
+gc: uncollectable &lt;dict 0x100363060&gt;
+gc: uncollectable &lt;dict 0x100366460&gt;
+gc: uncollectable &lt;dict 0x1003671f0&gt;
+Unreachable objects: 6
+Garbage:[Graph(one),
+ Graph(two),
+ Graph(three),
+ {&#39;name&#39;: &#39;one&#39;, &#39;other&#39;: Graph(two)},
+ {&#39;name&#39;: &#39;two&#39;, &#39;other&#39;: Graph(three)},
+ {&#39;name&#39;: &#39;three&#39;, &#39;other&#39;: Graph(one)}]
+
+Breaking the cycle and cleaning up garbage
+
+one.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+(Deleting two)
+two.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+(Deleting three)
+three.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+(Deleting one)
+one.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+
+Collecting...
+Unreachable objects: 0
+Garbage:[]
+</pre></div>
+</div>
+<p>And now let&#8217;s define a more intelligent <tt class="xref py py-class docutils literal"><span class="pre">WeakGraph</span></tt> class that
+knows not to create cycles using regular references, but to use a
+<tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt> when a cycle is detected.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">weakref_graph</span> <span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">demo</span>
+
+<span class="k">class</span> <span class="nc">WeakGraph</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># See if we should replace the reference</span>
+            <span class="c"># to other with a weakref.</span>
+            <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">all_nodes</span><span class="p">():</span>
+                <span class="n">other</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WeakGraph</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span>
+                
+<span class="n">demo</span><span class="p">(</span><span class="n">WeakGraph</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since the <tt class="xref py py-class docutils literal"><span class="pre">WeakGraph</span></tt> instances use proxies to refer to objects
+that have already been seen, as <tt class="xref py py-func docutils literal"><span class="pre">demo()</span></tt> removes all local
+references to the objects, the cycle is broken and the garbage
+collector can delete the objects for us.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python weakref_weakgraph.py
+
+Set up graph:
+one.set_next(two (&lt;class &#39;__main__.WeakGraph&#39;&gt;))
+two.set_next(three (&lt;class &#39;__main__.WeakGraph&#39;&gt;))
+three.set_next(one-&gt;two-&gt;three (&lt;type &#39;weakproxy&#39;&gt;))
+
+Graphs:
+one-&gt;two-&gt;three
+two-&gt;three-&gt;one-&gt;two
+three-&gt;one-&gt;two-&gt;three
+Collecting...
+Unreachable objects: 0
+Garbage:[]
+
+After 2 references removed:
+one-&gt;two-&gt;three
+Collecting...
+Unreachable objects: 0
+Garbage:[]
+
+Removing last reference:
+(Deleting one)
+one.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+(Deleting two)
+two.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+(Deleting three)
+three.set_next(None (&lt;type &#39;NoneType&#39;&gt;))
+Collecting...
+Unreachable objects: 0
+Garbage:[]
+</pre></div>
+</div>
+</div>
+<div class="section" id="caching-objects">
+<h2>Caching Objects<a class="headerlink" href="#caching-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">ref</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">proxy</span></tt> classes are considered &#8220;low
+level&#8221;. While they are useful for maintaining weak references to
+individual objects and allowing cycles to be garbage collected, if you
+need to create a cache of several objects the
+<tt class="xref py py-class docutils literal"><span class="pre">WeakKeyDictionary</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">WeakValueDictionary</span></tt> provide a
+more appropriate API.</p>
+<p>As you might expect, the <tt class="xref py py-class docutils literal"><span class="pre">WeakValueDictionary</span></tt> uses weak
+references to the values it holds, allowing them to be garbage
+collected when other code is not actually using them.</p>
+<p>To illustrate the difference between memory handling with a regular
+dictionary and <tt class="xref py py-class docutils literal"><span class="pre">WeakValueDictionary</span></tt>, let&#8217;s go experiment with
+explicitly calling the garbage collector again:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="n">gc</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="n">gc</span><span class="o">.</span><span class="n">DEBUG_LEAK</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ExpensiveObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;ExpensiveObject(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;(Deleting </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+        
+<span class="k">def</span> <span class="nf">demo</span><span class="p">(</span><span class="n">cache_factory</span><span class="p">):</span>
+    <span class="c"># hold objects so any weak references </span>
+    <span class="c"># are not removed immediately</span>
+    <span class="n">all_refs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c"># the cache using the factory we&#39;re given</span>
+    <span class="k">print</span> <span class="s">&#39;CACHE TYPE:&#39;</span><span class="p">,</span> <span class="n">cache_factory</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">cache_factory</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">,</span> <span class="s">&#39;three&#39;</span> <span class="p">]:</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">ExpensiveObject</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cache</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">all_refs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="k">del</span> <span class="n">o</span> <span class="c"># decref</span>
+
+    <span class="k">print</span> <span class="s">&#39;all_refs =&#39;</span><span class="p">,</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">all_refs</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Before, cache contains:&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cache</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">value</span> <span class="c"># decref</span>
+        
+    <span class="c"># Remove all references to our objects except the cache</span>
+    <span class="k">print</span> <span class="s">&#39;Cleanup:&#39;</span>
+    <span class="k">del</span> <span class="n">all_refs</span>
+    <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+    <span class="k">print</span> <span class="s">&#39;After, cache contains:&#39;</span><span class="p">,</span> <span class="n">cache</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cache</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;demo returning&#39;</span>
+    <span class="k">return</span>
+
+<span class="n">demo</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="n">demo</span><span class="p">(</span><span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that any loop variables that refer to the values we are caching must be
+cleared explicitly to decrement the reference count on the object. Otherwise
+the garbage collector would not remove the objects and they would remain in
+the cache. Similarly, the all_refs variable is used to hold references to
+prevent them from being garbage collected prematurely.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python weakref_valuedict.py
+
+CACHE TYPE: &lt;type &#39;dict&#39;&gt;
+all_refs ={&#39;one&#39;: ExpensiveObject(one),
+ &#39;three&#39;: ExpensiveObject(three),
+ &#39;two&#39;: ExpensiveObject(two)}
+Before, cache contains: [&#39;three&#39;, &#39;two&#39;, &#39;one&#39;]
+  three = ExpensiveObject(three)
+  two = ExpensiveObject(two)
+  one = ExpensiveObject(one)
+Cleanup:
+After, cache contains: [&#39;three&#39;, &#39;two&#39;, &#39;one&#39;]
+  three = ExpensiveObject(three)
+  two = ExpensiveObject(two)
+  one = ExpensiveObject(one)
+demo returning
+(Deleting ExpensiveObject(three))
+(Deleting ExpensiveObject(two))
+(Deleting ExpensiveObject(one))
+
+CACHE TYPE: weakref.WeakValueDictionary
+all_refs ={&#39;one&#39;: ExpensiveObject(one),
+ &#39;three&#39;: ExpensiveObject(three),
+ &#39;two&#39;: ExpensiveObject(two)}
+Before, cache contains: [&#39;three&#39;, &#39;two&#39;, &#39;one&#39;]
+  three = ExpensiveObject(three)
+  two = ExpensiveObject(two)
+  one = ExpensiveObject(one)
+Cleanup:
+(Deleting ExpensiveObject(three))
+(Deleting ExpensiveObject(two))
+(Deleting ExpensiveObject(one))
+After, cache contains: []
+demo returning
+</pre></div>
+</div>
+<p>The WeakKeyDictionary works similarly but uses weak references for the keys
+instead of the values in the dictionary.</p>
+<p>The library documentation for weakref contains this warning:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Caution: Because a WeakValueDictionary is built on top of a Python
+dictionary, it must not change size when iterating over it. This can be
+difficult to ensure for a WeakValueDictionary because actions performed by
+the program during iteration may cause items in the dictionary to vanish
+&#8220;by magic&#8221; (as a side effect of garbage collection).</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/weakref.html">weakref</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../gc/index.html#module-gc" title="gc: Garbage Collector"><tt class="xref py py-mod docutils literal"><span class="pre">gc</span></tt></a></dt>
+<dd>The gc module is the interface to the interpreter&#8217;s garbage collector.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../copy/index.html" title="copy – Duplicate objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../Queue/index.html" title="Queue – A thread-safe FIFO implementation"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

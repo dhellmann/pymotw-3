@@ -1,0 +1,1545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>codecs &#8211; String encoding and decoding - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="String Services" href="../string_services.html" />
+    <link rel="next" title="difflib – Compare sequences" href="../difflib/index.html" />
+    <link rel="prev" title="String Services" href="../string_services.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">codecs &#8211; String encoding and decoding</a><ul>
+<li><a class="reference internal" href="#unicode-primer">Unicode Primer</a><ul>
+<li><a class="reference internal" href="#encodings">Encodings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-files">Working with Files</a></li>
+<li><a class="reference internal" href="#byte-order">Byte Order</a></li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a><ul>
+<li><a class="reference internal" href="#encoding-errors">Encoding Errors</a></li>
+<li><a class="reference internal" href="#decoding-errors">Decoding Errors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#standard-input-and-output-streams">Standard Input and Output Streams</a></li>
+<li><a class="reference internal" href="#network-communication">Network Communication</a></li>
+<li><a class="reference internal" href="#encoding-translation">Encoding Translation</a></li>
+<li><a class="reference internal" href="#non-unicode-encodings">Non-Unicode Encodings</a></li>
+<li><a class="reference internal" href="#incremental-encoding">Incremental Encoding</a></li>
+<li><a class="reference internal" href="#defining-your-own-encoding">Defining Your Own Encoding</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../string_services.html" title="previous chapter"><strong>Previous:</strong> String Services</a><br/>
+          <a href="../difflib/index.html" title="next chapter"><strong>Next:</strong> difflib &#8211; Compare sequences</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/codecs/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../difflib/index.html" title="difflib – Compare sequences"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../string_services.html" title="String Services"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" accesskey="U">String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-codecs">
+<span id="codecs-string-encoding-and-decoding"></span><h1>codecs &#8211; String encoding and decoding<a class="headerlink" href="#module-codecs" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Encoders and decoders for converting text between different representations.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> module provides stream and file interfaces for
+transcoding data in your program.  It is most commonly used to work
+with Unicode text, but other encodings are also available for other
+purposes.</p>
+<div class="section" id="unicode-primer">
+<h2>Unicode Primer<a class="headerlink" href="#unicode-primer" title="Permalink to this headline">¶</a></h2>
+<p>CPython 2.x supports two types of strings for working with text data.
+Old-style <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> instances use a single 8-bit byte to represent
+each character of the string using its ASCII code.  In contrast,
+<tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> strings are managed internally as a sequence of
+Unicode <em>code points</em>.  The code point values are saved as a sequence
+of 2 or 4 bytes each, depending on the options given when Python was
+compiled.  Both <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> are derived from a
+common base class, and support a similar API.</p>
+<p>When <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> strings are output, they are encoded using one
+of several standard schemes so that the sequence of bytes can be
+reconstructed as the same string later.  The bytes of the encoded
+value are not necessarily the same as the code point values, and the
+encoding defines a way to translate between the two sets of values.
+Reading Unicode data also requires knowing the encoding so that the
+incoming bytes can be converted to the internal representation used by
+the <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> class.</p>
+<p>The most common encodings for Western languages are <tt class="docutils literal"><span class="pre">UTF-8</span></tt> and
+<tt class="docutils literal"><span class="pre">UTF-16</span></tt>, which use sequences of one and two byte values
+respectively to represent each character.  Other encodings can be more
+efficient for storing languages where most of the characters are
+represented by code points that do not fit into two bytes.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">For more introductory information about Unicode, refer to the list
+of references at the end of this section.  The Python <a class="reference external" href="http://docs.python.org/howto/unicode">Unicode
+HOWTO</a> is especially helpful.</p>
+</div>
+<div class="section" id="encodings">
+<h3>Encodings<a class="headerlink" href="#encodings" title="Permalink to this headline">¶</a></h3>
+<p>The best way to understand encodings is to look at the different
+series of bytes produced by encoding the same string in different
+ways.  The examples below use this function to format the byte string
+to make it easier to read.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="k">def</span> <span class="nf">to_hex</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">):</span>
+    <span class="s">&quot;Format text t as a sequence of nbyte long values separated by spaces.&quot;</span>
+    <span class="n">chars_per_item</span> <span class="o">=</span> <span class="n">nbytes</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">hex_version</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">num_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_version</span><span class="p">)</span> <span class="o">/</span> <span class="n">chars_per_item</span>
+    <span class="k">def</span> <span class="nf">chunkify</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_version</span><span class="p">),</span> <span class="n">chars_per_item</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">hex_version</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span> <span class="o">+</span> <span class="n">chars_per_item</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chunkify</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">to_hex</span><span class="p">(</span><span class="s">&#39;abcdef&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">to_hex</span><span class="p">(</span><span class="s">&#39;abcdef&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>The function uses <tt class="xref py py-mod docutils literal"><span class="pre">binascii</span></tt> to get a hexadecimal representation
+of the input byte string, then insert a space between every <em>nbytes</em>
+bytes before returning the value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_to_hex.py
+
+61 62 63 64 65 66
+6162 6364 6566
+</pre></div>
+</div>
+<p>The first encoding example begins by printing the text <tt class="docutils literal"><span class="pre">'pi:</span> <span class="pre">π'</span></tt>
+using the raw representation of the <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> class.  The <tt class="docutils literal"><span class="pre">π</span></tt>
+character is replaced with the expression for the Unicode code point,
+<tt class="docutils literal"><span class="pre">\u03c0</span></tt>.  The next two lines encode the string as UTF-8 and UTF-16
+respectively, and show the hexadecimal values resulting from the
+encoding.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Raw   :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;UTF-8 :&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;UTF-16:&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-16&#39;</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result of encoding a <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> string is a <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt>
+object.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encodings.py
+
+Raw   : u&#39;pi: \u03c0&#39;
+UTF-8 : 70 69 3a 20 cf 80
+UTF-16: fffe 7000 6900 3a00 2000 c003
+</pre></div>
+</div>
+<p>Given a sequence of encoded bytes as a <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> instance, the
+<tt class="xref py py-func docutils literal"><span class="pre">decode()</span></tt> method translates them to code points and returns the
+sequence as a <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">encoded</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Original :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Encoded  :&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Decoded  :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">decoded</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">decoded</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The choice of encoding used does not change the output type.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_decode.py
+
+Original : u&#39;pi: \u03c0&#39;
+Encoded  : 70 69 3a 20 cf 80 &lt;type &#39;str&#39;&gt;
+Decoded  : u&#39;pi: \u03c0&#39; &lt;type &#39;unicode&#39;&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The default encoding is set during the interpreter start-up process,
+when <a class="reference internal" href="../site/index.html#module-site" title="site: Site-wide configuration"><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a> is loaded.  Refer to <a class="reference internal" href="../sys/interpreter.html#sys-unicode-defaults"><em>Unicode Defaults</em></a>
+for a description of the default encoding settings accessible via
+<a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-files">
+<h2>Working with Files<a class="headerlink" href="#working-with-files" title="Permalink to this headline">¶</a></h2>
+<p>Encoding and decoding strings is especially important when dealing
+with I/O operations.  Whether you are writing to a file, socket, or
+other stream, you will want to ensure that the data is using the
+proper encoding.  In general, all text data needs to be decoded from
+its byte representation as it is read, and encoded from the internal
+values to a specific representation as it is written.  Your program
+can explicitly encode and decode data, but depending on the encoding
+used it can be non-trivial to determine whether you have read enough
+bytes in order to fully decode the data.  <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> provides
+classes that manage the data encoding and decoding for you, so you
+don&#8217;t have to create your own.</p>
+<p>The simplest interface provided by <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> is a replacement for
+the built-in <tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> function.  The new version works just like
+the built-in, but adds two new arguments to specify the encoding and
+desired error handling technique.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">encoding</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">encoding</span> <span class="o">+</span> <span class="s">&#39;.txt&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Writing to&#39;</span><span class="p">,</span> <span class="n">filename</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;wt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;pi: </span><span class="se">\u03c0</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="c"># Determine the byte grouping to use for to_hex()</span>
+<span class="n">nbytes</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;utf-8&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+           <span class="s">&#39;utf-16&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+           <span class="s">&#39;utf-32&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span>
+           <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
+
+<span class="c"># Show the raw bytes in the file</span>
+<span class="k">print</span> <span class="s">&#39;File contents:&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">nbytes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Starting with a <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> string with the code point for π,
+this example saves the text to a file using an encoding specified on
+the command line.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_open_write.py utf-8
+
+Writing to utf-8.txt
+File contents:
+70 69 3a 20 cf 80
+
+$ python codecs_open_write.py utf-16
+
+Writing to utf-16.txt
+File contents:
+fffe 7000 6900 3a00 2000 c003
+
+$ python codecs_open_write.py utf-32
+
+Writing to utf-32.txt
+File contents:
+fffe0000 70000000 69000000 3a000000 20000000 c0030000
+</pre></div>
+</div>
+<p>Reading the data with <tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> is straightforward, with one catch:
+you must know the encoding in advance, in order to set up the decoder
+correctly.  Some data formats, such as XML, let you specify the
+encoding as part of the file, but usually it is up to the application
+to manage.  <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> simply takes the encoding as an argument and
+assumes it is correct.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">encoding</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">encoding</span> <span class="o">+</span> <span class="s">&#39;.txt&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Reading from&#39;</span><span class="p">,</span> <span class="n">filename</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This example reads the files created by the previous program, and
+prints the representation of the resulting <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> object to
+the console.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_open_read.py utf-8
+
+Reading from utf-8.txt
+u&#39;pi: \u03c0&#39;
+
+$ python codecs_open_read.py utf-16
+
+Reading from utf-16.txt
+u&#39;pi: \u03c0&#39;
+
+$ python codecs_open_read.py utf-32
+
+Reading from utf-32.txt
+u&#39;pi: \u03c0&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="byte-order">
+<h2>Byte Order<a class="headerlink" href="#byte-order" title="Permalink to this headline">¶</a></h2>
+<p>Multi-byte encodings such as UTF-16 and UTF-32 pose a problem when
+transferring the data between different computer systems, either by
+copying the file directly or with network communication.  Different
+systems use different ordering of the high and low order bytes.  This
+characteristic of the data, known as its <em>endianness</em>, depends on
+factors such as the hardware architecture and choices made by the
+operating system and application developer.  There isn&#8217;t always a way
+to know in advance what byte order to use for a given set of data, so
+the multi-byte encodings include a <em>byte-order marker</em> (BOM) as the
+first few bytes of encoded output.  For example, UTF-16 is defined
+in such a way that 0xFFFE and 0xFEFF are not valid characters, and can
+be used to indicate the byte order.  <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> defines constants
+for the byte order markers used by UTF-16 and UTF-32.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;BOM&#39;</span><span class="p">,</span> <span class="s">&#39;BOM_BE&#39;</span><span class="p">,</span> <span class="s">&#39;BOM_LE&#39;</span><span class="p">,</span>
+              <span class="s">&#39;BOM_UTF8&#39;</span><span class="p">,</span>
+              <span class="s">&#39;BOM_UTF16&#39;</span><span class="p">,</span> <span class="s">&#39;BOM_UTF16_BE&#39;</span><span class="p">,</span> <span class="s">&#39;BOM_UTF16_LE&#39;</span><span class="p">,</span>
+              <span class="s">&#39;BOM_UTF32&#39;</span><span class="p">,</span> <span class="s">&#39;BOM_UTF32_BE&#39;</span><span class="p">,</span> <span class="s">&#39;BOM_UTF32_LE&#39;</span><span class="p">,</span>
+              <span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&#39;{:12} : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">codecs</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">BOM</span></tt>, <tt class="docutils literal"><span class="pre">BOM_UTF16</span></tt>, and <tt class="docutils literal"><span class="pre">BOM_UTF32</span></tt> are automatically set to the
+appropriate big-endian or little-endian values depending on the
+current system&#8217;s native byte order.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_bom.py
+
+BOM          : fffe
+BOM_BE       : feff
+BOM_LE       : fffe
+BOM_UTF8     : efbb bf
+BOM_UTF16    : fffe
+BOM_UTF16_BE : feff
+BOM_UTF16_LE : fffe
+BOM_UTF32    : fffe 0000
+BOM_UTF32_BE : 0000 feff
+BOM_UTF32_LE : fffe 0000
+</pre></div>
+</div>
+<p>Byte ordering is detected and handled automatically by the decoders in
+<a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a>, but you can also choose an explicit ordering for the
+encoding.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="c"># Pick the non-native version of UTF-16 encoding</span>
+<span class="k">if</span> <span class="n">codecs</span><span class="o">.</span><span class="n">BOM_UTF16</span> <span class="o">==</span> <span class="n">codecs</span><span class="o">.</span><span class="n">BOM_UTF16_BE</span><span class="p">:</span>
+    <span class="n">bom</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">BOM_UTF16_LE</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="s">&#39;utf_16_le&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">bom</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">BOM_UTF16_BE</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="s">&#39;utf_16_be&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Native order  :&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">codecs</span><span class="o">.</span><span class="n">BOM_UTF16</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Selected order:&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">bom</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c"># Encode the text.</span>
+<span class="n">encoded_text</span> <span class="o">=</span> <span class="s">u&#39;pi: </span><span class="se">\u03c0</span><span class="s">&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;{:14}: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">encoded_text</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;non-native-encoded.txt&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c"># Write the selected byte-order marker.  It is not included in the</span>
+    <span class="c"># encoded text because we were explicit about the byte order when</span>
+    <span class="c"># selecting the encoding.</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bom</span><span class="p">)</span>
+    <span class="c"># Write the byte string for the encoded text.</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">encoded_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">codecs_bom_create_file.py</span></tt> figures out the native byte ordering,
+then uses the alternate form explicitly so the next example can
+demonstrate auto-detection while reading.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_bom_create_file.py
+
+Native order  : fffe
+Selected order: feff
+utf_16_be     : 0070 0069 003a 0020 03c0
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">codecs_bom_detection.py</span></tt> does not specify a byte order when opening
+the file, so the decoder uses the BOM value in the first two bytes of
+the file to determine it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="c"># Look at the raw data</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;non-native-encoded.txt&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">raw_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Raw    :&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">raw_bytes</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c"># Re-open the file and let codecs detect the BOM</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;non-native-encoded.txt&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-16&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">decoded_text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Decoded:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">decoded_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since the first two bytes of the file are used for byte order
+detection, they are not included in the data returned by <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_bom_detection.py
+
+Raw    : feff 0070 0069 003a 0020 03c0
+Decoded: u&#39;pi: \u03c0&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>The previous sections pointed out the need to know the encoding being
+used when reading and writing Unicode files.  Setting the encoding
+correctly is important for two reasons.  If the encoding is configured
+incorrectly while reading from a file, the data will be interpreted
+wrong and may be corrupted or simply fail to decode.  Not all Unicode
+characters can be represented in all encodings, so if the wrong
+encoding is used while writing an error will be generated and data may
+be lost.</p>
+<p><a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> uses the same five error handling options that are
+provided by the <tt class="xref py py-func docutils literal"><span class="pre">encode()</span></tt> method of <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> and the
+<tt class="xref py py-func docutils literal"><span class="pre">decode()</span></tt> method of <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Error Mode</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">strict</span></tt></td>
+<td>Raises an exception if the data cannot be converted.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">replace</span></tt></td>
+<td>Substitutes a special marker character for data that cannot be encoded.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">ignore</span></tt></td>
+<td>Skips the data.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">xmlcharrefreplace</span></tt></td>
+<td>XML character (encoding only)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">backslashreplace</span></tt></td>
+<td>escape sequence (encoding only)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="encoding-errors">
+<h3>Encoding Errors<a class="headerlink" href="#encoding-errors" title="Permalink to this headline">¶</a></h3>
+<p>The most common error condition is receiving a
+<a class="reference internal" href="../exceptions/index.html#exceptions-unicodeerror"><em>UnicodeEncodeError</em></a> when writing
+Unicode data to an ASCII output stream, such as a regular file or
+<a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stdout</em></a>.  This sample program can be used
+to experiment with the different error handling modes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">error_handling</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: </span><span class="se">\u03c0</span><span class="s">&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c"># Save the data, encoded as ASCII, using the error</span>
+    <span class="c"># handling mode specified on the command line.</span>
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;encode_error.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span>
+                     <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;ascii&#39;</span><span class="p">,</span>
+                     <span class="n">errors</span><span class="o">=</span><span class="n">error_handling</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        
+<span class="k">except</span> <span class="ne">UnicodeEncodeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+    
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># If there was no error writing to the file,</span>
+    <span class="c"># show what it contains.</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;encode_error.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;File contents:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>While <tt class="docutils literal"><span class="pre">strict</span></tt> mode is safest for ensuring your application
+explicitly sets the correct encoding for all I/O operations, it can
+lead to program crashes when an exception is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encode_error.py strict
+
+ERROR: &#39;ascii&#39; codec can&#39;t encode character u&#39;\u03c0&#39; in position 4: ordinal not in range(128)
+</pre></div>
+</div>
+<p>Some of the other error modes are more flexible.  For example,
+<tt class="docutils literal"><span class="pre">replace</span></tt> ensures that no error is raised, at the expense of
+possibly losing data that cannot be converted to the requested
+encoding.  The Unicode character for pi still cannot be encoded in
+ASCII, but instead of raising an exception the character is replaced
+with <tt class="docutils literal"><span class="pre">?</span></tt> in the output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encode_error.py replace
+
+File contents: &#39;pi: ?&#39;
+</pre></div>
+</div>
+<p>To skip over problem data entirely, use <tt class="docutils literal"><span class="pre">ignore</span></tt>.  Any data that
+cannot be encoded is simply discarded.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encode_error.py ignore
+
+File contents: &#39;pi: &#39;
+</pre></div>
+</div>
+<p>There are two lossless error handling options, both of which replace
+the character with an alternate representation defined by a standard
+separate from the encoding.  <tt class="docutils literal"><span class="pre">xmlcharrefreplace</span></tt> uses an XML
+character reference as a substitute (the list of character references
+is specified in the W3C <a class="reference external" href="http://www.w3.org/TR/xml-entity-names/">XML Entity Definitions for Characters</a>).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encode_error.py xmlcharrefreplace
+
+File contents: &#39;pi: &amp;#960;&#39;
+</pre></div>
+</div>
+<p>The other lossless error handling scheme is <tt class="docutils literal"><span class="pre">backslashreplace</span></tt> which
+produces an output format like the value you get when you print the
+<tt class="xref py py-func docutils literal"><span class="pre">repr()</span></tt> of a <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> object.  Unicode characters are
+replaced with <tt class="docutils literal"><span class="pre">\u</span></tt> followed by the hexadecimal value of the code
+point.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encode_error.py backslashreplace
+
+File contents: &#39;pi: \\u03c0&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="decoding-errors">
+<h3>Decoding Errors<a class="headerlink" href="#decoding-errors" title="Permalink to this headline">¶</a></h3>
+<p>It is also possible to see errors when decoding data, especially if
+the wrong encoding is used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="n">error_handling</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: </span><span class="se">\u03c0</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Original     :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c"># Save the data with one encoding</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;decode_error.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-16&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c"># Dump the bytes from the file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;decode_error.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;File contents:&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># Try to read the data with the wrong encoding</span>
+<span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;decode_error.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span>
+                 <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span>
+                 <span class="n">errors</span><span class="o">=</span><span class="n">error_handling</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Read         :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As with encoding, <tt class="docutils literal"><span class="pre">strict</span></tt> error handling mode raises an exception
+if the byte stream cannot be properly decoded.  In this case, a
+<a class="reference internal" href="../exceptions/index.html#exceptions-unicodeerror"><em>UnicodeDecodeError</em></a> results from
+trying to convert part of the UTF-16 BOM to a character using the
+UTF-8 decoder.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_decode_error.py strict
+
+Original     : u&#39;pi: \u03c0&#39;
+File contents: ff fe 70 00 69 00 3a 00 20 00 c0 03
+ERROR: &#39;utf8&#39; codec can&#39;t decode byte 0xff in position 0: invalid start byte
+</pre></div>
+</div>
+<p>Switching to <tt class="docutils literal"><span class="pre">ignore</span></tt> causes the decoder to skip over the invalid
+bytes.  The result is still not quite what is expected, though, since
+it includes embedded null bytes.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_decode_error.py ignore
+
+Original     : u&#39;pi: \u03c0&#39;
+File contents: ff fe 70 00 69 00 3a 00 20 00 c0 03
+Read         : u&#39;p\x00i\x00:\x00 \x00\x03&#39;
+</pre></div>
+</div>
+<p>In <tt class="docutils literal"><span class="pre">replace</span></tt> mode invalid bytes are replaced with <tt class="docutils literal"><span class="pre">\uFFFD</span></tt>, the
+official Unicode replacement character, which looks like a diamond
+with a black background containing a white question mark (�).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_decode_error.py replace
+
+Original     : u&#39;pi: \u03c0&#39;
+File contents: ff fe 70 00 69 00 3a 00 20 00 c0 03
+Read         : u&#39;\ufffd\ufffdp\x00i\x00:\x00 \x00\ufffd\x03&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="standard-input-and-output-streams">
+<h2>Standard Input and Output Streams<a class="headerlink" href="#standard-input-and-output-streams" title="Permalink to this headline">¶</a></h2>
+<p>The most common cause of <a class="reference internal" href="../exceptions/index.html#exceptions-unicodeerror"><em>UnicodeEncodeError</em></a> exceptions is code that tries to print
+<tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> data to the console or a Unix pipeline when
+<a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stdout</em></a> is not configured with an
+encoding.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+
+<span class="c"># Printing to stdout may cause an encoding error</span>
+<span class="k">print</span> <span class="s">&#39;Default encoding:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">encoding</span>
+<span class="k">print</span> <span class="s">&#39;TTY:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">isatty</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">text</span>
+</pre></div>
+</div>
+<p>Problems with the default encoding of the standard I/O channels can be
+difficult to debug because the program works as expected when the
+output goes to the console, but cause encoding errors when it is used
+as part of a pipeline and the output includes Unicode characters above
+the ASCII range.  This difference in behavior is caused by Python&#8217;s
+initialization code, which sets the default encoding for each standard
+I/O channel <em>only if</em> the channel is connected to a terminal
+(<tt class="xref py py-func docutils literal"><span class="pre">isatty()</span></tt> returns <tt class="docutils literal"><span class="pre">True</span></tt>).  If there is no terminal, Python
+assumes the program will configure the encoding explicitly, and leaves
+the I/O channel alone.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_stdout.py
+Default encoding: utf-8
+TTY: True
+pi: π
+
+$ python codecs_stdout.py | cat -
+Default encoding: None
+TTY: False
+Traceback (most recent call last):
+  File &quot;codecs_stdout.py&quot;, line 18, in &lt;module&gt;
+    print text
+UnicodeEncodeError: &#39;ascii&#39; codec can&#39;t encode character u&#39;\u03c0&#39; in
+ position 4: ordinal not in range(128)
+</pre></div>
+</div>
+<p>To explicitly set the encoding on the standard output channel, use
+<tt class="xref py py-func docutils literal"><span class="pre">getwriter()</span></tt> to get a stream encoder class for a specific
+encoding.  Instantiate the class, passing <tt class="docutils literal"><span class="pre">sys.stdout</span></tt> as the only
+argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+
+<span class="c"># Wrap sys.stdout with a writer that knows how to handle encoding</span>
+<span class="c"># Unicode data.</span>
+<span class="n">wrapped_stdout</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="n">wrapped_stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;Via write: &#39;</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="c"># Replace sys.stdout with a writer</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">wrapped_stdout</span>
+
+<span class="k">print</span> <span class="s">u&#39;Via print:&#39;</span><span class="p">,</span> <span class="n">text</span>
+</pre></div>
+</div>
+<p>Writing to the wrapped version of <tt class="docutils literal"><span class="pre">sys.stdout</span></tt> passes the Unicode
+text through an encoder before sending the encoded bytes to stdout.
+Replacing <tt class="docutils literal"><span class="pre">sys.stdout</span></tt> means that any code used by your application
+that prints to standard output will be able to take advantage of the
+encoding writer.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_stdout_wrapped.py
+
+Via write: pi: π
+Via print: pi: π
+</pre></div>
+</div>
+<p>The next problem to solve is how to know which encoding should be
+used.  The proper encoding varies based on location, language, and
+user or system configuration, so hard-coding a fixed value is not a
+good idea.  It would also be annoying for a user to need to pass
+explicit arguments to every program setting the input and output
+encodings.  Fortunately, there is a global way to get a reasonable
+default encoding, using <a class="reference internal" href="../locale/index.html#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+
+<span class="c"># Configure locale from the user&#39;s environment settings.</span>
+<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c"># Wrap stdout with an encoding-aware writer.</span>
+<span class="n">lang</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">getdefaultlocale</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Locale encoding    :&#39;</span><span class="p">,</span> <span class="n">encoding</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="n">encoding</span><span class="p">)(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;With wrapped stdout:&#39;</span><span class="p">,</span> <span class="n">text</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">getdefaultlocale()</span></tt> returns the language and preferred encoding
+based on the system and user configuration settings in a form that can
+be used with <tt class="xref py py-func docutils literal"><span class="pre">getwriter()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_stdout_locale.py
+
+Locale encoding    : UTF-8
+With wrapped stdout: pi: π
+</pre></div>
+</div>
+<p>The encoding also needs to be set up when working with <a class="reference internal" href="../sys/runtime.html#sys-input-output"><em>sys.stdin</em></a>.  Use <tt class="xref py py-func docutils literal"><span class="pre">getreader()</span></tt> to get a reader capable of
+decoding the input bytes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Configure locale from the user&#39;s environment settings.</span>
+<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c"># Wrap stdin with an encoding-aware reader.</span>
+<span class="n">lang</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">getdefaultlocale</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdin</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getreader</span><span class="p">(</span><span class="n">encoding</span><span class="p">)(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;From stdin:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Reading from the wrapped handle returns <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> objects
+instead of <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> instances.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_stdout_locale.py | python codecs_stdin.py
+
+From stdin: u&#39;Locale encoding    : UTF-8\nWith wrapped stdout: pi: \u03c0\n&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-communication">
+<h2>Network Communication<a class="headerlink" href="#network-communication" title="Permalink to this headline">¶</a></h2>
+<p>Network sockets are also byte-streams, and so Unicode data must be
+encoded into bytes before it is written to a socket.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">SocketServer</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Get some bytes and echo them back to the client.</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">codecs</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="kn">import</span> <span class="nn">threading</span>
+
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># let the kernel give us a port</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">SocketServer</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">Echo</span><span class="p">)</span>
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span> <span class="c"># find out what port we were given</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="c"># don&#39;t hang on exit</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c"># Connect to the server</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+    <span class="c"># Send the data</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+    <span class="n">len_sent</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c"># Receive a response</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">len_sent</span><span class="p">)</span>
+    <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="c"># Clean up</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You could encode the data explicitly, before sending it, but miss one
+call to <tt class="xref py py-func docutils literal"><span class="pre">send()</span></tt> and your program would fail with an encoding
+error.</p>
+<div class="highlight-python"><div class="highlight"><pre>   $ python codecs_socket_fail.py
+   Traceback (most recent call last):
+     File &quot;codecs_socket_fail.py&quot;, line 43, in &lt;module&gt;
+       len_sent = s.send(text)
+   UnicodeEncodeError: &#39;ascii&#39; codec can&#39;t encode character u&#39;\u03c0&#39; in
+position 4: ordinal not in range(128)
+</pre></div>
+</div>
+<p>By using <tt class="xref py py-func docutils literal"><span class="pre">makefile()</span></tt> to get a file-like handle for the socket,
+and then wrapping that with a stream-based reader or writer, you will
+be able to pass Unicode strings and know they are encoded on the way
+in to and out of the socket.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">SocketServer</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Get some bytes and echo them back to the client.  There is</span>
+        <span class="c"># no need to decode them, since they are not used.</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">PassThrough</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other</span> <span class="o">=</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Writing :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">other</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Reading :&#39;</span><span class="p">,</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">other</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">other</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">codecs</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="kn">import</span> <span class="nn">threading</span>
+
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># let the kernel give us a port</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">SocketServer</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">Echo</span><span class="p">)</span>
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span> <span class="c"># find out what port we were given</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="c"># don&#39;t hang on exit</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c"># Connect to the server</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+    <span class="c"># Wrap the socket with a reader and writer.</span>
+    <span class="n">incoming</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getreader</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)(</span><span class="n">PassThrough</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)))</span>
+    <span class="n">outgoing</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)(</span><span class="n">PassThrough</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;w&#39;</span><span class="p">)))</span>
+
+    <span class="c"># Send the data</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;Sending :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">outgoing</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">outgoing</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="c"># Receive a response</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">incoming</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Received:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="c"># Clean up</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example uses <tt class="xref py py-class docutils literal"><span class="pre">PassThrough</span></tt> to show that the data is
+encoded before being sent, and the response is decoded after it is
+received in the client.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_socket.py
+Sending : u&#39;pi: \u03c0&#39;
+Writing : &#39;pi: \xcf\x80&#39;
+Reading : &#39;pi: \xcf\x80&#39;
+Received: u&#39;pi: \u03c0&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="encoding-translation">
+<h2>Encoding Translation<a class="headerlink" href="#encoding-translation" title="Permalink to this headline">¶</a></h2>
+<p>Although most applications will work with <tt class="xref py py-class docutils literal"><span class="pre">unicode</span></tt> data
+internally, decoding or encoding it as part of an I/O operation, there
+are times when changing a file&#8217;s encoding without holding on to that
+intermediate data format is useful.  <tt class="xref py py-func docutils literal"><span class="pre">EncodedFile()</span></tt> takes an open
+file handle using one encoding and wraps it with a class that
+translates the data to another encoding as the I/O occurs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="c"># Raw version of the original data.</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s">u&#39;pi: </span><span class="se">\u03c0</span><span class="s">&#39;</span>
+
+<span class="c"># Manually encode it as UTF-8.</span>
+<span class="n">utf8</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Start as UTF-8   :&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">utf8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># Set up an output buffer, then wrap it as an EncodedFile.</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">encoded_file</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">EncodedFile</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">data_encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span>
+                                  <span class="n">file_encoding</span><span class="o">=</span><span class="s">&#39;utf-16&#39;</span><span class="p">)</span>
+<span class="n">encoded_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">utf8</span><span class="p">)</span>
+
+<span class="c"># Fetch the buffer contents as a UTF-16 encoded byte string</span>
+<span class="n">utf16</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Encoded to UTF-16:&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">utf16</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c"># Set up another buffer with the UTF-16 data for reading,</span>
+<span class="c"># and wrap it with another EncodedFile.</span>
+<span class="nb">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">utf16</span><span class="p">)</span>
+<span class="n">encoded_file</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">EncodedFile</span><span class="p">(</span><span class="nb">buffer</span><span class="p">,</span> <span class="n">data_encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span>
+                                  <span class="n">file_encoding</span><span class="o">=</span><span class="s">&#39;utf-16&#39;</span><span class="p">)</span>
+
+<span class="c"># Read the UTF-8 encoded version of the data.</span>
+<span class="n">recoded</span> <span class="o">=</span> <span class="n">encoded_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Back to UTF-8    :&#39;</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">recoded</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example shows reading from and writing to separate handles
+returned by <tt class="xref py py-func docutils literal"><span class="pre">EncodedFile()</span></tt>.  No matter whether the handle is used
+for reading or writing, the <em>file_encoding</em> always refers to the
+encoding in use by the open file handle passed as the first argument,
+and <em>data_encoding</em> value refers to the encoding in use by the data
+passing through the <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">write()</span></tt> calls.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_encodedfile.py
+
+Start as UTF-8   : 70 69 3a 20 cf 80
+Encoded to UTF-16: fffe 7000 6900 3a00 2000 c003
+Back to UTF-8    : 70 69 3a 20 cf 80
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-unicode-encodings">
+<h2>Non-Unicode Encodings<a class="headerlink" href="#non-unicode-encodings" title="Permalink to this headline">¶</a></h2>
+<p>Although most of the earlier examples use Unicode encodings,
+<a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> can be used for many other data translations.  For
+example, Python includes codecs for working with base-64, bzip2,
+ROT-13, ZIP, and other data formats.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="nb">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;rot_13&#39;</span><span class="p">)(</span><span class="nb">buffer</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+
+<span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Original:&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;ROT-13  :&#39;</span><span class="p">,</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Any transformation that can be expressed as a function taking a single
+input argument and returning a byte or Unicode string can be
+registered as a codec.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_rot13.py
+
+Original: abcdefghijklmnopqrstuvwxyz
+ROT-13  : nopqrstuvwxyzabcdefghijklm
+</pre></div>
+</div>
+<p>Using <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> to wrap a data stream provides a simpler interface
+than working directly with <a class="reference internal" href="../zlib/index.html#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="nb">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;zlib&#39;</span><span class="p">)(</span><span class="nb">buffer</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;abcdefghijklmnopqrstuvwxyz</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">*</span> <span class="mi">50</span>
+
+<span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Original length :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">compressed_data</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;ZIP compressed  :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed_data</span><span class="p">)</span>
+
+<span class="nb">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">compressed_data</span><span class="p">)</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getreader</span><span class="p">(</span><span class="s">&#39;zlib&#39;</span><span class="p">)(</span><span class="nb">buffer</span><span class="p">)</span>
+
+<span class="n">first_line</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Read first line :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">first_line</span><span class="p">)</span>
+
+<span class="n">uncompressed_data</span> <span class="o">=</span> <span class="n">first_line</span> <span class="o">+</span> <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Uncompressed    :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">uncompressed_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Same            :&#39;</span><span class="p">,</span> <span class="n">text</span> <span class="o">==</span> <span class="n">uncompressed_data</span>
+</pre></div>
+</div>
+<p>Not all of the compression or encoding systems support reading a
+portion of the data through the stream interface using
+<a class="reference internal" href="../readline/index.html#module-readline" title="readline: Interface to the GNU readline library"><tt class="xref py py-func docutils literal"><span class="pre">readline()</span></tt></a> or <tt class="xref py py-func docutils literal"><span class="pre">read()</span></tt> because they need to find the end of
+a compressed segment to expand it.  If your program cannot hold the
+entire uncompressed data set in memory, use the incremental access
+features of the compression library instead of <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_zlib.py
+
+Original length : 1350
+ZIP compressed  : 48
+Read first line : &#39;abcdefghijklmnopqrstuvwxyz\n&#39;
+Uncompressed    : 1350
+Same            : True
+</pre></div>
+</div>
+</div>
+<div class="section" id="incremental-encoding">
+<h2>Incremental Encoding<a class="headerlink" href="#incremental-encoding" title="Permalink to this headline">¶</a></h2>
+<p>Some of the encodings provided, especially <tt class="docutils literal"><span class="pre">bz2</span></tt> and <tt class="docutils literal"><span class="pre">zlib</span></tt>, may
+dramatically change the length of the data stream as they work on it.
+For large data sets, these encodings operate better incrementally,
+working on one small chunk of data at a time.  The
+<tt class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></tt> API is
+designed for this purpose.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">codecs_to_hex</span> <span class="kn">import</span> <span class="n">to_hex</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;abcdefghijklmnopqrstuvwxyz</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">repetitions</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="k">print</span> <span class="s">&#39;Text length :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Repetitions :&#39;</span><span class="p">,</span> <span class="n">repetitions</span>
+<span class="k">print</span> <span class="s">&#39;Expected len:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">*</span> <span class="n">repetitions</span>
+
+<span class="c"># Encode the text several times build up a large amount of data</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getincrementalencoder</span><span class="p">(</span><span class="s">&#39;bz2&#39;</span><span class="p">)()</span>
+<span class="n">encoded</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Encoding:&#39;</span><span class="p">,</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repetitions</span><span class="p">):</span>
+    <span class="n">en_c</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">final</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">repetitions</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">en_c</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Encoded : {} bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">en_c</span><span class="p">))</span>
+        <span class="n">encoded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">en_c</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+    
+<span class="nb">bytes</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Total encoded length:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">bytes</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="c"># Decode the byte string one byte at a time</span>
+<span class="n">decoder</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getincrementaldecoder</span><span class="p">(</span><span class="s">&#39;bz2&#39;</span><span class="p">)()</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">print</span> <span class="s">&#39;Decoding:&#39;</span><span class="p">,</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">bytes</span><span class="p">):</span>
+    <span class="n">final</span><span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">decoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">final</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Decoded : {} characters&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="k">print</span> <span class="s">&#39;Decoding:&#39;</span><span class="p">,</span>
+        <span class="n">decoded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+<span class="k">print</span>
+
+<span class="n">restored</span> <span class="o">=</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decoded</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Total uncompressed length:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">restored</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each time data is passed to the encoder or decoder its internal state
+is updated.  When the state is consistent (as defined by the codec),
+data is returned and the state resets.  Until that point, calls to
+<tt class="xref py py-func docutils literal"><span class="pre">encode()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">decode()</span></tt> will not return any data.  When the
+last bit of data is passed in, the argument <em>final</em> should be set to
+<tt class="docutils literal"><span class="pre">True</span></tt> so the codec knows to flush any remaining buffered data.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_incremental_bz2.py
+
+Text length : 27
+Repetitions : 50
+Expected len: 1350
+
+Encoding:.................................................
+Encoded : 99 bytes
+
+Total encoded length: 99
+
+Decoding:............................................................
+............................
+Decoded : 1350 characters
+Decoding:..........
+
+Total uncompressed length: 1350
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-your-own-encoding">
+<h2>Defining Your Own Encoding<a class="headerlink" href="#defining-your-own-encoding" title="Permalink to this headline">¶</a></h2>
+<p>Since Python comes with a large number of standard codecs already, it
+is unlikely that you will need to define your own.  If you do, there
+are several base classes in <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> to make the process easier.</p>
+<p>The first step is to understand the nature of the transformation
+described by the encoding.  For example, an &#8220;invertcaps&#8221; encoding
+converts uppercase letters to lowercase, and lowercase letters to
+uppercase.  Here is a simple definition of an encoding function that
+performs this transformation on an input string:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="k">def</span> <span class="nf">invertcaps</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return new string with the case of all letters switched.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span>
+                    <span class="k">else</span> <span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+                    <span class="k">else</span> <span class="n">c</span>
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">text</span>
+                    <span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">invertcaps</span><span class="p">(</span><span class="s">&#39;ABC.def&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">invertcaps</span><span class="p">(</span><span class="s">&#39;abc.DEF&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the encoder and decoder are the same function (as with
+<tt class="docutils literal"><span class="pre">ROT-13</span></tt>).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_invertcaps.py
+
+abc.DEF
+ABC.def
+</pre></div>
+</div>
+<p>Although it is easy to understand, this implementation is not
+efficient, especially for very large text strings.  Fortunately,
+<a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> includes some helper functions for creating <em>character
+map</em> based codecs such as invertcaps.  A character map encoding is
+made up of two dictionaries.  The <em>encoding map</em> converts character
+values from the input string to byte values in the output and the
+<em>decoding map</em> goes the other way.  Create your decoding map first,
+and then use <tt class="xref py py-func docutils literal"><span class="pre">make_encoding_map()</span></tt> to convert it to an encoding
+map.  The C functions <tt class="xref py py-func docutils literal"><span class="pre">charmap_encode()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">charmap_decode()</span></tt> use the maps to convert their input data
+efficiently.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="c"># Map every character to itself</span>
+<span class="n">decoding_map</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">make_identity_dict</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span>
+
+<span class="c"># Make a list of pairs of ordinal values for the lower and upper case</span>
+<span class="c"># letters</span>
+<span class="n">pairs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">([</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">],</span>
+            <span class="p">[</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">])</span>
+
+<span class="c"># Modify the mapping to convert upper to lower and lower to upper.</span>
+<span class="n">decoding_map</span><span class="o">.</span><span class="n">update</span><span class="p">(</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">decoding_map</span><span class="o">.</span><span class="n">update</span><span class="p">(</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="c"># Create a separate encoding map.</span>
+<span class="n">encoding_map</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">make_encoding_map</span><span class="p">(</span><span class="n">decoding_map</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_encode</span><span class="p">(</span><span class="s">&#39;abc.DEF&#39;</span><span class="p">,</span> <span class="s">&#39;strict&#39;</span><span class="p">,</span> <span class="n">encoding_map</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_decode</span><span class="p">(</span><span class="s">&#39;abc.DEF&#39;</span><span class="p">,</span> <span class="s">&#39;strict&#39;</span><span class="p">,</span> <span class="n">decoding_map</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">encoding_map</span> <span class="o">==</span> <span class="n">decoding_map</span>
+    
+</pre></div>
+</div>
+<p>Although the encoding and decoding maps for invertcaps are the same,
+that may not always be the case.  <tt class="xref py py-func docutils literal"><span class="pre">make_encoding_map()</span></tt> detects
+situations where more than one input character is encoded to the same
+output byte and replaces the encoding value with <tt class="docutils literal"><span class="pre">None</span></tt> to mark the
+encoding as undefined.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_invertcaps_charmap.py
+
+(&#39;ABC.def&#39;, 7)
+(u&#39;ABC.def&#39;, 7)
+True
+</pre></div>
+</div>
+<p>The character map encoder and decoder support all of the standard
+error handling methods described earlier, so you do not need to do any
+extra work to comply with that part of the API.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">codecs_invertcaps_charmap</span> <span class="kn">import</span> <span class="n">encoding_map</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;pi: π&#39;</span>
+
+<span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="s">&#39;replace&#39;</span><span class="p">,</span> <span class="s">&#39;strict&#39;</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_encode</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">encoding_map</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">UnicodeEncodeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;{:7}: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">encoded</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because the Unicode code point for <tt class="docutils literal"><span class="pre">π</span></tt> is not in the encoding map,
+the strict error handling mode raises an exception.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_invertcaps_error.py
+
+ignore : (&#39;PI: &#39;, 5)
+replace: (&#39;PI: ?&#39;, 5)
+strict : &#39;charmap&#39; codec can&#39;t encode character u&#39;\u03c0&#39; in position
+ 4: character maps to &lt;undefined&gt;
+</pre></div>
+</div>
+<p>After that the encoding and decoding maps are defined, you need to set
+up a few additional classes and register the encoding.
+<tt class="xref py py-func docutils literal"><span class="pre">register()</span></tt> adds a search function to the registry so that when a
+user wants to use your encoding <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> can locate it.  The
+search function must take a single string argument with the name of
+the encoding, and return a <tt class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></tt> object if it knows the
+encoding, or <tt class="docutils literal"><span class="pre">None</span></tt> if it does not.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">encodings</span>
+
+<span class="k">def</span> <span class="nf">search1</span><span class="p">(</span><span class="n">encoding</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;search1: Searching for:&#39;</span><span class="p">,</span> <span class="n">encoding</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">search2</span><span class="p">(</span><span class="n">encoding</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;search2: Searching for:&#39;</span><span class="p">,</span> <span class="n">encoding</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+<span class="n">codecs</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">search1</span><span class="p">)</span>
+<span class="n">codecs</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">search2</span><span class="p">)</span>
+
+<span class="n">utf8</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;UTF-8:&#39;</span><span class="p">,</span> <span class="n">utf8</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">&#39;no-such-encoding&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">LookupError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<p>You can register multiple search functions, and each will be called in
+turn until one returns a <tt class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></tt> or the list is exhausted.
+The internal search function registered by <a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> knows how to
+load the standard codecs such as UTF-8 from <tt class="xref py py-mod docutils literal"><span class="pre">encodings</span></tt>, so those
+names will never be passed to your search function.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_register.py
+
+UTF-8: &lt;codecs.CodecInfo object for encoding utf-8 at 0x100452ae0&gt;
+search1: Searching for: no-such-encoding
+search2: Searching for: no-such-encoding
+ERROR: unknown encoding: no-such-encoding
+</pre></div>
+</div>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></tt> instance returned by the search function tells
+<a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> how to encode and decode using all of the different
+mechanisms supported: stateless, incremental, and stream.
+<a class="reference internal" href="#module-codecs" title="codecs: String encoding and decoding."><tt class="xref py py-mod docutils literal"><span class="pre">codecs</span></tt></a> includes base classes that make setting up a character
+map encoding easy.  This example puts all of the pieces together to
+register a search function that returns a <tt class="xref py py-class docutils literal"><span class="pre">CodecInfo</span></tt> instance
+configured for the invertcaps codec.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+
+<span class="kn">from</span> <span class="nn">codecs_invertcaps_charmap</span> <span class="kn">import</span> <span class="n">encoding_map</span><span class="p">,</span> <span class="n">decoding_map</span>
+
+<span class="c"># Stateless encoder/decoder</span>
+
+<span class="k">class</span> <span class="nc">InvertCapsCodec</span><span class="p">(</span><span class="n">codecs</span><span class="o">.</span><span class="n">Codec</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">&#39;strict&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_encode</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">encoding_map</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">&#39;strict&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_decode</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">decoding_map</span><span class="p">)</span>
+
+<span class="c"># Incremental forms</span>
+
+<span class="k">class</span> <span class="nc">InvertCapsIncrementalEncoder</span><span class="p">(</span><span class="n">codecs</span><span class="o">.</span><span class="n">IncrementalEncoder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_encode</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="n">encoding_map</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">InvertCapsIncrementalDecoder</span><span class="p">(</span><span class="n">codecs</span><span class="o">.</span><span class="n">IncrementalDecoder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">charmap_decode</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="n">decoding_map</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># Stream reader and writer</span>
+
+<span class="k">class</span> <span class="nc">InvertCapsStreamReader</span><span class="p">(</span><span class="n">InvertCapsCodec</span><span class="p">,</span> <span class="n">codecs</span><span class="o">.</span><span class="n">StreamReader</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">InvertCapsStreamWriter</span><span class="p">(</span><span class="n">InvertCapsCodec</span><span class="p">,</span> <span class="n">codecs</span><span class="o">.</span><span class="n">StreamWriter</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c"># Register the codec search function</span>
+
+<span class="k">def</span> <span class="nf">find_invertcaps</span><span class="p">(</span><span class="n">encoding</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the codec for &#39;invertcaps&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s">&#39;invertcaps&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">codecs</span><span class="o">.</span><span class="n">CodecInfo</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s">&#39;invertcaps&#39;</span><span class="p">,</span>
+            <span class="n">encode</span><span class="o">=</span><span class="n">InvertCapsCodec</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">,</span>
+            <span class="n">decode</span><span class="o">=</span><span class="n">InvertCapsCodec</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">,</span>
+            <span class="n">incrementalencoder</span><span class="o">=</span><span class="n">InvertCapsIncrementalEncoder</span><span class="p">,</span>
+            <span class="n">incrementaldecoder</span><span class="o">=</span><span class="n">InvertCapsIncrementalDecoder</span><span class="p">,</span>
+            <span class="n">streamreader</span><span class="o">=</span><span class="n">InvertCapsStreamReader</span><span class="p">,</span>
+            <span class="n">streamwriter</span><span class="o">=</span><span class="n">InvertCapsStreamWriter</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+<span class="n">codecs</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">find_invertcaps</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c"># Stateless encoder/decoder</span>
+    <span class="n">encoder</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getencoder</span><span class="p">(</span><span class="s">&#39;invertcaps&#39;</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;abc.DEF&#39;</span>
+    <span class="n">encoded_text</span><span class="p">,</span> <span class="n">consumed</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Encoder converted &quot;{}&quot; to &quot;{}&quot;, consuming {} characters&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">text</span><span class="p">,</span> <span class="n">encoded_text</span><span class="p">,</span> <span class="n">consumed</span><span class="p">)</span>
+
+    <span class="c"># Stream writer</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;invertcaps&#39;</span><span class="p">)(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;StreamWriter for stdout: &#39;</span><span class="p">,</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;abc.DEF&#39;</span><span class="p">)</span>
+    <span class="k">print</span>
+
+    <span class="c"># Incremental decoder</span>
+    <span class="n">decoder_factory</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getincrementaldecoder</span><span class="p">(</span><span class="s">&#39;invertcaps&#39;</span><span class="p">)</span>
+    <span class="n">decoder</span> <span class="o">=</span> <span class="n">decoder_factory</span><span class="p">()</span>
+    <span class="n">decoded_text_parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">encoded_text</span><span class="p">:</span>
+        <span class="n">decoded_text_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">decoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+    <span class="n">decoded_text_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">decoder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">final</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+    <span class="n">decoded_text</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decoded_text_parts</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;IncrementalDecoder converted &quot;{}&quot; to &quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">encoded_text</span><span class="p">,</span> <span class="n">decoded_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The stateless encoder/decoder base class is <tt class="xref py py-class docutils literal"><span class="pre">Codec</span></tt>.  Override
+<tt class="xref py py-func docutils literal"><span class="pre">encode()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">decode()</span></tt> with your implementation (in this
+case, calling <tt class="xref py py-func docutils literal"><span class="pre">charmap_encode()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">charmap_decode()</span></tt>
+respectively).  Each method must return a tuple containing the
+transformed data and the number of the input bytes or characters
+consumed.  Conveniently, <tt class="xref py py-func docutils literal"><span class="pre">charmap_encode()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">charmap_decode()</span></tt> already return that information.</p>
+<p><tt class="xref py py-class docutils literal"><span class="pre">IncrementalEncoder</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">IncrementalDecoder</span></tt> serve as
+base classes for the incremental interfaces.  The <tt class="xref py py-func docutils literal"><span class="pre">encode()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">decode()</span></tt> methods of the incremental classes are defined in such
+a way that they only return the actual transformed data.  Any
+information about buffering is maintained as internal state.  The
+invertcaps encoding does not need to buffer data (it uses a one-to-one
+mapping).  For encodings that produce a different amount of output
+depending on the data being processed, such as compression algorithms,
+<tt class="xref py py-class docutils literal"><span class="pre">BufferedIncrementalEncoder</span></tt> and
+<tt class="xref py py-class docutils literal"><span class="pre">BufferedIncrementalDecoder</span></tt> are more appropriate base classes,
+since they manage the unprocessed portion of the input for you.</p>
+<p><tt class="xref py py-class docutils literal"><span class="pre">StreamReader</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">StreamWriter</span></tt> need <tt class="xref py py-func docutils literal"><span class="pre">encode()</span></tt>
+and <tt class="xref py py-func docutils literal"><span class="pre">decode()</span></tt> methods, too, and since they are expected to return
+the same value as the version from <tt class="xref py py-class docutils literal"><span class="pre">Codec</span></tt> you can use multiple
+inheritance for the implementation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python codecs_invertcaps_register.py
+
+Encoder converted &quot;abc.DEF&quot; to &quot;ABC.def&quot;, consuming 7 characters
+StreamWriter for stdout: ABC.def
+IncrementalDecoder converted &quot;ABC.def&quot; to &quot;abc.DEF&quot;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/codecs.html">codecs</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../locale/index.html#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a></dt>
+<dd>Accessing and managing the localization-based configuration
+settings and behaviors.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">io</span></tt></dt>
+<dd>The <tt class="xref py py-mod docutils literal"><span class="pre">io</span></tt> module includes file and stream wrappers that
+handle encoding and decoding, too.</dd>
+<dt><a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a></dt>
+<dd>For a more detailed example of an echo server, see the
+<a class="reference internal" href="../SocketServer/index.html#module-SocketServer" title="SocketServer: Creating network servers."><tt class="xref py py-mod docutils literal"><span class="pre">SocketServer</span></tt></a> module.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">encodings</span></tt></dt>
+<dd>Package in the standard library containing the encoder/decoder
+implementations provided by Python..</dd>
+<dt><a class="reference external" href="http://docs.python.org/howto/unicode">Unicode HOWTO</a></dt>
+<dd>The official guide for using Unicode with Python 2.x.</dd>
+<dt><a class="reference external" href="http://effbot.org/zone/unicode-objects.htm">Python Unicode Objects</a></dt>
+<dd>Fredrik Lundh&#8217;s article about using non-ASCII character sets
+in Python 2.0.</dd>
+<dt><a class="reference external" href="http://evanjones.ca/python-utf8.html">How to Use UTF-8 with Python</a></dt>
+<dd>Evan Jones&#8217; quick guide to working with Unicode, including XML
+data and the Byte-Order Marker.</dd>
+<dt><a class="reference external" href="http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode">On the Goodness of Unicode</a></dt>
+<dd>Introduction to internationalization and Unicode by Tim Bray.</dd>
+<dt><a class="reference external" href="http://www.tbray.org/ongoing/When/200x/2003/04/13/Strings">On Character Strings</a></dt>
+<dd>A look at the history of string processing in programming
+languages, by Tim Bray.</dd>
+<dt><a class="reference external" href="http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF">Characters vs. Bytes</a></dt>
+<dd>Part one of Tim Bray&#8217;s &#8220;essay on modern character string
+processing for computer programmers.&#8221;  This installment covers
+in-memory representation of text in formats other than ASCII
+bytes.</dd>
+<dt><a class="reference external" href="http://www.joelonsoftware.com/articles/Unicode.html">The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)</a></dt>
+<dd>An introduction to Unicode by Joel Spolsky.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Endianness">Endianness</a></dt>
+<dd>Explanation of endianness in Wikipedia.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../difflib/index.html" title="difflib – Compare sequences"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../string_services.html" title="String Services"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" >String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

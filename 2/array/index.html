@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>array &#8211; Sequence of fixed-type data - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="datetime – Date/time value manipulation" href="../datetime/index.html" />
+    <link rel="prev" title="Data Types" href="../data_types.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">array &#8211; Sequence of fixed-type data</a><ul>
+<li><a class="reference internal" href="#array-initialization">array Initialization</a></li>
+<li><a class="reference internal" href="#manipulating-arrays">Manipulating Arrays</a></li>
+<li><a class="reference internal" href="#arrays-and-files">Arrays and Files</a></li>
+<li><a class="reference internal" href="#alternate-byte-ordering">Alternate Byte Ordering</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../data_types.html" title="previous chapter"><strong>Previous:</strong> Data Types</a><br/>
+          <a href="../datetime/index.html" title="next chapter"><strong>Next:</strong> datetime &#8211; Date/time value manipulation</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/array/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../datetime/index.html" title="datetime – Date/time value manipulation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../data_types.html" title="Data Types"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-array">
+<span id="array-sequence-of-fixed-type-data"></span><h1>array &#8211; Sequence of fixed-type data<a class="headerlink" href="#module-array" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Manage sequences of fixed-type numerical data efficiently.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-array" title="array: Manage sequences of fixed-type numerical data efficiently."><tt class="xref py py-mod docutils literal"><span class="pre">array</span></tt></a> module defines a sequence data structure that looks
+very much like a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> except that all of the members have to
+be of the same type.  The types supported are all numeric or other
+fixed-size primitive types such as bytes.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="33%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Type</th>
+<th class="head">Minimum size (bytes)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">c</span></tt></td>
+<td>character</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">b</span></tt></td>
+<td>int</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">B</span></tt></td>
+<td>int</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">u</span></tt></td>
+<td>Unicode character</td>
+<td>2 or 4 (build-dependent)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">h</span></tt></td>
+<td>int</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">H</span></tt></td>
+<td>int</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">i</span></tt></td>
+<td>int</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">I</span></tt></td>
+<td>long</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td>int</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">L</span></tt></td>
+<td>long</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">f</span></tt></td>
+<td>float</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">d</span></tt></td>
+<td>float</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="array-initialization">
+<h2>array Initialization<a class="headerlink" href="#array-initialization" title="Permalink to this headline">¶</a></h2>
+<p>An <a class="reference internal" href="#module-array" title="array: Manage sequences of fixed-type numerical data efficiently."><tt class="xref py py-class docutils literal"><span class="pre">array</span></tt></a> is instantiated with an argument describing the type
+of data to be allowed, and possibly an initial sequence of data to
+store in the array.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&#39;This is the array.&#39;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;As string:&#39;</span><span class="p">,</span> <span class="n">s</span>
+<span class="k">print</span> <span class="s">&#39;As array :&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span> <span class="s">&#39;As hex   :&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, the array is configured to hold a sequence of bytes
+and is initialized with a simple string.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python array_string.py
+
+As string: This is the array.
+As array : array(&#39;c&#39;, &#39;This is the array.&#39;)
+As hex   : 54686973206973207468652061727261792e
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulating-arrays">
+<h2>Manipulating Arrays<a class="headerlink" href="#manipulating-arrays" title="Permalink to this headline">¶</a></h2>
+<p>An <a class="reference internal" href="#module-array" title="array: Manage sequences of fixed-type numerical data efficiently."><tt class="xref py py-class docutils literal"><span class="pre">array</span></tt></a> can be extended and otherwise manipulated in the
+same ways as other Python sequences.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">array</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;Initial :&#39;</span><span class="p">,</span> <span class="n">a</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;Extended:&#39;</span><span class="p">,</span> <span class="n">a</span>
+
+<span class="k">print</span> <span class="s">&#39;Slice   :&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;Iterator:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python array_sequence.py
+
+Initial : array(&#39;i&#39;, [0, 1, 2, 3, 4])
+Extended: array(&#39;i&#39;, [0, 1, 2, 3, 4, 0, 1, 2, 3, 4])
+Slice   : array(&#39;i&#39;, [3, 4, 0])
+Iterator: [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 0), (6, 1), (7, 2), (8, 3), (9, 4)]
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrays-and-files">
+<h2>Arrays and Files<a class="headerlink" href="#arrays-and-files" title="Permalink to this headline">¶</a></h2>
+<p>The contents of an array can be written to and read from files using
+built-in methods coded efficiently for that purpose.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;A1:&#39;</span><span class="p">,</span> <span class="n">a</span>
+
+<span class="c"># Write the array of numbers to the file</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">file</span><span class="p">)</span> <span class="c"># must pass an *actual* file</span>
+<span class="n">output</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="c"># Read the raw data</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">raw_data</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Raw Contents:&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+
+<span class="c"># Read the data into an array</span>
+<span class="nb">input</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">)</span>
+<span class="n">a2</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;A2:&#39;</span><span class="p">,</span> <span class="n">a2</span>
+</pre></div>
+</div>
+<p>This example illustrates reading the data &#8220;raw&#8221;, directly from the
+binary file, versus reading it into a new array and converting the
+bytes to the appropriate types.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python array_file.py
+
+A1: array(&#39;i&#39;, [0, 1, 2, 3, 4])
+Raw Contents: 0000000001000000020000000300000004000000
+A2: array(&#39;i&#39;, [0, 1, 2, 3, 4])
+</pre></div>
+</div>
+</div>
+<div class="section" id="alternate-byte-ordering">
+<h2>Alternate Byte Ordering<a class="headerlink" href="#alternate-byte-ordering" title="Permalink to this headline">¶</a></h2>
+<p>If the data in the array is not in the native byte order, or needs to
+be swapped before being written to a file intended for a system with a
+different byte order, it is easy to convert the entire array without
+iterating over the elements from Python.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="k">def</span> <span class="nf">to_hex</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">chars_per_item</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">itemsize</span> <span class="o">*</span> <span class="mi">2</span> <span class="c"># 2 hex digits</span>
+    <span class="n">hex_version</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">num_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_version</span><span class="p">)</span> <span class="o">/</span> <span class="n">chars_per_item</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">chars_per_item</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">chars_per_item</span>
+        <span class="k">yield</span> <span class="n">hex_version</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">a2</span><span class="o">.</span><span class="n">byteswap</span><span class="p">()</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%10s</span><span class="s"> </span><span class="si">%10s</span><span class="s"> </span><span class="si">%10s</span><span class="s"> </span><span class="si">%10s</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;A1 hex&#39;</span><span class="p">,</span> <span class="s">&#39;A1&#39;</span><span class="p">,</span> <span class="s">&#39;A2 hex&#39;</span><span class="p">,</span> <span class="s">&#39;A2&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">((</span><span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">to_hex</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">a1</span><span class="p">,</span> <span class="n">to_hex</span><span class="p">(</span><span class="n">a2</span><span class="p">),</span> <span class="n">a2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="n">values</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python array_byteswap.py
+
+    A1 hex         A1     A2 hex         A2
+---------- ---------- ---------- ----------
+  00000000          0   00000000          0
+  01000000          1   00000001   16777216
+  02000000          2   00000002   33554432
+  03000000          3   00000003   50331648
+  04000000          4   00000004   67108864
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/array.html">array</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../struct/index.html#module-struct" title="struct: Convert between strings and binary data."><tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt></a></dt>
+<dd>The struct module.</dd>
+<dt><a class="reference external" href="http://www.scipy.org">Numerical Python</a></dt>
+<dd>NumPy is a Python library for working with large datasets efficiently.</dd>
+</dl>
+<p class="last"><a class="reference internal" href="../articles/data_structures.html#article-data-structures"><em>In-Memory Data Structures</em></a></p>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../datetime/index.html" title="datetime – Date/time value manipulation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../data_types.html" title="Data Types"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

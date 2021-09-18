@@ -1,3 +1,0 @@
-This line is recognized.
-# But this line is ignored.
-And this line is processed.

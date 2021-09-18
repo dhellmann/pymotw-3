@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>In-Memory Data Structures - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Features of the Standard Library" href="index.html" />
+    <link rel="next" title="File Access" href="file_access.html" />
+    <link rel="prev" title="Data Persistence and Exchange" href="data_persistence.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">In-Memory Data Structures</a><ul>
+<li><a class="reference internal" href="#array">array</a></li>
+<li><a class="reference internal" href="#sorting">Sorting</a></li>
+<li><a class="reference internal" href="#queue">Queue</a></li>
+<li><a class="reference internal" href="#collections">collections</a></li>
+<li><a class="reference internal" href="#decoding-data">Decoding Data</a></li>
+<li><a class="reference internal" href="#custom-variations">Custom Variations</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="data_persistence.html" title="previous chapter"><strong>Previous:</strong> Data Persistence and Exchange</a><br/>
+          <a href="file_access.html" title="next chapter"><strong>Next:</strong> File Access</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/articles/data_structures.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="file_access.html" title="File Access"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="data_persistence.html" title="Data Persistence and Exchange"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Features of the Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="in-memory-data-structures">
+<span id="article-data-structures"></span><h1>In-Memory Data Structures<a class="headerlink" href="#in-memory-data-structures" title="Permalink to this headline">¶</a></h1>
+<p>Python includes several standard programming data structures as <a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html">built-in types</a> (list, tuple, dictionary, and set).  Most applications won&#8217;t need any other structures, but when they do the standard library delivers.</p>
+<div class="section" id="array">
+<h2>array<a class="headerlink" href="#array" title="Permalink to this headline">¶</a></h2>
+<p>For large amounts of data, it may be more efficient to use an <a class="reference internal" href="../array/index.html#module-array" title="array: Manage sequences of fixed-type numerical data efficiently."><tt class="xref py py-mod docutils literal"><span class="pre">array</span></tt></a> instead of a <tt class="docutils literal"><span class="pre">list</span></tt>.  Since the array is limited to a single data type, it can use a more compact memory representation than a general purpose list.  As an added benefit, arrays can be manipulated using many of the same methods as a list, so it may be possible to replaces lists with arrays in to your application without a lot of other changes.</p>
+</div>
+<div class="section" id="sorting">
+<h2>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">¶</a></h2>
+<p>If you need to maintain a sorted list as you add and remove values, check out <a class="reference internal" href="../heapq/index.html#module-heapq" title="heapq: In-place heap sort algorithm"><tt class="xref py py-mod docutils literal"><span class="pre">heapq</span></tt></a>.  By using the functions in <a class="reference internal" href="../heapq/index.html#module-heapq" title="heapq: In-place heap sort algorithm"><tt class="xref py py-mod docutils literal"><span class="pre">heapq</span></tt></a> to add or remove items from a list, you can maintain the sort order of the list with low overhead.</p>
+<p>Another option for building sorted lists or arrays is <a class="reference internal" href="../bisect/index.html#module-bisect" title="bisect: Maintains a list in sorted order without having to call sort each time an item is added to the list."><tt class="xref py py-mod docutils literal"><span class="pre">bisect</span></tt></a>.  bisect uses a binary search to find the insertion point for new items, and is an alternative to repeatedly sorting a list that changes frequently.</p>
+</div>
+<div class="section" id="queue">
+<h2>Queue<a class="headerlink" href="#queue" title="Permalink to this headline">¶</a></h2>
+<p>Although the built-in list can simulate a queue using the <tt class="docutils literal"><span class="pre">insert()</span></tt> and <tt class="docutils literal"><span class="pre">pop()</span></tt> methods, it isn&#8217;t thread-safe.  For true ordered communication between threads you should use a <a class="reference internal" href="../Queue/index.html#module-Queue" title="Queue: Provides a thread-safe FIFO implementation"><tt class="xref py py-mod docutils literal"><span class="pre">Queue</span></tt></a>.  <a class="reference internal" href="../multiprocessing/index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a> includes a version of a Queue that works between processes, making it easier to port between the modules.</p>
+</div>
+<div class="section" id="collections">
+<h2>collections<a class="headerlink" href="#collections" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../collections/index.html#module-collections" title="collections: Container data types."><tt class="xref py py-mod docutils literal"><span class="pre">collections</span></tt></a> includes implementations of several data structures that extend those found in other modules.  For example, Deque is a double-ended queue, and allows you to add or remove items from either end.  The <tt class="docutils literal"><span class="pre">defaultdict</span></tt> is a dictionary that responds with a default value if a key is missing.  And <tt class="docutils literal"><span class="pre">namedtuple</span></tt> extends the normal tuple to give each member item an attribute name in addition to a numerical index.</p>
+</div>
+<div class="section" id="decoding-data">
+<h2>Decoding Data<a class="headerlink" href="#decoding-data" title="Permalink to this headline">¶</a></h2>
+<p>If you are working with data from another application, perhaps coming from a binary file or stream of data, you will find <a class="reference internal" href="../struct/index.html#module-struct" title="struct: Convert between strings and binary data."><tt class="xref py py-mod docutils literal"><span class="pre">struct</span></tt></a> useful for decoding the data into Python&#8217;s native types for easier manipulation.</p>
+</div>
+<div class="section" id="custom-variations">
+<h2>Custom Variations<a class="headerlink" href="#custom-variations" title="Permalink to this headline">¶</a></h2>
+<p>And finally, if the available types don&#8217;t give you what you need, you may want to subclass one of the native types and customize it.  You can also start from scratch by using the abstract base classes defined in <a class="reference internal" href="../collections/index.html#module-collections" title="collections: Container data types."><tt class="xref py py-mod docutils literal"><span class="pre">collections</span></tt></a>.</p>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="file_access.html" title="File Access"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="data_persistence.html" title="Data Persistence and Exchange"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="index.html" >Features of the Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

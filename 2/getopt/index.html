@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>getopt &#8211; Command line option parsing - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Generic Operating System Services" href="../generic_os.html" />
+    <link rel="next" title="optparse – Command line option parser to replace getopt." href="../optparse/index.html" />
+    <link rel="prev" title="time – Functions for manipulating clock time" href="../time/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">getopt &#8211; Command line option parsing</a><ul>
+<li><a class="reference internal" href="#function-arguments">Function Arguments</a></li>
+<li><a class="reference internal" href="#short-form-options">Short Form Options</a></li>
+<li><a class="reference internal" href="#long-form-options">Long Form Options</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#abbreviating-long-form-options">Abbreviating Long Form Options</a></li>
+<li><a class="reference internal" href="#gnu-style-option-parsing">GNU-style Option Parsing</a></li>
+<li><a class="reference internal" href="#special-case">Special Case: <tt class="docutils literal"><span class="pre">--</span></tt></a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../time/index.html" title="previous chapter"><strong>Previous:</strong> time &#8211; Functions for manipulating clock time</a><br/>
+          <a href="../optparse/index.html" title="next chapter"><strong>Next:</strong> optparse &#8211; Command line option parser to replace getopt.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/getopt/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../optparse/index.html" title="optparse – Command line option parser to replace getopt."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../time/index.html" title="time – Functions for manipulating clock time"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" accesskey="U">Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-getopt">
+<span id="getopt-command-line-option-parsing"></span><h1>getopt &#8211; Command line option parsing<a class="headerlink" href="#module-getopt" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Command line option parsing</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The getopt module is the <em>old-school</em> command line option parser that
+supports the conventions established by the Unix function
+<tt class="docutils literal"><span class="pre">getopt()</span></tt>. It parses an argument sequence, such as <tt class="docutils literal"><span class="pre">sys.argv</span></tt> and
+returns a sequence of (option, argument) pairs and a sequence of
+non-option arguments.</p>
+<p>Supported option syntax includes:</p>
+<div class="highlight-python"><div class="highlight"><pre>-a
+-bval
+-b val
+--noarg
+--witharg=val
+--witharg val
+</pre></div>
+</div>
+<div class="section" id="function-arguments">
+<h2>Function Arguments<a class="headerlink" href="#function-arguments" title="Permalink to this headline">¶</a></h2>
+<p>The getopt function takes three arguments:</p>
+<ul class="simple">
+<li>The first argument is the sequence of arguments to be parsed. This
+usually comes from <tt class="docutils literal"><span class="pre">sys.argv[1:]</span></tt> (ignoring the program name in
+<tt class="docutils literal"><span class="pre">sys.arg[0]</span></tt>).</li>
+<li>The second argument is the option definition string for single character
+options. If one of the options requires an argument, its letter is followed
+by a colon.</li>
+<li>The third argument, if used, should be a sequence of the long-style
+option names. Long style options can be more than a single
+character, such as <tt class="docutils literal"><span class="pre">--noarg</span></tt> or <tt class="docutils literal"><span class="pre">--witharg</span></tt>. The option names in
+the sequence should not include the <tt class="docutils literal"><span class="pre">--</span></tt> prefix. If any long
+option requires an argument, its name should have a suffix of <tt class="docutils literal"><span class="pre">=</span></tt>.</li>
+</ul>
+<p>Short and long form options can be combined in a single call.</p>
+</div>
+<div class="section" id="short-form-options">
+<h2>Short Form Options<a class="headerlink" href="#short-form-options" title="Permalink to this headline">¶</a></h2>
+<p>If a program wants to take 2 options, <tt class="docutils literal"><span class="pre">-a</span></tt>, and <tt class="docutils literal"><span class="pre">-b</span></tt> with the b
+option requiring an argument, the value should be <tt class="docutils literal"><span class="pre">&quot;ab:&quot;</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getopt</span>
+
+<span class="k">print</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">([</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="s">&#39;-bval&#39;</span><span class="p">,</span> <span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;val&#39;</span><span class="p">],</span> <span class="s">&#39;ab:c:&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_short.py
+
+([(&#39;-a&#39;, &#39;&#39;), (&#39;-b&#39;, &#39;val&#39;), (&#39;-c&#39;, &#39;val&#39;)], [])
+</pre></div>
+</div>
+</div>
+<div class="section" id="long-form-options">
+<h2>Long Form Options<a class="headerlink" href="#long-form-options" title="Permalink to this headline">¶</a></h2>
+<p>If a program wants to take 2 options, <tt class="docutils literal"><span class="pre">--noarg</span></tt> and <tt class="docutils literal"><span class="pre">--witharg</span></tt>
+the sequence should be <tt class="docutils literal"><span class="pre">[</span> <span class="pre">'noarg',</span> <span class="pre">'witharg='</span> <span class="pre">]</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getopt</span>
+
+<span class="k">print</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">([</span> <span class="s">&#39;--noarg&#39;</span><span class="p">,</span> <span class="s">&#39;--witharg&#39;</span><span class="p">,</span> <span class="s">&#39;val&#39;</span><span class="p">,</span> <span class="s">&#39;--witharg2=another&#39;</span> <span class="p">],</span>
+                    <span class="s">&#39;&#39;</span><span class="p">,</span>
+                    <span class="p">[</span> <span class="s">&#39;noarg&#39;</span><span class="p">,</span> <span class="s">&#39;witharg=&#39;</span><span class="p">,</span> <span class="s">&#39;witharg2=&#39;</span> <span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_long.py
+
+([(&#39;--noarg&#39;, &#39;&#39;), (&#39;--witharg&#39;, &#39;val&#39;), (&#39;--witharg2&#39;, &#39;another&#39;)], [])
+</pre></div>
+</div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Below is a more complete example program which takes 5 options:
+<tt class="docutils literal"><span class="pre">-o</span></tt>, <tt class="docutils literal"><span class="pre">-v</span></tt>, <tt class="docutils literal"><span class="pre">--output</span></tt>, <tt class="docutils literal"><span class="pre">--verbose</span></tt>, and <tt class="docutils literal"><span class="pre">--version</span></tt>. The
+<tt class="docutils literal"><span class="pre">-o</span></tt>, <tt class="docutils literal"><span class="pre">--output</span></tt>, and <tt class="docutils literal"><span class="pre">--version</span></tt> options each require an
+argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getopt</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;1.0&#39;</span>
+<span class="n">verbose</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">output_filename</span> <span class="o">=</span> <span class="s">&#39;default.out&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;ARGV      :&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="s">&#39;o:v&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;output=&#39;</span><span class="p">,</span> 
+                                                         <span class="s">&#39;verbose&#39;</span><span class="p">,</span>
+                                                         <span class="s">&#39;version=&#39;</span><span class="p">,</span>
+                                                         <span class="p">])</span>
+<span class="k">print</span> <span class="s">&#39;OPTIONS   :&#39;</span><span class="p">,</span> <span class="n">options</span>
+
+<span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="s">&#39;--output&#39;</span><span class="p">):</span>
+        <span class="n">output_filename</span> <span class="o">=</span> <span class="n">arg</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span> <span class="s">&#39;--verbose&#39;</span><span class="p">):</span>
+        <span class="n">verbose</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="o">==</span> <span class="s">&#39;--version&#39;</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">arg</span>
+
+<span class="k">print</span> <span class="s">&#39;VERSION   :&#39;</span><span class="p">,</span> <span class="n">version</span>
+<span class="k">print</span> <span class="s">&#39;VERBOSE   :&#39;</span><span class="p">,</span> <span class="n">verbose</span>
+<span class="k">print</span> <span class="s">&#39;OUTPUT    :&#39;</span><span class="p">,</span> <span class="n">output_filename</span>
+<span class="k">print</span> <span class="s">&#39;REMAINING :&#39;</span><span class="p">,</span> <span class="n">remainder</span>
+</pre></div>
+</div>
+<p>The program can be called in a variety of ways.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py
+
+ARGV      : []
+OPTIONS   : []
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : default.out
+REMAINING : []
+</pre></div>
+</div>
+<p>A single letter option can be a separate from its argument:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py -o foo
+
+ARGV      : [&#39;-o&#39;, &#39;foo&#39;]
+OPTIONS   : [(&#39;-o&#39;, &#39;foo&#39;)]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : foo
+REMAINING : []
+</pre></div>
+</div>
+<p>or combined:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py -ofoo
+
+ARGV      : [&#39;-ofoo&#39;]
+OPTIONS   : [(&#39;-o&#39;, &#39;foo&#39;)]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : foo
+REMAINING : []
+</pre></div>
+</div>
+<p>A long form option can similarly be separate:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py --output foo
+
+ARGV      : [&#39;--output&#39;, &#39;foo&#39;]
+OPTIONS   : [(&#39;--output&#39;, &#39;foo&#39;)]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : foo
+REMAINING : []
+</pre></div>
+</div>
+<p>or combined, with <tt class="docutils literal"><span class="pre">=</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py --output=foo
+
+ARGV      : [&#39;--output=foo&#39;]
+OPTIONS   : [(&#39;--output&#39;, &#39;foo&#39;)]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : foo
+REMAINING : []
+</pre></div>
+</div>
+</div>
+<div class="section" id="abbreviating-long-form-options">
+<h2>Abbreviating Long Form Options<a class="headerlink" href="#abbreviating-long-form-options" title="Permalink to this headline">¶</a></h2>
+<p>The long form option does not have to be spelled out entirely, so long as a
+unique prefix is provided:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py --o foo
+
+ARGV      : [&#39;--o&#39;, &#39;foo&#39;]
+OPTIONS   : [(&#39;--output&#39;, &#39;foo&#39;)]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : foo
+REMAINING : []
+</pre></div>
+</div>
+<p>If a unique prefix is not provided, an exception is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py --ver 2.0
+
+ARGV      : [&#39;--ver&#39;, &#39;2.0&#39;]
+Traceback (most recent call last):
+  File &quot;getopt_example.py&quot;, line 44, in &lt;module&gt;
+    &#39;version=&#39;,
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/getopt.py&quot;, line 88, in getopt
+    opts, args = do_longs(opts, args[0][2:], longopts, args[1:])
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/getopt.py&quot;, line 152, in do_longs
+    has_arg, opt = long_has_args(opt, longopts)
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/getopt.py&quot;, line 179, in long_has_args
+    raise GetoptError(&#39;option --%s not a unique prefix&#39; % opt, opt)
+getopt.GetoptError: option --ver not a unique prefix
+</pre></div>
+</div>
+<p>Option processing stops as soon as the first non-option argument is
+encountered.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py -v not_an_option --output foo
+
+ARGV      : [&#39;-v&#39;, &#39;not_an_option&#39;, &#39;--output&#39;, &#39;foo&#39;]
+OPTIONS   : [(&#39;-v&#39;, &#39;&#39;)]
+VERSION   : 1.0
+VERBOSE   : True
+OUTPUT    : default.out
+REMAINING : [&#39;not_an_option&#39;, &#39;--output&#39;, &#39;foo&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="gnu-style-option-parsing">
+<h2>GNU-style Option Parsing<a class="headerlink" href="#gnu-style-option-parsing" title="Permalink to this headline">¶</a></h2>
+<p>New in Python 2.3, an additional function <tt class="docutils literal"><span class="pre">gnu_getopt()</span></tt> was
+added. It allows option and non-option arguments to be mixed on the
+command line in any order.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">getopt</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">version</span> <span class="o">=</span> <span class="s">&#39;1.0&#39;</span>
+<span class="n">verbose</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">output_filename</span> <span class="o">=</span> <span class="s">&#39;default.out&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;ARGV      :&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">gnu_getopt</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="s">&#39;o:v&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;output=&#39;</span><span class="p">,</span> 
+                                                             <span class="s">&#39;verbose&#39;</span><span class="p">,</span>
+                                                             <span class="s">&#39;version=&#39;</span><span class="p">,</span>
+                                                             <span class="p">])</span>
+<span class="k">print</span> <span class="s">&#39;OPTIONS   :&#39;</span><span class="p">,</span> <span class="n">options</span>
+
+<span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="s">&#39;--output&#39;</span><span class="p">):</span>
+        <span class="n">output_filename</span> <span class="o">=</span> <span class="n">arg</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span> <span class="s">&#39;--verbose&#39;</span><span class="p">):</span>
+        <span class="n">verbose</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">elif</span> <span class="n">opt</span> <span class="o">==</span> <span class="s">&#39;--version&#39;</span><span class="p">:</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">arg</span>
+
+<span class="k">print</span> <span class="s">&#39;VERSION   :&#39;</span><span class="p">,</span> <span class="n">version</span>
+<span class="k">print</span> <span class="s">&#39;VERBOSE   :&#39;</span><span class="p">,</span> <span class="n">verbose</span>
+<span class="k">print</span> <span class="s">&#39;OUTPUT    :&#39;</span><span class="p">,</span> <span class="n">output_filename</span>
+<span class="k">print</span> <span class="s">&#39;REMAINING :&#39;</span><span class="p">,</span> <span class="n">remainder</span>
+</pre></div>
+</div>
+<p>After changing the call in the previous example, the difference becomes clear:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_gnu.py -v not_an_option --output foo
+
+ARGV      : [&#39;-v&#39;, &#39;not_an_option&#39;, &#39;--output&#39;, &#39;foo&#39;]
+OPTIONS   : [(&#39;-v&#39;, &#39;&#39;), (&#39;--output&#39;, &#39;foo&#39;)]
+VERSION   : 1.0
+VERBOSE   : True
+OUTPUT    : foo
+REMAINING : [&#39;not_an_option&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="special-case">
+<h2>Special Case: <tt class="docutils literal"><span class="pre">--</span></tt><a class="headerlink" href="#special-case" title="Permalink to this headline">¶</a></h2>
+<p>If <tt class="docutils literal"><span class="pre">getopt</span></tt> encounters <tt class="docutils literal"><span class="pre">--</span></tt> in the input arguments, it stops
+processing the remaining arguments as options.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python getopt_example.py -v -- --output foo
+
+ARGV      : [&#39;-v&#39;, &#39;--&#39;, &#39;--output&#39;, &#39;foo&#39;]
+OPTIONS   : [(&#39;-v&#39;, &#39;&#39;)]
+VERSION   : 1.0
+VERBOSE   : True
+OUTPUT    : default.out
+REMAINING : [&#39;--output&#39;, &#39;foo&#39;]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/getopt.html">getopt</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../optparse/index.html#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../optparse/index.html#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../optparse/index.html" title="optparse – Command line option parser to replace getopt."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../time/index.html" title="time – Functions for manipulating clock time"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" >Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

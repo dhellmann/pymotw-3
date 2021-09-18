@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>grp &#8211; Unix Group Database - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Unix-specific Services" href="../unix.html" />
+    <link rel="next" title="pipes – Unix shell command pipeline templates" href="../pipes/index.html" />
+    <link rel="prev" title="commands – Run external shell commands" href="../commands/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">grp &#8211; Unix Group Database</a><ul>
+<li><a class="reference internal" href="#querying-all-groups">Querying All Groups</a></li>
+<li><a class="reference internal" href="#group-memberships-for-a-user">Group Memberships for a User</a></li>
+<li><a class="reference internal" href="#finding-a-group-by-name">Finding a Group By Name</a></li>
+<li><a class="reference internal" href="#finding-a-group-by-id">Finding a Group by ID</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../commands/index.html" title="previous chapter"><strong>Previous:</strong> commands &#8211; Run external shell commands</a><br/>
+          <a href="../pipes/index.html" title="next chapter"><strong>Next:</strong> pipes &#8211; Unix shell command pipeline templates</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/grp/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pipes/index.html" title="pipes – Unix shell command pipeline templates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../commands/index.html" title="commands – Run external shell commands"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" accesskey="U">Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-grp">
+<span id="grp-unix-group-database"></span><h1>grp &#8211; Unix Group Database<a class="headerlink" href="#module-grp" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Read group data from Unix group database.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The grp module can be used to read information about Unix groups from
+the group database (usually <tt class="docutils literal"><span class="pre">/etc/group</span></tt>).  The read-only interface
+returns tuple-like objects with named attributes for the standard
+fields of a group record.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="21%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Index</th>
+<th class="head">Attribute</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>gr_name</td>
+<td>Name</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>gr_passwd</td>
+<td>Password, if any (encrypted)</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>gr_gid</td>
+<td>Numerical id (integer)</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>gr_mem</td>
+<td>Names of group members</td>
+</tr>
+</tbody>
+</table>
+<p>The name and password values are both strings, the GID is an integer,
+and the members are reported as a list of strings.</p>
+<div class="section" id="querying-all-groups">
+<h2>Querying All Groups<a class="headerlink" href="#querying-all-groups" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you need to print a report of all of the &#8220;real&#8221; groups on a
+system, including their members (for our purposes, &#8220;real&#8221; is defined
+as having a name not starting with &#8220;<tt class="docutils literal"><span class="pre">_</span></tt>&#8221;).  To load the entire
+password database, you would use <tt class="docutils literal"><span class="pre">getgrall()</span></tt>.  The return value is
+a list with an undefined order, so you probably want to sort it before
+printing the report.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">grp</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="c"># Load all of the user data, sorted by username</span>
+<span class="n">all_groups</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrall</span><span class="p">()</span>
+<span class="n">interesting_groups</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">g</span> 
+                            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">all_groups</span> 
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">g</span><span class="o">.</span><span class="n">gr_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">)),</span>
+                            <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s">&#39;gr_name&#39;</span><span class="p">))</span>
+
+<span class="c"># Find the longest length for the name</span>
+<span class="n">name_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">gr_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">interesting_groups</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c"># Print report headers</span>
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%-*s</span><span class="s"> </span><span class="si">%4s</span><span class="s"> </span><span class="si">%10s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">name_length</span><span class="p">,</span> <span class="s">&#39;Name&#39;</span><span class="p">,</span> 
+             <span class="s">&#39;GID&#39;</span><span class="p">,</span> 
+             <span class="s">&#39;Password&#39;</span><span class="p">,</span>
+             <span class="s">&#39;Members&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="n">name_length</span><span class="p">,</span> <span class="s">&#39;----&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+
+<span class="c"># Print the data</span>
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">interesting_groups</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">name_length</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">gr_name</span><span class="p">,</span> 
+                 <span class="n">g</span><span class="o">.</span><span class="n">gr_gid</span><span class="p">,</span> 
+                 <span class="n">g</span><span class="o">.</span><span class="n">gr_passwd</span><span class="p">,</span>
+                 <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">gr_mem</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python grp_getgrall.py
+
+Name                                      GID   Password Members
+---------------------------------------- ---- ---------- ------------------------------
+accessibility                              90          *
+accessibility                              90          *
+admin                                      80          * root, dhellmann
+admin                                      80          * root
+authedusers                                50          *
+authedusers                                50          *
+bin                                         7          *
+bin                                         7          *
+certusers                                  29          * root, _jabber, _postfix, _cyrus, _calendar, _dovecot
+certusers                                  29          * root, _jabber, _postfix, _cyrus, _calendar, _dovecot
+com.apple.access_screensharing            401            dhellmann
+com.apple.access_screensharing-disabled   101            dhellmann
+com.apple.access_ssh                      102            dhellmann
+consoleusers                               53          *
+consoleusers                               53          *
+daemon                                      1          * root
+daemon                                      1          * root
+dhellmann                                 501
+dialer                                     68          *
+dialer                                     68          *
+everyone                                   12          *
+everyone                                   12          *
+group                                      16          *
+group                                      16          *
+interactusers                              51          *
+interactusers                              51          *
+kmem                                        2          * root
+kmem                                        2          * root
+localaccounts                              61          *
+localaccounts                              61          *
+mail                                        6          * _teamsserver
+mail                                        6          * _teamsserver
+netaccounts                                62          *
+netaccounts                                62          *
+netusers                                   52          *
+netusers                                   52          *
+network                                    69          *
+network                                    69          *
+nobody                                   4294967294          *
+nobody                                   4294967294          *
+nogroup                                  4294967295          *
+nogroup                                  4294967295          *
+operator                                    5          * root
+operator                                    5          * root
+owner                                      10          *
+owner                                      10          *
+procmod                                     9          * root
+procmod                                     9          * root
+procview                                    8          * root
+procview                                    8          * root
+racemi                                    500            dhellmann
+smmsp                                     103          *
+staff                                      20          * root
+staff                                      20          * root
+sys                                         3          * root
+sys                                         3          * root
+tty                                         4          * root
+tty                                         4          * root
+utmp                                       45          *
+utmp                                       45          *
+wheel                                       0          * root
+wheel                                       0          * root
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-memberships-for-a-user">
+<h2>Group Memberships for a User<a class="headerlink" href="#group-memberships-for-a-user" title="Permalink to this headline">¶</a></h2>
+<p>Another common task might be to print a list of all the groups for a
+given user:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">grp</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="s">&#39;dhellmann&#39;</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">gr_name</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrall</span><span class="p">()</span> <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">gr_mem</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">username</span><span class="p">,</span> <span class="s">&#39;belongs to:&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python grp_groups_for_user.py
+
+dhellmann belongs to: _lpadmin, admin, com.apple.access_screensharing-disabled, com.apple.access_screensharing, com.apple.access_ssh, racemi
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-a-group-by-name">
+<h2>Finding a Group By Name<a class="headerlink" href="#finding-a-group-by-name" title="Permalink to this headline">¶</a></h2>
+<p>As with <a class="reference internal" href="../pwd/index.html#module-pwd" title="pwd: Unix Password Database"><tt class="xref py py-mod docutils literal"><span class="pre">pwd</span></tt></a>, it is also possible to query for information about
+a specific group, either by name or numeric id.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">grp</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="s">&#39;admin&#39;</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrnam</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Name    :&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">gr_name</span>
+<span class="k">print</span> <span class="s">&#39;GID     :&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">gr_gid</span>
+<span class="k">print</span> <span class="s">&#39;Password:&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">gr_passwd</span>
+<span class="k">print</span> <span class="s">&#39;Members :&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">gr_mem</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python grp_getgrnam.py
+
+Name    : admin
+GID     : 80
+Password: *
+Members : root, dhellmann
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-a-group-by-id">
+<h2>Finding a Group by ID<a class="headerlink" href="#finding-a-group-by-id" title="Permalink to this headline">¶</a></h2>
+<p>To identify the group running the current process, combine
+<tt class="docutils literal"><span class="pre">getgrgid()</span></tt> with <tt class="docutils literal"><span class="pre">os.getgid()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">grp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">gid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getgid</span><span class="p">()</span>
+<span class="n">group_info</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrgid</span><span class="p">(</span><span class="n">gid</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Currently running with GID=</span><span class="si">%s</span><span class="s"> name=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">gid</span><span class="p">,</span> <span class="n">group_info</span><span class="o">.</span><span class="n">gr_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python grp_getgrgid_process.py
+
+Currently running with GID=501 name=dhellmann
+</pre></div>
+</div>
+<p>And to get the group name based on the permissions on a file, look up
+the group returned by <tt class="docutils literal"><span class="pre">os.stat()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">grp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;grp_getgrgid_fileowner.py&#39;</span>
+<span class="n">stat_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">owner</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getgrgid</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_gid</span><span class="p">)</span><span class="o">.</span><span class="n">gr_name</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is owned by </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_gid</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python grp_getgrgid_fileowner.py
+
+grp_getgrgid_fileowner.py is owned by dhellmann (501)
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/grp.html">grp</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../pwd/index.html#module-pwd" title="pwd: Unix Password Database"><tt class="xref py py-mod docutils literal"><span class="pre">pwd</span></tt></a></dt>
+<dd>Read user data from the password database.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">spwd</span></tt></dt>
+<dd>Read user data from the shadow password database.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pipes/index.html" title="pipes – Unix shell command pipeline templates"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../commands/index.html" title="commands – Run external shell commands"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../unix.html" >Unix-specific Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>operator &#8211; Functional interface to built-in operators - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Numeric and Mathematical Modules" href="../numeric.html" />
+    <link rel="next" title="random – Pseudorandom number generators" href="../random/index.html" />
+    <link rel="prev" title="math – Mathematical functions" href="../math/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">operator &#8211; Functional interface to built-in operators</a><ul>
+<li><a class="reference internal" href="#logical-operations">Logical Operations</a></li>
+<li><a class="reference internal" href="#comparison-operators">Comparison Operators</a></li>
+<li><a class="reference internal" href="#arithmetic-operators">Arithmetic Operators</a></li>
+<li><a class="reference internal" href="#sequence-operators">Sequence Operators</a></li>
+<li><a class="reference internal" href="#in-place-operators">In-place Operators</a></li>
+<li><a class="reference internal" href="#attribute-and-item-getters">Attribute and Item &#8220;Getters&#8221;</a></li>
+<li><a class="reference internal" href="#combining-operators-and-custom-classes">Combining Operators and Custom Classes</a></li>
+<li><a class="reference internal" href="#type-checking">Type Checking</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../math/index.html" title="previous chapter"><strong>Previous:</strong> math &#8211; Mathematical functions</a><br/>
+          <a href="../random/index.html" title="next chapter"><strong>Next:</strong> random &#8211; Pseudorandom number generators</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/operator/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../random/index.html" title="random – Pseudorandom number generators"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../math/index.html" title="math – Mathematical functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../numeric.html" accesskey="U">Numeric and Mathematical Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-operator">
+<span id="operator-functional-interface-to-built-in-operators"></span><h1>operator &#8211; Functional interface to built-in operators<a class="headerlink" href="#module-operator" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Functional interface to built-in operators.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>Functional programming using iterators occasionally requires creating
+small functions for simple expressions. Sometimes these can be
+expressed as lambda functions, but some operations do not need to be
+implemented with custom functions at all. The <a class="reference internal" href="#module-operator" title="operator: Functional interface to built-in operators"><tt class="xref py py-mod docutils literal"><span class="pre">operator</span></tt></a> module
+defines functions that correspond to built-in operations for
+arithmetic and comparison, as well as sequence and dictionary
+operations.</p>
+<div class="section" id="logical-operations">
+<h2>Logical Operations<a class="headerlink" href="#logical-operations" title="Permalink to this headline">¶</a></h2>
+<p>There are functions for determining the boolean equivalent for a
+value, negating that to create the opposite boolean value, and
+comparing objects to see if they are identical.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">print</span> <span class="s">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span> <span class="s">&#39;b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;not_(a)     :&#39;</span><span class="p">,</span> <span class="n">not_</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;truth(a)    :&#39;</span><span class="p">,</span> <span class="n">truth</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;is_(a, b)   :&#39;</span><span class="p">,</span> <span class="n">is_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;is_not(a, b):&#39;</span><span class="p">,</span> <span class="n">is_not</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">not_()</span></tt> includes the trailing underscore because <strong class="command">not</strong>
+is a Python keyword.  <tt class="xref py py-func docutils literal"><span class="pre">truth()</span></tt> applies the same logic used when
+testing an expression in an <strong class="command">if</strong> statement.  <tt class="xref py py-func docutils literal"><span class="pre">is_()</span></tt>
+implements the same check used by the <strong class="command">is</strong> keyword, and
+<tt class="xref py py-func docutils literal"><span class="pre">is_not()</span></tt> does the same test and returns the opposite answer.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_boolean.py
+
+a = -1
+b = 5
+
+not_(a)     : False
+truth(a)    : True
+is_(a, b)   : False
+is_not(a, b): True
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparison-operators">
+<h2>Comparison Operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h2>
+<p>All of the rich comparison operators are supported.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span> <span class="s">&#39;b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+<span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lt</span><span class="p">,</span> <span class="n">le</span><span class="p">,</span> <span class="n">eq</span><span class="p">,</span> <span class="n">ne</span><span class="p">,</span> <span class="n">ge</span><span class="p">,</span> <span class="n">gt</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(a, b):&#39;</span> <span class="o">%</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The functions are equivalent to the expression syntax using <tt class="docutils literal"><span class="pre">&lt;</span></tt>,
+<tt class="docutils literal"><span class="pre">&lt;=</span></tt>, <tt class="docutils literal"><span class="pre">==</span></tt>, <tt class="docutils literal"><span class="pre">&gt;=</span></tt>, and <tt class="docutils literal"><span class="pre">&gt;</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_comparisons.py
+
+
+a = 1
+b = 5.0
+lt(a, b): True
+le(a, b): True
+eq(a, b): False
+ne(a, b): True
+ge(a, b): False
+gt(a, b): False
+</pre></div>
+</div>
+</div>
+<div class="section" id="arithmetic-operators">
+<h2>Arithmetic Operators<a class="headerlink" href="#arithmetic-operators" title="Permalink to this headline">¶</a></h2>
+<p>The arithmetic operators for manipulating numerical values are also supported.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="k">print</span> <span class="s">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span> <span class="s">&#39;b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+<span class="k">print</span> <span class="s">&#39;c =&#39;</span><span class="p">,</span> <span class="n">c</span>
+<span class="k">print</span> <span class="s">&#39;d =&#39;</span><span class="p">,</span> <span class="n">d</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Positive/Negative:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;abs(a):&#39;</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;neg(a):&#39;</span><span class="p">,</span> <span class="n">neg</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;neg(b):&#39;</span><span class="p">,</span> <span class="n">neg</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;pos(a):&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;pos(b):&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Arithmetic:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;add(a, b)     :&#39;</span><span class="p">,</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;div(a, b)     :&#39;</span><span class="p">,</span> <span class="n">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;div(d, c)     :&#39;</span><span class="p">,</span> <span class="n">div</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;floordiv(a, b):&#39;</span><span class="p">,</span> <span class="n">floordiv</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;floordiv(d, c):&#39;</span><span class="p">,</span> <span class="n">floordiv</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;mod(a, b)     :&#39;</span><span class="p">,</span> <span class="n">mod</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;mul(a, b)     :&#39;</span><span class="p">,</span> <span class="n">mul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;pow(c, d)     :&#39;</span><span class="p">,</span> <span class="nb">pow</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;sub(b, a)     :&#39;</span><span class="p">,</span> <span class="n">sub</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;truediv(a, b) :&#39;</span><span class="p">,</span> <span class="n">truediv</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;truediv(d, c) :&#39;</span><span class="p">,</span> <span class="n">truediv</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Bitwise:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;and_(c, d)  :&#39;</span><span class="p">,</span> <span class="n">and_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;invert(c)   :&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;lshift(c, d):&#39;</span><span class="p">,</span> <span class="n">lshift</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;or_(c, d)   :&#39;</span><span class="p">,</span> <span class="n">or_</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;rshift(d, c):&#39;</span><span class="p">,</span> <span class="n">rshift</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;xor(c, d)   :&#39;</span><span class="p">,</span> <span class="n">xor</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are two separate division operators: <tt class="xref py py-func docutils literal"><span class="pre">floordiv()</span></tt> (integer
+division as implemented in Python before version 3.0) and
+<tt class="xref py py-func docutils literal"><span class="pre">truediv()</span></tt> (floating point division).</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_math.py
+
+a = -1
+b = 5.0
+c = 2
+d = 6
+
+Positive/Negative:
+abs(a): 1
+neg(a): 1
+neg(b): -5.0
+pos(a): -1
+pos(b): 5.0
+
+Arithmetic:
+add(a, b)     : 4.0
+div(a, b)     : -0.2
+div(d, c)     : 3
+floordiv(a, b): -1.0
+floordiv(d, c): 3
+mod(a, b)     : 4.0
+mul(a, b)     : -5.0
+pow(c, d)     : 64
+sub(b, a)     : 6.0
+truediv(a, b) : -0.2
+truediv(d, c) : 3.0
+
+Bitwise:
+and_(c, d)  : 2
+invert(c)   : -3
+lshift(c, d): 128
+or_(c, d)   : 6
+rshift(d, c): 1
+xor(c, d)   : 4
+</pre></div>
+</div>
+</div>
+<div class="section" id="sequence-operators">
+<h2>Sequence Operators<a class="headerlink" href="#sequence-operators" title="Permalink to this headline">¶</a></h2>
+<p>The operators for working with sequences can be divided into four
+groups for building up sequences, searching for items, accessing
+contents, and removing items from sequences.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span> <span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span> <span class="s">&#39;b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Constructive:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;  concat(a, b):&#39;</span><span class="p">,</span> <span class="n">concat</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  repeat(a, 3):&#39;</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Searching:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;  contains(a, 1)  :&#39;</span><span class="p">,</span> <span class="n">contains</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  contains(b, &quot;d&quot;):&#39;</span><span class="p">,</span> <span class="n">contains</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  countOf(a, 1)   :&#39;</span><span class="p">,</span> <span class="n">countOf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  countOf(b, &quot;d&quot;) :&#39;</span><span class="p">,</span> <span class="n">countOf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  indexOf(a, 5)   :&#39;</span><span class="p">,</span> <span class="n">indexOf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Access Items:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;  getitem(b, 1)            :&#39;</span><span class="p">,</span> <span class="n">getitem</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  getslice(a, 1, 3)        :&#39;</span><span class="p">,</span> <span class="n">getslice</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;  setitem(b, 1, &quot;d&quot;)       :&#39;</span><span class="p">,</span> <span class="n">setitem</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">),</span> <span class="s">&#39;, after b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+<span class="k">print</span> <span class="s">&#39;  setslice(a, 1, 3, [4, 5]):&#39;</span><span class="p">,</span> <span class="n">setslice</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]),</span> <span class="s">&#39;, after a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Destructive:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;  delitem(b, 1)    :&#39;</span><span class="p">,</span> <span class="n">delitem</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s">&#39;, after b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+<span class="k">print</span> <span class="s">&#39;  delslice(a, 1, 3):&#39;</span><span class="p">,</span> <span class="n">delslice</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s">&#39;, after a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>Some of these operations, such as <tt class="xref py py-func docutils literal"><span class="pre">setitem()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">delitem()</span></tt>,
+modify the sequence in place and do not return a value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_sequences.py
+
+a = [1, 2, 3]
+b = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+Constructive:
+  concat(a, b): [1, 2, 3, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+  repeat(a, 3): [1, 2, 3, 1, 2, 3, 1, 2, 3]
+
+Searching:
+  contains(a, 1)  : True
+  contains(b, &quot;d&quot;): False
+  countOf(a, 1)   : 1
+  countOf(b, &quot;d&quot;) : 0
+  indexOf(a, 5)   : 0
+
+Access Items:
+  getitem(b, 1)            : b
+  getslice(a, 1, 3)        : [2, 3]
+  setitem(b, 1, &quot;d&quot;)       : None , after b = [&#39;a&#39;, &#39;d&#39;, &#39;c&#39;]
+  setslice(a, 1, 3, [4, 5]): None , after a = [1, 4, 5]
+
+Destructive:
+  delitem(b, 1)    : None , after b = [&#39;a&#39;, &#39;c&#39;]
+  delslice(a, 1, 3): None , after a = [1]
+</pre></div>
+</div>
+</div>
+<div class="section" id="in-place-operators">
+<h2>In-place Operators<a class="headerlink" href="#in-place-operators" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the standard operators, many types of objects support
+&#8220;in-place&#8221; modification through special operators such as <tt class="docutils literal"><span class="pre">+=</span></tt>. There are
+equivalent functions for in-place modifications, too:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span> <span class="s">&#39;b =&#39;</span><span class="p">,</span> <span class="n">b</span>
+<span class="k">print</span> <span class="s">&#39;c =&#39;</span><span class="p">,</span> <span class="n">c</span>
+<span class="k">print</span> <span class="s">&#39;d =&#39;</span><span class="p">,</span> <span class="n">d</span>
+<span class="k">print</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">iadd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;a = iadd(a, b) =&gt;&#39;</span><span class="p">,</span> <span class="n">a</span>
+<span class="k">print</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">iconcat</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;c = iconcat(c, d) =&gt;&#39;</span><span class="p">,</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p>These examples only demonstrate a few of the functions. Refer to the stdlib
+documentation for complete details.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_inplace.py
+
+a = -1
+b = 5.0
+c = [1, 2, 3]
+d = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+a = iadd(a, b) =&gt; 4.0
+
+c = iconcat(c, d) =&gt; [1, 2, 3, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="attribute-and-item-getters">
+<h2>Attribute and Item &#8220;Getters&#8221;<a class="headerlink" href="#attribute-and-item-getters" title="Permalink to this headline">¶</a></h2>
+<p>One of the most unusual features of the <a class="reference internal" href="#module-operator" title="operator: Functional interface to built-in operators"><tt class="xref py py-mod docutils literal"><span class="pre">operator</span></tt></a> module is the
+concept of <em>getters</em>. These are callable objects constructed at
+runtime to retrieve attributes of objects or contents from
+sequences. Getters are especially useful when working with iterators
+or generator sequences, where they are intended to incur less overhead
+than a lambda or Python function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyObj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;example class for attrgetter&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyObj</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;MyObj(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span> <span class="n">MyObj</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">l</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">attrgetter</span><span class="p">(</span><span class="s">&#39;arg&#39;</span><span class="p">)</span>
+<span class="n">vals</span> <span class="o">=</span> <span class="p">[</span> <span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">vals</span>
+</pre></div>
+</div>
+<p>Attribute getters work like <tt class="docutils literal"><span class="pre">lambda</span> <span class="pre">x,</span> <span class="pre">n='attrname':</span> <span class="pre">getattr(x,</span> <span class="pre">n)</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_attrgetter.py
+
+[MyObj(0), MyObj(1), MyObj(2), MyObj(3), MyObj(4)]
+[0, 1, 2, 3, 4]
+</pre></div>
+</div>
+<p>While item getters work like <tt class="docutils literal"><span class="pre">lambda</span> <span class="pre">x,</span> <span class="pre">y=5:</span> <span class="pre">x[y]</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">print</span> <span class="s">&#39;Dictionaries:&#39;</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">dict</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">l</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">itemgetter</span><span class="p">(</span><span class="s">&#39;val&#39;</span><span class="p">)</span>
+<span class="n">vals</span> <span class="o">=</span> <span class="p">[</span> <span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">vals</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Tuples:&#39;</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">l</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">vals</span> <span class="o">=</span> <span class="p">[</span> <span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">vals</span>
+</pre></div>
+</div>
+<p>Item getters work with mappings as well as sequences.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_itemgetter.py
+
+Dictionaries:
+[{&#39;val&#39;: 0}, {&#39;val&#39;: 1}, {&#39;val&#39;: 2}, {&#39;val&#39;: 3}, {&#39;val&#39;: 4}]
+[0, 1, 2, 3, 4]
+
+Tuples:
+[(0, 0), (1, 2), (2, 4), (3, 6), (4, 8)]
+[0, 2, 4, 6, 8]
+</pre></div>
+</div>
+</div>
+<div class="section" id="combining-operators-and-custom-classes">
+<h2>Combining Operators and Custom Classes<a class="headerlink" href="#combining-operators-and-custom-classes" title="Permalink to this headline">¶</a></h2>
+<p>The functions in the <a class="reference internal" href="#module-operator" title="operator: Functional interface to built-in operators"><tt class="xref py py-mod docutils literal"><span class="pre">operator</span></tt></a> module work via the standard
+Python interfaces for their operations, so they work with user-defined
+classes as well as the built-in types.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyObj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Example for operator overloading&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyObj</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;MyObj(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span>
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;compare for less-than&quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&#39;Testing </span><span class="si">%s</span><span class="s"> &lt; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">val</span>
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;add values&quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&#39;Adding </span><span class="si">%s</span><span class="s"> + </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MyObj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">MyObj</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">MyObj</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Comparison:&#39;</span>
+<span class="k">print</span> <span class="n">lt</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">Arithmetic:&#39;</span>
+<span class="k">print</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Refer to the Python reference guide for a complete list of the special
+methods used by each operator.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_classes.py
+
+Comparison:
+Testing MyObj(1) &lt; MyObj(2)
+True
+
+Arithmetic:
+Adding MyObj(1) + MyObj(2)
+MyObj(3)
+</pre></div>
+</div>
+</div>
+<div class="section" id="type-checking">
+<h2>Type Checking<a class="headerlink" href="#type-checking" title="Permalink to this headline">¶</a></h2>
+<p>Besides the actual operators, there are functions for testing API
+compliance for mapping, number, and sequence types.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">NoType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Supports none of the type APIs&quot;&quot;&quot;</span>
+    
+<span class="k">class</span> <span class="nc">MultiType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Supports multiple type APIs&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;mapping&#39;</span>
+    <span class="k">def</span> <span class="nf">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">NoType</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">MultiType</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="p">(</span><span class="n">isMappingType</span><span class="p">,</span> <span class="n">isNumberType</span><span class="p">,</span> <span class="n">isSequenceType</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(o):&#39;</span> <span class="o">%</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">(t):&#39;</span> <span class="o">%</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The tests are not perfect, since the interfaces are not strictly
+defined, but they do provide some idea of what is supported.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python operator_typechecking.py
+
+isMappingType(o): False
+isMappingType(t): True
+isNumberType(o): False
+isNumberType(t): True
+isSequenceType(o): False
+isSequenceType(t): True
+</pre></div>
+</div>
+<p><a class="reference internal" href="../abc/index.html#module-abc" title="abc: Abstract Base Classes"><tt class="xref py py-mod docutils literal"><span class="pre">abc</span></tt></a> includes <a class="reference internal" href="../abc/index.html#abc-collection-types"><em>abstract base classes</em></a> that define the APIs for collection types.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/operator.html">operator</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../functools/index.html#module-functools" title="functools: Tools for working with functions."><tt class="xref py py-mod docutils literal"><span class="pre">functools</span></tt></a></dt>
+<dd>Functional programming tools, including the
+<tt class="xref py py-func docutils literal"><span class="pre">total_ordering()</span></tt> decorator for adding rich comparison
+methods to a class.</dd>
+<dt><a class="reference internal" href="../itertools/index.html#module-itertools" title="itertools: Iterator functions for efficient looping"><tt class="xref py py-mod docutils literal"><span class="pre">itertools</span></tt></a></dt>
+<dd>Iterator operations.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../random/index.html" title="random – Pseudorandom number generators"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../math/index.html" title="math – Mathematical functions"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../numeric.html" >Numeric and Mathematical Modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>unittest &#8211; Automated testing framework - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Development Tools" href="../dev_tools.html" />
+    <link rel="next" title="pdb – Interactive Debugger" href="../pdb/index.html" />
+    <link rel="prev" title="pydoc – Online help for Python modules" href="../pydoc/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">unittest &#8211; Automated testing framework</a><ul>
+<li><a class="reference internal" href="#basic-test-structure">Basic Test Structure</a></li>
+<li><a class="reference internal" href="#running-tests">Running Tests</a></li>
+<li><a class="reference internal" href="#test-outcomes">Test Outcomes</a></li>
+<li><a class="reference internal" href="#asserting-truth">Asserting Truth</a></li>
+<li><a class="reference internal" href="#testing-equality">Testing Equality</a></li>
+<li><a class="reference internal" href="#almost-equal">Almost Equal?</a></li>
+<li><a class="reference internal" href="#testing-for-exceptions">Testing for Exceptions</a></li>
+<li><a class="reference internal" href="#test-fixtures">Test Fixtures</a></li>
+<li><a class="reference internal" href="#test-suites">Test Suites</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../pydoc/index.html" title="previous chapter"><strong>Previous:</strong> pydoc &#8211; Online help for Python modules</a><br/>
+          <a href="../pdb/index.html" title="next chapter"><strong>Next:</strong> pdb &#8211; Interactive Debugger</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/unittest/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pdb/index.html" title="pdb – Interactive Debugger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../pydoc/index.html" title="pydoc – Online help for Python modules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../dev_tools.html" accesskey="U">Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-unittest">
+<span id="unittest-automated-testing-framework"></span><h1>unittest &#8211; Automated testing framework<a class="headerlink" href="#module-unittest" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Automated testing framework</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1</td>
+</tr>
+</tbody>
+</table>
+<p>Python&#8217;s <a class="reference internal" href="#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a> module, sometimes referred to as PyUnit, is
+based on the XUnit framework design by Kent Beck and Erich Gamma. The
+same pattern is repeated in many other languages, including C, perl,
+Java, and Smalltalk. The framework implemented by <a class="reference internal" href="#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a>
+supports fixtures, test suites, and a test runner to enable automated
+testing for your code.</p>
+<div class="section" id="basic-test-structure">
+<h2>Basic Test Structure<a class="headerlink" href="#basic-test-structure" title="Permalink to this headline">¶</a></h2>
+<p>Tests, as defined by <a class="reference internal" href="#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a>, have two parts: code to manage
+test &#8220;fixtures&#8221;, and the test itself. Individual tests are created by
+subclassing <tt class="xref py py-class docutils literal"><span class="pre">TestCase</span></tt> and overriding or adding appropriate
+methods. For example,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">SimplisticTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this case, the <tt class="xref py py-class docutils literal"><span class="pre">SimplisticTest</span></tt> has a single <tt class="xref py py-func docutils literal"><span class="pre">test()</span></tt>
+method, which would fail if True is ever False.</p>
+</div>
+<div class="section" id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to run unittest tests is to include:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>at the bottom of each test file, then simply run the script directly from the
+command line:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_simple.py
+
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</pre></div>
+</div>
+<p>This abbreviated output includes the amount of time the tests took, along with
+a status indicator for each test (the &#8221;.&#8221; on the first line of output means
+that a test passed). For more detailed test results, include the -v option:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_simple.py -v
+
+test (__main__.SimplisticTest) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-outcomes">
+<h2>Test Outcomes<a class="headerlink" href="#test-outcomes" title="Permalink to this headline">¶</a></h2>
+<p>Tests have 3 possible outcomes:</p>
+<dl class="docutils">
+<dt>ok</dt>
+<dd>The test passes.</dd>
+<dt>FAIL</dt>
+<dd>The test does not pass, and raises an AssertionError exception.</dd>
+<dt>ERROR</dt>
+<dd>The test raises an exception other than AssertionError.</dd>
+</dl>
+<p>There is no explicit way to cause a test to &#8220;pass&#8221;, so a test&#8217;s status depends
+on the presence (or absence) of an exception.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">OutcomesTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testPass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">testFail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failIf</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testError</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Test error!&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When a test fails or generates an error, the traceback is included in the
+output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_outcomes.py
+
+EF.
+======================================================================
+ERROR: testError (__main__.OutcomesTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;unittest_outcomes.py&quot;, line 42, in testError
+    raise RuntimeError(&#39;Test error!&#39;)
+RuntimeError: Test error!
+
+======================================================================
+FAIL: testFail (__main__.OutcomesTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;unittest_outcomes.py&quot;, line 39, in testFail
+    self.failIf(True)
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+FAILED (failures=1, errors=1)
+</pre></div>
+</div>
+<p>In the example above, <tt class="xref py py-func docutils literal"><span class="pre">testFail()</span></tt> fails and the traceback shows
+the line with the failure code. It is up to the person reading the
+test output to look at the code to figure out the semantic meaning of
+the failed test, though. To make it easier to understand the nature of
+a test failure, the <tt class="xref py py-func docutils literal"><span class="pre">fail*()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">assert*()</span></tt> methods all
+accept an argument <em>msg</em>, which can be used to produce a more detailed
+error message.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">FailureMessageTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testFail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failIf</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="s">&#39;failure message goes here&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_failwithmessage.py -v
+
+testFail (__main__.FailureMessageTest) ... FAIL
+
+======================================================================
+FAIL: testFail (__main__.FailureMessageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;unittest_failwithmessage.py&quot;, line 36, in testFail
+    self.failIf(True, &#39;failure message goes here&#39;)
+AssertionError: failure message goes here
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+</div>
+<div class="section" id="asserting-truth">
+<h2>Asserting Truth<a class="headerlink" href="#asserting-truth" title="Permalink to this headline">¶</a></h2>
+<p>Most tests assert the truth of some condition. There are a few
+different ways to write truth-checking tests, depending on the
+perspective of the test author and the desired outcome of the code
+being tested. If the code produces a value which can be evaluated as
+true, the methods <tt class="xref py py-func docutils literal"><span class="pre">failUnless()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">assertTrue()</span></tt> should
+be used. If the code produces a false value, the methods
+<tt class="xref py py-func docutils literal"><span class="pre">failIf()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">assertFalse()</span></tt> make more sense.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">TruthTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testFailUnless</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testAssertTrue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testFailIf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failIf</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testAssertFalse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_truth.py -v
+
+testAssertFalse (__main__.TruthTest) ... ok
+testAssertTrue (__main__.TruthTest) ... ok
+testFailIf (__main__.TruthTest) ... ok
+testFailUnless (__main__.TruthTest) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-equality">
+<h2>Testing Equality<a class="headerlink" href="#testing-equality" title="Permalink to this headline">¶</a></h2>
+<p>As a special case, <a class="reference internal" href="#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a> includes methods for testing the
+equality of two values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">EqualityTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnlessEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testNotEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failIfEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_equality.py -v
+
+testEqual (__main__.EqualityTest) ... ok
+testNotEqual (__main__.EqualityTest) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+<p>These special tests are handy, since the values being compared appear
+in the failure message when a test fails.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">InequalityTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failIfEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testNotEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnlessEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And when these tests are run:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_notequal.py -v
+
+testEqual (__main__.InequalityTest) ... FAIL
+testNotEqual (__main__.InequalityTest) ... FAIL
+
+======================================================================
+FAIL: testEqual (__main__.InequalityTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;unittest_notequal.py&quot;, line 36, in testEqual
+    self.failIfEqual(1, 3-2)
+AssertionError: 1 == 1
+
+======================================================================
+FAIL: testNotEqual (__main__.InequalityTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;unittest_notequal.py&quot;, line 39, in testNotEqual
+    self.failUnlessEqual(2, 3-2)
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=2)
+</pre></div>
+</div>
+</div>
+<div class="section" id="almost-equal">
+<h2>Almost Equal?<a class="headerlink" href="#almost-equal" title="Permalink to this headline">¶</a></h2>
+<p>In addition to strict equality, it is possible to test for near
+equality of floating point numbers using <tt class="xref py py-func docutils literal"><span class="pre">failIfAlmostEqual()</span></tt>
+and <tt class="xref py py-func docutils literal"><span class="pre">failUnlessAlmostEqual()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">AlmostEqualTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testNotAlmostEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failIfAlmostEqual</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.3</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testAlmostEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnlessAlmostEqual</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.3</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The arguments are the values to be compared, and the number of decimal
+places to use for the test.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_almostequal.py
+
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-for-exceptions">
+<h2>Testing for Exceptions<a class="headerlink" href="#testing-for-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>As previously mentioned, if a test raises an exception other than
+<a class="reference internal" href="../exceptions/index.html#exceptions-assertionerror"><em>AssertionError</em></a> it is treated as an
+error. This is very useful for uncovering mistakes while you are
+modifying code which has existing test coverage. There are
+circumstances, however, in which you want the test to verify that some
+code does produce an exception. For example, if an invalid value is
+given to an attribute of an object. In such cases,
+<tt class="xref py py-func docutils literal"><span class="pre">failUnlessRaises()</span></tt> makes the code more clear than trapping the
+exception yourself. Compare these two tests:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">def</span> <span class="nf">raises_error</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwds</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid value: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwds</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">ExceptionTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">testTrapLocally</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">raises_error</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s">&#39;c&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s">&#39;Did not see ValueError&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testFailUnlessRaises</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnlessRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">raises_error</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s">&#39;c&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The results for both are the same, but the second test using
+<tt class="xref py py-func docutils literal"><span class="pre">failUnlessRaises()</span></tt> is more succinct.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_exception.py -v
+
+testFailUnlessRaises (__main__.ExceptionTest) ... ok
+testTrapLocally (__main__.ExceptionTest) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+(&#39;a&#39;,) {&#39;b&#39;: &#39;c&#39;}
+(&#39;a&#39;,) {&#39;b&#39;: &#39;c&#39;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-fixtures">
+<h2>Test Fixtures<a class="headerlink" href="#test-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>Fixtures are resources needed by a test. For example, if you are
+writing several tests for the same class, those tests all need an
+instance of that class to use for testing. Other test fixtures include
+database connections and temporary files (many people would argue that
+using external resources makes such tests not &#8220;unit&#8221; tests, but they
+are still tests and still useful).  <tt class="xref py py-class docutils literal"><span class="pre">TestCase</span></tt> includes a
+special hook to configure and clean up any fixtures needed by your
+tests. To configure the fixtures, override <tt class="xref py py-func docutils literal"><span class="pre">setUp()</span></tt>. To clean
+up, override <tt class="xref py py-func docutils literal"><span class="pre">tearDown()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">FixturesTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;In setUp()&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixture</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;In tearDown()&#39;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixture</span>
+
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;in test()&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnlessEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fixture</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When this sample test is run, you can see the order of execution of the
+fixture and test methods:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python unittest_fixtures.py
+
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+In setUp()
+in test()
+In tearDown()
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-suites">
+<h2>Test Suites<a class="headerlink" href="#test-suites" title="Permalink to this headline">¶</a></h2>
+<p>The standard library documentation describes how to organize test
+suites manually. I generally do not use test suites directly, because
+I prefer to build the suites automatically (these are automated tests,
+after all).  Automating the construction of test suites is especially
+useful for large code bases, in which related tests are not all in the
+same place. Tools such as nose make it easier to manage tests when
+they are spread over multiple files and directories.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/unittest.html">unittest</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../doctest/index.html#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a></dt>
+<dd>An alternate means of running tests embedded in docstrings or
+external documentation files.</dd>
+<dt><a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/">nose</a></dt>
+<dd>A more sophisticated test manager.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/unittest2">unittest2</a></dt>
+<dd>Ongoing improvements to <a class="reference internal" href="#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a></dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pdb/index.html" title="pdb – Interactive Debugger"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../pydoc/index.html" title="pydoc – Online help for Python modules"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../dev_tools.html" >Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

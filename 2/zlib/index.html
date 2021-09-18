@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zlib &#8211; Low-level access to GNU zlib compression library - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Compression and Archiving" href="../compression.html" />
+    <link rel="next" title="Data Persistence" href="../persistence.html" />
+    <link rel="prev" title="zipfile – Read and write ZIP archive files" href="../zipfile/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">zlib &#8211; Low-level access to GNU zlib compression library</a><ul>
+<li><a class="reference internal" href="#working-with-data-in-memory">Working with Data in Memory</a></li>
+<li><a class="reference internal" href="#working-with-streams">Working with Streams</a></li>
+<li><a class="reference internal" href="#mixed-content-streams">Mixed Content Streams</a></li>
+<li><a class="reference internal" href="#checksums">Checksums</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../zipfile/index.html" title="previous chapter"><strong>Previous:</strong> zipfile &#8211; Read and write ZIP archive files</a><br/>
+          <a href="../persistence.html" title="next chapter"><strong>Next:</strong> Data Persistence</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/zlib/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../persistence.html" title="Data Persistence"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../zipfile/index.html" title="zipfile – Read and write ZIP archive files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" accesskey="U">Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-zlib">
+<span id="zlib-low-level-access-to-gnu-zlib-compression-library"></span><h1>zlib &#8211; Low-level access to GNU zlib compression library<a class="headerlink" href="#module-zlib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Low-level access to GNU zlib compression library</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.5 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a> module provides a lower-level interface to many of the
+functions in the <a class="reference internal" href="#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a> compression library from GNU.</p>
+<div class="section" id="working-with-data-in-memory">
+<h2>Working with Data in Memory<a class="headerlink" href="#working-with-data-in-memory" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to work with <a class="reference internal" href="#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a> requires holding all of the
+data to be compressed or decompressed in memory, and then using
+<tt class="xref py py-func docutils literal"><span class="pre">compress()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">decompress()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zlib</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="s">&#39;This is the original text.&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Original     :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">original_data</span><span class="p">),</span> <span class="n">original_data</span>
+
+<span class="n">compressed</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Compressed   :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed</span><span class="p">),</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+
+<span class="n">decompressed</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Decompressed :&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">decompressed</span><span class="p">),</span> <span class="n">decompressed</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python zlib_memory.py
+
+Original     : 26 This is the original text.
+Compressed   : 32 789c0bc9c82c5600a2928c5485fca2ccf4ccbcc41c8592d48a123d007f2f097e
+Decompressed : 26 This is the original text.
+</pre></div>
+</div>
+<p>Notice that for short text, the compressed version can be longer.
+While the actual results depend on the input data, for short bits of
+text it is interesting to observe the compression overhead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zlib</span>
+
+<span class="n">original_data</span> <span class="o">=</span> <span class="s">&#39;This is the original text.&#39;</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%15s</span><span class="s">  </span><span class="si">%15s</span><span class="s">&#39;</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;len(data)&#39;</span><span class="p">,</span> <span class="s">&#39;len(compressed)&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">,</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">original_data</span> <span class="o">*</span> <span class="n">i</span>
+    <span class="n">compressed</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>    
+    <span class="k">print</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed</span><span class="p">)),</span> <span class="s">&#39;*&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python zlib_lengths.py
+
+      len(data)  len(compressed)
+---------------  ---------------
+              0                8 *
+             26               32 *
+             52               35
+             78               35
+            104               36
+            130               36
+            156               36
+            182               36
+            208               36
+            234               36
+            260               36
+            286               36
+            312               37
+            338               37
+            364               38
+            390               38
+            416               38
+            442               38
+            468               38
+            494               38
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-streams">
+<h2>Working with Streams<a class="headerlink" href="#working-with-streams" title="Permalink to this headline">¶</a></h2>
+<p>The in-memory approach has obvious drawbacks that make it impractical
+for real-world use cases.  The alternative is to use <tt class="xref py py-class docutils literal"><span class="pre">Compress</span></tt>
+and <tt class="xref py py-class docutils literal"><span class="pre">Decompress</span></tt> objects to manipulate streams of data, so that
+the entire data set does not have to fit into memory.</p>
+<p>The simple server below responds to requests consisting of filenames
+by writing a compressed version of the file to the socket used to
+communicate with the client.  It has some artificial chunking in place
+to illustrate the buffering behavior that happens when the data passed
+to <tt class="xref py py-func docutils literal"><span class="pre">compress()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">decompress()</span></tt> doesn&#8217;t result in a
+complete block of compressed or uncompressed output.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This server has obvious security implications.  Do not run it on a
+system on the open internet or in any environment where security
+might be an issue.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="k">class</span> <span class="nc">ZlibRequestHandler</span><span class="p">(</span><span class="n">SocketServer</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;Server&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">compressor</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compressobj</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c"># Find out what file the client wants</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;client asked for: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        
+        <span class="c"># Send chunks of the file as they are compressed</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">input</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>            
+                <span class="n">block</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;RAW &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+                <span class="n">compressed</span> <span class="o">=</span> <span class="n">compressor</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">compressed</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;SENDING &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">compressed</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;BUFFERING&#39;</span><span class="p">)</span>
+        
+        <span class="c"># Send any data being buffered by the compressor</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">compressor</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">remaining</span><span class="p">:</span>
+            <span class="n">to_send</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[:</span><span class="n">BLOCK_SIZE</span><span class="p">]</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[</span><span class="n">BLOCK_SIZE</span><span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;FLUSHING &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">to_send</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">to_send</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="kn">import</span> <span class="nn">threading</span>
+    <span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+                        <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(name)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+                        <span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;Client&#39;</span><span class="p">)</span>
+
+    <span class="c"># Set up a server, running in a separate thread</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># let the kernel give us a port</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">SocketServer</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">ZlibRequestHandler</span><span class="p">)</span>
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span> <span class="c"># find out what port we were given</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c"># Connect to the server</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Contacting server on </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+    <span class="c"># Ask for a file</span>
+    <span class="n">requested_file</span> <span class="o">=</span> <span class="s">&#39;lorem.txt&#39;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;sending filename: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">requested_file</span><span class="p">)</span>
+    <span class="n">len_sent</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">requested_file</span><span class="p">)</span>
+
+    <span class="c"># Receive a response</span>
+    <span class="nb">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">decompressor</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">()</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;READ &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+
+        <span class="c"># Include any unconsumed data when feeding the decompressor.</span>
+        <span class="n">to_decompress</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">unconsumed_tail</span> <span class="o">+</span> <span class="n">response</span>
+        <span class="k">while</span> <span class="n">to_decompress</span><span class="p">:</span>
+            <span class="n">decompressed</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">to_decompress</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">decompressed</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;DECOMPRESSED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">decompressed</span><span class="p">)</span>
+                <span class="nb">buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">decompressed</span><span class="p">)</span>
+                <span class="c"># Look for unconsumed data due to buffer overflow</span>
+                <span class="n">to_decompress</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">unconsumed_tail</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;BUFFERING&#39;</span><span class="p">)</span>
+                <span class="n">to_decompress</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c"># deal with data reamining inside the decompressor buffer</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">remainder</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;FLUSHED &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span><span class="p">,</span> <span class="n">remainder</span><span class="p">)</span>
+        <span class="nb">buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">reaminder</span><span class="p">)</span>
+    
+    <span class="n">full_response</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+    <span class="n">lorem</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;response matches file contents: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">full_response</span> <span class="o">==</span> <span class="n">lorem</span><span class="p">)</span>
+
+    <span class="c"># Clean up</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python zlib_server.py
+
+Client: Contacting server on 127.0.0.1:56229
+Client: sending filename: &quot;lorem.txt&quot;
+Server: client asked for: &quot;lorem.txt&quot;
+Server: RAW &quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+&quot;
+Server: SENDING &quot;7801&quot;
+Server: RAW &quot;egestas, enim et consectetuer ullamcorper, lectus ligula rutrum &quot;
+Server: BUFFERING
+Client: READ &quot;7801&quot;
+Server: RAW &quot;leo, a
+elementum elit tortor eu quam. Duis tincidunt nisi ut ant&quot;
+Client: BUFFERING
+Server: BUFFERING
+Server: RAW &quot;e. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque ve&quot;
+Server: BUFFERING
+Server: RAW &quot;l arcu. Vivamus
+purus orci, iaculis ac, suscipit sit amet, pulvi&quot;
+Server: BUFFERING
+Server: RAW &quot;nar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit d&quot;
+Server: BUFFERING
+Server: RAW &quot;iam egestas
+dui. Pellentesque habitant morbi tristique senectus &quot;
+Server: BUFFERING
+Server: RAW &quot;et netus et
+malesuada fames ac turpis egestas. Aliquam viverra f&quot;
+Server: BUFFERING
+Server: RAW &quot;ringilla
+leo. Nulla feugiat augue eleifend nulla. Vivamus mauris&quot;
+Server: BUFFERING
+Server: RAW &quot;. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse poten&quot;
+Server: BUFFERING
+Server: RAW &quot;ti. Mauris massa. Ut
+eget velit auctor tortor blandit sollicitud&quot;
+Server: BUFFERING
+Server: RAW &quot;in. Suspendisse imperdiet
+justo.
+&quot;
+Server: BUFFERING
+Server: FLUSHING &quot;5592418edb300c45f73e050f60f80e05ba6c8b0245bb676426c382923c22e9f3f70bc94c1ac00b9b963eff7fe4b73ea4921e9e95f66e7d906b105789954a6f2e&quot;
+Server: FLUSHING &quot;25245206f1ae877ad17623318d8dbef62665919b78b0af244d2b49bc5e4a33aea58f43c64a06ad7432bda5318d8c819e267d255ec4a44a0b14a638451f784892&quot;
+Client: READ &quot;5592418edb300c45f73e050f60f80e05ba6c8b0245bb676426c382923c22e9f3f70bc94c1ac00b9b963eff7fe4b73ea4921e9e95f66e7d906b105789954a6f2e&quot;
+Server: FLUSHING &quot;de932b7aa53a85b6a27bb6a0a6ae94b0d94236fa31bb2c572e6aa86ff44b768aa11efa9e4232ba4f21d30b5e37fa2966e8243e7f9e62c4a3e4467ff4e49abe1c&quot;
+Client: DECOMPRESSED &quot;Lorem ipsum dolor sit amet, conse&quot;
+Server: FLUSHING &quot;39e0b18fa22b299784247159c913d90f587be239d24e6d3c6dae8be1ac437db038e4e94041067f467198826d9b765ba18b71dba1b62b23f29de1b227dcbff87b&quot;
+Client: READ &quot;25245206f1ae877ad17623318d8dbef62665919b78b0af244d2b49bc5e4a33aea58f43c64a06ad7432bda5318d8c819e267d255ec4a44a0b14a638451f784892&quot;
+Server: FLUSHING &quot;e38b065252ede3a2ffa5428f3b4d106f181022c652d9c49377a62b06387d53e4c0d43e3a6cf4c500052d4f3d650c1c1c18a84e7e18c403255d256f0aeb9cb709&quot;
+Client: DECOMPRESSED &quot;ctetuer adipiscing elit. Donec
+egestas, enim et consectetuer ullamcorper, lectus ligula rutrum leo, a
+elementum elit tortor eu&quot;
+Server: FLUSHING &quot;d044afd2607f72fe24459513909fdf480807b346da90f5f2f684f04888d9a41fd05277a1a3074821f2f7fbadcaeed0ff1d73a962ce666e6296b9098f85f8c0e6&quot;
+Client: READ &quot;de932b7aa53a85b6a27bb6a0a6ae94b0d94236fa31bb2c572e6aa86ff44b768aa11efa9e4232ba4f21d30b5e37fa2966e8243e7f9e62c4a3e4467ff4e49abe1c&quot;
+Server: FLUSHING &quot;dd4c8b46eeda5e45b562d776058dbfe9d1b7e51f6f370ea5&quot;
+Client: DECOMPRESSED &quot; quam. Duis tincidunt nisi ut ante. Nulla
+facilisi. Sed tristique eros eu libero. Pellentesque vel arcu. Vivamus
+p&quot;
+Client: READ &quot;39e0b18fa22b299784247159c913d90f587be239d24e6d3c6dae8be1ac437db038e4e94041067f467198826d9b765ba18b71dba1b62b23f29de1b227dcbff87b&quot;
+Client: DECOMPRESSED &quot;urus orci, iaculis ac, suscipit sit amet, pulvinar eu,
+lacus. Praesent placerat tortor sed nisl. Nunc blandit diam egestas
+dui. Pellentesque &quot;
+Client: READ &quot;e38b065252ede3a2ffa5428f3b4d106f181022c652d9c49377a62b06387d53e4c0d43e3a6cf4c500052d4f3d650c1c1c18a84e7e18c403255d256f0aeb9cb709&quot;
+Client: DECOMPRESSED &quot;habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Aliquam viverra fringilla
+leo. Nulla feugiat aug&quot;
+Client: READ &quot;d044afd2607f72fe24459513909fdf480807b346da90f5f2f684f04888d9a41fd05277a1a3074821f2f7fbadcaeed0ff1d73a962ce666e6296b9098f85f8c0e6&quot;
+Client: DECOMPRESSED &quot;ue eleifend nulla. Vivamus mauris. Vivamus sed
+mauris in nibh placerat egestas. Suspendisse potenti. Mauris massa. Ut
+eget velit auctor tortor blandit s&quot;
+Client: READ &quot;dd4c8b46eeda5e45b562d776058dbfe9d1b7e51f6f370ea5&quot;
+Client: DECOMPRESSED &quot;ollicitudin. Suspendisse imperdiet
+justo.
+&quot;
+Client: response matches file contents: True
+</pre></div>
+</div>
+</div>
+<div class="section" id="mixed-content-streams">
+<h2>Mixed Content Streams<a class="headerlink" href="#mixed-content-streams" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">Decompress</span></tt> class returned by <tt class="xref py py-func docutils literal"><span class="pre">decompressobj()</span></tt> can
+also be used in situations where compressed and uncompressed data is
+mixed together.  After decompressing all of the data, the
+<em>unused_data</em> attribute contains any data not used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zlib</span>
+
+<span class="n">lorem</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">compressed</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">lorem</span><span class="p">)</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">compressed</span> <span class="o">+</span> <span class="n">lorem</span>
+
+<span class="n">decompressor</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">()</span>
+<span class="n">decompressed</span> <span class="o">=</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">combined</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Decompressed matches lorem:&#39;</span><span class="p">,</span> <span class="n">decompressed</span> <span class="o">==</span> <span class="n">lorem</span>
+<span class="k">print</span> <span class="s">&#39;Unused data matches lorem :&#39;</span><span class="p">,</span> <span class="n">decompressor</span><span class="o">.</span><span class="n">unused_data</span> <span class="o">==</span> <span class="n">lorem</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python zlib_mixed.py
+
+Decompressed matches lorem: True
+Unused data matches lorem : True
+</pre></div>
+</div>
+</div>
+<div class="section" id="checksums">
+<h2>Checksums<a class="headerlink" href="#checksums" title="Permalink to this headline">¶</a></h2>
+<p>In addition to compression and decompression functions, <a class="reference internal" href="#module-zlib" title="zlib: Low-level access to GNU zlib compression library"><tt class="xref py py-mod docutils literal"><span class="pre">zlib</span></tt></a>
+includes two functions for computing checksums of data,
+<tt class="xref py py-func docutils literal"><span class="pre">adler32()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">crc32()</span></tt>.  Neither checksum is billed as
+cryptographically secure, and they are only intended for use for data
+integrity verification.</p>
+<p>Both functions take the same arguments, a string of data and an
+optional value to be used as a starting point for the checksum.  They
+return a 32-bit signed integer value which can also be passed back on
+subsequent calls as a new starting point argument to produce a
+<em>running</em> checksum.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">zlib</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;lorem.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">cksum</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Adler32: </span><span class="si">%12d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">cksum</span>
+<span class="k">print</span> <span class="s">&#39;       : </span><span class="si">%12d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cksum</span><span class="p">)</span>
+
+<span class="n">cksum</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">crc32</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;CRC-32 : </span><span class="si">%12d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">cksum</span>
+<span class="k">print</span> <span class="s">&#39;       : </span><span class="si">%12d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">zlib</span><span class="o">.</span><span class="n">crc32</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cksum</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python zlib_checksums.py
+
+Adler32:   1865879205
+       :    118955337
+CRC-32 :   1878123957
+       :  -1940264325
+</pre></div>
+</div>
+<p>The Adler32 algorithm is said to be faster than a standard CRC, but I
+found it to be slower in my own tests.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">timeit</span>
+
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="k">def</span> <span class="nf">show_results</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+    <span class="s">&quot;Print results in terms of microseconds per pass and per item.&quot;</span>
+    <span class="n">per_pass</span> <span class="o">=</span> <span class="mi">1000000</span> <span class="o">*</span> <span class="p">(</span><span class="n">result</span> <span class="o">/</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">:</span><span class="se">\t</span><span class="si">%.2f</span><span class="s"> usec/pass&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">per_pass</span><span class="p">)</span>
+
+
+<span class="n">adler32</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span>
+    <span class="n">stmt</span><span class="o">=</span><span class="s">&quot;zlib.adler32(data)&quot;</span><span class="p">,</span>
+    <span class="n">setup</span><span class="o">=</span><span class="s">&quot;import zlib; data=open(&#39;lorem.txt&#39;,&#39;r&#39;).read() * 10&quot;</span><span class="p">,</span> 
+    <span class="p">)</span>
+<span class="n">show_results</span><span class="p">(</span><span class="s">&#39;Adler32, separate&#39;</span><span class="p">,</span> <span class="n">adler32</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">iterations</span><span class="p">),</span> <span class="n">iterations</span><span class="p">)</span>
+
+<span class="n">adler32_running</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span>
+    <span class="n">stmt</span><span class="o">=</span><span class="s">&quot;cksum = zlib.adler32(data, cksum)&quot;</span><span class="p">,</span>
+    <span class="n">setup</span><span class="o">=</span><span class="s">&quot;import zlib; data=open(&#39;lorem.txt&#39;,&#39;r&#39;).read() * 10; cksum = zlib.adler32(data)&quot;</span><span class="p">,</span> 
+    <span class="p">)</span>
+<span class="n">show_results</span><span class="p">(</span><span class="s">&#39;Adler32, running&#39;</span><span class="p">,</span> <span class="n">adler32_running</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">iterations</span><span class="p">),</span> <span class="n">iterations</span><span class="p">)</span>
+
+<span class="n">crc32</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span>
+    <span class="n">stmt</span><span class="o">=</span><span class="s">&quot;zlib.crc32(data)&quot;</span><span class="p">,</span>
+    <span class="n">setup</span><span class="o">=</span><span class="s">&quot;import zlib; data=open(&#39;lorem.txt&#39;,&#39;r&#39;).read() * 10&quot;</span><span class="p">,</span> 
+    <span class="p">)</span>
+<span class="n">show_results</span><span class="p">(</span><span class="s">&#39;CRC-32, separate&#39;</span><span class="p">,</span> <span class="n">crc32</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">iterations</span><span class="p">),</span> <span class="n">iterations</span><span class="p">)</span>
+
+<span class="n">crc32_running</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span>
+    <span class="n">stmt</span><span class="o">=</span><span class="s">&quot;cksum = zlib.crc32(data, cksum)&quot;</span><span class="p">,</span>
+    <span class="n">setup</span><span class="o">=</span><span class="s">&quot;import zlib; data=open(&#39;lorem.txt&#39;,&#39;r&#39;).read() * 10; cksum = zlib.crc32(data)&quot;</span><span class="p">,</span> 
+    <span class="p">)</span>
+<span class="n">show_results</span><span class="p">(</span><span class="s">&#39;CRC-32, running&#39;</span><span class="p">,</span> <span class="n">crc32_running</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">iterations</span><span class="p">),</span> <span class="n">iterations</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python zlib_checksum_tests.py
+
+Adler32, separate:      1.07 usec/pass
+Adler32, running:       1.10 usec/pass
+CRC-32, separate:       9.78 usec/pass
+CRC-32, running:        9.73 usec/pass
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/zlib.html">zlib</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../gzip/index.html#module-gzip" title="gzip: Read and write gzip files"><tt class="xref py py-mod docutils literal"><span class="pre">gzip</span></tt></a></dt>
+<dd>The gzip module includes a higher level (file-based) interface to the zlib library.</dd>
+<dt><a class="reference external" href="http://www.zlib.net/">http://www.zlib.net/</a></dt>
+<dd>Home page for zlib library.</dd>
+<dt><a class="reference external" href="http://www.zlib.net/manual.html">http://www.zlib.net/manual.html</a></dt>
+<dd>Complete zlib documentation.</dd>
+<dt><a class="reference internal" href="../bz2/index.html#module-bz2" title="bz2: bzip2 compression"><tt class="xref py py-mod docutils literal"><span class="pre">bz2</span></tt></a></dt>
+<dd>The bz2 module provides a similar interface to the bzip2 compression library.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../persistence.html" title="Data Persistence"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../zipfile/index.html" title="zipfile – Read and write ZIP archive files"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../compression.html" >Data Compression and Archiving</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

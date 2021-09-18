@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>glob &#8211; Filename pattern matching - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="fnmatch – Compare filenames against Unix-style glob patterns." href="../fnmatch/index.html" />
+    <link rel="prev" title="tempfile – Create temporary filesystem resources." href="../tempfile/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">glob &#8211; Filename pattern matching</a><ul>
+<li><a class="reference internal" href="#example-data">Example Data</a></li>
+<li><a class="reference internal" href="#wildcards">Wildcards</a></li>
+<li><a class="reference internal" href="#single-character-wildcard">Single Character Wildcard</a></li>
+<li><a class="reference internal" href="#character-ranges">Character Ranges</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../tempfile/index.html" title="previous chapter"><strong>Previous:</strong> tempfile &#8211; Create temporary filesystem resources.</a><br/>
+          <a href="../fnmatch/index.html" title="next chapter"><strong>Next:</strong> fnmatch &#8211; Compare filenames against Unix-style glob patterns.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/glob/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../fnmatch/index.html" title="fnmatch – Compare filenames against Unix-style glob patterns."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../tempfile/index.html" title="tempfile – Create temporary filesystem resources."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-glob">
+<span id="glob-filename-pattern-matching"></span><h1>glob &#8211; Filename pattern matching<a class="headerlink" href="#module-glob" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Use Unix shell rules to fine filenames matching a pattern.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4</td>
+</tr>
+</tbody>
+</table>
+<p>Even though the glob API is very simple, the module packs a lot of
+power. It is useful in any situation where your program needs to look
+for a list of files on the filesystem with names matching a
+pattern. If you need a list of filenames that all have a certain
+extension, prefix, or any common string in the middle, use <a class="reference internal" href="#module-glob" title="glob: Use Unix shell rules to fine filenames matching a pattern."><tt class="xref py py-mod docutils literal"><span class="pre">glob</span></tt></a>
+instead of writing code to scan the directory contents yourself.</p>
+<p>The pattern rules for glob are not regular expressions. Instead, they
+follow standard Unix path expansion rules. There are only a few
+special characters: two different wild-cards, and character ranges are
+supported. The patterns rules are applied to segments of the filename
+(stopping at the path separator, <tt class="docutils literal"><span class="pre">/</span></tt>). Paths in the pattern can be
+relative or absolute. Shell variable names and tilde (<tt class="docutils literal"><span class="pre">~</span></tt>) are not
+expanded.</p>
+<div class="section" id="example-data">
+<h2>Example Data<a class="headerlink" href="#example-data" title="Permalink to this headline">¶</a></h2>
+<p>The examples below assume the following test files are present in the
+current working directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python glob_maketestdata.py
+
+dir
+dir/file.txt
+dir/file1.txt
+dir/file2.txt
+dir/filea.txt
+dir/fileb.txt
+dir/subdir
+dir/subdir/subfile.txt
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Use <tt class="docutils literal"><span class="pre">glob_maketestdata.py</span></tt> in the sample code to create these
+files if you want to run the examples.</p>
+</div>
+</div>
+<div class="section" id="wildcards">
+<h2>Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline">¶</a></h2>
+<p>An asterisk (<tt class="docutils literal"><span class="pre">*</span></tt>) matches zero or more characters in a segment of a
+name. For example, <tt class="docutils literal"><span class="pre">dir/*</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;dir/*&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>The pattern matches every pathname (file or directory) in the directory dir,
+without recursing further into subdirectories.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python glob_asterisk.py
+
+dir/file.txt
+dir/file1.txt
+dir/file2.txt
+dir/filea.txt
+dir/fileb.txt
+dir/subdir
+</pre></div>
+</div>
+<p>To list files in a subdirectory, you must include the subdirectory in the
+pattern:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="k">print</span> <span class="s">&#39;Named explicitly:&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;dir/subdir/*&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">name</span>
+
+<span class="k">print</span> <span class="s">&#39;Named with wildcard:&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;dir/*/*&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>The first case above lists the subdirectory name explicitly, while the second
+case depends on a wildcard to find the directory.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python glob_subdir.py
+
+Named explicitly:
+        dir/subdir/subfile.txt
+Named with wildcard:
+        dir/subdir/subfile.txt
+</pre></div>
+</div>
+<p>The results, in this case, are the same. If there was another subdirectory,
+the wildcard would match both subdirectories and include the filenames from
+both.</p>
+</div>
+<div class="section" id="single-character-wildcard">
+<h2>Single Character Wildcard<a class="headerlink" href="#single-character-wildcard" title="Permalink to this headline">¶</a></h2>
+<p>The other wildcard character supported is the question mark
+(<tt class="docutils literal"><span class="pre">?</span></tt>). It matches any single character in that position in the
+name. For example,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;dir/file?.txt&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>Matches all of the filenames which begin with &#8220;file&#8221;, have one more character
+of any type, then end with &#8221;.txt&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python glob_question.py
+
+dir/file1.txt
+dir/file2.txt
+dir/filea.txt
+dir/fileb.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="character-ranges">
+<h2>Character Ranges<a class="headerlink" href="#character-ranges" title="Permalink to this headline">¶</a></h2>
+<p>When you need to match a specific character, use a character range instead of
+a question mark. For example, to find all of the files which have a digit in
+the name before the extension:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">glob</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&#39;dir/*[0-9].*&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>The character range <tt class="docutils literal"><span class="pre">[0-9]</span></tt> matches any single digit. The range is
+ordered based on the character code for each letter/digit, and the
+dash indicates an unbroken range of sequential characters. The same
+range value could be written <tt class="docutils literal"><span class="pre">[0123456789]</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python glob_charrange.py
+
+dir/file1.txt
+dir/file2.txt
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/glob.html">glob</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.opengroup.org/onlinepubs/000095399/utilities/xcu_chap02.html#tag_02_13">Pattern Matching Notation</a></dt>
+<dd>An explanation of globbing from The Open Group&#8217;s Shell Command Language specification.</dd>
+<dt><a class="reference internal" href="../fnmatch/index.html#module-fnmatch" title="fnmatch: Compare filenames against Unix-style glob patterns."><tt class="xref py py-mod docutils literal"><span class="pre">fnmatch</span></tt></a></dt>
+<dd>Filename matching implementation.</dd>
+<dt><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></dt>
+<dd>Other tools for working with files.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../fnmatch/index.html" title="fnmatch – Compare filenames against Unix-style glob patterns."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../tempfile/index.html" title="tempfile – Create temporary filesystem resources."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>tempfile &#8211; Create temporary filesystem resources. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="File and Directory Access" href="../file_access.html" />
+    <link rel="next" title="glob – Filename pattern matching" href="../glob/index.html" />
+    <link rel="prev" title="filecmp – Compare files" href="../filecmp/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">tempfile &#8211; Create temporary filesystem resources.</a><ul>
+<li><a class="reference internal" href="#temporaryfile">TemporaryFile</a></li>
+<li><a class="reference internal" href="#namedtemporaryfile">NamedTemporaryFile</a></li>
+<li><a class="reference internal" href="#mkdtemp">mkdtemp</a></li>
+<li><a class="reference internal" href="#predicting-names">Predicting Names</a></li>
+<li><a class="reference internal" href="#temporary-file-location">Temporary File Location</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../filecmp/index.html" title="previous chapter"><strong>Previous:</strong> filecmp &#8211; Compare files</a><br/>
+          <a href="../glob/index.html" title="next chapter"><strong>Next:</strong> glob &#8211; Filename pattern matching</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/tempfile/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../glob/index.html" title="glob – Filename pattern matching"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../filecmp/index.html" title="filecmp – Compare files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" accesskey="U">File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-tempfile">
+<span id="tempfile-create-temporary-filesystem-resources"></span><h1>tempfile &#8211; Create temporary filesystem resources.<a class="headerlink" href="#module-tempfile" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Create temporary filesystem resources.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">Since 1.4 with major security revisions in 2.3</td>
+</tr>
+</tbody>
+</table>
+<p>Many programs need to create files to write intermediate
+data. Creating files with unique names securely, so they cannot be
+guessed by someone wanting to break the application, is
+challenging. The <a class="reference internal" href="#module-tempfile" title="tempfile: Create temporary filesystem resources."><tt class="xref py py-mod docutils literal"><span class="pre">tempfile</span></tt></a> module provides several functions for
+creating filesystem resources securely. <tt class="xref py py-func docutils literal"><span class="pre">TemporaryFile()</span></tt> opens
+and returns an un-named file, <tt class="xref py py-func docutils literal"><span class="pre">NamedTemporaryFile()</span></tt> opens and
+returns a named file, and <tt class="xref py py-func docutils literal"><span class="pre">mkdtemp()</span></tt> creates a temporary
+directory and returns its name.</p>
+<div class="section" id="temporaryfile">
+<h2>TemporaryFile<a class="headerlink" href="#temporaryfile" title="Permalink to this headline">¶</a></h2>
+<p>If your application needs a temporary file to store data, but does not
+need to share that file with other programs, the best option for
+creating the file is the <tt class="xref py py-func docutils literal"><span class="pre">TemporaryFile()</span></tt> function. It creates
+a file, and on platforms where it is possible, unlinks it
+immediately. This makes it impossible for another program to find or
+open the file, since there is no reference to it in the filesystem
+table. The file created by <tt class="xref py py-func docutils literal"><span class="pre">TemporaryFile()</span></tt> is removed
+automatically when it is closed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="k">print</span> <span class="s">&#39;Building a file name yourself:&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/guess_my_name.</span><span class="si">%s</span><span class="s">.txt&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w+b&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;temp:&#39;</span><span class="p">,</span> <span class="n">temp</span>
+    <span class="k">print</span> <span class="s">&#39;temp.name:&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">name</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c"># Clean up the temporary file yourself</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;TemporaryFile:&#39;</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;temp:&#39;</span><span class="p">,</span> <span class="n">temp</span>
+    <span class="k">print</span> <span class="s">&#39;temp.name:&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">name</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c"># Automatically cleans up the file</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example illustrates the difference in creating a temporary file
+using a common pattern for making up a name, versus using the
+<tt class="xref py py-func docutils literal"><span class="pre">TemporaryFile()</span></tt> function. Notice that the file returned by
+<tt class="xref py py-func docutils literal"><span class="pre">TemporaryFile()</span></tt> has no name.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_TemporaryFile.py
+
+Building a file name yourself:
+temp: &lt;open file &#39;/tmp/guess_my_name.14891.txt&#39;, mode &#39;w+b&#39; at 0x100458270&gt;
+temp.name: /tmp/guess_my_name.14891.txt
+
+TemporaryFile:
+temp: &lt;open file &#39;&lt;fdopen&gt;&#39;, mode &#39;w+b&#39; at 0x100458780&gt;
+temp.name: &lt;fdopen&gt;
+</pre></div>
+</div>
+<p>By default, the file handle is created with mode <tt class="docutils literal"><span class="pre">'w+b'</span></tt> so it
+behaves consistently on all platforms and your program can write to it
+and read from it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">temp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Some data&#39;</span><span class="p">)</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">print</span> <span class="n">temp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>After writing, you have to rewind the file handle using <tt class="xref py py-func docutils literal"><span class="pre">seek()</span></tt>
+in order to read the data back from it.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_TemporaryFile_binary.py
+
+Some data
+</pre></div>
+</div>
+<p>If you want the file to work in text mode, set <em>mode</em> to <tt class="docutils literal"><span class="pre">'w+t'</span></tt>
+when you create it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;w+t&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">([</span><span class="s">&#39;first</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;second</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">])</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The file handle treats the data as text:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_TemporaryFile_text.py
+
+first
+second
+</pre></div>
+</div>
+</div>
+<div class="section" id="namedtemporaryfile">
+<h2>NamedTemporaryFile<a class="headerlink" href="#namedtemporaryfile" title="Permalink to this headline">¶</a></h2>
+<p>There are situations, however, where having a named temporary file is
+important. If your application spans multiple processes, or even
+hosts, naming the file is the simplest way to pass it between parts of
+the application. The <tt class="xref py py-func docutils literal"><span class="pre">NamedTemporaryFile()</span></tt> function creates a
+file with a name, accessed from the name attribute.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">temp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;temp:&#39;</span><span class="p">,</span> <span class="n">temp</span>
+    <span class="k">print</span> <span class="s">&#39;temp.name:&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">name</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c"># Automatically cleans up the file</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Exists after close:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Even though the file is named, it is still removed after the handle is
+closed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_NamedTemporaryFile.py
+
+temp: &lt;open file &#39;&lt;fdopen&gt;&#39;, mode &#39;w+b&#39; at 0x100458270&gt;
+temp.name: /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpIIkknb
+Exists after close: False
+</pre></div>
+</div>
+</div>
+<div class="section" id="mkdtemp">
+<h2>mkdtemp<a class="headerlink" href="#mkdtemp" title="Permalink to this headline">¶</a></h2>
+<p>If you need several temporary files, it may be more convenient to
+create a single temporary directory and then open all of the files in
+that directory.  To create a temporary directory, use
+<tt class="xref py py-func docutils literal"><span class="pre">mkdtemp()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">directory_name</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">directory_name</span>
+<span class="c"># Clean up the directory yourself</span>
+<span class="n">os</span><span class="o">.</span><span class="n">removedirs</span><span class="p">(</span><span class="n">directory_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since the directory is not &#8220;opened&#8221; per se, you have to remove it
+yourself when you are done with it.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_mkdtemp.py
+
+/var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpE4plSY
+</pre></div>
+</div>
+</div>
+<div class="section" id="predicting-names">
+<h2>Predicting Names<a class="headerlink" href="#predicting-names" title="Permalink to this headline">¶</a></h2>
+<p>For debugging purposes, it is useful to be able to include some
+indication of the origin of the temporary files. While obviously less
+secure than strictly anonymous temporary files, including a
+predictable portion in the name lets you find the file to examine it
+while your program is using it. All of the functions described so far
+take three arguments to allow you to control the filenames to some
+degree. Names are generated using the formula:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">dir</span> <span class="o">+</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">random</span> <span class="o">+</span> <span class="n">suffix</span>
+</pre></div>
+</div>
+<p>where all of the values except random can be passed as arguments to
+<tt class="xref py py-func docutils literal"><span class="pre">TemporaryFile()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">NamedTemporaryFile()</span></tt>, and
+<tt class="xref py py-func docutils literal"><span class="pre">mkdtemp()</span></tt>. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">temp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s">&#39;_suffix&#39;</span><span class="p">,</span> 
+                                   <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;prefix_&#39;</span><span class="p">,</span> 
+                                   <span class="nb">dir</span><span class="o">=</span><span class="s">&#39;/tmp&#39;</span><span class="p">,</span>
+                                   <span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;temp:&#39;</span><span class="p">,</span> <span class="n">temp</span>
+    <span class="k">print</span> <span class="s">&#39;temp.name:&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">name</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <em>prefix</em> and <em>suffix</em> arguments are combined with a random string
+of characters to build the file name, and the <em>dir</em> argument is taken
+as-is and used as the location of the new file.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_NamedTemporaryFile_args.py
+
+temp: &lt;open file &#39;&lt;fdopen&gt;&#39;, mode &#39;w+b&#39; at 0x100458270&gt;
+temp.name: /tmp/prefix_SMkGcX_suffix
+</pre></div>
+</div>
+</div>
+<div class="section" id="temporary-file-location">
+<h2>Temporary File Location<a class="headerlink" href="#temporary-file-location" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t specify an explicit destination using the <em>dir</em> argument,
+the actual path used for the temporary files will vary based on your
+platform and settings. The tempfile module includes two functions for
+querying the settings being used at runtime:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="k">print</span> <span class="s">&#39;gettempdir():&#39;</span><span class="p">,</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;gettempprefix():&#39;</span><span class="p">,</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempprefix</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">gettempdir()</span></tt> returns the default directory that will hold all
+of the temporary files and <tt class="xref py py-func docutils literal"><span class="pre">gettempprefix()</span></tt> returns the string
+prefix for new file and directory names.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_settings.py
+
+gettempdir(): /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T
+gettempprefix(): tmp
+</pre></div>
+</div>
+<p>The value returned by <tt class="xref py py-func docutils literal"><span class="pre">gettempdir()</span></tt> is set based on a
+straightforward algorithm of looking through a list of locations for
+the first place the current process can create a file. From the
+library documentation:</p>
+<p>Python searches a standard list of directories and sets tempdir to the
+first one which the calling user can create files in. The list is:</p>
+<ol class="arabic simple">
+<li>The directory named by the <tt class="docutils literal"><span class="pre">TMPDIR</span></tt> environment variable.</li>
+<li>The directory named by the <tt class="docutils literal"><span class="pre">TEMP</span></tt> environment variable.</li>
+<li>The directory named by the <tt class="docutils literal"><span class="pre">TMP</span></tt> environment variable.</li>
+<li>A platform-specific location:<ul>
+<li>On RiscOS, the directory named by the <tt class="docutils literal"><span class="pre">Wimp$ScrapDir</span></tt> environment
+variable.</li>
+<li>On Windows, the directories <tt class="docutils literal"><span class="pre">C:\TEMP</span></tt>, <tt class="docutils literal"><span class="pre">C:\TMP</span></tt>, <tt class="docutils literal"><span class="pre">\TEMP</span></tt>,
+and <tt class="docutils literal"><span class="pre">\TMP</span></tt>, in that order.</li>
+<li>On all other platforms, the directories <tt class="docutils literal"><span class="pre">/tmp</span></tt>, <tt class="docutils literal"><span class="pre">/var/tmp</span></tt>,
+and <tt class="docutils literal"><span class="pre">/usr/tmp</span></tt>, in that order.</li>
+</ul>
+</li>
+<li>As a last resort, the current working directory.</li>
+</ol>
+<p>If your program needs to use a global location for all temporary files
+that you need to set explicitly but do not want to set through one of
+these environment variables, you can set <tt class="docutils literal"><span class="pre">tempfile.tempdir</span></tt>
+directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="n">tempfile</span><span class="o">.</span><span class="n">tempdir</span> <span class="o">=</span> <span class="s">&#39;/I/changed/this/path&#39;</span>
+<span class="k">print</span> <span class="s">&#39;gettempdir():&#39;</span><span class="p">,</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python tempfile_tempdir.py
+
+gettempdir(): /I/changed/this/path
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/tempfile.html">tempfile</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></dt>
+<dd>More modules for working with files.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../glob/index.html" title="glob – Filename pattern matching"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../filecmp/index.html" title="filecmp – Compare files"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../file_access.html" >File and Directory Access</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>smtplib &#8211; Simple Mail Transfer Protocol client - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="socket – Network Communication" href="../socket/index.html" />
+    <link rel="prev" title="smtpd – Sample SMTP Servers" href="../smtpd/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">smtplib &#8211; Simple Mail Transfer Protocol client</a><ul>
+<li><a class="reference internal" href="#sending-an-email-message">Sending an Email Message</a></li>
+<li><a class="reference internal" href="#authentication-and-encryption">Authentication and Encryption</a></li>
+<li><a class="reference internal" href="#verifying-an-email-address">Verifying an Email Address</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../smtpd/index.html" title="previous chapter"><strong>Previous:</strong> smtpd &#8211; Sample SMTP Servers</a><br/>
+          <a href="../socket/index.html" title="next chapter"><strong>Next:</strong> socket &#8211; Network Communication</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/smtplib/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../socket/index.html" title="socket – Network Communication"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../smtpd/index.html" title="smtpd – Sample SMTP Servers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-smtplib">
+<span id="smtplib-simple-mail-transfer-protocol-client"></span><h1>smtplib &#8211; Simple Mail Transfer Protocol client<a class="headerlink" href="#module-smtplib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Interact with SMTP servers, including sending email.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-smtplib" title="smtplib: Simple mail transfer protocol client."><tt class="xref py py-mod docutils literal"><span class="pre">smtplib</span></tt></a> includes the class <tt class="xref py py-class docutils literal"><span class="pre">SMTP</span></tt>, which is useful for communicating with mail servers to send mail.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The email addresses, host names, and IP addresses in the following examples have been
+obscured, but otherwise the transcripts illustrate the sequence of commands and responses
+accurately.</p>
+</div>
+<div class="section" id="sending-an-email-message">
+<h2>Sending an Email Message<a class="headerlink" href="#sending-an-email-message" title="Permalink to this headline">¶</a></h2>
+<p>The most common use of <tt class="xref py py-class docutils literal"><span class="pre">SMTP</span></tt> is to connect to a mail server and send a message.  The mail server host name and port can be passed to the constructor, or you can use <tt class="docutils literal"><span class="pre">connect()</span></tt> explicitly.  Once connected, just call <tt class="docutils literal"><span class="pre">sendmail()</span></tt> with the envelope parameters and body of the message.  The message text should be a fully formed <span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2882.html"><strong>RFC 2882</strong></a>-compliant message, since smtplib does not modify the contents or headers at all.  That means you need to add the <tt class="docutils literal"><span class="pre">From</span></tt> and <tt class="docutils literal"><span class="pre">To</span></tt> headers yourself.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">smtplib</span>
+<span class="kn">import</span> <span class="nn">email.utils</span>
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+
+<span class="c"># Create the message</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="s">&#39;This is the body of the message.&#39;</span><span class="p">)</span>
+<span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Recipient&#39;</span><span class="p">,</span> <span class="s">&#39;recipient@example.com&#39;</span><span class="p">))</span>
+<span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Author&#39;</span><span class="p">,</span> <span class="s">&#39;author@example.com&#39;</span><span class="p">))</span>
+<span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Simple test message&#39;</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s">&#39;mail&#39;</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">set_debuglevel</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="c"># show communication with the server</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="s">&#39;author@example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;recipient@example.com&#39;</span><span class="p">],</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example, debugging is also turned on to show the communication between client and server.  Otherwise the example would produce no output at all.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python smtplib_sendmail.py
+send: &#39;ehlo localhost.local\r\n&#39;
+reply: &#39;250-mail.example.com Hello [192.168.1.17], pleased to meet you\r\n&#39;
+reply: &#39;250-ENHANCEDSTATUSCODES\r\n&#39;
+reply: &#39;250-PIPELINING\r\n&#39;
+reply: &#39;250-8BITMIME\r\n&#39;
+reply: &#39;250-SIZE\r\n&#39;
+reply: &#39;250-DSN\r\n&#39;
+reply: &#39;250-ETRN\r\n&#39;
+reply: &#39;250-AUTH GSSAPI DIGEST-MD5 CRAM-MD5\r\n&#39;
+reply: &#39;250-DELIVERBY\r\n&#39;
+reply: &#39;250 HELP\r\n&#39;
+reply: retcode (250); Msg: mail.example.com Hello [192.168.1.17], pleased to meet you
+ENHANCEDSTATUSCODES
+PIPELINING
+8BITMIME
+SIZE
+DSN
+ETRN
+AUTH GSSAPI DIGEST-MD5 CRAM-MD5
+DELIVERBY
+HELP
+send: &#39;mail FROM:&lt;author@example.com&gt; size=266\r\n&#39;
+reply: &#39;250 2.1.0 &lt;author@example.com&gt;... Sender ok\r\n&#39;
+reply: retcode (250); Msg: 2.1.0 &lt;author@example.com&gt;... Sender ok
+send: &#39;rcpt TO:&lt;recipient@example.com&gt;\r\n&#39;
+reply: &#39;250 2.1.5 &lt;recipient@example.com&gt;... Recipient ok\r\n&#39;
+reply: retcode (250); Msg: 2.1.5 &lt;recipient@example.com&gt;... Recipient ok
+send: &#39;data\r\n&#39;
+reply: &#39;354 Enter mail, end with &quot;.&quot; on a line by itself\r\n&#39;
+reply: retcode (354); Msg: Enter mail, end with &quot;.&quot; on a line by itself
+data: (354, &#39;Enter mail, end with &quot;.&quot; on a line by itself&#39;)
+send: &#39;From nobody Sun Sep 28 10:02:48 2008\r\nContent-Type: text/plain; charset=&quot;us-ascii&quot;\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nTo: Recipient &lt;recipient@example.com&gt;\r\nFrom: Author &lt;author@example.com&gt;\r\nSubject: Simple test message\r\n\r\nThis is the body of the message.\r\n.\r\n&#39;
+reply: &#39;250 2.0.0 m8SE2mpc015614 Message accepted for delivery\r\n&#39;
+reply: retcode (250); Msg: 2.0.0 m8SE2mpc015614 Message accepted for delivery
+data: (250, &#39;2.0.0 m8SE2mpc015614 Message accepted for delivery&#39;)
+send: &#39;quit\r\n&#39;
+reply: &#39;221 2.0.0 mail.example.com closing connection\r\n&#39;
+reply: retcode (221); Msg: 2.0.0 mail.example.com closing connection
+</pre></div>
+</div>
+<p>Notice that the second argument to <tt class="docutils literal"><span class="pre">sendmail()</span></tt>, the recipients, is passed as a list.  You can include any number of addresses in the list to have the message delivered to each of them in turn.  Since the envelope information is separate from the message headers, you can even BCC someone by including them in the method argument but not in the message header.</p>
+</div>
+<div class="section" id="authentication-and-encryption">
+<h2>Authentication and Encryption<a class="headerlink" href="#authentication-and-encryption" title="Permalink to this headline">¶</a></h2>
+<p>The SMTP class also handles authentication and TLS (transport layer security) encryption, when the server supports them.  To determine if the server supports TLS, call <tt class="docutils literal"><span class="pre">ehlo()</span></tt> directly to identify your computer to the server and ask it what extensions are available.  Then call <tt class="docutils literal"><span class="pre">has_extn()</span></tt> to check the results.  Once TLS is started, you must call <tt class="docutils literal"><span class="pre">ehlo()</span></tt> again before authenticating.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">smtplib</span>
+<span class="kn">import</span> <span class="nn">email.utils</span>
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+<span class="kn">import</span> <span class="nn">getpass</span>
+
+<span class="c"># Prompt the user for connection info</span>
+<span class="n">to_email</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Recipient: &#39;</span><span class="p">)</span>
+<span class="n">servername</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Mail server name: &#39;</span><span class="p">)</span>
+<span class="n">username</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Mail user name: &#39;</span><span class="p">)</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&#39;s password: &quot;</span> <span class="o">%</span> <span class="n">username</span><span class="p">)</span>
+
+<span class="c"># Create the message</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="s">&#39;Test message from PyMOTW.&#39;</span><span class="p">)</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">set_unixfrom</span><span class="p">(</span><span class="s">&#39;author&#39;</span><span class="p">)</span>
+<span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Recipient&#39;</span><span class="p">,</span> <span class="n">to_email</span><span class="p">))</span>
+<span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Author&#39;</span><span class="p">,</span> <span class="s">&#39;author@example.com&#39;</span><span class="p">))</span>
+<span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Test from PyMOTW&#39;</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="n">servername</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">set_debuglevel</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># identify ourselves, prompting server for supported features</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">ehlo</span><span class="p">()</span>
+
+    <span class="c"># If we can encrypt this session, do it</span>
+    <span class="k">if</span> <span class="n">server</span><span class="o">.</span><span class="n">has_extn</span><span class="p">(</span><span class="s">&#39;STARTTLS&#39;</span><span class="p">):</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">starttls</span><span class="p">()</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">ehlo</span><span class="p">()</span> <span class="c"># re-identify ourselves over TLS connection</span>
+
+    <span class="n">server</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="s">&#39;author@example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">to_email</span><span class="p">],</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice that <tt class="docutils literal"><span class="pre">STARTTLS</span></tt> does not appear in the list of extensions (in the reply to <tt class="docutils literal"><span class="pre">EHLO</span></tt>) once TLS is enabled.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python smtplib_authenticated.py
+Recipient: recipient@example.com
+Mail server name: smtpauth.isp.net
+Mail user name: user@isp.net
+user@isp.net&#39;s password:
+send: &#39;ehlo localhost.local\r\n&#39;
+reply: &#39;250-elasmtp-isp.net Hello localhost.local [&lt;your IP here&gt;]\r\n&#39;
+reply: &#39;250-SIZE 14680064\r\n&#39;
+reply: &#39;250-PIPELINING\r\n&#39;
+reply: &#39;250-AUTH PLAIN LOGIN CRAM-MD5\r\n&#39;
+reply: &#39;250-STARTTLS\r\n&#39;
+reply: &#39;250 HELP\r\n&#39;
+reply: retcode (250); Msg: elasmtp-isp.net Hello localhost.local [&lt;your IP here&gt;]
+SIZE 14680064
+PIPELINING
+AUTH PLAIN LOGIN CRAM-MD5
+STARTTLS
+HELP
+send: &#39;STARTTLS\r\n&#39;
+reply: &#39;220 TLS go ahead\r\n&#39;
+reply: retcode (220); Msg: TLS go ahead
+send: &#39;ehlo localhost.local\r\n&#39;
+reply: &#39;250-elasmtp-isp.net Hello localhost.local [&lt;your IP here&gt;]\r\n&#39;
+reply: &#39;250-SIZE 14680064\r\n&#39;
+reply: &#39;250-PIPELINING\r\n&#39;
+reply: &#39;250-AUTH PLAIN LOGIN CRAM-MD5\r\n&#39;
+reply: &#39;250 HELP\r\n&#39;
+reply: retcode (250); Msg: elasmtp-isp.net Hello farnsworth.local [&lt;your IP here&gt;]
+SIZE 14680064
+PIPELINING
+AUTH PLAIN LOGIN CRAM-MD5
+HELP
+send: &#39;AUTH CRAM-MD5\r\n&#39;
+reply: &#39;334 PDExNjkyLjEyMjI2MTI1NzlAZWxhc210cC1tZWFseS5hdGwuc2EuZWFydGhsaW5rLm5ldD4=\r\n&#39;
+reply: retcode (334); Msg: PDExNjkyLjEyMjI2MTI1NzlAZWxhc210cC1tZWFseS5hdGwuc2EuZWFydGhsaW5rLm5ldD4=
+send: &#39;ZGhlbGxtYW5uQGVhcnRobGluay5uZXQgN2Q1YjAyYTRmMGQ1YzZjM2NjOTNjZDc1MDQxN2ViYjg=\r\n&#39;
+reply: &#39;235 Authentication succeeded\r\n&#39;
+reply: retcode (235); Msg: Authentication succeeded
+send: &#39;mail FROM:&lt;author@example.com&gt; size=221\r\n&#39;
+reply: &#39;250 OK\r\n&#39;
+reply: retcode (250); Msg: OK
+send: &#39;rcpt TO:&lt;recipient@example.com&gt;\r\n&#39;
+reply: &#39;250 Accepted\r\n&#39;
+reply: retcode (250); Msg: Accepted
+send: &#39;data\r\n&#39;
+reply: &#39;354 Enter message, ending with &quot;.&quot; on a line by itself\r\n&#39;
+reply: retcode (354); Msg: Enter message, ending with &quot;.&quot; on a line by itself
+data: (354, &#39;Enter message, ending with &quot;.&quot; on a line by itself&#39;)
+send: &#39;Content-Type: text/plain; charset=&quot;us-ascii&quot;\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: 7bit\r\nTo: Recipient &lt;recipient@example.com&gt;\r\nFrom: Author &lt;author@example.com&gt;\r\nSubject: Test from PyMOTW\r\n\r\nTest message from PyMOTW.\r\n.\r\n&#39;
+reply: &#39;250 OK id=1KjxNj-00032a-Ux\r\n&#39;
+reply: retcode (250); Msg: OK id=1KjxNj-00032a-Ux
+data: (250, &#39;OK id=1KjxNj-00032a-Ux&#39;)
+send: &#39;quit\r\n&#39;
+reply: &#39;221 elasmtp-isp.net closing connection\r\n&#39;
+reply: retcode (221); Msg: elasmtp-isp.net closing connection
+</pre></div>
+</div>
+</div>
+<div class="section" id="verifying-an-email-address">
+<h2>Verifying an Email Address<a class="headerlink" href="#verifying-an-email-address" title="Permalink to this headline">¶</a></h2>
+<p>The SMTP protocol includes a command to ask a server whether an address is valid.  Usually <tt class="docutils literal"><span class="pre">VRFY</span></tt> is disabled to prevent spammers from finding legitimate email addresses, but if it is enabled you can ask the server about an address and receive a status code indicating validity along with the user&#8217;s full name, if it is available.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">smtplib</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s">&#39;mail&#39;</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">set_debuglevel</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="c"># show communication with the server</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">dhellmann_result</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="s">&#39;dhellmann&#39;</span><span class="p">)</span>
+    <span class="n">notthere_result</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="s">&#39;notthere&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;dhellmann:&#39;</span><span class="p">,</span> <span class="n">dhellmann_result</span>
+<span class="k">print</span> <span class="s">&#39;notthere :&#39;</span><span class="p">,</span> <span class="n">notthere_result</span>
+</pre></div>
+</div>
+<p>As the last 2 lines of output here show, the address <tt class="docutils literal"><span class="pre">dhellmann</span></tt> is valid but <tt class="docutils literal"><span class="pre">notthere</span></tt> is not.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python smtplib_verify.py
+send: &#39;vrfy &lt;dhellmann&gt;\r\n&#39;
+reply: &#39;250 2.1.5 Doug Hellmann &lt;dhellmann@mail.example.com&gt;\r\n&#39;
+reply: retcode (250); Msg: 2.1.5 Doug Hellmann &lt;dhellmann@mail.example.com&gt;
+send: &#39;vrfy &lt;notthere&gt;\r\n&#39;
+reply: &#39;550 5.1.1 &lt;notthere&gt;... User unknown\r\n&#39;
+reply: retcode (550); Msg: 5.1.1 &lt;notthere&gt;... User unknown
+send: &#39;quit\r\n&#39;
+reply: &#39;221 2.0.0 mail.example.com closing connection\r\n&#39;
+reply: retcode (221); Msg: 2.0.0 mail.example.com closing connection
+dhellmann: (250, &#39;2.1.5 Doug Hellmann &lt;dhellmann@mail.example.com&gt;&#39;)
+notthere : (550, &#39;5.1.1 &lt;notthere&gt;... User unknown&#39;)
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/smtplib.html">smtplib</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><span class="target" id="index-1"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc821.html"><strong>RFC 821</strong></a></dt>
+<dd>The Simple Mail Transfer Protocol (SMTP) specification.</dd>
+<dt><span class="target" id="index-2"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc1869.html"><strong>RFC 1869</strong></a></dt>
+<dd>SMTP Service Extensions to the base protocol.</dd>
+<dt><span class="target" id="index-3"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a></dt>
+<dd>&#8220;Standard for the Format of ARPA Internet Text Messages&#8221;, the original email message
+format specification.</dd>
+<dt><span class="target" id="index-4"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a></dt>
+<dd>&#8220;Internet Message Format&#8221;, updates to the email message format.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt></dt>
+<dd>Standard library module for parsing email messages.</dd>
+<dt><a class="reference internal" href="../smtpd/index.html#module-smtpd" title="smtpd: Includes classes for implementing SMTP servers."><tt class="xref py py-mod docutils literal"><span class="pre">smtpd</span></tt></a></dt>
+<dd>Implements a simple SMTP server.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../socket/index.html" title="socket – Network Communication"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../smtpd/index.html" title="smtpd – Sample SMTP Servers"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

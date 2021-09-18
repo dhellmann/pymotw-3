@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>time &#8211; Functions for manipulating clock time - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Generic Operating System Services" href="../generic_os.html" />
+    <link rel="next" title="getopt – Command line option parsing" href="../getopt/index.html" />
+    <link rel="prev" title="os – Portable access to operating system specific features." href="../os/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">time &#8211; Functions for manipulating clock time</a><ul>
+<li><a class="reference internal" href="#wall-clock-time">Wall Clock Time</a></li>
+<li><a class="reference internal" href="#processor-clock-time">Processor Clock Time</a></li>
+<li><a class="reference internal" href="#struct-time">struct_time</a></li>
+<li><a class="reference internal" href="#parsing-and-formatting-times">Parsing and Formatting Times</a></li>
+<li><a class="reference internal" href="#working-with-time-zones">Working with Time Zones</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../os/index.html" title="previous chapter"><strong>Previous:</strong> os &#8211; Portable access to operating system specific features.</a><br/>
+          <a href="../getopt/index.html" title="next chapter"><strong>Next:</strong> getopt &#8211; Command line option parsing</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/time/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../getopt/index.html" title="getopt – Command line option parsing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../os/index.html" title="os – Portable access to operating system specific features."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" accesskey="U">Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-time">
+<span id="time-functions-for-manipulating-clock-time"></span><h1>time &#8211; Functions for manipulating clock time<a class="headerlink" href="#module-time" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Functions for manipulating clock time.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 or earlier</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-mod docutils literal"><span class="pre">time</span></tt></a> module exposes C library functions for manipulating
+dates and times.  Since it is tied to the underlying C implementation,
+some details (such as the start of the epoch and maximum date value
+supported) are platform-specific.  Refer to the library documentation
+for complete details.</p>
+<div class="section" id="wall-clock-time">
+<h2>Wall Clock Time<a class="headerlink" href="#wall-clock-time" title="Permalink to this headline">¶</a></h2>
+<p>One of the core functions of the <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-mod docutils literal"><span class="pre">time</span></tt></a> module is <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-func docutils literal"><span class="pre">time()</span></tt></a>,
+which returns the number of seconds since the start of the epoch as a
+floating point value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;The time is:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Although the value is always a float, actual precision is
+platform-dependent.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_time.py
+The time is: 1205079300.54
+</pre></div>
+</div>
+<p>The float representation is useful when storing or comparing dates,
+but not as useful for producing human readable representations. For
+logging or printing time <tt class="xref py py-func docutils literal"><span class="pre">ctime()</span></tt> can be more useful.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;The time is      :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+<span class="n">later</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mi">15</span>
+<span class="k">print</span> <span class="s">&#39;15 secs from now :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">later</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here the second output line shows how to use <tt class="xref py py-func docutils literal"><span class="pre">ctime()</span></tt> to format
+a time value other than the current time.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_ctime.py
+The time is      : Sun Mar  9 12:18:02 2008
+15 secs from now : Sun Mar  9 12:18:17 2008
+</pre></div>
+</div>
+</div>
+<div class="section" id="processor-clock-time">
+<h2>Processor Clock Time<a class="headerlink" href="#processor-clock-time" title="Permalink to this headline">¶</a></h2>
+<p>While <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-func docutils literal"><span class="pre">time()</span></tt></a> returns a wall clock time, <tt class="xref py py-func docutils literal"><span class="pre">clock()</span></tt>
+returns processor clock time.  The values returned from
+<tt class="xref py py-func docutils literal"><span class="pre">clock()</span></tt> should be used for performance testing, benchmarking,
+etc. since they reflect the actual time used by the program, and can
+be more precise than the values from <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-func docutils literal"><span class="pre">time()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c"># Data to use to calculate md5 checksums</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(),</span> <span class="s">&#39;: </span><span class="si">%0.3f</span><span class="s"> </span><span class="si">%0.3f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">cksum</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example, the formatted <tt class="xref py py-func docutils literal"><span class="pre">ctime()</span></tt> is printed along with
+the floating point values from <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-func docutils literal"><span class="pre">time()</span></tt></a>, and <tt class="xref py py-func docutils literal"><span class="pre">clock()</span></tt> for
+each iteration through the loop. If you want to run the example on
+your system, you may have to add more cycles to the inner loop or work
+with a larger amount of data to actually see a difference.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_clock.py
+Sun Mar  9 12:41:53 2008 : 1205080913.260 0.030
+Sun Mar  9 12:41:53 2008 : 1205080913.682 0.440
+Sun Mar  9 12:41:54 2008 : 1205080914.103 0.860
+Sun Mar  9 12:41:54 2008 : 1205080914.518 1.270
+Sun Mar  9 12:41:54 2008 : 1205080914.932 1.680
+</pre></div>
+</div>
+<p>Typically, the processor clock doesn&#8217;t tick if your program isn&#8217;t doing
+anything.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%0.2f</span><span class="s"> </span><span class="si">%0.2f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">())</span>
+    <span class="k">print</span> <span class="s">&#39;Sleeping&#39;</span><span class="p">,</span> <span class="n">i</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, the loop does very little work by going to sleep
+after each iteration. The <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-func docutils literal"><span class="pre">time()</span></tt></a> value increases even while
+the app is asleep, but the <tt class="xref py py-func docutils literal"><span class="pre">clock()</span></tt> value does not.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_clock_sleep.py
+Sun Mar  9 12:46:36 2008 1205081196.20 0.02
+Sleeping 6
+Sun Mar  9 12:46:42 2008 1205081202.20 0.02
+Sleeping 5
+Sun Mar  9 12:46:47 2008 1205081207.20 0.02
+Sleeping 4
+Sun Mar  9 12:46:51 2008 1205081211.20 0.02
+Sleeping 3
+Sun Mar  9 12:46:54 2008 1205081214.21 0.02
+Sleeping 2
+</pre></div>
+</div>
+<p>Calling <tt class="xref py py-func docutils literal"><span class="pre">sleep()</span></tt> yields control from the current thread and
+asks it to wait for the system to wake it back up. If your program has
+only one thread, this effectively blocks the app and it does no work.</p>
+</div>
+<div class="section" id="struct-time">
+<h2>struct_time<a class="headerlink" href="#struct-time" title="Permalink to this headline">¶</a></h2>
+<p>Storing times as elapsed seconds is useful in some situations, but
+there are times when you need to have access to the individual fields
+of a date (year, month, etc.). The <a class="reference internal" href="#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-mod docutils literal"><span class="pre">time</span></tt></a> module defines
+<tt class="xref py py-class docutils literal"><span class="pre">struct_time</span></tt> for holding date and time values with components
+broken out so they are easy to access. There are several functions
+that work with <tt class="xref py py-class docutils literal"><span class="pre">struct_time</span></tt> values instead of floats.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;gmtime   :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;localtime:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;mktime   :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+
+<span class="k">print</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Day of month:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">tm_mday</span>
+<span class="k">print</span> <span class="s">&#39; Day of week:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">tm_wday</span>
+<span class="k">print</span> <span class="s">&#39; Day of year:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">tm_yday</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">gmtime()</span></tt> returns the current time in UTC. <tt class="xref py py-func docutils literal"><span class="pre">localtime()</span></tt>
+returns the current time with the current time zone
+applied. <tt class="xref py py-func docutils literal"><span class="pre">mktime()</span></tt> takes a <tt class="xref py py-class docutils literal"><span class="pre">struct_time</span></tt> and converts it
+to the floating point representation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_struct.py
+gmtime   : (2008, 3, 9, 16, 58, 19, 6, 69, 0)
+localtime: (2008, 3, 9, 12, 58, 19, 6, 69, 1)
+mktime   : 1205081899.0
+
+Day of month: 9
+ Day of week: 6
+ Day of year: 69
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-and-formatting-times">
+<h2>Parsing and Formatting Times<a class="headerlink" href="#parsing-and-formatting-times" title="Permalink to this headline">¶</a></h2>
+<p>The two functions <tt class="xref py py-func docutils literal"><span class="pre">strptime()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">strftime()</span></tt> convert
+between struct_time and string representations of time values. There
+is a long list of formatting instructions available to support input
+and output in different styles. The complete list is documented in the
+library documentation for the time module.</p>
+<p>This example converts the current time from a string, to a
+<tt class="xref py py-class docutils literal"><span class="pre">struct_time</span></tt> instance, and back to a string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">now</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">parsed</span>
+<span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%a %b </span><span class="si">%d</span><span class="s"> %H:%M:%S %Y&quot;</span><span class="p">,</span> <span class="n">parsed</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output string is not exactly like the input, since the day of the
+month is prefixed with a zero.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_strptime.py
+Sun Mar  9 13:01:19 2008
+(2008, 3, 9, 13, 1, 19, 6, 69, -1)
+Sun Mar 09 13:01:19 2008
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-time-zones">
+<h2>Working with Time Zones<a class="headerlink" href="#working-with-time-zones" title="Permalink to this headline">¶</a></h2>
+<p>The functions for determining the current time depend on having the time zone
+set, either by your program or by using a default time zone set for the
+system. Changing the time zone does not change the actual time, just the way
+it is represented.</p>
+<p>To change the time zone, set the environment variable <tt class="docutils literal"><span class="pre">TZ</span></tt>, then
+call <tt class="xref py py-func docutils literal"><span class="pre">tzset()</span></tt>.  Using TZ, you can specify the time zone with a
+lot of detail, right down to the start and stop times for daylight
+savings time. It is usually easier to use the time zone name and let
+the underlying libraries derive the other information, though.</p>
+<p>This example program changes the time zone to a few different values
+and shows how the changes affect other settings in the time module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">show_zone_info</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">TZ    :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;TZ&#39;</span><span class="p">,</span> <span class="s">&#39;(not set)&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">tzname:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">tzname</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Zone  : </span><span class="si">%d</span><span class="s"> (</span><span class="si">%d</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">timezone</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">timezone</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">DST   :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">daylight</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Time  :&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+    <span class="k">print</span>
+
+<span class="k">print</span> <span class="s">&#39;Default :&#39;</span>
+<span class="n">show_zone_info</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">zone</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;US/Eastern&#39;</span><span class="p">,</span> <span class="s">&#39;US/Pacific&#39;</span><span class="p">,</span> <span class="s">&#39;GMT&#39;</span><span class="p">,</span> <span class="s">&#39;Europe/Amsterdam&#39;</span> <span class="p">]:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;TZ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zone</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">tzset</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">zone</span><span class="p">,</span> <span class="s">&#39;:&#39;</span>
+    <span class="n">show_zone_info</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>My default time zone is US/Eastern, so setting TZ to that has no
+effect. The other zones used change the tzname, daylight flag, and
+timezone offset value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python time_timezone.py
+Default :
+    TZ    : (not set)
+    tzname: (&#39;EST&#39;, &#39;EDT&#39;)
+    Zone  : 18000 (5)
+    DST   : 1
+    Time  : Sun Mar  9 13:06:53 2008
+
+US/Eastern :
+    TZ    : US/Eastern
+    tzname: (&#39;EST&#39;, &#39;EDT&#39;)
+    Zone  : 18000 (5)
+    DST   : 1
+    Time  : Sun Mar  9 13:06:53 2008
+
+US/Pacific :
+    TZ    : US/Pacific
+    tzname: (&#39;PST&#39;, &#39;PDT&#39;)
+    Zone  : 28800 (8)
+    DST   : 1
+    Time  : Sun Mar  9 10:06:53 2008
+
+GMT :
+    TZ    : GMT
+    tzname: (&#39;GMT&#39;, &#39;GMT&#39;)
+    Zone  : 0 (0)
+    DST   : 0
+    Time  : Sun Mar  9 17:06:53 2008
+
+Europe/Amsterdam :
+    TZ    : Europe/Amsterdam
+    tzname: (&#39;CET&#39;, &#39;CEST&#39;)
+    Zone  : -3600 (-1)
+    DST   : 1
+    Time  : Sun Mar  9 18:06:53 2008
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/time.html">time</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../datetime/index.html#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a></dt>
+<dd>The datetime module includes other classes for doing calculations with dates and times.</dd>
+<dt><a class="reference internal" href="../calendar/index.html#module-calendar" title="calendar: The calendar module implements classes for working with dates to manage year/month/week oriented values."><tt class="xref py py-mod docutils literal"><span class="pre">calendar</span></tt></a></dt>
+<dd>Work with higher-level date functions to produce calendars or
+calculate recurring events.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../getopt/index.html" title="getopt – Command line option parsing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../os/index.html" title="os – Portable access to operating system specific features."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" >Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

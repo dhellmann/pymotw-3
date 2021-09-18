@@ -1,0 +1,599 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>datetime &#8211; Date/time value manipulation - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="calendar – Work with dates" href="../calendar/index.html" />
+    <link rel="prev" title="array – Sequence of fixed-type data" href="../array/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">datetime &#8211; Date/time value manipulation</a><ul>
+<li><a class="reference internal" href="#times">Times</a></li>
+<li><a class="reference internal" href="#dates">Dates</a></li>
+<li><a class="reference internal" href="#timedeltas">timedeltas</a></li>
+<li><a class="reference internal" href="#date-arithmetic">Date Arithmetic</a></li>
+<li><a class="reference internal" href="#comparing-values">Comparing Values</a></li>
+<li><a class="reference internal" href="#combining-dates-and-times">Combining Dates and Times</a></li>
+<li><a class="reference internal" href="#formatting-and-parsing">Formatting and Parsing</a></li>
+<li><a class="reference internal" href="#time-zones">Time Zones</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../array/index.html" title="previous chapter"><strong>Previous:</strong> array &#8211; Sequence of fixed-type data</a><br/>
+          <a href="../calendar/index.html" title="next chapter"><strong>Next:</strong> calendar &#8211; Work with dates</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/datetime/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../calendar/index.html" title="calendar – Work with dates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../array/index.html" title="array – Sequence of fixed-type data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-datetime">
+<span id="datetime-date-time-value-manipulation"></span><h1>datetime &#8211; Date/time value manipulation<a class="headerlink" href="#module-datetime" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The datetime module includes functions and classes for doing date and time parsing, formatting, and arithmetic.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a> contains functions and classes for working with dates
+and times, separatley and together.</p>
+<div class="section" id="times">
+<h2>Times<a class="headerlink" href="#times" title="Permalink to this headline">¶</a></h2>
+<p>Time values are represented with the <a class="reference internal" href="../time/index.html#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-class docutils literal"><span class="pre">time</span></tt></a> class. Times have
+attributes for hour, minute, second, and microsecond. They can also
+include time zone information. The arguments to initialize a
+<a class="reference internal" href="../time/index.html#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-class docutils literal"><span class="pre">time</span></tt></a> instance are optional, but the default of <tt class="docutils literal"><span class="pre">0</span></tt> is
+unlikely to be what you want.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">t</span>
+<span class="k">print</span> <span class="s">&#39;hour  :&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">hour</span>
+<span class="k">print</span> <span class="s">&#39;minute:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">minute</span>
+<span class="k">print</span> <span class="s">&#39;second:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">second</span>
+<span class="k">print</span> <span class="s">&#39;microsecond:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">microsecond</span>
+<span class="k">print</span> <span class="s">&#39;tzinfo:&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">tzinfo</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_time.py
+
+01:02:03
+hour  : 1
+minute: 2
+second: 3
+microsecond: 0
+tzinfo: None
+</pre></div>
+</div>
+<p>A time instance only holds values of time, and not a date associated
+with the time.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">print</span> <span class="s">&#39;Earliest  :&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">min</span>
+<span class="k">print</span> <span class="s">&#39;Latest    :&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">max</span>
+<span class="k">print</span> <span class="s">&#39;Resolution:&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">resolution</span>
+</pre></div>
+</div>
+<p>The <em>min</em> and <em>max</em> class attributes reflect the valid range of
+times in a single day.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_time_minmax.py
+
+Earliest  : 00:00:00
+Latest    : 23:59:59.999999
+Resolution: 0:00:00.000001
+</pre></div>
+</div>
+<p>The resolution for time is limited to whole microseconds.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span> <span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%02.1f</span><span class="s"> :&#39;</span> <span class="o">%</span> <span class="n">m</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<p>In fact, using floating point numbers for the microsecond argument
+generates a <a class="reference internal" href="../exceptions/index.html#exceptions-typeerror"><em>TypeError</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_time_resolution.py
+
+1.0 : 00:00:00.000001
+0.0 : 00:00:00
+0.1 : ERROR: integer argument expected, got float
+0.6 : ERROR: integer argument expected, got float
+</pre></div>
+</div>
+</div>
+<div class="section" id="dates">
+<h2>Dates<a class="headerlink" href="#dates" title="Permalink to this headline">¶</a></h2>
+<p>Calendar date values are represented with the <tt class="xref py py-class docutils literal"><span class="pre">date</span></tt>
+class. Instances have attributes for year, month, and day. It is easy
+to create a date representing today&#8217;s date using the <tt class="xref py py-func docutils literal"><span class="pre">today()</span></tt>
+class method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">today</span>
+<span class="k">print</span> <span class="s">&#39;ctime:&#39;</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;tuple:&#39;</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;ordinal:&#39;</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">toordinal</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Year:&#39;</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">year</span>
+<span class="k">print</span> <span class="s">&#39;Mon :&#39;</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">month</span>
+<span class="k">print</span> <span class="s">&#39;Day :&#39;</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">day</span>
+</pre></div>
+</div>
+<p>This example prints the current date in several formats:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_date.py
+
+2013-02-21
+ctime: Thu Feb 21 00:00:00 2013
+tuple: time.struct_time(tm_year=2013, tm_mon=2, tm_mday=21, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=52, tm_isdst=-1)
+ordinal: 734920
+Year: 2013
+Mon : 2
+Day : 21
+</pre></div>
+</div>
+<p>There are also class methods for creating instances from integers
+(using proleptic Gregorian ordinal values, which starts counting from
+Jan. 1 of the year 1) or POSIX timestamp values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="mi">733114</span>
+<span class="k">print</span> <span class="s">&#39;o:&#39;</span><span class="p">,</span> <span class="n">o</span>
+<span class="k">print</span> <span class="s">&#39;fromordinal(o):&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">fromordinal</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;t:&#39;</span><span class="p">,</span> <span class="n">t</span>
+<span class="k">print</span> <span class="s">&#39;fromtimestamp(t):&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example illustrates the different value types used by
+<tt class="xref py py-func docutils literal"><span class="pre">fromordinal()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">fromtimestamp()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_date_fromordinal.py
+
+o: 733114
+fromordinal(o): 2008-03-13
+t: 1361446545.52
+fromtimestamp(t): 2013-02-21
+</pre></div>
+</div>
+<p>As with <a class="reference internal" href="../time/index.html#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-class docutils literal"><span class="pre">time</span></tt></a>, the range of date values supported can be
+determined using the <em>min</em> and <em>max</em> attributes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">print</span> <span class="s">&#39;Earliest  :&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">min</span>
+<span class="k">print</span> <span class="s">&#39;Latest    :&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">max</span>
+<span class="k">print</span> <span class="s">&#39;Resolution:&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">resolution</span>
+</pre></div>
+</div>
+<p>The resolution for dates is whole days.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_date_minmax.py
+
+Earliest  : 0001-01-01
+Latest    : 9999-12-31
+Resolution: 1 day, 0:00:00
+</pre></div>
+</div>
+<p>Another way to create new date instances uses the <tt class="xref py py-func docutils literal"><span class="pre">replace()</span></tt>
+method of an existing date. For example, you can change the year,
+leaving the day and month alone.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">d1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2008</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;d1:&#39;</span><span class="p">,</span> <span class="n">d1</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2009</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;d2:&#39;</span><span class="p">,</span> <span class="n">d2</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_date_replace.py
+
+d1: 2008-03-12
+d2: 2009-03-12
+</pre></div>
+</div>
+</div>
+<div class="section" id="timedeltas">
+<h2>timedeltas<a class="headerlink" href="#timedeltas" title="Permalink to this headline">¶</a></h2>
+<p>Using <tt class="xref py py-func docutils literal"><span class="pre">replace()</span></tt> is not the only way to calculate future/past
+dates. You can use <a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a> to perform basic arithmetic on date
+values via the <tt class="xref py py-class docutils literal"><span class="pre">timedelta</span></tt> class. Subtracting dates produces a
+<tt class="xref py py-class docutils literal"><span class="pre">timedelta</span></tt>, and a <tt class="xref py py-class docutils literal"><span class="pre">timedelta</span></tt> can be added or
+subtracted from a date to produce another date. The internal values
+for a <tt class="xref py py-class docutils literal"><span class="pre">timedelta</span></tt> are stored in days, seconds, and
+microseconds.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">print</span> <span class="s">&quot;microseconds:&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">microseconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;milliseconds:&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;seconds     :&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;minutes     :&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;hours       :&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;days        :&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;weeks       :&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Intermediate level values passed to the constructor are converted into
+days, seconds, and microseconds.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_timedelta.py
+
+microseconds: 0:00:00.000001
+milliseconds: 0:00:00.001000
+seconds     : 0:00:01
+minutes     : 0:01:00
+hours       : 1:00:00
+days        : 1 day, 0:00:00
+weeks       : 7 days, 0:00:00
+</pre></div>
+</div>
+</div>
+<div class="section" id="date-arithmetic">
+<h2>Date Arithmetic<a class="headerlink" href="#date-arithmetic" title="Permalink to this headline">¶</a></h2>
+<p>Date math uses the standard arithmetic operators. This example with
+date objects illustrates using <tt class="xref py py-class docutils literal"><span class="pre">timedelta</span></tt> objects to compute
+new dates, and subtracting date instances to produce timedeltas
+(including a negative delta value).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Today    :&#39;</span><span class="p">,</span> <span class="n">today</span>
+
+<span class="n">one_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;One day  :&#39;</span><span class="p">,</span> <span class="n">one_day</span>
+
+<span class="n">yesterday</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">one_day</span>
+<span class="k">print</span> <span class="s">&#39;Yesterday:&#39;</span><span class="p">,</span> <span class="n">yesterday</span>
+
+<span class="n">tomorrow</span> <span class="o">=</span> <span class="n">today</span> <span class="o">+</span> <span class="n">one_day</span>
+<span class="k">print</span> <span class="s">&#39;Tomorrow :&#39;</span><span class="p">,</span> <span class="n">tomorrow</span>
+
+<span class="k">print</span> <span class="s">&#39;tomorrow - yesterday:&#39;</span><span class="p">,</span> <span class="n">tomorrow</span> <span class="o">-</span> <span class="n">yesterday</span>
+<span class="k">print</span> <span class="s">&#39;yesterday - tomorrow:&#39;</span><span class="p">,</span> <span class="n">yesterday</span> <span class="o">-</span> <span class="n">tomorrow</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_date_math.py
+
+Today    : 2013-02-21
+One day  : 1 day, 0:00:00
+Yesterday: 2013-02-20
+Tomorrow : 2013-02-22
+tomorrow - yesterday: 2 days, 0:00:00
+yesterday - tomorrow: -2 days, 0:00:00
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-values">
+<h2>Comparing Values<a class="headerlink" href="#comparing-values" title="Permalink to this headline">¶</a></h2>
+<p>Both date and time values can be compared using the standard operators
+to determine which is earlier or later.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;Times:&#39;</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">t1:&#39;</span><span class="p">,</span> <span class="n">t1</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">t2:&#39;</span><span class="p">,</span> <span class="n">t2</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">t1 &lt; t2:&#39;</span><span class="p">,</span> <span class="n">t1</span> <span class="o">&lt;</span> <span class="n">t2</span>
+
+<span class="k">print</span> <span class="s">&#39;Dates:&#39;</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">d1:&#39;</span><span class="p">,</span> <span class="n">d1</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">d2:&#39;</span><span class="p">,</span> <span class="n">d2</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">d1 &gt; d2:&#39;</span><span class="p">,</span> <span class="n">d1</span> <span class="o">&gt;</span> <span class="n">d2</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_comparing.py
+
+Times:
+        t1: 12:55:00
+        t2: 13:05:00
+        t1 &lt; t2: True
+Dates:
+        d1: 2013-02-21
+        d2: 2013-02-22
+        d1 &gt; d2: False
+</pre></div>
+</div>
+</div>
+<div class="section" id="combining-dates-and-times">
+<h2>Combining Dates and Times<a class="headerlink" href="#combining-dates-and-times" title="Permalink to this headline">¶</a></h2>
+<p>Use the <a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> class to hold values consisting of both date
+and time components. As with <tt class="xref py py-class docutils literal"><span class="pre">date</span></tt>, there are several
+convenient class methods to make creating <a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> instances
+from other common values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">print</span> <span class="s">&#39;Now    :&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Today  :&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;UTC Now:&#39;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;year&#39;</span><span class="p">,</span> <span class="s">&#39;month&#39;</span><span class="p">,</span> <span class="s">&#39;day&#39;</span><span class="p">,</span> <span class="s">&#39;hour&#39;</span><span class="p">,</span> <span class="s">&#39;minute&#39;</span><span class="p">,</span> <span class="s">&#39;second&#39;</span><span class="p">,</span> <span class="s">&#39;microsecond&#39;</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">attr</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you might expect, the <a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> instance has all of the
+attributes of both a date and a time object.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_datetime.py
+
+Now    : 2013-02-21 06:35:45.658505
+Today  : 2013-02-21 06:35:45.659381
+UTC Now: 2013-02-21 11:35:45.659396
+year : 2013
+month : 2
+day : 21
+hour : 6
+minute : 35
+second : 45
+microsecond : 659677
+</pre></div>
+</div>
+<p>Just as with date, datetime provides convenient class methods for
+creating new instances. It also includes <tt class="xref py py-func docutils literal"><span class="pre">fromordinal()</span></tt> and
+<tt class="xref py py-func docutils literal"><span class="pre">fromtimestamp()</span></tt>. In addition, <tt class="xref py py-func docutils literal"><span class="pre">combine()</span></tt> can be useful
+if you already have a date instance and time instance and want to
+create a datetime.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;t :&#39;</span><span class="p">,</span> <span class="n">t</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;d :&#39;</span><span class="p">,</span> <span class="n">d</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;dt:&#39;</span><span class="p">,</span> <span class="n">dt</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_datetime_combine.py
+
+t : 01:02:03
+d : 2013-02-21
+dt: 2013-02-21 01:02:03
+</pre></div>
+</div>
+</div>
+<div class="section" id="formatting-and-parsing">
+<h2>Formatting and Parsing<a class="headerlink" href="#formatting-and-parsing" title="Permalink to this headline">¶</a></h2>
+<p>The default string representation of a datetime object uses the <a class="reference external" href="http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/date_and_time_format.htm">ISO
+8601</a> format (<tt class="docutils literal"><span class="pre">YYYY-MM-DDTHH:MM:SS.mmmmmm</span></tt>). Alternate formats can
+be generated using <tt class="xref py py-func docutils literal"><span class="pre">strftime()</span></tt>. Similarly, if your input data
+includes timestamp values parsable with <tt class="xref py py-func docutils literal"><span class="pre">time.strptime()</span></tt>, then
+<tt class="xref py py-func docutils literal"><span class="pre">datetime.strptime()</span></tt> is a convenient way to convert them to
+datetime instances.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">format</span> <span class="o">=</span> <span class="s">&quot;%a %b </span><span class="si">%d</span><span class="s"> %H:%M:%S %Y&quot;</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;ISO     :&#39;</span><span class="p">,</span> <span class="n">today</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;strftime:&#39;</span><span class="p">,</span> <span class="n">s</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">format</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;strptime:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python datetime_datetime_strptime.py
+
+ISO     : 2013-02-21 06:35:45.707450
+strftime: Thu Feb 21 06:35:45 2013
+strptime: Thu Feb 21 06:35:45 2013
+</pre></div>
+</div>
+</div>
+<div class="section" id="time-zones">
+<h2>Time Zones<a class="headerlink" href="#time-zones" title="Permalink to this headline">¶</a></h2>
+<p>Within <a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a>, time zones are represented by subclasses of
+<tt class="xref py py-class docutils literal"><span class="pre">tzinfo</span></tt>. Since <tt class="xref py py-class docutils literal"><span class="pre">tzinfo</span></tt> is an abstract base class, you
+need to define a subclass and provide appropriate implementations for
+a few methods to make it useful. Unfortunately, <a class="reference internal" href="#module-datetime" title="datetime: Date/time value manipulation."><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a> does
+not include any actual implementations ready to be used, although the
+documentation does provide a few sample implementations. Refer to the
+standard library documentation page for examples using fixed offsets
+as well as a DST-aware class and more details about creating your own
+class.  <a class="reference external" href="http://pytz.sourceforge.net/">pytz</a> is also a good source for time zone implementation
+details.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/datetime.html">datetime</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../calendar/index.html#module-calendar" title="calendar: The calendar module implements classes for working with dates to manage year/month/week oriented values."><tt class="xref py py-mod docutils literal"><span class="pre">calendar</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../calendar/index.html#module-calendar" title="calendar: The calendar module implements classes for working with dates to manage year/month/week oriented values."><tt class="xref py py-mod docutils literal"><span class="pre">calendar</span></tt></a> module.</dd>
+<dt><a class="reference internal" href="../time/index.html#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-mod docutils literal"><span class="pre">time</span></tt></a></dt>
+<dd>The <a class="reference internal" href="../time/index.html#module-time" title="time: Functions for manipulating clock time"><tt class="xref py py-mod docutils literal"><span class="pre">time</span></tt></a> module.</dd>
+<dt><a class="reference external" href="http://labix.org/python-dateutil">dateutil</a></dt>
+<dd>dateutil from Labix extends the datetime module with additional features.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar">WikiPedia: Proleptic Gregorian calendar</a></dt>
+<dd>A description of the Gregorian calendar system.</dd>
+<dt><a class="reference external" href="http://pytz.sourceforge.net/">pytz</a></dt>
+<dd>World Time Zone database</dd>
+<dt><a class="reference external" href="http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/date_and_time_format.htm">ISO 8601</a></dt>
+<dd>The standard for numeric representation of Dates and Time</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../calendar/index.html" title="calendar – Work with dates"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../array/index.html" title="array – Sequence of fixed-type data"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

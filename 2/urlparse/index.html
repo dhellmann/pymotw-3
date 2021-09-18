@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>urlparse &#8211; Split URL into component pieces. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="uuid – Universally unique identifiers" href="../uuid/index.html" />
+    <link rel="prev" title="urllib2 – Library for opening URLs." href="../urllib2/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">urlparse &#8211; Split URL into component pieces.</a><ul>
+<li><a class="reference internal" href="#parsing">Parsing</a></li>
+<li><a class="reference internal" href="#unparsing">Unparsing</a></li>
+<li><a class="reference internal" href="#joining">Joining</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../urllib2/index.html" title="previous chapter"><strong>Previous:</strong> urllib2 &#8211; Library for opening URLs.</a><br/>
+          <a href="../uuid/index.html" title="next chapter"><strong>Next:</strong> uuid &#8211; Universally unique identifiers</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/urlparse/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../uuid/index.html" title="uuid – Universally unique identifiers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../urllib2/index.html" title="urllib2 – Library for opening URLs."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-urlparse">
+<span id="urlparse-split-url-into-component-pieces"></span><h1>urlparse &#8211; Split URL into component pieces.<a class="headerlink" href="#module-urlparse" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Split URL into component pieces.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">since 1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-mod docutils literal"><span class="pre">urlparse</span></tt></a> module provides functions for breaking URLs down
+into their component parts, as defined by the relevant RFCs.</p>
+<div class="section" id="parsing">
+<h2>Parsing<a class="headerlink" href="#parsing" title="Permalink to this headline">¶</a></h2>
+<p>The return value from the <a class="reference internal" href="#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-func docutils literal"><span class="pre">urlparse()</span></tt></a> function is an object
+which acts like a tuple with 6 elements.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="s">&#39;http://netloc/path;parameters?query=argument#fragment&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">parsed</span>
+</pre></div>
+</div>
+<p>The parts of the URL available through the tuple interface are the scheme,
+network location, path, parameters, query, and fragment.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urlparse.py
+
+ParseResult(scheme=&#39;http&#39;, netloc=&#39;netloc&#39;, path=&#39;/path&#39;, params=&#39;parameters&#39;, query=&#39;query=argument&#39;, fragment=&#39;fragment&#39;)
+</pre></div>
+</div>
+<p>Although the return value acts like a tuple, it is really based on a
+<a class="reference internal" href="../collections/namedtuple.html#collections-namedtuple"><em>namedtuple</em></a>, a subclass of tuple that
+supports accessing the parts of the URL via named attributes instead
+of indexes. That&#8217;s especially useful if, like me, you can&#8217;t remember
+the index order. In addition to being easier to use for the
+programmer, the attribute API also offers access to several values not
+available in the tuple API.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="s">&#39;http://user:pass@NetLoc:80/path;parameters?query=argument#fragment&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;scheme  :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span>
+<span class="k">print</span> <span class="s">&#39;netloc  :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span>
+<span class="k">print</span> <span class="s">&#39;path    :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">path</span>
+<span class="k">print</span> <span class="s">&#39;params  :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">params</span>
+<span class="k">print</span> <span class="s">&#39;query   :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">query</span>
+<span class="k">print</span> <span class="s">&#39;fragment:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">fragment</span>
+<span class="k">print</span> <span class="s">&#39;username:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">username</span>
+<span class="k">print</span> <span class="s">&#39;password:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">password</span>
+<span class="k">print</span> <span class="s">&#39;hostname:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="s">&#39;(netloc in lower case)&#39;</span>
+<span class="k">print</span> <span class="s">&#39;port    :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span>
+</pre></div>
+</div>
+<p>The <em>username</em> and <em>password</em> are available when present in the input
+URL and <tt class="docutils literal"><span class="pre">None</span></tt> when not. The <em>hostname</em> is the same value as
+<em>netloc</em>, in all lower case.  And the <em>port</em> is converted to an
+integer when present and <tt class="docutils literal"><span class="pre">None</span></tt> when not.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urlparseattrs.py
+
+scheme  : http
+netloc  : user:pass@NetLoc:80
+path    : /path
+params  : parameters
+query   : query=argument
+fragment: fragment
+username: user
+password: pass
+hostname: netloc (netloc in lower case)
+port    : 80
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">urlsplit()</span></tt> function is an alternative to
+<a class="reference internal" href="#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-func docutils literal"><span class="pre">urlparse()</span></tt></a>. It behaves a little different, because it does not
+split the parameters from the URL. This is useful for URLs following
+<span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2396.html"><strong>RFC 2396</strong></a>, which supports parameters for each segment of the path.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlsplit</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="s">&#39;http://user:pass@NetLoc:80/path;parameters/path2;parameters2?query=argument#fragment&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">parsed</span>
+<span class="k">print</span> <span class="s">&#39;scheme  :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span>
+<span class="k">print</span> <span class="s">&#39;netloc  :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">netloc</span>
+<span class="k">print</span> <span class="s">&#39;path    :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">path</span>
+<span class="k">print</span> <span class="s">&#39;query   :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">query</span>
+<span class="k">print</span> <span class="s">&#39;fragment:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">fragment</span>
+<span class="k">print</span> <span class="s">&#39;username:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">username</span>
+<span class="k">print</span> <span class="s">&#39;password:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">password</span>
+<span class="k">print</span> <span class="s">&#39;hostname:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="s">&#39;(netloc in lower case)&#39;</span>
+<span class="k">print</span> <span class="s">&#39;port    :&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span>
+</pre></div>
+</div>
+<p>Since the parameters are not split out, the tuple API will show 5
+elements instead of 6, and there is no <em>params</em> attribute.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urlsplit.py
+
+SplitResult(scheme=&#39;http&#39;, netloc=&#39;user:pass@NetLoc:80&#39;, path=&#39;/path;parameters/path2;parameters2&#39;, query=&#39;query=argument&#39;, fragment=&#39;fragment&#39;)
+scheme  : http
+netloc  : user:pass@NetLoc:80
+path    : /path;parameters/path2;parameters2
+query   : query=argument
+fragment: fragment
+username: user
+password: pass
+hostname: netloc (netloc in lower case)
+port    : 80
+</pre></div>
+</div>
+<p>To simply strip the fragment identifier from a URL, as you might need
+to do to find a base page name from a URL, use <tt class="xref py py-func docutils literal"><span class="pre">urldefrag()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urldefrag</span>
+<span class="n">original</span> <span class="o">=</span> <span class="s">&#39;http://netloc/path;parameters?query=argument#fragment&#39;</span>
+<span class="k">print</span> <span class="n">original</span>
+<span class="n">url</span><span class="p">,</span> <span class="n">fragment</span> <span class="o">=</span> <span class="n">urldefrag</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">url</span>
+<span class="k">print</span> <span class="n">fragment</span>
+</pre></div>
+</div>
+<p>The return value is a tuple containing the base URL and the fragment.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urldefrag.py
+
+http://netloc/path;parameters?query=argument#fragment
+http://netloc/path;parameters?query=argument
+fragment
+</pre></div>
+</div>
+</div>
+<div class="section" id="unparsing">
+<h2>Unparsing<a class="headerlink" href="#unparsing" title="Permalink to this headline">¶</a></h2>
+<p>There are several ways to assemble a split URL back together into a
+single string. The parsed URL object has a <tt class="xref py py-func docutils literal"><span class="pre">geturl()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+<span class="n">original</span> <span class="o">=</span> <span class="s">&#39;http://netloc/path;parameters?query=argument#fragment&#39;</span>
+<span class="k">print</span> <span class="s">&#39;ORIG  :&#39;</span><span class="p">,</span> <span class="n">original</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARSED:&#39;</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">geturl()</span></tt> only works on the object returned by
+<a class="reference internal" href="#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-func docutils literal"><span class="pre">urlparse()</span></tt></a> or <tt class="xref py py-func docutils literal"><span class="pre">urlsplit()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_geturl.py
+
+ORIG  : http://netloc/path;parameters?query=argument#fragment
+PARSED: http://netloc/path;parameters?query=argument#fragment
+</pre></div>
+</div>
+<p>If you have a regular tuple of values, you can use
+<tt class="xref py py-func docutils literal"><span class="pre">urlunparse()</span></tt> to combine them into a URL.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">urlunparse</span>
+<span class="n">original</span> <span class="o">=</span> <span class="s">&#39;http://netloc/path;parameters?query=argument#fragment&#39;</span>
+<span class="k">print</span> <span class="s">&#39;ORIG  :&#39;</span><span class="p">,</span> <span class="n">original</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARSED:&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">parsed</span><span class="p">),</span> <span class="n">parsed</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">parsed</span><span class="p">[:]</span>
+<span class="k">print</span> <span class="s">&#39;TUPLE :&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span>
+<span class="k">print</span> <span class="s">&#39;NEW   :&#39;</span><span class="p">,</span> <span class="n">urlunparse</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>While the <tt class="xref py py-class docutils literal"><span class="pre">ParseResult</span></tt> returned by <a class="reference internal" href="#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-func docutils literal"><span class="pre">urlparse()</span></tt></a> can be
+used as a tuple, in this example I explicitly create a new tuple to
+show that <tt class="xref py py-func docutils literal"><span class="pre">urlunparse()</span></tt> works with normal tuples, too.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urlunparse.py
+
+ORIG  : http://netloc/path;parameters?query=argument#fragment
+PARSED: &lt;class &#39;urlparse.ParseResult&#39;&gt; ParseResult(scheme=&#39;http&#39;, netloc=&#39;netloc&#39;, path=&#39;/path&#39;, params=&#39;parameters&#39;, query=&#39;query=argument&#39;, fragment=&#39;fragment&#39;)
+TUPLE : &lt;type &#39;tuple&#39;&gt; (&#39;http&#39;, &#39;netloc&#39;, &#39;/path&#39;, &#39;parameters&#39;, &#39;query=argument&#39;, &#39;fragment&#39;)
+NEW   : http://netloc/path;parameters?query=argument#fragment
+</pre></div>
+</div>
+<p>If the input URL included superfluous parts, those may be dropped from the
+unparsed version of the URL.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">urlunparse</span>
+<span class="n">original</span> <span class="o">=</span> <span class="s">&#39;http://netloc/path;?#&#39;</span>
+<span class="k">print</span> <span class="s">&#39;ORIG  :&#39;</span><span class="p">,</span> <span class="n">original</span>
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PARSED:&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">parsed</span><span class="p">),</span> <span class="n">parsed</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">parsed</span><span class="p">[:]</span>
+<span class="k">print</span> <span class="s">&#39;TUPLE :&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">t</span>
+<span class="k">print</span> <span class="s">&#39;NEW   :&#39;</span><span class="p">,</span> <span class="n">urlunparse</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the <em>parameters</em>, <em>query</em>, and <em>fragment</em> are all
+missing in the original URL. The new URL does not look the same as the
+original, but is equivalent according to the standard.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urlunparseextra.py
+
+ORIG  : http://netloc/path;?#
+PARSED: &lt;class &#39;urlparse.ParseResult&#39;&gt; ParseResult(scheme=&#39;http&#39;, netloc=&#39;netloc&#39;, path=&#39;/path&#39;, params=&#39;&#39;, query=&#39;&#39;, fragment=&#39;&#39;)
+TUPLE : &lt;type &#39;tuple&#39;&gt; (&#39;http&#39;, &#39;netloc&#39;, &#39;/path&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;)
+NEW   : http://netloc/path
+</pre></div>
+</div>
+</div>
+<div class="section" id="joining">
+<h2>Joining<a class="headerlink" href="#joining" title="Permalink to this headline">¶</a></h2>
+<p>In addition to parsing URLs, <a class="reference internal" href="#module-urlparse" title="urlparse: Split URL into component pieces."><tt class="xref py py-mod docutils literal"><span class="pre">urlparse</span></tt></a> includes
+<tt class="xref py py-func docutils literal"><span class="pre">urljoin()</span></tt> for constructing absolute URLs from relative
+fragments.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+<span class="k">print</span> <span class="n">urljoin</span><span class="p">(</span><span class="s">&#39;http://www.example.com/path/file.html&#39;</span><span class="p">,</span> <span class="s">&#39;anotherfile.html&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">urljoin</span><span class="p">(</span><span class="s">&#39;http://www.example.com/path/file.html&#39;</span><span class="p">,</span> <span class="s">&#39;../anotherfile.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the example, the relative portion of the path (<tt class="docutils literal"><span class="pre">&quot;../&quot;</span></tt>) is taken
+into account when the second URL is computed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python urlparse_urljoin.py
+
+http://www.example.com/path/anotherfile.html
+http://www.example.com/anotherfile.html
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/urlparse.html">urlparse</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../urllib/index.html#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a></dt>
+<dd>Retrieve the contents of a resource identified by a URL.</dd>
+<dt><a class="reference internal" href="../urllib2/index.html#module-urllib2" title="urllib2: Library for opening URLs."><tt class="xref py py-mod docutils literal"><span class="pre">urllib2</span></tt></a></dt>
+<dd>Alternative API for accessing remote URLs.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../uuid/index.html" title="uuid – Universally unique identifiers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../urllib2/index.html" title="urllib2 – Library for opening URLs."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

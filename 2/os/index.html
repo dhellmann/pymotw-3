@@ -1,0 +1,1267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>os &#8211; Portable access to operating system specific features. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Generic Operating System Services" href="../generic_os.html" />
+    <link rel="next" title="time – Functions for manipulating clock time" href="../time/index.html" />
+    <link rel="prev" title="Generic Operating System Services" href="../generic_os.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">os &#8211; Portable access to operating system specific features.</a><ul>
+<li><a class="reference internal" href="#process-owner">Process Owner</a></li>
+<li><a class="reference internal" href="#process-environment">Process Environment</a></li>
+<li><a class="reference internal" href="#process-working-directory">Process Working Directory</a></li>
+<li><a class="reference internal" href="#pipes">Pipes</a></li>
+<li><a class="reference internal" href="#file-descriptors">File Descriptors</a></li>
+<li><a class="reference internal" href="#filesystem-permissions">Filesystem Permissions</a></li>
+<li><a class="reference internal" href="#directories">Directories</a></li>
+<li><a class="reference internal" href="#symbolic-links">Symbolic Links</a></li>
+<li><a class="reference internal" href="#walking-a-directory-tree">Walking a Directory Tree</a></li>
+<li><a class="reference internal" href="#running-external-commands">Running External Commands</a></li>
+<li><a class="reference internal" href="#creating-processes-with-os-fork">Creating Processes with os.fork()</a></li>
+<li><a class="reference internal" href="#waiting-for-a-child">Waiting for a Child</a></li>
+<li><a class="reference internal" href="#spawn">Spawn</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../generic_os.html" title="previous chapter"><strong>Previous:</strong> Generic Operating System Services</a><br/>
+          <a href="../time/index.html" title="next chapter"><strong>Next:</strong> time &#8211; Functions for manipulating clock time</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/os/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../time/index.html" title="time – Functions for manipulating clock time"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../generic_os.html" title="Generic Operating System Services"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" accesskey="U">Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-os">
+<span id="os-portable-access-to-operating-system-specific-features"></span><h1>os &#8211; Portable access to operating system specific features.<a class="headerlink" href="#module-os" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Portable access to operating system specific features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 (or earlier)</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> module provides a wrapper for platform specific modules
+such as <tt class="xref py py-mod docutils literal"><span class="pre">posix</span></tt>, <tt class="xref py py-mod docutils literal"><span class="pre">nt</span></tt>, and <tt class="xref py py-mod docutils literal"><span class="pre">mac</span></tt>. The API for functions
+available on all platform should be the same, so using the <a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a>
+module offers some measure of portability. Not all functions are
+available on all platforms, however. Many of the process management
+functions described in this summary are not available for Windows.</p>
+<p>The Python documentation for the <a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> module is subtitled
+&#8220;Miscellaneous operating system interfaces&#8221;. The module consists
+mostly of functions for creating and managing running processes or
+filesystem content (files and directories), with a few other bits of
+functionality thrown in besides.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some of the example code below will only work on Unix-like
+operating systems.</p>
+</div>
+<div class="section" id="process-owner">
+<h2>Process Owner<a class="headerlink" href="#process-owner" title="Permalink to this headline">¶</a></h2>
+<p>The first set of functions to cover are used for determining and
+changing the process owner ids. These are mostly useful to authors of
+daemons or special system programs which need to change permission
+level rather than running as <tt class="docutils literal"><span class="pre">root</span></tt>. This section does not try to
+explain all of the intricate details of Unix security, process owners,
+etc. See the References list below for more details.</p>
+<p>This first script shows the real and effective user and group
+information for a process, and then changes the effective values. This
+is similar to what a daemon would need to do when it starts as root
+during a system boot, to lower the privilege level and run as a
+different user.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before running the example, change the <tt class="xref py py-data docutils literal"><span class="pre">TEST_GID</span></tt> and
+<tt class="xref py py-data docutils literal"><span class="pre">TEST_UID</span></tt> values to match a real user.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">TEST_GID</span><span class="o">=</span><span class="mi">501</span>
+<span class="n">TEST_UID</span><span class="o">=</span><span class="mi">527</span>
+
+<span class="k">def</span> <span class="nf">show_user_info</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Effective User  :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">geteuid</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Effective Group :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getegid</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Actual User     :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">getlogin</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Actual Group    :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getgid</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Actual Groups   :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getgroups</span><span class="p">()</span>
+    <span class="k">return</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE CHANGE:&#39;</span>
+<span class="n">show_user_info</span><span class="p">()</span>
+<span class="k">print</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">setegid</span><span class="p">(</span><span class="n">TEST_GID</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR: Could not change effective group.  Re-run as root.&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;CHANGED GROUP:&#39;</span>
+    <span class="n">show_user_info</span><span class="p">()</span>
+    <span class="k">print</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">seteuid</span><span class="p">(</span><span class="n">TEST_UID</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;ERROR: Could not change effective user.  Re-run as root.&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;CHANGE USER:&#39;</span>
+    <span class="n">show_user_info</span><span class="p">()</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>When run as user with id of 527 and group 501 on OS X, this output is
+produced:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_process_user_example.py
+
+BEFORE CHANGE:
+Effective User  : 527
+Effective Group : 501
+Actual User     : 527 dhellmann
+Actual Group    : 501
+Actual Groups   : [501, 401, 101, 500, 12, 33, 61, 80, 98, 100, 204, 102]
+
+CHANGED GROUP:
+Effective User  : 527
+Effective Group : 501
+Actual User     : 527 dhellmann
+Actual Group    : 501
+Actual Groups   : [501, 401, 101, 500, 12, 33, 61, 80, 98, 100, 204, 102]
+
+CHANGE USER:
+Effective User  : 527
+Effective Group : 501
+Actual User     : 527 dhellmann
+Actual Group    : 501
+Actual Groups   : [501, 401, 101, 500, 12, 33, 61, 80, 98, 100, 204, 102]
+</pre></div>
+</div>
+<p>Notice that the values do not change. When not running as root,
+processes cannot change their effective owner values. Any attempt to
+set the effective user id or group id to anything other than that of
+the current user causes an <a class="reference internal" href="../exceptions/index.html#exceptions-oserror"><em>OSError</em></a>.</p>
+<p>Running the same script using <strong class="command">sudo</strong> so that it starts out
+with root privileges is a different story.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo python os_process_user_example.py
+BEFORE CHANGE:
+Effective User  : 0
+Effective Group : 0
+Actual User      : 0 dhellmann
+Actual Group    : 0
+Actual Groups   : [0, 1, 2, 8, 29, 3, 9, 4, 5, 80, 20]
+
+CHANGED GROUP:
+Effective User  : 0
+Effective Group : 501
+Actual User      : 0 dhellmann
+Actual Group    : 0
+Actual Groups   : [501, 1, 2, 8, 29, 3, 9, 4, 5, 80, 20]
+
+CHANGE USER:
+Effective User  : 527
+Effective Group : 501
+Actual User      : 0 dhellmann
+Actual Group    : 0
+Actual Groups   : [501, 1, 2, 8, 29, 3, 9, 4, 5, 80, 20]
+</pre></div>
+</div>
+<p>In this case, since it starts as root, it can change the effective
+user and group for the process. Once the effective UID is changed, the
+process is limited to the permissions of that user. Since non-root
+users cannot change their effective group, the program needs to change
+the group before changing the user.</p>
+<p>Besides finding and changing the process owner, there are functions for
+determining the current and parent process id, finding and changing the
+process group and session ids, as well as finding the controlling terminal id.
+These can be useful for sending signals between processes or for complex
+applications such as writing a command line shell.</p>
+</div>
+<div class="section" id="process-environment">
+<h2>Process Environment<a class="headerlink" href="#process-environment" title="Permalink to this headline">¶</a></h2>
+<p>Another feature of the operating system exposed to a program though
+the <a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> module is the environment. Variables set in the
+environment are visible as strings that can be read through
+<tt class="xref py py-data docutils literal"><span class="pre">os.environ</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">getenv()</span></tt>. Environment variables are
+commonly used for configuration values such as search paths, file
+locations, and debug flags. This example shows how to retrieve an
+environment variable, and pass a value through to a child process.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;Initial value:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;TESTVAR&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Child process:&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo $TESTVAR&#39;</span><span class="p">)</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;TESTVAR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;THIS VALUE WAS CHANGED&#39;</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Changed value:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;TESTVAR&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;Child process:&#39;</span> 
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo $TESTVAR&#39;</span><span class="p">)</span>
+
+<span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;TESTVAR&#39;</span><span class="p">]</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Removed value:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;TESTVAR&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Child process:&#39;</span> 
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo $TESTVAR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-data docutils literal"><span class="pre">os.environ</span></tt> object follows the standard Python mapping API
+for retrieving and setting values. Changes to <tt class="xref py py-data docutils literal"><span class="pre">os.environ</span></tt> are
+exported for child processes.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_environ_example.py
+
+Initial value: None
+Child process:
+
+
+Changed value: THIS VALUE WAS CHANGED
+Child process:
+THIS VALUE WAS CHANGED
+
+Removed value: None
+Child process:
+</pre></div>
+</div>
+</div>
+<div class="section" id="process-working-directory">
+<h2>Process Working Directory<a class="headerlink" href="#process-working-directory" title="Permalink to this headline">¶</a></h2>
+<p>Operating systems with hierarchical filesystems have a concept of the
+<em>current working directory</em> &#8211; the directory on the filesystem the
+process uses as the starting location when files are accessed with
+relative paths.  The current working directory can be retrieved with
+<tt class="xref py py-func docutils literal"><span class="pre">getcwd()</span></tt> and changed with <tt class="xref py py-func docutils literal"><span class="pre">chdir()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Moving up one:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;After move:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-const docutils literal"><span class="pre">os.curdir</span></tt> and <tt class="xref py py-const docutils literal"><span class="pre">os.pardir</span></tt> are used to refer to the
+current and parent directories in a portable manner. The output should
+not be surprising:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_cwd_example.py
+
+Starting: /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/os
+Moving up one: ..
+After move: /Users/dhellmann/Documents/PyMOTW/src/PyMOTW
+</pre></div>
+</div>
+</div>
+<div class="section" id="pipes">
+<h2>Pipes<a class="headerlink" href="#pipes" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> module provides several functions for managing the I/O
+of child processes using <em>pipes</em>. The functions all work essentially
+the same way, but return different file handles depending on the type
+of input or output desired. For the most part, these functions are
+made obsolete by the <a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a> module (added in Python 2.4),
+but there is a good chance legacy code uses them.</p>
+<p>The most commonly used pipe function is <tt class="xref py py-func docutils literal"><span class="pre">popen()</span></tt>. It creates a
+new process running the command given and attaches a single stream to
+the input or output of that process, depending on the <em>mode</em>
+argument. While <tt class="xref py py-func docutils literal"><span class="pre">popen()</span></tt> functions work on Windows, some of these
+examples assume a Unix-like shell.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;popen, read:&#39;</span>
+<span class="n">pipe_stdout</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&#39;echo &quot;to stdout&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">stdout_value</span> <span class="o">=</span> <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">stdout:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">popen, write:&#39;</span>
+<span class="n">pipe_stdin</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&#39;cat -&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">stdin: to stdin</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The descriptions of the streams also assume Unix-like terminology:</p>
+<ul class="simple">
+<li>stdin - The &#8220;standard input&#8221; stream for a process (file descriptor 0) is
+readable by the process. This is usually where terminal input goes.</li>
+<li>stdout - The &#8220;standard output&#8221; stream for a process (file descriptor
+1) is writable by the process, and is used for displaying regular
+output to the user.</li>
+<li>stderr - The &#8220;standard error&#8221; stream for a process (file descriptor 2) is
+writable by the process, and is used for conveying error messages.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_popen.py
+
+popen, read:
+        stdout: &#39;to stdout\n&#39;
+
+popen, write:
+        stdin: to stdin
+</pre></div>
+</div>
+<p>The caller can only read from or write to the streams associated with
+the child process, which limits the usefulness. The other
+<tt class="xref py py-func docutils literal"><span class="pre">popen()</span></tt> variants provide additional streams so it is possible to
+work with stdin, stdout, and stderr as needed.</p>
+<p>For example, <tt class="xref py py-func docutils literal"><span class="pre">popen2()</span></tt> returns a write-only stream attached to
+stdin of the child process, and a read-only stream attached to its
+stdout.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;popen2:&#39;</span>
+<span class="n">pipe_stdin</span><span class="p">,</span> <span class="n">pipe_stdout</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen2</span><span class="p">(</span><span class="s">&#39;cat -&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;through stdin to stdout&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">stdout_value</span> <span class="o">=</span> <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">pass through:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This simplistic example illustrates bi-directional communication. The
+value written to stdin is read by <tt class="docutils literal"><span class="pre">cat</span></tt> (because of the <tt class="docutils literal"><span class="pre">'-'</span></tt>
+argument), then written back to stdout. A more complicated process
+could pass other types of messages back and forth through the pipe;
+even serialized objects.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_popen2.py
+
+popen2:
+        pass through: &#39;through stdin to stdout&#39;
+</pre></div>
+</div>
+<p>In most cases, it is desirable to have access to both stdout and
+stderr. The stdout stream is used for message passing and the stderr
+stream is used for errors, so reading from it separately reduces the
+complexity for parsing any error messages. The <tt class="xref py py-func docutils literal"><span class="pre">popen3()</span></tt>
+function returns three open streams tied to stdin, stdout, and stderr
+of the new process.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;popen3:&#39;</span>
+<span class="n">pipe_stdin</span><span class="p">,</span> <span class="n">pipe_stdout</span><span class="p">,</span> <span class="n">pipe_stderr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen3</span><span class="p">(</span><span class="s">&#39;cat -; echo &quot;;to stderr&quot; 1&gt;&amp;2&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;through stdin to stdout&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">stdout_value</span> <span class="o">=</span> <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">pass through:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">stderr_value</span> <span class="o">=</span> <span class="n">pipe_stderr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stderr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">stderr:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stderr_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that the program has to read from and close both stdout and
+stderr <em>separately</em>. There are some related to flow control and
+sequencing when dealing with I/O for multiple processes. The I/O is
+buffered, and if the caller expects to be able to read all of the data
+from a stream then the child process must close that stream to
+indicate the end-of-file. For more information on these issues, refer
+to the <a class="reference external" href="http://docs.python.org/2.7/library/popen2.html#popen2-flow-control">Flow Control Issues</a>
+section of the Python library documentation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_popen3.py
+
+popen3:
+        pass through: &#39;through stdin to stdout&#39;
+        stderr: &#39;;to stderr\n&#39;
+</pre></div>
+</div>
+<p>And finally, <tt class="xref py py-func docutils literal"><span class="pre">popen4()</span></tt> returns 2 streams, stdin and a merged
+stdout/stderr.  This is useful when the results of the command need to
+be logged, but not parsed directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;popen4:&#39;</span>
+<span class="n">pipe_stdin</span><span class="p">,</span> <span class="n">pipe_stdout_and_stderr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen4</span><span class="p">(</span><span class="s">&#39;cat -; echo &quot;;to stderr&quot; 1&gt;&amp;2&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;through stdin to stdout&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">stdout_value</span> <span class="o">=</span> <span class="n">pipe_stdout_and_stderr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdout_and_stderr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">combined output:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All of the messages written to both stdout and stderr are read
+together.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_popen4.py
+
+popen4:
+        combined output: &#39;through stdin to stdout;to stderr\n&#39;
+</pre></div>
+</div>
+<p>Besides accepting a single string command to be given to the shell for
+parsing, <tt class="xref py py-func docutils literal"><span class="pre">popen2()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">popen3()</span></tt>, and <tt class="xref py py-func docutils literal"><span class="pre">popen4()</span></tt> also
+accept a sequence of strings (command, followed by arguments).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;popen2, cmd as sequence:&#39;</span>
+<span class="n">pipe_stdin</span><span class="p">,</span> <span class="n">pipe_stdout</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen2</span><span class="p">([</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">])</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;through stdin to stdout&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">stdout_value</span> <span class="o">=</span> <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">pipe_stdout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">pass through:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stdout_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the arguments are not processed by the shell.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_popen2_seq.py
+
+popen2, cmd as sequence:
+        pass through: &#39;through stdin to stdout&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-descriptors">
+<h2>File Descriptors<a class="headerlink" href="#file-descriptors" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> includes the standard set of functions for working with
+low-level <em>file descriptors</em> (integers representing open files owned
+by the current process). This is a lower-level API than is provided by
+<tt class="xref py py-class docutils literal"><span class="pre">file</span></tt> objects. They are not covered here because it is
+generally easier to work directly with <tt class="xref py py-class docutils literal"><span class="pre">file</span></tt> objects. Refer to
+the library documentation for details.</p>
+</div>
+<div class="section" id="filesystem-permissions">
+<h2>Filesystem Permissions<a class="headerlink" href="#filesystem-permissions" title="Permalink to this headline">¶</a></h2>
+<p>The function <tt class="xref py py-func docutils literal"><span class="pre">access()</span></tt> can be used to test the access rights a
+process has for a file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">print</span> <span class="s">&#39;Testing:&#39;</span><span class="p">,</span> <span class="n">__file__</span>
+<span class="k">print</span> <span class="s">&#39;Exists:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">F_OK</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Readable:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">R_OK</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Writable:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">W_OK</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Executable:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The results will vary depending on how the example code is installed,
+but it will look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_access.py
+
+Testing: os_access.py
+Exists: True
+Readable: True
+Writable: True
+Executable: False
+</pre></div>
+</div>
+<p>The library documentation for <tt class="xref py py-func docutils literal"><span class="pre">access()</span></tt> includes two special
+warnings. First, there isn&#8217;t much sense in calling <tt class="xref py py-func docutils literal"><span class="pre">access()</span></tt>
+to test whether a file can be opened before actually calling
+<tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> on it. There is a small, but real, window of time
+between the two calls during which the permissions on the file could
+change. The other warning applies mostly to networked filesystems that
+extend the POSIX permission semantics. Some filesystem types may
+respond to the POSIX call that a process has permission to access a
+file, then report a failure when the attempt is made using
+<tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> for some reason not tested via the POSIX call. All in
+all, it is better to call <tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt> with the required mode and
+catch the <a class="reference internal" href="../exceptions/index.html#exceptions-ioerror"><em>IOError</em></a> raised if there is a
+problem.</p>
+<p>More detailed information about the file can be accessed using
+<tt class="xref py py-func docutils literal"><span class="pre">stat()</span></tt> or <tt class="xref py py-func docutils literal"><span class="pre">lstat()</span></tt> (for checking the status of
+something that might be a symbolic link).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">__file__</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">stat_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;os.stat(</span><span class="si">%s</span><span class="s">):&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Size:&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_size</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Permissions:&#39;</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Owner:&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_uid</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Device:&#39;</span><span class="p">,</span> <span class="n">stat_info</span><span class="o">.</span><span class="n">st_dev</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Last modified:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once again, the output will vary depending on how the example code was
+installed. Try passing different filenames on the command line to
+<tt class="docutils literal"><span class="pre">os_stat.py</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_stat.py
+
+os.stat(os_stat.py):
+        Size: 1516
+        Permissions: 0100644
+        Owner: 527
+        Device: 234881026
+        Last modified: Sat Feb 19 19:18:23 2011
+</pre></div>
+</div>
+<p>On Unix-like systems, file permissions can be changed using
+<tt class="xref py py-func docutils literal"><span class="pre">chmod()</span></tt>, passing the mode as an integer. Mode values can be
+constructed using constants defined in the <tt class="xref py py-mod docutils literal"><span class="pre">stat</span></tt> module.  This
+example toggles the user&#8217;s execute permission bit:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;os_stat_chmod_example.txt&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;contents&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># Determine what permissions are already set using stat</span>
+<span class="n">existing_permissions</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IMODE</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Adding execute permission&#39;</span>
+    <span class="n">new_permissions</span> <span class="o">=</span> <span class="n">existing_permissions</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXUSR</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Removing execute permission&#39;</span>
+    <span class="c"># use xor to remove the user execute permission</span>
+    <span class="n">new_permissions</span> <span class="o">=</span> <span class="n">existing_permissions</span> <span class="o">^</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXUSR</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">new_permissions</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>The script assumes it has the permissions necessary to modify the mode
+of the file when run.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_stat_chmod.py
+
+Adding execute permission
+</pre></div>
+</div>
+</div>
+<div class="section" id="directories">
+<span id="os-directories"></span><h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
+<p>There are several functions for working with directories on the filesystem,
+including creating, listing contents, and removing them.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">dir_name</span> <span class="o">=</span> <span class="s">&#39;os_directories_example&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Creating&#39;</span><span class="p">,</span> <span class="n">dir_name</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+<span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s">&#39;example.txt&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Creating&#39;</span><span class="p">,</span> <span class="n">file_name</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">&#39;wt&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;example file&#39;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Listing&#39;</span><span class="p">,</span> <span class="n">dir_name</span>
+<span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Cleaning up&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are two sets of functions for creating and deleting
+directories. When creating a new directory with <tt class="xref py py-func docutils literal"><span class="pre">mkdir()</span></tt>,
+all of the parent directories must already exist. When removing a
+directory with <tt class="xref py py-func docutils literal"><span class="pre">rmdir()</span></tt>, only the leaf directory (the last
+part of the path) is actually removed. In contrast,
+<tt class="xref py py-func docutils literal"><span class="pre">makedirs()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">removedirs()</span></tt> operate on all of
+the nodes in the path.  <tt class="xref py py-func docutils literal"><span class="pre">makedirs()</span></tt> will create any parts of
+the path which do not exist, and <tt class="xref py py-func docutils literal"><span class="pre">removedirs()</span></tt> will remove
+all of the parent directories (assuming it can).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_directories.py
+
+Creating os_directories_example
+Creating os_directories_example/example.txt
+Listing os_directories_example
+[&#39;example.txt&#39;]
+Cleaning up
+</pre></div>
+</div>
+</div>
+<div class="section" id="symbolic-links">
+<h2>Symbolic Links<a class="headerlink" href="#symbolic-links" title="Permalink to this headline">¶</a></h2>
+<p>For platforms and filesystems that support them, there are functions
+for working with symlinks.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">tempfile</span>
+
+<span class="n">link_name</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mktemp</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Creating link </span><span class="si">%s</span><span class="s"> -&gt; </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">link_name</span><span class="p">,</span> <span class="n">__file__</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">link_name</span><span class="p">)</span>
+
+<span class="n">stat_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">lstat</span><span class="p">(</span><span class="n">link_name</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Permissions:&#39;</span><span class="p">,</span> <span class="nb">oct</span><span class="p">(</span><span class="n">stat_info</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Points to:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">readlink</span><span class="p">(</span><span class="n">link_name</span><span class="p">)</span>
+
+<span class="c"># Cleanup</span>
+<span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">link_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Although <a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> includes <tt class="xref py py-func docutils literal"><span class="pre">tempnam()</span></tt> for creating
+temporary filenames, it is not as secure as the <a class="reference internal" href="../tempfile/index.html#module-tempfile" title="tempfile: Create temporary filesystem resources."><tt class="xref py py-mod docutils literal"><span class="pre">tempfile</span></tt></a> module
+and produces a <a class="reference internal" href="../exceptions/index.html#exceptions-runtimewarning"><em>RuntimeWarning</em></a>
+message when it is used. In general it is better to use
+<a class="reference internal" href="../tempfile/index.html#module-tempfile" title="tempfile: Create temporary filesystem resources."><tt class="xref py py-mod docutils literal"><span class="pre">tempfile</span></tt></a>, as in this example.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_symlinks.py
+
+Creating link /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/tmpt1_Bsr -&gt; os_symlinks.py
+Permissions: 0120755
+Points to: os_symlinks.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="walking-a-directory-tree">
+<h2>Walking a Directory Tree<a class="headerlink" href="#walking-a-directory-tree" title="Permalink to this headline">¶</a></h2>
+<p>The function <tt class="xref py py-func docutils literal"><span class="pre">walk()</span></tt> traverses a directory recursively and
+for each directory generates a tuple containing the directory path,
+any immediate sub-directories of that path, and the names of any files
+in that directory.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="c"># If we are not given a path to list, use /tmp</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="s">&#39;/tmp&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">dir_name</span><span class="p">,</span> <span class="n">sub_dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">dir_name</span>
+    <span class="c"># Make the subdirectory names stand out with /</span>
+    <span class="n">sub_dirs</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">/&#39;</span> <span class="o">%</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">sub_dirs</span> <span class="p">]</span>
+    <span class="c"># Mix the directory contents together</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">sub_dirs</span> <span class="o">+</span> <span class="n">files</span>
+    <span class="n">contents</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="c"># Show the contents</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">contents</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p>This example shows a recursive directory listing.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_walk.py ../zipimport
+
+
+../zipimport
+        __init__.py
+        __init__.pyc
+        example_package/
+        index.rst
+        zipimport_example.zip
+        zipimport_find_module.py
+        zipimport_find_module.pyc
+        zipimport_get_code.py
+        zipimport_get_code.pyc
+        zipimport_get_data.py
+        zipimport_get_data.pyc
+        zipimport_get_data_nozip.py
+        zipimport_get_data_nozip.pyc
+        zipimport_get_data_zip.py
+        zipimport_get_data_zip.pyc
+        zipimport_get_source.py
+        zipimport_get_source.pyc
+        zipimport_is_package.py
+        zipimport_is_package.pyc
+        zipimport_load_module.py
+        zipimport_load_module.pyc
+        zipimport_make_example.py
+        zipimport_make_example.pyc
+
+../zipimport/example_package
+        README.txt
+        __init__.py
+        __init__.pyc
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-external-commands">
+<span id="os-system"></span><h2>Running External Commands<a class="headerlink" href="#running-external-commands" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Many of these functions for working with processes have limited
+portability. For a more consistent way to work with processes in a
+platform independent manner, see the <a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a> module
+instead.</p>
+</div>
+<p>The simplest way to run a separate command, without interacting with
+it at all, is <tt class="xref py py-func docutils literal"><span class="pre">system()</span></tt>. It takes a single string which is
+the command line to be executed by a sub-process running a shell.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># Simple command</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;ls -l&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The return value of <tt class="xref py py-func docutils literal"><span class="pre">system()</span></tt> is the exit value of the shell
+running the program packed into a 16 bit number, with the high byte
+the exit status and the low byte the signal number that caused the
+process to die, or zero.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_system_example.py
+
+total 248
+-rw-r--r--  1 dhellmann  dhellmann      0 Feb 19  2011 __init__.py
+-rw-r--r--  1 dhellmann  dhellmann  22700 Jul  8  2011 index.rst
+-rw-r--r--  1 dhellmann  dhellmann   1360 Feb 19  2011 os_access.py
+-rw-r--r--  1 dhellmann  dhellmann   1292 Feb 19  2011 os_cwd_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1499 Feb 19  2011 os_directories.py
+-rw-r--r--  1 dhellmann  dhellmann   1573 Feb 19  2011 os_environ_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1241 Feb 19  2011 os_exec_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1267 Feb 19  2011 os_fork_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1703 Feb 19  2011 os_kill_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1476 Feb 19  2011 os_popen.py
+-rw-r--r--  1 dhellmann  dhellmann   1506 Feb 19  2011 os_popen2.py
+-rw-r--r--  1 dhellmann  dhellmann   1528 Feb 19  2011 os_popen2_seq.py
+-rw-r--r--  1 dhellmann  dhellmann   1658 Feb 19  2011 os_popen3.py
+-rw-r--r--  1 dhellmann  dhellmann   1567 Feb 19  2011 os_popen4.py
+-rw-r--r--  1 dhellmann  dhellmann   1395 Feb 19  2011 os_process_id_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1896 Feb 19  2011 os_process_user_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1206 Feb 19  2011 os_spawn_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1516 Feb 19  2011 os_stat.py
+-rw-r--r--  1 dhellmann  dhellmann   1751 Feb 19  2011 os_stat_chmod.py
+-rwxr--r--  1 dhellmann  dhellmann      8 Feb 21 06:36 os_stat_chmod_example.txt
+-rw-r--r--  1 dhellmann  dhellmann   1421 Feb 19  2011 os_symlinks.py
+-rw-r--r--  1 dhellmann  dhellmann   1250 Feb 19  2011 os_system_background.py
+-rw-r--r--  1 dhellmann  dhellmann   1191 Feb 19  2011 os_system_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1214 Feb 19  2011 os_system_shell.py
+-rw-r--r--  1 dhellmann  dhellmann   1499 Feb 19  2011 os_wait_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1555 Feb 19  2011 os_waitpid_example.py
+-rw-r--r--  1 dhellmann  dhellmann   1643 Feb 19  2011 os_walk.py
+</pre></div>
+</div>
+<p>Since the command is passed directly to the shell for processing, it can even
+include shell syntax such as globbing or environment variables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># Command with shell expansion</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;ls -ld $TMPDIR&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_system_shell.py
+
+drwx------  10 dhellmann  dhellmann  340 Feb 21 06:36 /var/folders/5q/8gk0wq888xlggz008k8dr7180000hg/T/
+</pre></div>
+</div>
+<p>Unless the command is explicitly run in the background, the call to
+<tt class="xref py py-func docutils literal"><span class="pre">system()</span></tt> blocks until it is complete. Standard input,
+output, and error from the child process are tied to the appropriate
+streams owned by the caller by default, but can be redirected using
+shell syntax.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">print</span> <span class="s">&#39;Calling...&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;date; (sleep 3; date) &amp;&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Sleeping...&#39;</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is getting into shell trickery, though, and there are better ways to
+accomplish the same thing.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_system_background.py
+
+Calling...
+Thu Feb 21 06:36:14 EST 2013
+Sleeping...
+Thu Feb 21 06:36:18 EST 2013
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-processes-with-os-fork">
+<span id="id1"></span><h2>Creating Processes with os.fork()<a class="headerlink" href="#creating-processes-with-os-fork" title="Permalink to this headline">¶</a></h2>
+<p>The POSIX functions <tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">exec*()</span></tt> (available
+under Mac OS X, Linux, and other UNIX variants) are exposed via the
+<a class="reference internal" href="#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> module. Entire books have been written about reliably using
+these functions, so check the library or bookstore for more details
+than are presented here.</p>
+<p>To create a new process as a clone of the current process, use
+<tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">pid</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Child process id:&#39;</span><span class="p">,</span> <span class="n">pid</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;I am the child&#39;</span>
+</pre></div>
+</div>
+<p>The output will vary based on the state of the system each time the
+example is run, but it will look something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -u os_fork_example.py
+
+Child process id: 14167
+I am the child
+</pre></div>
+</div>
+<p>After the fork, there are two processes running the same code. For a
+program to tell which one it is in, it needs to check the return value
+of <tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt>. If the value is <tt class="docutils literal"><span class="pre">0</span></tt>, the current process is the
+child.  If it is not <tt class="docutils literal"><span class="pre">0</span></tt>, the program is running in the parent
+process and the return value is the process id of the child process.</p>
+<p>From the parent process, it is possible to send the child
+signals. This is a bit more complicated to set up, and uses the
+<a class="reference internal" href="../signal/index.html#module-signal" title="signal: Receive notification of asynchronous system events"><tt class="xref py py-mod docutils literal"><span class="pre">signal</span></tt></a> module. First, define a signal handler to be invoked
+when the signal is received.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">signal_usr1</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="s">&quot;Callback invoked when a signal is received&quot;</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Received USR1 in process </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">pid</span>
+</pre></div>
+</div>
+<p>Then <tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt>, and in the parent pause a short amount of time
+before sending a <tt class="xref py py-const docutils literal"><span class="pre">USR1</span></tt> signal using <tt class="xref py py-func docutils literal"><span class="pre">kill()</span></tt>. The
+short pause gives the child process time to set up the signal handler.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;Forking...&#39;</span>
+<span class="n">child_pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">child_pid</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT: Pausing before sending signal...&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT: Signaling </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">child_pid</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">child_pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the child, set up the signal handler and go to sleep for a while to
+give the parent time to send the signal:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;CHILD: Setting up signal handler&#39;</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">,</span> <span class="n">signal_usr1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;CHILD: Pausing to wait for signal&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A real application, wouldn&#8217;t need (or want) to call <tt class="xref py py-func docutils literal"><span class="pre">sleep()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_kill_example.py
+
+Forking...
+PARENT: Pausing before sending signal...
+PARENT: Signaling 14170
+Forking...
+CHILD: Setting up signal handler
+CHILD: Pausing to wait for signal
+Received USR1 in process 14170
+</pre></div>
+</div>
+<p>A simple way to handle separate behavior in the child process is to
+check the return value of <tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt> and branch. More complex
+behavior may call for more code separation than a simple branch. In
+other cases, there may be an existing program that needs to be
+wrapped. For both of these situations, the <tt class="xref py py-func docutils literal"><span class="pre">exec*()</span></tt> series
+of functions can be used to run another program.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">child_pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">child_pid</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">child_pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">execlp</span><span class="p">(</span><span class="s">&#39;ls&#39;</span><span class="p">,</span> <span class="s">&#39;ls&#39;</span><span class="p">,</span> <span class="s">&#39;-l&#39;</span><span class="p">,</span> <span class="s">&#39;/tmp/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a program is &#8220;execed&#8221;, the code from that program replaces the
+code from the existing process.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_exec_example.py
+
+total 320
+-rw-r-----  1 root        _lp         1193 Feb 21 06:26 025c6512ef714
+-rw-r--r--  1 root        wheel      70150 Feb 19 09:01 Carbon Copy Cloner-96-8F64ABE0-B932-4033-B71B-8815A11C13F1.growlRegDict
+-rw-r--r--  1 root        wheel      70150 Feb 19 09:01 Carbon Copy Cloner-96-F29FA27F-20E9-45F4-8FEB-B5BE8104239A.growlRegDict
+-rw-r--r--  1 dhellmann   wheel          0 Feb 19 09:03 CrashReportCopyLock-Doug Hellmann’s iPhone
+-rw-r--r--  1 dhellmann   wheel          0 Feb 19 23:52 CrashReportCopyLock-Fry
+-rw-r--r--  1 dhellmann   wheel          0 Feb 19 10:02 CrashReportCopyLock-Nibbler
+-rw-r--r--  1 dhellmann   wheel      12288 Feb 21 06:35 example.db
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-CRQRox
+drwx------  3 dhellmann   wheel        102 Feb 19 15:39 launch-EId8eS
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-XiBNeS
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-m0jqKW
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-n4P253
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launchd-328.RnuGVc
+drwx------  3 _spotlight  wheel        102 Feb 19 09:06 launchd-587.onAzLG
+drwx------  2 dhellmann   wheel         68 Feb 19 15:46 ssh-DUxXnX9KUd
+drwxr-xr-x  2 dhellmann   dhellmann     68 Feb 20 03:15 var_backups
+</pre></div>
+</div>
+<p>There are many variations of <tt class="xref py py-func docutils literal"><span class="pre">exec*()</span></tt>, depending on the form in
+which the arguments are available, whether the path and environment of
+the parent process should be be copied to the child, etc. Refer to the
+library documentation for complete details.</p>
+<p>For all variations, the first argument is a path or filename and the
+remaining arguments control how that program runs. They are either
+passed as command line arguments or override the process &#8220;environment&#8221;
+(see <tt class="xref py py-data docutils literal"><span class="pre">os.environ</span></tt> and <tt class="xref py py-data docutils literal"><span class="pre">os.getenv</span></tt>).</p>
+</div>
+<div class="section" id="waiting-for-a-child">
+<h2>Waiting for a Child<a class="headerlink" href="#waiting-for-a-child" title="Permalink to this headline">¶</a></h2>
+<p>Many computationally intensive programs use multiple processes to work
+around the threading limitations of Python and the Global Interpreter
+Lock. When starting several processes to run separate tasks, the
+master will need to wait for one or more of them to finish before
+starting new ones, to avoid overloading the server. There are a few
+different ways to do that using <tt class="xref py py-func docutils literal"><span class="pre">wait()</span></tt> and related functions.</p>
+<p>When it does not matter which child process might exit first, use
+<tt class="xref py py-func docutils literal"><span class="pre">wait()</span></tt>.  It returns as soon as any child process exits.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT: Forking </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">worker_pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">worker_pid</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;WORKER </span><span class="si">%s</span><span class="s">: Starting&#39;</span> <span class="o">%</span> <span class="n">i</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;WORKER </span><span class="si">%s</span><span class="s">: Finishing&#39;</span> <span class="o">%</span> <span class="n">i</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT: Waiting for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT:&#39;</span><span class="p">,</span> <span class="n">done</span>
+</pre></div>
+</div>
+<p>The return value from <tt class="xref py py-func docutils literal"><span class="pre">wait()</span></tt> is a tuple containing the
+process id and exit status (&#8220;a 16-bit number, whose low byte is the
+signal number that killed the process, and whose high byte is the exit
+status&#8221;).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_wait_example.py
+
+PARENT: Forking 0
+WORKER 0: Starting
+WORKER 0: Finishing
+PARENT: Forking 0
+PARENT: Forking 1
+WORKER 1: Starting
+WORKER 1: Finishing
+PARENT: Forking 0
+PARENT: Forking 1
+PARENT: Forking 2
+WORKER 2: Starting
+WORKER 2: Finishing
+PARENT: Forking 0
+PARENT: Forking 1
+PARENT: Forking 2
+PARENT: Waiting for 0
+PARENT: (14176, 0)
+PARENT: Waiting for 1
+PARENT: (14177, 256)
+PARENT: Waiting for 2
+PARENT: (14178, 512)
+</pre></div>
+</div>
+<p>To wait for a specific process, use <tt class="xref py py-func docutils literal"><span class="pre">waitpid()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">workers</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT: Forking </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">worker_pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">worker_pid</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;WORKER </span><span class="si">%s</span><span class="s">: Starting&#39;</span> <span class="o">%</span> <span class="n">i</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;WORKER </span><span class="si">%s</span><span class="s">: Finishing&#39;</span> <span class="o">%</span> <span class="n">i</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">workers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">worker_pid</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT: Waiting for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">pid</span>
+    <span class="n">done</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;PARENT:&#39;</span><span class="p">,</span> <span class="n">done</span>
+</pre></div>
+</div>
+<p>Pass the process id of the target process, and <tt class="xref py py-func docutils literal"><span class="pre">waitpid()</span></tt> blocks
+until that process exits.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_waitpid_example.py
+
+PARENT: Forking 0
+WORKER 0: Starting
+WORKER 0: Finishing
+PARENT: Forking 0
+PARENT: Forking 1
+WORKER 1: Starting
+WORKER 1: Finishing
+PARENT: Forking 0
+PARENT: Forking 1
+PARENT: Forking 2
+WORKER 2: Starting
+WORKER 2: Finishing
+PARENT: Forking 0
+PARENT: Forking 1
+PARENT: Forking 2
+PARENT: Waiting for 14181
+PARENT: (14181, 0)
+PARENT: Waiting for 14182
+PARENT: (14182, 256)
+PARENT: Waiting for 14183
+PARENT: (14183, 512)
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">wait3()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">wait4()</span></tt> work in a similar manner, but
+return more detailed information about the child process with the pid,
+exit status, and resource usage.</p>
+</div>
+<div class="section" id="spawn">
+<h2>Spawn<a class="headerlink" href="#spawn" title="Permalink to this headline">¶</a></h2>
+<p>As a convenience, the <tt class="xref py py-func docutils literal"><span class="pre">spawn*()</span></tt> family of functions handles the
+<tt class="xref py py-func docutils literal"><span class="pre">fork()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">exec*()</span></tt> in one statement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">spawnlp</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">P_WAIT</span><span class="p">,</span> <span class="s">&#39;ls&#39;</span><span class="p">,</span> <span class="s">&#39;ls&#39;</span><span class="p">,</span> <span class="s">&#39;-l&#39;</span><span class="p">,</span> <span class="s">&#39;/tmp/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first argument is a mode indicating whether or not to wait for the
+process to finish before returning.  This example waits.  Use
+<tt class="xref py py-const docutils literal"><span class="pre">P_NOWAIT</span></tt> to let the other process start, but then resume in
+the current process.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python os_spawn_example.py
+
+total 320
+-rw-r-----  1 root        _lp         1193 Feb 21 06:26 025c6512ef714
+-rw-r--r--  1 root        wheel      70150 Feb 19 09:01 Carbon Copy Cloner-96-8F64ABE0-B932-4033-B71B-8815A11C13F1.growlRegDict
+-rw-r--r--  1 root        wheel      70150 Feb 19 09:01 Carbon Copy Cloner-96-F29FA27F-20E9-45F4-8FEB-B5BE8104239A.growlRegDict
+-rw-r--r--  1 dhellmann   wheel          0 Feb 19 09:03 CrashReportCopyLock-Doug Hellmann’s iPhone
+-rw-r--r--  1 dhellmann   wheel          0 Feb 19 23:52 CrashReportCopyLock-Fry
+-rw-r--r--  1 dhellmann   wheel          0 Feb 19 10:02 CrashReportCopyLock-Nibbler
+-rw-r--r--  1 dhellmann   wheel      12288 Feb 21 06:35 example.db
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-CRQRox
+drwx------  3 dhellmann   wheel        102 Feb 19 15:39 launch-EId8eS
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-XiBNeS
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-m0jqKW
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launch-n4P253
+drwx------  3 dhellmann   wheel        102 Feb 19 09:00 launchd-328.RnuGVc
+drwx------  3 _spotlight  wheel        102 Feb 19 09:06 launchd-587.onAzLG
+drwx------  2 dhellmann   wheel         68 Feb 19 15:46 ssh-DUxXnX9KUd
+drwxr-xr-x  2 dhellmann   dhellmann     68 Feb 20 03:15 var_backups
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/os.html">os</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../subprocess/index.html#module-subprocess" title="subprocess: Work with additional processes"><tt class="xref py py-mod docutils literal"><span class="pre">subprocess</span></tt></a></dt>
+<dd>The subprocess module supersedes os.popen().</dd>
+<dt><a class="reference internal" href="../multiprocessing/index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a></dt>
+<dd>The multiprocessing module makes working with extra processes
+easier than doing all of the work yourself.</dd>
+<dt><a class="reference internal" href="../tempfile/index.html#module-tempfile" title="tempfile: Create temporary filesystem resources."><tt class="xref py py-mod docutils literal"><span class="pre">tempfile</span></tt></a></dt>
+<dd>The tempfile module for working with temporary files.</dd>
+<dt><em>Unix Manual Page Introduction</em></dt>
+<dd><p class="first">Includes definitions of real and effective ids, etc.</p>
+<p class="last"><a class="reference external" href="http://www.scit.wlv.ac.uk/cgi-bin/mansec?2+intro">http://www.scit.wlv.ac.uk/cgi-bin/mansec?2+intro</a></p>
+</dd>
+<dt><em>Speaking UNIX, Part 8.</em></dt>
+<dd><p class="first">Learn how UNIX multitasks.</p>
+<p class="last"><a class="reference external" href="http://www.ibm.com/developerworks/aix/library/au-speakingunix8/index.html">http://www.ibm.com/developerworks/aix/library/au-speakingunix8/index.html</a></p>
+</dd>
+<dt><em>Unix Concepts</em></dt>
+<dd><p class="first">For more discussion of stdin, stdout, and stderr.</p>
+<p class="last"><a class="reference external" href="http://www.linuxhq.com/guides/LUG/node67.html">http://www.linuxhq.com/guides/LUG/node67.html</a></p>
+</dd>
+<dt><em>Delve into Unix Process Creation</em></dt>
+<dd><p class="first">Explains the life cycle of a UNIX process.</p>
+<p class="last"><a class="reference external" href="http://www.ibm.com/developerworks/aix/library/au-unixprocess.html">http://www.ibm.com/developerworks/aix/library/au-unixprocess.html</a></p>
+</dd>
+<dt><a class="reference external" href="http://www.amazon.com/Programming-Environment-Addison-Wesley-Professional-Computing/dp/0201433079/ref=pd_bbs_3/002-2842372-4768037?ie=UTF8&amp;s=books&amp;amp;qid=1182098757&amp;sr=8-3">Advanced Programming in the UNIX(R) Environment</a></dt>
+<dd>Covers working with multiple processes, such as handling signals, closing duplicated
+file descriptors, etc.</dd>
+</dl>
+<p class="last"><a class="reference internal" href="../articles/file_access.html#article-file-access"><em>File Access</em></a></p>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../time/index.html" title="time – Functions for manipulating clock time"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../generic_os.html" title="Generic Operating System Services"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" >Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

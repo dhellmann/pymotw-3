@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>EasyDialogs &#8211; Carbon dialogs for Mac OS X - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Miscelaneous" href="../miscelaneous.html" />
+    <link rel="next" title="plistlib – Manipulate OS X property list files" href="../plistlib/index.html" />
+    <link rel="prev" title="Miscelaneous" href="../miscelaneous.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">EasyDialogs &#8211; Carbon dialogs for Mac OS X</a><ul>
+<li><a class="reference internal" href="#messages">Messages</a></li>
+<li><a class="reference internal" href="#progressbar">ProgressBar</a></li>
+<li><a class="reference internal" href="#simple-prompts">Simple Prompts</a></li>
+<li><a class="reference internal" href="#passwords">Passwords</a></li>
+<li><a class="reference internal" href="#files-and-directories">Files and Directories</a></li>
+<li><a class="reference internal" href="#getargv">GetArgv</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../miscelaneous.html" title="previous chapter"><strong>Previous:</strong> Miscelaneous</a><br/>
+          <a href="../plistlib/index.html" title="next chapter"><strong>Next:</strong> plistlib &#8211; Manipulate OS X property list files</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/EasyDialogs/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../plistlib/index.html" title="plistlib – Manipulate OS X property list files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../miscelaneous.html" title="Miscelaneous"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../miscelaneous.html" accesskey="U">Miscelaneous</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-EasyDialogs">
+<span id="easydialogs-carbon-dialogs-for-mac-os-x"></span><h1>EasyDialogs &#8211; Carbon dialogs for Mac OS X<a class="headerlink" href="#module-EasyDialogs" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Provides simple interfaces to Carbon dialogs from Python.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">At least 2.0, Macintosh-only (see References below for a Windows implementation)</td>
+</tr>
+</tbody>
+</table>
+<p>The EasyDialogs module includes classes and functions for working with
+simple message and prompt dialogs, as well as stock dialogs for
+querying the user for file or directory names. The dialogs use the
+Carbon API. See Apple&#8217;s <a class="reference external" href="http://developer.apple.com/documentation/Carbon/Reference/Navigation_Services_Ref/Reference/reference.html">Navigation Services Reference</a> for more
+details about some of the options not covered in detail here.</p>
+<div class="section" id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Permalink to this headline">¶</a></h2>
+<p>A simple Message function displays modal dialog containing a text message for
+the user.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+
+<span class="n">EasyDialogs</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="s">&#39;This is a Message dialog&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/MessageDialog.png" src="../_images/MessageDialog.png" />
+<p>It is easy to change the label of the &#8220;OK&#8221; button using the <tt class="docutils literal"><span class="pre">ok</span></tt>
+argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+
+<span class="n">EasyDialogs</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="s">&#39;The button label has changed&#39;</span><span class="p">,</span> <span class="n">ok</span><span class="o">=</span><span class="s">&#39;Continue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/MessageDialog_continue.png" src="../_images/MessageDialog_continue.png" />
+</div>
+<div class="section" id="progressbar">
+<h2>ProgressBar<a class="headerlink" href="#progressbar" title="Permalink to this headline">¶</a></h2>
+<p>The ProgressBar class manages a modeless dialog with a progress meter. It can
+operate in determinate (when you know how much work there is to be done) or
+indeterminate (when you want to show that your app is working, but do not know
+how much work needs to be done) modes. The constructor takes arguments for the
+dialog title, the maximum value, and a label to describe the current phase of
+operation.</p>
+<p>In determinate mode, set the maxval argument to the number of steps, amount of
+data to download, etc. Then use the incr() method to step the progress from 0
+to maxval.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">meter</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="s">&#39;Making progress...&#39;</span><span class="p">,</span>
+                                <span class="n">maxval</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                <span class="n">label</span><span class="o">=</span><span class="s">&#39;Starting&#39;</span><span class="p">,</span>
+                                <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="s">&#39;Phase </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="k">print</span> <span class="n">phase</span>
+    <span class="n">meter</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
+    <span class="n">meter</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Done with loop&#39;</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">del</span> <span class="n">meter</span>
+<span class="k">print</span> <span class="s">&#39;The dialog should be gone now&#39;</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/ProgressBar_partial.png" src="../_images/ProgressBar_partial.png" />
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_ProgressBar.py
+Phase 1
+Phase 2
+Phase 3
+Phase 4
+Phase 5
+Phase 6
+Phase 7
+Phase 8
+Phase 9
+Phase 10
+Done with loop
+</pre></div>
+</div>
+<img alt="../_images/ProgressBar_complete.png" src="../_images/ProgressBar_complete.png" />
+<div class="highlight-python"><div class="highlight"><pre>The dialog should be gone now
+</pre></div>
+</div>
+<p>Explicitly deleting the ProgressBar instance using <tt class="docutils literal"><span class="pre">del</span></tt> removes it
+from the screen.</p>
+<p>If you are measuring progress in uneven steps, use <tt class="docutils literal"><span class="pre">set()</span></tt> to change
+the progress meter instead of <tt class="docutils literal"><span class="pre">incr()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">meter</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="s">&#39;Making progress...&#39;</span><span class="p">,</span>
+                                <span class="n">maxval</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                <span class="n">label</span><span class="o">=</span><span class="s">&#39;Starting&#39;</span><span class="p">,</span>
+                                <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">123</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;Bytes: </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">meter</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">meter</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/ProgressBar_set_partial.png" src="../_images/ProgressBar_set_partial.png" />
+</div>
+<div class="section" id="simple-prompts">
+<h2>Simple Prompts<a class="headerlink" href="#simple-prompts" title="Permalink to this headline">¶</a></h2>
+<p>EasyDialogs also lets you ask the user for information. Use AskString to
+display a modal dialog to prompt the user for a simple string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">AskString</span><span class="p">(</span><span class="s">&#39;What is your favorite color?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;RESPONSE:&#39;</span><span class="p">,</span> <span class="n">response</span>
+</pre></div>
+</div>
+<img alt="../_images/AskString.png" src="../_images/AskString.png" />
+<p>The return value depends on the user&#8217;s response. It is either the text they
+enter:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskString.py
+RESPONSE: blue
+</pre></div>
+</div>
+<p>or None if they press the Cancel button.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskString.py
+RESPONSE: None
+</pre></div>
+</div>
+<p>The string response has a length limit of 254 characters. If the value entered
+is longer than that, it is truncated.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">default</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="k">print</span> <span class="s">&#39;len(default)=&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">AskString</span><span class="p">(</span><span class="s">&#39;Enter a long string&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;len(response)=&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/AskString_too_long.png" src="../_images/AskString_too_long.png" />
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskString_too_long.py
+len(default)= 520
+len(response)= 254
+</pre></div>
+</div>
+</div>
+<div class="section" id="passwords">
+<h2>Passwords<a class="headerlink" href="#passwords" title="Permalink to this headline">¶</a></h2>
+<p>Use AskPassword to prompt the user for secret values that should not be echoed
+back to the screen in clear-text.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">AskPassword</span><span class="p">(</span><span class="s">&#39;Password:&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;s3cr3t&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Shh!:&#39;</span><span class="p">,</span> <span class="n">response</span>
+</pre></div>
+</div>
+<img alt="../_images/AskPassword.png" src="../_images/AskPassword.png" />
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskPassword.py
+Shh!: s3cr3t
+</pre></div>
+</div>
+<p>The Ok/Cancel behavior for AskPassword is the same as AskString.</p>
+</div>
+<div class="section" id="files-and-directories">
+<h2>Files and Directories<a class="headerlink" href="#files-and-directories" title="Permalink to this headline">¶</a></h2>
+<p>There are special functions for requesting file or directory names. These use
+the native file selector dialogs, so the user does not have to type in the
+paths. For example, to ask the user which file to open, use AskFileForOpen.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">AskFileForOpen</span><span class="p">(</span>
+    <span class="n">message</span><span class="o">=</span><span class="s">&#39;Select a Python source file&#39;</span><span class="p">,</span>
+    <span class="n">defaultLocation</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+    <span class="n">wanted</span><span class="o">=</span><span class="nb">unicode</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Selected:&#39;</span><span class="p">,</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<p>The wanted=unicode argument tells AskFileForOpen to return the name of the
+file as a unicode string. The other possible return types include ASCII
+string, and some Apple data structures for working with file references.</p>
+<p>By specifing defaultLocation, this example initializes the dialog to the
+current working directory. The user is still free to navigate around the
+filesystem.</p>
+<p>Other options to AskFileForOpen let you filter the values displayed, control
+the type codes of files visible to the user, and interact with the dialog
+through callbacks. Refer to the module documentation and Apple&#8217;s reference
+guide for more details.</p>
+<img alt="../_images/AskForFileOpen.png" src="../_images/AskForFileOpen.png" />
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskFileForOpen.py
+Selected: /Users/dhellmann/Documents/PyMOTW/in_progress/EasyDialogs/EasyDialogs_AskFileForOpen.py
+</pre></div>
+</div>
+<p>To prompt the user to provide a new filename when saving a file, use
+AskFileForSave.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">AskFileForSave</span><span class="p">(</span>
+    <span class="n">message</span><span class="o">=</span><span class="s">&#39;Name the destination&#39;</span><span class="p">,</span>
+    <span class="n">defaultLocation</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+    <span class="n">wanted</span><span class="o">=</span><span class="nb">unicode</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Selected:&#39;</span><span class="p">,</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<img alt="../_images/AskFileForSave.png" src="../_images/AskFileForSave.png" />
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskFileForSave.py
+Selected: /Users/dhellmann/Documents/PyMOTW/in_progress/EasyDialogs/new_file.py
+</pre></div>
+</div>
+<p>If you need the user to select a directory, existing or new, use AskFolder.
+The dialog includes a button to let them create a new folder.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">AskFolder</span><span class="p">(</span>
+    <span class="n">message</span><span class="o">=</span><span class="s">&#39;Name the destination&#39;</span><span class="p">,</span>
+    <span class="n">defaultLocation</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+    <span class="n">wanted</span><span class="o">=</span><span class="nb">unicode</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Selected:&#39;</span><span class="p">,</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<img alt="../_images/AskFolder.png" src="../_images/AskFolder.png" />
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_AskFolder.py
+Selected: /Users/dhellmann/Documents/PyMOTW/in_progress/EasyDialogs
+</pre></div>
+</div>
+</div>
+<div class="section" id="getargv">
+<h2>GetArgv<a class="headerlink" href="#getargv" title="Permalink to this headline">¶</a></h2>
+<p>An unusually complex dialog, GetArgv lets the user build a command line string
+by selecting options from menus. It uses a variation of the getopt syntax to
+describe the valid options, and returns a list of strings that can be parsed
+by getopt. In my research this week, I found some scripts that use GetArgv if
+the user does not specify arguments on the command line.</p>
+<p>Let&#8217;s look at an example that builds a command using the options supported by
+the Python interpreter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">EasyDialogs</span>
+
+<span class="n">arguments</span> <span class="o">=</span> <span class="n">EasyDialogs</span><span class="o">.</span><span class="n">GetArgv</span><span class="p">([</span> 
+        <span class="p">(</span><span class="s">&#39;c=&#39;</span><span class="p">,</span> <span class="s">&#39;program passed in as string (terminates option list)&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;Debug&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="s">&#39;Ignore environment variables&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;Inspect interactively after running&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;m=&#39;</span><span class="p">,</span> <span class="s">&#39;run library module as a script (terminates option list)&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;O&#39;</span><span class="p">,</span> <span class="s">&#39;Optimize generated bytecode&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;Q=&#39;</span><span class="p">,</span> <span class="s">&#39;division options: -Qold (default), -Qwarn, -Qwarnall, -Qnew&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="s">&quot;don&#39;t imply &#39;import site&#39; on initialization&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;issue warnings about inconsistent tab usage&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;tt&#39;</span><span class="p">,</span> <span class="s">&#39;issue errors about inconsistent tab usage&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;unbuffered binary stdout and stderr&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="s">&#39;verbose (trace import statements)&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;V&#39;</span><span class="p">,</span> <span class="s">&#39;print the Python version number and exit&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;W=&#39;</span><span class="p">,</span> <span class="s">&#39;warning control  (arg is action:message:category:module:lineno)&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;skip first line of source, allowing use of non-Unix forms of #!cmd&#39;</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">commandlist</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="s">&#39;Default Interpreter&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s">&#39;python2.5&#39;</span><span class="p">,</span> <span class="s">&#39;Python 2.5&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s">&#39;pyhton2.4&#39;</span><span class="p">,</span> <span class="s">&#39;Python 2.4&#39;</span><span class="p">),</span>
+                     <span class="p">],</span>
+        <span class="n">addoldfile</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">addnewfile</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">addfolder</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="p">)</span>
+<span class="k">print</span> <span class="n">arguments</span>
+</pre></div>
+</div>
+<img alt="../_images/GetArgv_1.png" src="../_images/GetArgv_1.png" />
+<p>The first argument is a list of tuples containing the option specifier and a
+text description. The specifier can contain a single letter for simple boolean
+switches; a letter followed by colon (&#8221;:&#8221;) or equals sign (&#8220;=&#8221;) for single
+letter options that take an argument; several letters for long-form switches
+(&#8220;opt&#8221; translates to &#8220;&#8211;opt&#8221;); or several letters followed by colon or equal
+sign for long options taking an argument. The option description is a string
+displayed in the dialog.</p>
+<img alt="../_images/GetArgv_2.png" src="../_images/GetArgv_2.png" />
+<p>The dialog is divided into 4 sections. At the top is the list of options you
+specified. The user can select an option from the list. If the option takes an
+argument, a text field is displayed so the user can provide a value. The Add
+button inserts the selected option into the command line field at the bottom
+of the dialog.</p>
+<img alt="../_images/GetArgv_3.png" src="../_images/GetArgv_3.png" />
+<p>The second argument to GetArgv is a list of commands and descriptions. The
+user can select a command to be included in the argument list from the menu in
+the middle of the dialog.</p>
+<img alt="../_images/GetArgv_4.png" src="../_images/GetArgv_4.png" />
+<p>The arguments addoldfile, addnewfile, and addfolder control the sensitivity of
+the buttons in the third section of the dialog. In this example, only the Add
+file... button is enabled because the Python interpreter does not take
+directories or missing files as arguments.</p>
+<p>At the bottom of the dialog is the command line being constructed by the user.
+When they press OK, GetArgv returns a list of all of the options that looks
+like sys.argv.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python EasyDialogs_GetArgv.py
+[&#39;python&#39;, &#39;-d&#39;, &#39;-v&#39;, &#39;/Users/dhellmann/Documents/PyMOTW/in_progress/EasyDialogs/EasyDialogs_GetArgv.py&#39;]
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/easydialogs.html">EasyDialogs</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://developer.apple.com/documentation/Carbon/Reference/Navigation_Services_Ref/Reference/reference.html">Navigation Services Reference</a></dt>
+<dd>Documentation for Apple&#8217;s API for working with file objects under Mac OS X.</dd>
+<dt><a class="reference external" href="http://www.averdevelopment.com/python/EasyDialogs.html">EasyDialogs for Windows</a></dt>
+<dd>A version of this module that runs under Windows.</dd>
+<dt><a class="reference external" href="http://code.google.com/p/optparse-gui/">optparse-gui</a></dt>
+<dd>A replacement for GetArgv that works with <a class="reference internal" href="../optparse/index.html#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> instead.</dd>
+<dt><a class="reference external" href="http://easygui.sourceforge.net/">EasyGui</a></dt>
+<dd>A similar portable library for creating simple graphical user interfaces.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../plistlib/index.html" title="plistlib – Manipulate OS X property list files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../miscelaneous.html" title="Miscelaneous"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../miscelaneous.html" >Miscelaneous</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

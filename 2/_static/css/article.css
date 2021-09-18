@@ -1,0 +1,26 @@
+/*
+** $Id$
+*/
+
+/* An individual article page */
+
+.article_reprint_disclaimer {
+    text-align: center;
+    font-style: italic;
+}
+
+.deck {
+    font-size: 110%;
+    background-color: #DDDDDD;
+    font-style: italic;
+    margin-left: 2em;
+    margin-right: 2em;    
+    margin-bottom: 2em;
+}
+
+img {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+}

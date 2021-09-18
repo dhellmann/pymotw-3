@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pickle and cPickle &#8211; Python object serialization - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Persistence" href="../persistence.html" />
+    <link rel="next" title="shelve – Persistent storage of arbitrary Python objects" href="../shelve/index.html" />
+    <link rel="prev" title="gdbm – GNU’s version of the dbm library" href="../gdbm/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">pickle and cPickle &#8211; Python object serialization</a><ul>
+<li><a class="reference internal" href="#importing">Importing</a></li>
+<li><a class="reference internal" href="#encoding-and-decoding-data-in-strings">Encoding and Decoding Data in Strings</a></li>
+<li><a class="reference internal" href="#working-with-streams">Working with Streams</a></li>
+<li><a class="reference internal" href="#problems-reconstructing-objects">Problems Reconstructing Objects</a></li>
+<li><a class="reference internal" href="#circular-references">Circular References</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../gdbm/index.html" title="previous chapter"><strong>Previous:</strong> gdbm &#8211; GNU&#8217;s version of the dbm library</a><br/>
+          <a href="../shelve/index.html" title="next chapter"><strong>Next:</strong> shelve &#8211; Persistent storage of arbitrary Python objects</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/pickle/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../shelve/index.html" title="shelve – Persistent storage of arbitrary Python objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../gdbm/index.html" title="gdbm – GNU’s version of the dbm library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" accesskey="U">Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-pickle">
+<span id="pickle-and-cpickle-python-object-serialization"></span><h1>pickle and cPickle &#8211; Python object serialization<a class="headerlink" href="#module-pickle" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-cPickle"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Python object serialization</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">pickle at least 1.4, cPickle 1.5</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> module implements an algorithm for turning an
+arbitrary Python object into a series of bytes.  This process is also
+called <em>serializing</em>&#8221; the object. The byte stream representing the
+object can then be transmitted or stored, and later reconstructed to
+create a new object with the same characteristics.</p>
+<p>The <a class="reference internal" href="#module-cPickle" title="cPickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">cPickle</span></tt></a> module implements the same algorithm, in C instead
+of Python. It is many times faster than the Python implementation, but
+does not allow the user to subclass from Pickle. If subclassing is not
+important for your use, you probably want to use cPickle.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The documentation for pickle makes clear that it offers no security
+guarantees. Be careful if you use pickle for inter-process communication or
+data storage.  Do not trust data you cannot verify as secure.</p>
+</div>
+<div class="section" id="importing">
+<h2>Importing<a class="headerlink" href="#importing" title="Permalink to this headline">¶</a></h2>
+<p>It is common to first try to import cPickle, giving an alias of
+&#8220;pickle&#8221;. If that import fails for any reason, you can then fall back
+on the native Python implementation in the pickle module. This gives
+you the faster implementation, if it is available, and the portable
+implementation otherwise.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+   <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+   <span class="kn">import</span> <span class="nn">pickle</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encoding-and-decoding-data-in-strings">
+<h2>Encoding and Decoding Data in Strings<a class="headerlink" href="#encoding-and-decoding-data-in-strings" title="Permalink to this headline">¶</a></h2>
+<p>This first example encodes a data structure as a string, then prints
+the string to the console. It uses a data structure made up of
+entirely native types. Instances of any class can be pickled, as will
+be illustrated in a later example.  Use <tt class="docutils literal"><span class="pre">pickle.dumps()</span></tt> to create a
+string representation of the value of the object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mf">3.0</span> <span class="p">}</span> <span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;DATA:&#39;</span><span class="p">,</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">data_string</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;PICKLE:&#39;</span><span class="p">,</span> <span class="n">data_string</span>
+</pre></div>
+</div>
+<p>By default, the pickle will contain only ASCII characters. A more
+efficient binary format is also available, but all of the examples
+here use the ASCII output because it is easier to understand in print.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_string.py
+
+DATA:[{&#39;a&#39;: &#39;A&#39;, &#39;b&#39;: 2, &#39;c&#39;: 3.0}]
+PICKLE: (lp1
+(dp2
+S&#39;a&#39;
+S&#39;A&#39;
+sS&#39;c&#39;
+F3
+sS&#39;b&#39;
+I2
+sa.
+</pre></div>
+</div>
+<p>Once the data is serialized, you can write it to a file, socket, pipe, etc.
+Then later you can read the file and unpickle the data to construct a new
+object with the same values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="n">data1</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mf">3.0</span> <span class="p">}</span> <span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+
+<span class="n">data1_string</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
+
+<span class="n">data2</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data1_string</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;AFTER:&#39;</span><span class="p">,</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;SAME?:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">data1</span> <span class="ow">is</span> <span class="n">data2</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;EQUAL?:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">data1</span> <span class="o">==</span> <span class="n">data2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you see, the newly constructed object is the equal to but not the same
+object as the original. No surprise there.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_unpickle.py
+
+BEFORE:[{&#39;a&#39;: &#39;A&#39;, &#39;b&#39;: 2, &#39;c&#39;: 3.0}]
+AFTER:[{&#39;a&#39;: &#39;A&#39;, &#39;b&#39;: 2, &#39;c&#39;: 3.0}]
+SAME?: False
+EQUAL?: True
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-streams">
+<h2>Working with Streams<a class="headerlink" href="#working-with-streams" title="Permalink to this headline">¶</a></h2>
+<p>In addition to <tt class="docutils literal"><span class="pre">dumps()</span></tt> and <tt class="docutils literal"><span class="pre">loads()</span></tt>, pickle provides a couple
+of convenience functions for working with file-like streams. It is
+possible to write multiple objects to a stream, and then read them
+from the stream without knowing in advance how many objects are
+written or how big they are.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="k">class</span> <span class="nc">SimpleObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_backwards</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;pickle&#39;</span><span class="p">))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;cPickle&#39;</span><span class="p">))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;last&#39;</span><span class="p">))</span>
+
+<span class="c"># Simulate a file with StringIO</span>
+<span class="n">out_s</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+
+<span class="c"># Write to the stream</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;WRITING: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">name_backwards</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">out_s</span><span class="p">)</span>
+    <span class="n">out_s</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="c"># Set up a read-able stream</span>
+<span class="n">in_s</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">out_s</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+<span class="c"># Read the data</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">in_s</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;READ: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">name_backwards</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The example simulates streams using StringIO buffers, so we have to
+play a little trickery to establish the readable stream. A simple
+database format could use pickles to store objects, too, though
+<a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a> would be easier to work with.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_stream.py
+
+WRITING: pickle (elkcip)
+WRITING: cPickle (elkciPc)
+WRITING: last (tsal)
+READ: pickle (elkcip)
+READ: cPickle (elkciPc)
+READ: last (tsal)
+</pre></div>
+</div>
+<p>Besides storing data, pickles are very handy for inter-process
+communication. For example, using <tt class="docutils literal"><span class="pre">os.fork()</span></tt> and <tt class="docutils literal"><span class="pre">os.pipe()</span></tt>, one
+can establish worker processes that read job instructions from one
+pipe and write the results to another pipe. The core code for managing
+the worker pool and sending jobs in and receiving responses can be
+reused, since the job and response objects don&#8217;t have to be of a
+particular class. If you are using pipes or sockets, do not forget to
+flush after dumping each object, to push the data through the
+connection to the other end.  See <a class="reference internal" href="../multiprocessing/index.html#module-multiprocessing" title="multiprocessing: Manage processes like threads."><tt class="xref py py-mod docutils literal"><span class="pre">multiprocessing</span></tt></a> if you don&#8217;t
+want to write your own worker pool manager.</p>
+</div>
+<div class="section" id="problems-reconstructing-objects">
+<h2>Problems Reconstructing Objects<a class="headerlink" href="#problems-reconstructing-objects" title="Permalink to this headline">¶</a></h2>
+<p>When working with your own classes, you must ensure that the class being
+pickled appears in the namespace of the process reading the pickle. Only the
+data for the instance is pickled, not the class definition. The class name is
+used to find the constructor to create the new object when unpickling. Take
+this example, which writes instances of a class to a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">SimpleObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_backwards</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;pickle&#39;</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;cPickle&#39;</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleObject</span><span class="p">(</span><span class="s">&#39;last&#39;</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Please specify a filename as an argument to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">out_s</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c"># Write to the stream</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;WRITING: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">name_backwards</span><span class="p">)</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">out_s</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">out_s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When run, the script creates a file based on the name given as
+argument on the command line:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_dump_to_file_1.py test.dat
+
+WRITING: pickle (elkcip)
+WRITING: cPickle (elkciPc)
+WRITING: last (tsal)
+</pre></div>
+</div>
+<p>A simplistic attempt to load the resulting pickled objects fails:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Please specify a filename as an argument to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">in_s</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c"># Read the data</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">o</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">in_s</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;READ: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">name_backwards</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">in_s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This version fails because there is no SimpleObject class available:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_load_from_file_1.py test.dat
+
+Traceback (most recent call last):
+  File &quot;pickle_load_from_file_1.py&quot;, line 52, in &lt;module&gt;
+    o = pickle.load(in_s)
+AttributeError: &#39;module&#39; object has no attribute &#39;SimpleObject&#39;
+</pre></div>
+</div>
+<p>The corrected version, which imports SimpleObject from the original
+script, succeeds.</p>
+<p>Add:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pickle_dump_to_file_1</span> <span class="kn">import</span> <span class="n">SimpleObject</span>
+</pre></div>
+</div>
+<p>to the end of the import list, then re-run the script:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_load_from_file_2.py test.dat
+
+READ: pickle (elkcip)
+READ: cPickle (elkciPc)
+READ: last (tsal)
+</pre></div>
+</div>
+<p>There are some special considerations when pickling data types with
+values that cannot be pickled (sockets, file handles, database
+connections, etc.). Classes that use values which cannot be pickled
+can define <tt class="docutils literal"><span class="pre">__getstate__()</span></tt> and <tt class="docutils literal"><span class="pre">__setstate__()</span></tt> to return a
+subset of the state of the instance to be pickled. New-style classes
+can also define <tt class="docutils literal"><span class="pre">__getnewargs__()</span></tt>, which should return arguments to
+be passed to the class memory allocator (<tt class="docutils literal"><span class="pre">C.__new__()</span></tt>).  Use of
+these features is covered in more detail in the standard library
+documentation.</p>
+</div>
+<div class="section" id="circular-references">
+<h2>Circular References<a class="headerlink" href="#circular-references" title="Permalink to this headline">¶</a></h2>
+<p>The pickle protocol automatically handles circular references between
+objects, so you don&#8217;t need to do anything special with complex data
+structures.  Consider the digraph:</p>
+<p class="graphviz">
+<img src="../_images/graphviz-66fc6f0c5ce5dbae5d0dae2b027dfd0d8edfdc38.png" alt="digraph pickle_example {
+&quot;root&quot;;
+&quot;root&quot; -&gt; &quot;a&quot;;
+&quot;root&quot; -&gt; &quot;b&quot;;
+&quot;a&quot; -&gt; &quot;b&quot;;
+&quot;b&quot; -&gt; &quot;a&quot;;
+&quot;b&quot; -&gt; &quot;c&quot;;
+&quot;a&quot; -&gt; &quot;a&quot;;
+}" />
+</p>
+<p>Even though the graph includes several cycles, the correct structure
+can be pickled and then reloaded.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simple digraph where each node knows about the other nodes</span>
+<span class="sd">    it leads to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="s">&quot;Create an edge between this node and the other.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">preorder_traversal</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">seen</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generator function to yield the edges via a preorder traversal.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">seen</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">yield</span> <span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">subnode</span><span class="p">)</span> <span class="ow">in</span> <span class="n">preorder_traversal</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">seen</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">subnode</span><span class="p">)</span>
+    <span class="k">return</span>
+    
+<span class="k">def</span> <span class="nf">show_edges</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="s">&quot;Print all of the edges in the graph.&quot;</span>
+    <span class="k">for</span> <span class="n">parent</span><span class="p">,</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">preorder_traversal</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%5s</span><span class="s"> -&gt; </span><span class="si">%2s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
+
+<span class="c"># Set up the nodes.</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&#39;root&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">)</span>
+
+<span class="c"># Add edges between them.</span>
+<span class="n">root</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">root</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;ORIGINAL GRAPH:&#39;</span>
+<span class="n">show_edges</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+<span class="c"># Pickle and unpickle the graph to create</span>
+<span class="c"># a new set of nodes.</span>
+<span class="n">dumped</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">reloaded</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">dumped</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;RELOADED GRAPH:&#39;</span>
+<span class="n">show_edges</span><span class="p">(</span><span class="n">reloaded</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The reloaded nodes are not the same object, but the relationship
+between the nodes is maintained and only one copy of the object with
+multiple reference is reloaded. Both of these statements can be
+verified by examining the <tt class="docutils literal"><span class="pre">id()</span></tt> values for the nodes before and
+after being passed through pickle.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pickle_cycle.py
+
+ORIGINAL GRAPH:
+ root -&gt;  a (4299721744)
+    a -&gt;  b (4299721808)
+    b -&gt;  a (4299721744)
+    b -&gt;  c (4299721872)
+    a -&gt;  a (4299721744)
+ root -&gt;  b (4299721808)
+
+RELOADED GRAPH:
+ root -&gt;  a (4299722000)
+    a -&gt;  b (4299722064)
+    b -&gt;  a (4299722000)
+    b -&gt;  c (4299722128)
+    a -&gt;  a (4299722000)
+ root -&gt;  b (4299722064)
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickle</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a></dt>
+<dd>The shelve module.</dd>
+<dt><a class="reference external" href="http://peadrop.com/blog/2007/06/18/pickle-an-interesting-stack-language/">Pickle: An interesting stack language.</a></dt>
+<dd>by Alexandre Vassalotti</dd>
+</dl>
+<p class="last"><a class="reference internal" href="../articles/data_persistence.html#article-data-persistence"><em>Data Persistence and Exchange</em></a></p>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../shelve/index.html" title="shelve – Persistent storage of arbitrary Python objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../gdbm/index.html" title="gdbm – GNU’s version of the dbm library"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../persistence.html" >Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

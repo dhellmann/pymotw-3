@@ -1,0 +1,981 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cgitb &#8211; Detailed traceback reports - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="Cookie – HTTP Cookies" href="../Cookie/index.html" />
+    <link rel="prev" title="BaseHTTPServer – base classes for implementing web servers" href="../BaseHTTPServer/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">cgitb &#8211; Detailed traceback reports</a><ul>
+<li><a class="reference internal" href="#standard-traceback-dumps">Standard Traceback Dumps</a></li>
+<li><a class="reference internal" href="#enabling-detailed-tracebacks">Enabling Detailed Tracebacks</a></li>
+<li><a class="reference internal" href="#local-variables-in-tracebacks">Local Variables in Tracebacks</a></li>
+<li><a class="reference internal" href="#adding-more-context">Adding More Context</a></li>
+<li><a class="reference internal" href="#exception-properties">Exception Properties</a></li>
+<li><a class="reference internal" href="#logging-tracebacks">Logging Tracebacks</a></li>
+<li><a class="reference internal" href="#html-output">HTML Output</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../BaseHTTPServer/index.html" title="previous chapter"><strong>Previous:</strong> BaseHTTPServer &#8211; base classes for implementing web servers</a><br/>
+          <a href="../Cookie/index.html" title="next chapter"><strong>Next:</strong> Cookie &#8211; HTTP Cookies</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/cgitb/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../Cookie/index.html" title="Cookie – HTTP Cookies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../BaseHTTPServer/index.html" title="BaseHTTPServer – base classes for implementing web servers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-cgitb">
+<span id="cgitb-detailed-traceback-reports"></span><h1>cgitb &#8211; Detailed traceback reports<a class="headerlink" href="#module-cgitb" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">cgitb provides more detailed traceback information than <a class="reference internal" href="../traceback/index.html#module-traceback" title="traceback: Extract, format, and print exceptions and stack traces."><tt class="xref py py-mod docutils literal"><span class="pre">traceback</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-cgitb" title="cgitb: Mis-named module that provides extended traceback information."><tt class="xref py py-mod docutils literal"><span class="pre">cgitb</span></tt></a> was originally designed for showing errors and debugging
+information in web applications.  It was later updated to include
+plain-text output as well, but unfortunately wasn&#8217;t renamed.  This has
+led to obscurity and the module is not used as often as it should be.
+Nonetheless, <a class="reference internal" href="#module-cgitb" title="cgitb: Mis-named module that provides extended traceback information."><tt class="xref py py-mod docutils literal"><span class="pre">cgitb</span></tt></a> is a valuable debugging tool in the standard
+library.</p>
+<div class="section" id="standard-traceback-dumps">
+<h2>Standard Traceback Dumps<a class="headerlink" href="#standard-traceback-dumps" title="Permalink to this headline">¶</a></h2>
+<p>Python&#8217;s default exception handling behavior is to print a <em>traceback</em>
+to standard error with the call stack leading up to the error
+position.  This basic output frequently contains enough information to
+understand the cause of the exception and permit a fix.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">arg1</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg1</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">local_var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg2</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">func3</span><span class="p">(</span><span class="n">local_var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func3</span><span class="p">(</span><span class="n">arg3</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg2</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">local_var</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above sample program has a subtle error in <tt class="xref py py-func docutils literal"><span class="pre">func3()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_basic_traceback.py
+
+Traceback (most recent call last):
+  File &quot;cgitb_basic_traceback.py&quot;, line 22, in &lt;module&gt;
+    func1(1)
+  File &quot;cgitb_basic_traceback.py&quot;, line 12, in func1
+    return func2(local_var)
+  File &quot;cgitb_basic_traceback.py&quot;, line 16, in func2
+    return func3(local_var)
+  File &quot;cgitb_basic_traceback.py&quot;, line 19, in func3
+    local_var = arg2 / 2
+NameError: global name &#39;arg2&#39; is not defined
+</pre></div>
+</div>
+</div>
+<div class="section" id="enabling-detailed-tracebacks">
+<h2>Enabling Detailed Tracebacks<a class="headerlink" href="#enabling-detailed-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>While the basic traceback includes enough information for us to spot
+the error, enabling cgitb replaces <tt class="docutils literal"><span class="pre">sys.excepthook</span></tt> with a function
+that gives extended tracebacks with even more detail.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">arg1</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg1</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">local_var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg2</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">func3</span><span class="p">(</span><span class="n">local_var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func3</span><span class="p">(</span><span class="n">arg3</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg2</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">local_var</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see below, the error report is much more extensive.  Each
+frame of the stack is listed, along with:</p>
+<ul class="simple">
+<li>the full path to the source file, instead of just the base name</li>
+<li>the values of the arguments to each function in the stack</li>
+<li>a few lines of source context from around the line in the error path</li>
+<li>the values of variables in the expression causing the error</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_extended_traceback.py
+
+&lt;type &#39;exceptions.NameError&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:39 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_extended_traceback.py in &lt;module&gt;()
+   21 def func3(arg3):
+   22     local_var = arg2 / 2
+   23     return local_var
+   24
+   25 func1(1)
+func1 = &lt;function func1&gt;
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_extended_traceback.py in func1(arg1=1)
+   13 def func1(arg1):
+   14     local_var = arg1 * 2
+   15     return func2(local_var)
+   16
+   17 def func2(arg2):
+global func2 = &lt;function func2&gt;
+local_var = 2
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_extended_traceback.py in func2(arg2=2)
+   17 def func2(arg2):
+   18     local_var = arg2 + 2
+   19     return func3(local_var)
+   20
+   21 def func3(arg3):
+global func3 = &lt;function func3&gt;
+local_var = 4
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_extended_traceback.py in func3(arg3=4)
+   20
+   21 def func3(arg3):
+   22     local_var = arg2 / 2
+   23     return local_var
+   24
+local_var undefined
+arg2 undefined
+&lt;type &#39;exceptions.NameError&#39;&gt;: global name &#39;arg2&#39; is not defined
+    __class__ = &lt;type &#39;exceptions.NameError&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of exceptions.NameError object&gt;
+    __dict__ = {}
+    __doc__ = &#39;Name not found globally.&#39;
+    __format__ = &lt;built-in method __format__ of exceptions.NameError object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of exceptions.NameError object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of exceptions.NameError object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of exceptions.NameError object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of exceptions.NameError object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of exceptions.NameError object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of exceptions.NameError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of exceptions.NameError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of exceptions.NameError object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of exceptions.NameError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of exceptions.NameError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of exceptions.NameError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of exceptions.NameError object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of exceptions.NameError object&gt;
+    args = (&quot;global name &#39;arg2&#39; is not defined&quot;,)
+    message = &quot;global name &#39;arg2&#39; is not defined&quot;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_extended_traceback.py&quot;, line 25, in &lt;module&gt;
+    func1(1)
+  File &quot;cgitb_extended_traceback.py&quot;, line 15, in func1
+    return func2(local_var)
+  File &quot;cgitb_extended_traceback.py&quot;, line 19, in func2
+    return func3(local_var)
+  File &quot;cgitb_extended_traceback.py&quot;, line 22, in func3
+    local_var = arg2 / 2
+NameError: global name &#39;arg2&#39; is not defined
+</pre></div>
+</div>
+<p>The end of the output also includes the full details of the exception
+object (in case it has attributes other than <tt class="docutils literal"><span class="pre">message</span></tt> that would be
+useful for debugging) and the original form of a traceback dump.</p>
+</div>
+<div class="section" id="local-variables-in-tracebacks">
+<h2>Local Variables in Tracebacks<a class="headerlink" href="#local-variables-in-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>Having access to the variables involved in the error stack can help
+find a logical error that occurs somewhere higher in the stack than
+the line where the actual exception is generated.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">divisor</span>
+
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">5</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the case of this code with a <a class="reference internal" href="../exceptions/index.html#exceptions-zerodivisionerror"><em>ZeroDivisionError</em></a>, we can see that the problem is
+introduced in the computation of the value of <tt class="docutils literal"><span class="pre">c</span></tt> in <tt class="docutils literal"><span class="pre">func1()</span></tt>,
+rather than where the value is used in <tt class="docutils literal"><span class="pre">func2()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_local_vars.py
+
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:39 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_local_vars.py in &lt;module&gt;()
+   16 def func1(a, b):
+   17     c = b - 5
+   18     return func2(a, c)
+   19
+   20 func1(1, 5)
+func1 = &lt;function func1&gt;
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_local_vars.py in func1(a=1, b=5)
+   16 def func1(a, b):
+   17     c = b - 5
+   18     return func2(a, c)
+   19
+   20 func1(1, 5)
+global func2 = &lt;function func2&gt;
+a = 1
+c = 0
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_local_vars.py in func2(a=1, divisor=0)
+   12
+   13 def func2(a, divisor):
+   14     return a / divisor
+   15
+   16 def func1(a, b):
+a = 1
+divisor = 0
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;: integer division or modulo by zero
+    __class__ = &lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __dict__ = {}
+    __doc__ = &#39;Second argument to a division or modulo operation was zero.&#39;
+    __format__ = &lt;built-in method __format__ of exceptions.ZeroDivisionError object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of exceptions.ZeroDivisionError object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of exceptions.ZeroDivisionError object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of exceptions.ZeroDivisionError object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of exceptions.ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of exceptions.ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of exceptions.ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of exceptions.ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of exceptions.ZeroDivisionError object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of exceptions.ZeroDivisionError object&gt;
+    args = (&#39;integer division or modulo by zero&#39;,)
+    message = &#39;integer division or modulo by zero&#39;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_local_vars.py&quot;, line 20, in &lt;module&gt;
+    func1(1, 5)
+  File &quot;cgitb_local_vars.py&quot;, line 18, in func1
+    return func2(a, c)
+  File &quot;cgitb_local_vars.py&quot;, line 14, in func2
+    return a / divisor
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+<p>The code in <a class="reference internal" href="#module-cgitb" title="cgitb: Mis-named module that provides extended traceback information."><tt class="xref py py-mod docutils literal"><span class="pre">cgitb</span></tt></a> that examines the variables used in the stack
+frame leading to the error is smart enough to evaluate object
+attributes to display them, too.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">BrokenClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class has an error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Be careful passing arguments in here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">return</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">BrokenClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we see that <tt class="docutils literal"><span class="pre">self.a</span></tt> and <tt class="docutils literal"><span class="pre">self.b</span></tt> are involved in the
+error-prone code.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_with_classes.py
+
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:39 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_with_classes.py in &lt;module&gt;()
+   24         return
+   25
+   26 o = BrokenClass(1, 0)
+   27
+   28
+o undefined
+BrokenClass = &lt;class &#39;__main__.BrokenClass&#39;&gt;
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_with_classes.py in __init__(self=&lt;__main__.BrokenClass object&gt;, a=1, b=0)
+   21         self.b = b
+   22         self.c = self.a * self.b
+   23         self.d = self.a / self.b
+   24         return
+   25
+self = &lt;__main__.BrokenClass object&gt;
+self.d undefined
+self.a = 1
+self.b = 0
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;: integer division or modulo by zero
+    __class__ = &lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __dict__ = {}
+    __doc__ = &#39;Second argument to a division or modulo operation was zero.&#39;
+    __format__ = &lt;built-in method __format__ of exceptions.ZeroDivisionError object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of exceptions.ZeroDivisionError object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of exceptions.ZeroDivisionError object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of exceptions.ZeroDivisionError object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of exceptions.ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of exceptions.ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of exceptions.ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of exceptions.ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of exceptions.ZeroDivisionError object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of exceptions.ZeroDivisionError object&gt;
+    args = (&#39;integer division or modulo by zero&#39;,)
+    message = &#39;integer division or modulo by zero&#39;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_with_classes.py&quot;, line 26, in &lt;module&gt;
+    o = BrokenClass(1, 0)
+  File &quot;cgitb_with_classes.py&quot;, line 23, in __init__
+    self.d = self.a / self.b
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-more-context">
+<h2>Adding More Context<a class="headerlink" href="#adding-more-context" title="Permalink to this headline">¶</a></h2>
+<p>Suppose your function includes a lot of inline comments, whitespace,
+or other code that makes it very long.  Having the default of 5 lines
+of context may not be enough help in that case, if the body of the
+function is pushed out of the code window displayed.  Using a larger
+context value when enabling cgitb gets around this.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">context_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;text&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context_length</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">divisor</span>
+
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">5</span>
+    <span class="c"># Really</span>
+    <span class="c"># long</span>
+    <span class="c"># comment</span>
+    <span class="c"># goes</span>
+    <span class="c"># here.</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can pass <em>context</em> to <tt class="xref py py-func docutils literal"><span class="pre">enable()</span></tt> to control the amount of
+code displayed for each line of the traceback.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_more_context.py 5
+
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:39 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_more_context.py in &lt;module&gt;()
+   24     # goes
+   25     # here.
+   26     return func2(a, c)
+   27
+   28 func1(1, 5)
+func1 = &lt;function func1&gt;
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_more_context.py in func1(a=1, b=5)
+   24     # goes
+   25     # here.
+   26     return func2(a, c)
+   27
+   28 func1(1, 5)
+global func2 = &lt;function func2&gt;
+a = 1
+c = 0
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_more_context.py in func2(a=1, divisor=0)
+   15
+   16 def func2(a, divisor):
+   17     return a / divisor
+   18
+   19 def func1(a, b):
+a = 1
+divisor = 0
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;: integer division or modulo by zero
+    __class__ = &lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __dict__ = {}
+    __doc__ = &#39;Second argument to a division or modulo operation was zero.&#39;
+    __format__ = &lt;built-in method __format__ of exceptions.ZeroDivisionError object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of exceptions.ZeroDivisionError object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of exceptions.ZeroDivisionError object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of exceptions.ZeroDivisionError object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of exceptions.ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of exceptions.ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of exceptions.ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of exceptions.ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of exceptions.ZeroDivisionError object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of exceptions.ZeroDivisionError object&gt;
+    args = (&#39;integer division or modulo by zero&#39;,)
+    message = &#39;integer division or modulo by zero&#39;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_more_context.py&quot;, line 28, in &lt;module&gt;
+    func1(1, 5)
+  File &quot;cgitb_more_context.py&quot;, line 26, in func1
+    return func2(a, c)
+  File &quot;cgitb_more_context.py&quot;, line 17, in func2
+    return a / divisor
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+<p>Increasing the value gets us enough of the function that we can spot
+the problem in the code, again.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_more_context.py 10
+
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:39 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_more_context.py in &lt;module&gt;()
+   19 def func1(a, b):
+   20     c = b - 5
+   21     # Really
+   22     # long
+   23     # comment
+   24     # goes
+   25     # here.
+   26     return func2(a, c)
+   27
+   28 func1(1, 5)
+func1 = &lt;function func1&gt;
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_more_context.py in func1(a=1, b=5)
+   19 def func1(a, b):
+   20     c = b - 5
+   21     # Really
+   22     # long
+   23     # comment
+   24     # goes
+   25     # here.
+   26     return func2(a, c)
+   27
+   28 func1(1, 5)
+global func2 = &lt;function func2&gt;
+a = 1
+c = 0
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_more_context.py in func2(a=1, divisor=0)
+   12
+   13 context_length = int(sys.argv[1])
+   14 cgitb.enable(format=&#39;text&#39;, context=context_length)
+   15
+   16 def func2(a, divisor):
+   17     return a / divisor
+   18
+   19 def func1(a, b):
+   20     c = b - 5
+   21     # Really
+a = 1
+divisor = 0
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;: integer division or modulo by zero
+    __class__ = &lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __dict__ = {}
+    __doc__ = &#39;Second argument to a division or modulo operation was zero.&#39;
+    __format__ = &lt;built-in method __format__ of exceptions.ZeroDivisionError object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of exceptions.ZeroDivisionError object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of exceptions.ZeroDivisionError object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of exceptions.ZeroDivisionError object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of exceptions.ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of exceptions.ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of exceptions.ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of exceptions.ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of exceptions.ZeroDivisionError object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of exceptions.ZeroDivisionError object&gt;
+    args = (&#39;integer division or modulo by zero&#39;,)
+    message = &#39;integer division or modulo by zero&#39;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_more_context.py&quot;, line 28, in &lt;module&gt;
+    func1(1, 5)
+  File &quot;cgitb_more_context.py&quot;, line 26, in func1
+    return func2(a, c)
+  File &quot;cgitb_more_context.py&quot;, line 17, in func2
+    return a / divisor
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+</div>
+<div class="section" id="exception-properties">
+<h2>Exception Properties<a class="headerlink" href="#exception-properties" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the local variables from each stack frame, <a class="reference internal" href="#module-cgitb" title="cgitb: Mis-named module that provides extended traceback information."><tt class="xref py py-mod docutils literal"><span class="pre">cgitb</span></tt></a>
+shows all properties of the exception object.  If you have a custom
+exception type with extra properties, they are printed as part of the
+error report.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add extra properties to a special exception</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">bad_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bad_value</span> <span class="o">=</span> <span class="n">bad_value</span>
+        <span class="ne">Exception</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">raise</span> <span class="n">MyException</span><span class="p">(</span><span class="s">&#39;Normal message&#39;</span><span class="p">,</span> <span class="n">bad_value</span><span class="o">=</span><span class="mi">99</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, the <em>bad_value</em> property is included along with the
+standard <em>message</em> and <em>args</em> values.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_exception_properties.py
+
+&lt;class &#39;__main__.MyException&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:39 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_exception_properties.py in &lt;module&gt;()
+   18         self.bad_value = bad_value
+   19         Exception.__init__(self, message)
+   20         return
+   21
+   22 raise MyException(&#39;Normal message&#39;, bad_value=99)
+MyException = &lt;class &#39;__main__.MyException&#39;&gt;
+bad_value undefined
+&lt;class &#39;__main__.MyException&#39;&gt;: Normal message
+    __class__ = &lt;class &#39;__main__.MyException&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of MyException object&gt;
+    __dict__ = {&#39;bad_value&#39;: 99}
+    __doc__ = &#39;Add extra properties to a special exception\n    &#39;
+    __format__ = &lt;built-in method __format__ of MyException object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of MyException object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of MyException object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of MyException object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of MyException object&gt;
+    __init__ = &lt;bound method MyException.__init__ of MyException(&#39;Normal message&#39;,)&gt;
+    __module__ = &#39;__main__&#39;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of MyException object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of MyException object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of MyException object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of MyException object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of MyException object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of MyException object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of MyException object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of MyException object&gt;
+    __weakref__ = None
+    args = (&#39;Normal message&#39;,)
+    bad_value = 99
+    message = &#39;Normal message&#39;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_exception_properties.py&quot;, line 22, in &lt;module&gt;
+    raise MyException(&#39;Normal message&#39;, bad_value=99)
+MyException: Normal message
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-tracebacks">
+<h2>Logging Tracebacks<a class="headerlink" href="#logging-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>For many situations, printing the traceback details to standard error
+is the best resolution.  In a production system, however, logging the
+errors is even better.  <tt class="xref py py-func docutils literal"><span class="pre">enable()</span></tt> includes an optional
+argument, <em>logdir</em>, to enable error logging.  When a directory name is
+provided, each exception is logged to its own file in the given
+directory.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">logdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;LOGS&#39;</span><span class="p">),</span>
+             <span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+             <span class="n">format</span><span class="o">=</span><span class="s">&#39;text&#39;</span><span class="p">,</span>
+             <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">divisor</span>
+
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">5</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Even though the error display is suppressed, a message is printed
+describing where to go to find the error log.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python cgitb_log_exception.py
+
+&lt;p&gt;A problem occurred in a Python script.
+&lt;p&gt; /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/LOGS/tmpju23ip.txt contains the description of this error.
+
+$ ls LOGS
+
+tmpju23ip.txt
+
+$ cat LOGS/*.txt
+
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+Python 2.7.2: /Users/dhellmann/Envs/pymotw/bin/python
+Thu Feb 21 06:35:40 2013
+
+A problem occurred in a Python script.  Here is the sequence of
+function calls leading up to the error, in the order they occurred.
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_log_exception.py in &lt;module&gt;()
+   21 def func1(a, b):
+   22     c = b - 5
+   23     return func2(a, c)
+   24
+   25 func1(1, 5)
+func1 = &lt;function func1&gt;
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_log_exception.py in func1(a=1, b=5)
+   21 def func1(a, b):
+   22     c = b - 5
+   23     return func2(a, c)
+   24
+   25 func1(1, 5)
+global func2 = &lt;function func2&gt;
+a = 1
+c = 0
+
+ /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/cgitb/cgitb_log_exception.py in func2(a=1, divisor=0)
+   17
+   18 def func2(a, divisor):
+   19     return a / divisor
+   20
+   21 def func1(a, b):
+a = 1
+divisor = 0
+&lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;: integer division or modulo by zero
+    __class__ = &lt;type &#39;exceptions.ZeroDivisionError&#39;&gt;
+    __delattr__ = &lt;method-wrapper &#39;__delattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __dict__ = {}
+    __doc__ = &#39;Second argument to a division or modulo operation was zero.&#39;
+    __format__ = &lt;built-in method __format__ of exceptions.ZeroDivisionError object&gt;
+    __getattribute__ = &lt;method-wrapper &#39;__getattribute__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getitem__ = &lt;method-wrapper &#39;__getitem__&#39; of exceptions.ZeroDivisionError object&gt;
+    __getslice__ = &lt;method-wrapper &#39;__getslice__&#39; of exceptions.ZeroDivisionError object&gt;
+    __hash__ = &lt;method-wrapper &#39;__hash__&#39; of exceptions.ZeroDivisionError object&gt;
+    __init__ = &lt;method-wrapper &#39;__init__&#39; of exceptions.ZeroDivisionError object&gt;
+    __new__ = &lt;built-in method __new__ of type object&gt;
+    __reduce__ = &lt;built-in method __reduce__ of exceptions.ZeroDivisionError object&gt;
+    __reduce_ex__ = &lt;built-in method __reduce_ex__ of exceptions.ZeroDivisionError object&gt;
+    __repr__ = &lt;method-wrapper &#39;__repr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setattr__ = &lt;method-wrapper &#39;__setattr__&#39; of exceptions.ZeroDivisionError object&gt;
+    __setstate__ = &lt;built-in method __setstate__ of exceptions.ZeroDivisionError object&gt;
+    __sizeof__ = &lt;built-in method __sizeof__ of exceptions.ZeroDivisionError object&gt;
+    __str__ = &lt;method-wrapper &#39;__str__&#39; of exceptions.ZeroDivisionError object&gt;
+    __subclasshook__ = &lt;built-in method __subclasshook__ of type object&gt;
+    __unicode__ = &lt;built-in method __unicode__ of exceptions.ZeroDivisionError object&gt;
+    args = (&#39;integer division or modulo by zero&#39;,)
+    message = &#39;integer division or modulo by zero&#39;
+
+The above is a description of an error in a Python program.  Here is
+the original traceback:
+
+Traceback (most recent call last):
+  File &quot;cgitb_log_exception.py&quot;, line 25, in &lt;module&gt;
+    func1(1, 5)
+  File &quot;cgitb_log_exception.py&quot;, line 23, in func1
+    return func2(a, c)
+  File &quot;cgitb_log_exception.py&quot;, line 19, in func2
+    return a / divisor
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+</div>
+<div class="section" id="html-output">
+<h2>HTML Output<a class="headerlink" href="#html-output" title="Permalink to this headline">¶</a></h2>
+<p>Because <a class="reference internal" href="#module-cgitb" title="cgitb: Mis-named module that provides extended traceback information."><tt class="xref py py-mod docutils literal"><span class="pre">cgitb</span></tt></a> was originally developed for handling exceptions
+in web apps, no discussion would be complete without an example of the
+HTML output it produces.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgitb</span>
+<span class="n">cgitb</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">arg1</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg1</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">func2</span><span class="p">(</span><span class="n">local_var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg2</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">func3</span><span class="p">(</span><span class="n">local_var</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">func3</span><span class="p">(</span><span class="n">arg3</span><span class="p">):</span>
+    <span class="n">local_var</span> <span class="o">=</span> <span class="n">arg2</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">local_var</span>
+
+<span class="n">func1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By leaving out the <em>format</em> argument (or specifying <tt class="docutils literal"><span class="pre">html</span></tt>), the
+traceback format changes to HTML output.</p>
+<img alt="../_images/html_error.png" src="../_images/html_error.png" />
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/cgitb.html">cgitb</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../traceback/index.html#module-traceback" title="traceback: Extract, format, and print exceptions and stack traces."><tt class="xref py py-mod docutils literal"><span class="pre">traceback</span></tt></a></dt>
+<dd>Standard library module for working with tracebacks.</dd>
+<dt><a class="reference internal" href="../inspect/index.html#module-inspect" title="inspect: Inspect live objects"><tt class="xref py py-mod docutils literal"><span class="pre">inspect</span></tt></a></dt>
+<dd>The inspect module includes more functions for examining the
+stack.</dd>
+<dt><a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a></dt>
+<dd>The sys module provides access to the current exception value
+and the <tt class="docutils literal"><span class="pre">excepthook</span></tt> handler invoked when an exception
+occurs.</dd>
+<dt><a class="reference external" href="http://thread.gmane.org/gmane.comp.python.devel/110326">Improved traceback module</a></dt>
+<dd>Python-dev discussion of improvements to the traceback module
+and related enhancements other developers use locally.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../Cookie/index.html" title="Cookie – HTTP Cookies"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../BaseHTTPServer/index.html" title="BaseHTTPServer – base classes for implementing web servers"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>doctest &#8211; Testing through documentation - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Development Tools" href="../dev_tools.html" />
+    <link rel="next" title="pydoc – Online help for Python modules" href="../pydoc/index.html" />
+    <link rel="prev" title="Development Tools" href="../dev_tools.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">doctest &#8211; Testing through documentation</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#handling-unpredictable-output">Handling Unpredictable Output</a></li>
+<li><a class="reference internal" href="#tracebacks">Tracebacks</a></li>
+<li><a class="reference internal" href="#working-around-whitespace">Working Around Whitespace</a></li>
+<li><a class="reference internal" href="#test-locations">Test Locations</a></li>
+<li><a class="reference internal" href="#external-documentation">External Documentation</a></li>
+<li><a class="reference internal" href="#running-tests">Running Tests</a><ul>
+<li><a class="reference internal" href="#by-module">By Module</a></li>
+<li><a class="reference internal" href="#by-file">By File</a></li>
+<li><a class="reference internal" href="#unittest-suite">Unittest Suite</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#test-context">Test Context</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../dev_tools.html" title="previous chapter"><strong>Previous:</strong> Development Tools</a><br/>
+          <a href="../pydoc/index.html" title="next chapter"><strong>Next:</strong> pydoc &#8211; Online help for Python modules</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/doctest/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pydoc/index.html" title="pydoc – Online help for Python modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dev_tools.html" title="Development Tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../dev_tools.html" accesskey="U">Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-doctest">
+<span id="doctest-testing-through-documentation"></span><h1>doctest &#8211; Testing through documentation<a class="headerlink" href="#module-doctest" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Write automated tests as part of the documentation for a module.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.1</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> lets you test your code by running examples embedded in
+the documentation and verifying that they produce the expected
+results.  It works by parsing the help text to find examples, running
+them, then comparing the output text against the expected value.  Many
+developers find <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> easier than <a class="reference internal" href="../unittest/index.html#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a> because in
+its simplest form, there is no API to learn before using it.  However,
+as the examples become more complex the lack of fixture management can
+make writing <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> tests more cumbersome than using
+<a class="reference internal" href="../unittest/index.html#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a>.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>The first step to setting up doctests is to use the interactive
+interpreter to create examples and then copy and paste them into the
+docstrings in your module.  Here, <tt class="xref py py-func docutils literal"><span class="pre">my_function()</span></tt> has two examples
+given:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; my_function(2, 3)</span>
+<span class="sd">    6</span>
+<span class="sd">    &gt;&gt;&gt; my_function(&#39;a&#39;, 3)</span>
+<span class="sd">    &#39;aaa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    
+</pre></div>
+</div>
+<p>To run the tests, use <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> as the main program via the
+<tt class="docutils literal"><span class="pre">-m</span></tt> option to the interpreter.  Usually no output is produced while
+the tests are running, so the example below includes the <tt class="docutils literal"><span class="pre">-v</span></tt> option
+to make the output more verbose.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_simple.py
+
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+1 items had no tests:
+    doctest_simple
+1 items passed all tests:
+   2 tests in doctest_simple.my_function
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>Examples cannot usually stand on their own as explanations of a
+function, so <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> also lets you keep the surrounding text
+you would normally include in the documentation.  It looks for lines
+beginning with the interpreter prompt, <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt>, to find the beginning
+of a test case.  The case is ended by a blank line, or by the next
+interpreter prompt.  Intervening text is ignored, and can have any
+format as long as it does not look like a test case.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a * b.</span>
+
+<span class="sd">    Works with numbers:</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; my_function(2, 3)</span>
+<span class="sd">    6</span>
+
+<span class="sd">    and strings:</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; my_function(&#39;a&#39;, 3)</span>
+<span class="sd">    &#39;aaa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    
+</pre></div>
+</div>
+<p>The surrounding text in the updated docstring makes it more useful to
+a human reader, and is ignored by <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a>, and the results are
+the same.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_simple_with_docs.py
+
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+1 items had no tests:
+    doctest_simple_with_docs
+1 items passed all tests:
+   2 tests in doctest_simple_with_docs.my_function
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+</div>
+<div class="section" id="handling-unpredictable-output">
+<h2>Handling Unpredictable Output<a class="headerlink" href="#handling-unpredictable-output" title="Permalink to this headline">¶</a></h2>
+<p>There are other cases where the exact output may not be predictable,
+but should still be testable.  Local date and time values and object
+ids change on every test run.  The default precision used in the
+representation of floating point values depend on compiler options.
+Object string representations may not be deterministic.  Although
+these conditions are outside of your control, there are techniques for
+dealing with them.</p>
+<p>For example, in CPython, object identifiers are based on the memory
+address of the data structure holding the object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">unpredictable</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a new list containing obj.</span>
+
+<span class="sd">    &gt;&gt;&gt; unpredictable(MyClass())</span>
+<span class="sd">    [&lt;doctest_unpredictable.MyClass object at 0x10055a2d0&gt;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">obj</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>These id values change each time a program runs, because it is loaded
+into a different part of memory.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_unpredictable.py
+
+Trying:
+    unpredictable(MyClass())
+Expecting:
+    [&lt;doctest_unpredictable.MyClass object at 0x10055a2d0&gt;]
+**********************************************************************
+File &quot;doctest_unpredictable.py&quot;, line 16, in doctest_unpredictable.unpredictable
+Failed example:
+    unpredictable(MyClass())
+Expected:
+    [&lt;doctest_unpredictable.MyClass object at 0x10055a2d0&gt;]
+Got:
+    [&lt;doctest_unpredictable.MyClass object at 0x10051df90&gt;]
+2 items had no tests:
+    doctest_unpredictable
+    doctest_unpredictable.MyClass
+**********************************************************************
+1 items had failures:
+   1 of   1 in doctest_unpredictable.unpredictable
+1 tests in 3 items.
+0 passed and 1 failed.
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+<p>When the tests include values that are likely to change in
+unpredictable ways, and where the actual value is not important to the
+test results, you can use the <tt class="docutils literal"><span class="pre">ELLIPSIS</span></tt> option to tell
+<a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> to ignore portions of the verification value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">unpredictable</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a new list containing obj.</span>
+
+<span class="sd">    &gt;&gt;&gt; unpredictable(MyClass()) #doctest: +ELLIPSIS</span>
+<span class="sd">    [&lt;doctest_ellipsis.MyClass object at 0x...&gt;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">obj</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The comment after the call to <tt class="xref py py-func docutils literal"><span class="pre">unpredictable()</span></tt> (<tt class="docutils literal"><span class="pre">#doctest:</span>
+<span class="pre">+ELLIPSIS</span></tt>) tells <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> to turn on the <tt class="docutils literal"><span class="pre">ELLIPSIS</span></tt> option
+for that test.  The <tt class="docutils literal"><span class="pre">...</span></tt> replaces the memory address in the object
+id, so that portion of the expected value is ignored and the actual
+output matches and the test passes.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_ellipsis.py
+
+Trying:
+    unpredictable(MyClass()) #doctest: +ELLIPSIS
+Expecting:
+    [&lt;doctest_ellipsis.MyClass object at 0x...&gt;]
+ok
+2 items had no tests:
+    doctest_ellipsis
+    doctest_ellipsis.MyClass
+1 items passed all tests:
+   1 tests in doctest_ellipsis.unpredictable
+1 tests in 3 items.
+1 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>There are cases where you cannot ignore the unpredictable value,
+because that would obviate the test.  For example, simple tests
+quickly become more complex when dealing with data types whose string
+representations are inconsistent.  The string form of a dictionary,
+for example, may change based on the order the keys are added.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">keys</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;aa&#39;</span><span class="p">,</span> <span class="s">&#39;aaa&#39;</span> <span class="p">]</span>
+
+<span class="n">d1</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span> <span class="p">)</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;d1:&#39;</span><span class="p">,</span> <span class="n">d1</span>
+<span class="k">print</span> <span class="s">&#39;d2:&#39;</span><span class="p">,</span> <span class="n">d2</span>
+<span class="k">print</span> <span class="s">&#39;d1 == d2:&#39;</span><span class="p">,</span> <span class="n">d1</span> <span class="o">==</span> <span class="n">d2</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;s1:&#39;</span><span class="p">,</span> <span class="n">s1</span>
+<span class="k">print</span> <span class="s">&#39;s2:&#39;</span><span class="p">,</span> <span class="n">s2</span>
+<span class="k">print</span> <span class="s">&#39;s1 == s2:&#39;</span><span class="p">,</span> <span class="n">s1</span> <span class="o">==</span> <span class="n">s2</span>
+</pre></div>
+</div>
+<p>Because of cache collision, the internal key list order is different
+for the two dictionaries, even though they contain the same values and
+are considered to be equal.  Sets use the same hashing algorithm, and
+exhibit the same behavior.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python doctest_hashed_values.py
+
+
+d1: {&#39;a&#39;: 1, &#39;aa&#39;: 2, &#39;aaa&#39;: 3}
+d2: {&#39;aa&#39;: 2, &#39;a&#39;: 1, &#39;aaa&#39;: 3}
+d1 == d2: True
+
+s1: set([&#39;a&#39;, &#39;aa&#39;, &#39;aaa&#39;])
+s2: set([&#39;aa&#39;, &#39;a&#39;, &#39;aaa&#39;])
+s1 == s2: True
+</pre></div>
+</div>
+<p>The best way to deal with these potential discrepancies is to create
+tests that produce values that are not likely to change.  In the case
+of dictionaries and sets, that might mean looking for specific keys
+individually, generating a sorted list of the contents of the data
+structure, or comparing against a literal value for equality instead
+of depending on the string representation.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">group_by_length</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a dictionary grouping words into sets by length.</span>
+
+<span class="sd">    &gt;&gt;&gt; grouped = group_by_length([ &#39;python&#39;, &#39;module&#39;, &#39;of&#39;, &#39;the&#39;, &#39;week&#39; ])</span>
+<span class="sd">    &gt;&gt;&gt; grouped == { 2:set([&#39;of&#39;]),</span>
+<span class="sd">    ...              3:set([&#39;the&#39;]),</span>
+<span class="sd">    ...              4:set([&#39;week&#39;]),</span>
+<span class="sd">    ...              6:set([&#39;python&#39;, &#39;module&#39;]),</span>
+<span class="sd">    ...              }</span>
+<span class="sd">    True</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">),</span> <span class="nb">set</span><span class="p">())</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Notice that the single example is actually interpreted as two separate
+tests, with the first expecting no console output and the second
+expecting the boolean result of the comparison operation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_hashed_values_tests.py
+
+Trying:
+    grouped = group_by_length([ &#39;python&#39;, &#39;module&#39;, &#39;of&#39;, &#39;the&#39;, &#39;week&#39; ])
+Expecting nothing
+ok
+Trying:
+    grouped == { 2:set([&#39;of&#39;]),
+                 3:set([&#39;the&#39;]),
+                 4:set([&#39;week&#39;]),
+                 6:set([&#39;python&#39;, &#39;module&#39;]),
+                 }
+Expecting:
+    True
+ok
+1 items had no tests:
+    doctest_hashed_values_tests
+1 items passed all tests:
+   2 tests in doctest_hashed_values_tests.group_by_length
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+</div>
+<div class="section" id="tracebacks">
+<h2>Tracebacks<a class="headerlink" href="#tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>Tracebacks are a special case of changing data.  Since the paths in a
+traceback depend on the location where a module is installed on the
+filesystem on a given system, it would be impossible to write portable
+tests if they were treated the same as other output.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">this_raises</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This function always raises an exception.</span>
+
+<span class="sd">    &gt;&gt;&gt; this_raises()</span>
+<span class="sd">    Traceback (most recent call last):</span>
+<span class="sd">      File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="sd">      File &quot;/no/such/path/doctest_tracebacks.py&quot;, line 14, in this_raises</span>
+<span class="sd">        raise RuntimeError(&#39;here is the error&#39;)</span>
+<span class="sd">    RuntimeError: here is the error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;here is the error&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> makes a special effort to recognize tracebacks, and
+ignore the parts that might change from system to system.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_tracebacks.py
+
+Trying:
+    this_raises()
+Expecting:
+    Traceback (most recent call last):
+      File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+      File &quot;/no/such/path/doctest_tracebacks.py&quot;, line 14, in this_raises
+        raise RuntimeError(&#39;here is the error&#39;)
+    RuntimeError: here is the error
+ok
+1 items had no tests:
+    doctest_tracebacks
+1 items passed all tests:
+   1 tests in doctest_tracebacks.this_raises
+1 tests in 2 items.
+1 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>In fact, the entire body of the traceback is ignored and can be
+omitted.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">this_raises</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This function always raises an exception.</span>
+
+<span class="sd">    &gt;&gt;&gt; this_raises()</span>
+<span class="sd">    Traceback (most recent call last):</span>
+<span class="sd">    RuntimeError: here is the error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;here is the error&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> sees a traceback header line (either <tt class="docutils literal"><span class="pre">Traceback</span>
+<span class="pre">(most</span> <span class="pre">recent</span> <span class="pre">call</span> <span class="pre">last):</span></tt> or <tt class="docutils literal"><span class="pre">Traceback</span> <span class="pre">(innermost</span> <span class="pre">last):</span></tt>,
+depending on the version of Python you are running), it skips ahead to
+find the exception type and message, ignoring the intervening lines
+entirely.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_tracebacks_no_body.py
+
+Trying:
+    this_raises()
+Expecting:
+    Traceback (most recent call last):
+    RuntimeError: here is the error
+ok
+1 items had no tests:
+    doctest_tracebacks_no_body
+1 items passed all tests:
+   1 tests in doctest_tracebacks_no_body.this_raises
+1 tests in 2 items.
+1 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-around-whitespace">
+<h2>Working Around Whitespace<a class="headerlink" href="#working-around-whitespace" title="Permalink to this headline">¶</a></h2>
+<p>In real world applications, output usually includes whitespace such as
+blank lines, tabs, and extra spacing to make it more readable.  Blank
+lines, in particular, cause issues with <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> because they
+are used to delimit tests.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">double_space</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints a list of lines double-spaced.</span>
+
+<span class="sd">    &gt;&gt;&gt; double_space([&#39;Line one.&#39;, &#39;Line two.&#39;])</span>
+<span class="sd">    Line one.</span>
+<span class="sd">    </span>
+<span class="sd">    Line two.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">l</span>
+        <span class="k">print</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">double_space()</span></tt> takes a list of input lines, and prints them
+double-spaced with blank lines between.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest doctest_blankline_fail.py
+
+**********************************************************************
+File &quot;doctest_blankline_fail.py&quot;, line 13, in doctest_blankline_fail.double_space
+Failed example:
+    double_space([&#39;Line one.&#39;, &#39;Line two.&#39;])
+Expected:
+    Line one.
+Got:
+    Line one.
+    &lt;BLANKLINE&gt;
+    Line two.
+    &lt;BLANKLINE&gt;
+**********************************************************************
+1 items had failures:
+   1 of   1 in doctest_blankline_fail.double_space
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+<p>The test fails, because it interprets the blank line after <tt class="docutils literal"><span class="pre">Line</span>
+<span class="pre">one.</span></tt> in the docstring as the end of the sample output.  To match the
+blank lines, replace them in the sample input with the string
+<tt class="docutils literal"><span class="pre">&lt;BLANKLINE&gt;</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">double_space</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints a list of lines double-spaced.</span>
+
+<span class="sd">    &gt;&gt;&gt; double_space([&#39;Line one.&#39;, &#39;Line two.&#39;])</span>
+<span class="sd">    Line one.</span>
+<span class="sd">    &lt;BLANKLINE&gt;</span>
+<span class="sd">    Line two.</span>
+<span class="sd">    &lt;BLANKLINE&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">l</span>
+        <span class="k">print</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> replaces actual blank lines with the same literal
+before performing the comparison, so now the actual and expected
+values match and the test passes.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_blankline.py
+
+Trying:
+    double_space([&#39;Line one.&#39;, &#39;Line two.&#39;])
+Expecting:
+    Line one.
+    &lt;BLANKLINE&gt;
+    Line two.
+    &lt;BLANKLINE&gt;
+ok
+1 items had no tests:
+    doctest_blankline
+1 items passed all tests:
+   1 tests in doctest_blankline.double_space
+1 tests in 2 items.
+1 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>Another pitfall of using text comparisons for tests is that embedded
+whitespace can also cause tricky problems with tests.  This example
+has a single extra space after the <tt class="docutils literal"><span class="pre">6</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; my_function(2, 3)</span>
+<span class="sd">    6 </span>
+<span class="sd">    &gt;&gt;&gt; my_function(&#39;a&#39;, 3)</span>
+<span class="sd">    &#39;aaa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Extra spaces can find their way into your code via copy-and-paste
+errors, but since they come at the end of the line, they can go
+unnoticed in the source file and be invisible in the test failure
+report as well.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_extra_space.py
+
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+**********************************************************************
+File &quot;doctest_extra_space.py&quot;, line 12, in doctest_extra_space.my_function
+Failed example:
+    my_function(2, 3)
+Expected:
+    6
+Got:
+    6
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+1 items had no tests:
+    doctest_extra_space
+**********************************************************************
+1 items had failures:
+   1 of   2 in doctest_extra_space.my_function
+2 tests in 2 items.
+1 passed and 1 failed.
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+<p>Using one of the diff-based reporting options, such as
+<tt class="docutils literal"><span class="pre">REPORT_NDIFF</span></tt>, shows the difference between the actual and expected
+values with more detail, and the extra space becomes visible.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; my_function(2, 3) #doctest: +REPORT_NDIFF</span>
+<span class="sd">    6 </span>
+<span class="sd">    &gt;&gt;&gt; my_function(&#39;a&#39;, 3)</span>
+<span class="sd">    &#39;aaa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Unified (<tt class="docutils literal"><span class="pre">REPORT_UDIFF</span></tt>) and context (<tt class="docutils literal"><span class="pre">REPORT_CDIFF</span></tt>) diffs are
+also available, for output where those formats are more readable.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_ndiff.py
+
+Trying:
+    my_function(2, 3) #doctest: +REPORT_NDIFF
+Expecting:
+    6
+**********************************************************************
+File &quot;doctest_ndiff.py&quot;, line 12, in doctest_ndiff.my_function
+Failed example:
+    my_function(2, 3) #doctest: +REPORT_NDIFF
+Differences (ndiff with -expected +actual):
+    - 6
+    ?  -
+    + 6
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+1 items had no tests:
+    doctest_ndiff
+**********************************************************************
+1 items had failures:
+   1 of   2 in doctest_ndiff.my_function
+2 tests in 2 items.
+1 passed and 1 failed.
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+<p>There are cases where it is beneficial to add extra whitespace in the
+sample output for the test, and have <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> ignore it.  For
+example, data structures can be easier to read when spread across
+several lines, even if their representation would fit on a single
+line.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a * b.</span>
+
+<span class="sd">    &gt;&gt;&gt; my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 3) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;,</span>
+<span class="sd">     &#39;A&#39;, &#39;B&#39;, &#39;C&#39;,</span>
+<span class="sd">     &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]</span>
+
+<span class="sd">    This does not match because of the extra space after the [ in the list</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2) #doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">    [ &#39;A&#39;, &#39;B&#39;, &#39;C&#39;,</span>
+<span class="sd">      &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+    
+</pre></div>
+</div>
+<p>When <tt class="docutils literal"><span class="pre">NORMALIZE_WHITESPACE</span></tt> is turned on, any whitespace in the
+actual and expected values is considered a match.  You cannot add
+whitespace to the expected value where none exists in the output, but
+the length of the whitespace sequence and actual whitespace characters
+do not need to match.  The first test example gets this rule correct,
+and passes, even though there are extra spaces and newlines.  The
+second has extra whitespace after <tt class="docutils literal"><span class="pre">[</span></tt> and before <tt class="docutils literal"><span class="pre">]</span></tt>, so it fails.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_normalize_whitespace.py
+
+Trying:
+    my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 3) #doctest: +NORMALIZE_WHITESPACE
+Expecting:
+    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;,
+     &#39;A&#39;, &#39;B&#39;, &#39;C&#39;,
+     &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]
+ok
+Trying:
+    my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2) #doctest: +NORMALIZE_WHITESPACE
+Expecting:
+    [ &#39;A&#39;, &#39;B&#39;, &#39;C&#39;,
+      &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ]
+**********************************************************************
+File &quot;doctest_normalize_whitespace.py&quot;, line 20, in doctest_normalize_whitespace.my_function
+Failed example:
+    my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2) #doctest: +NORMALIZE_WHITESPACE
+Expected:
+    [ &#39;A&#39;, &#39;B&#39;, &#39;C&#39;,
+      &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ]
+Got:
+    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]
+1 items had no tests:
+    doctest_normalize_whitespace
+**********************************************************************
+1 items had failures:
+   1 of   2 in doctest_normalize_whitespace.my_function
+2 tests in 2 items.
+1 passed and 1 failed.
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-locations">
+<h2>Test Locations<a class="headerlink" href="#test-locations" title="Permalink to this headline">¶</a></h2>
+<p>All of the tests in the examples so far have been written in the
+docstrings of the functions they are testing.  That is convenient for
+users who examine the docstrings for help using the funcion
+(especially with <a class="reference internal" href="../pydoc/index.html#module-pydoc" title="pydoc: Online help for Python modules"><tt class="xref py py-mod docutils literal"><span class="pre">pydoc</span></tt></a>), but <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> looks for tests in
+other places, too.  The obvious location for additional tests is in
+the docstrings elsewhere in the module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Tests can appear in any docstring within the module.</span>
+
+<span class="sd">Module-level tests cross class and function boundaries.</span>
+
+<span class="sd">&gt;&gt;&gt; A(&#39;a&#39;) == B(&#39;b&#39;)</span>
+<span class="sd">False</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple class.</span>
+
+<span class="sd">    &gt;&gt;&gt; A(&#39;instance_name&#39;).name</span>
+<span class="sd">    &#39;instance_name&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an unusual value.</span>
+
+<span class="sd">        &gt;&gt;&gt; A(&#39;name&#39;).method()</span>
+<span class="sd">        &#39;eman&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)))</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Another simple class.</span>
+<span class="sd">        </span>
+<span class="sd">    &gt;&gt;&gt; B(&#39;different_name&#39;).name</span>
+<span class="sd">    &#39;different_name&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Every docstring can contain tests at the module, class and function
+level.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_docstrings.py
+
+Trying:
+    A(&#39;a&#39;) == B(&#39;b&#39;)
+Expecting:
+    False
+ok
+Trying:
+    A(&#39;instance_name&#39;).name
+Expecting:
+    &#39;instance_name&#39;
+ok
+Trying:
+    A(&#39;name&#39;).method()
+Expecting:
+    &#39;eman&#39;
+ok
+Trying:
+    B(&#39;different_name&#39;).name
+Expecting:
+    &#39;different_name&#39;
+ok
+1 items had no tests:
+    doctest_docstrings.A.__init__
+4 items passed all tests:
+   1 tests in doctest_docstrings
+   1 tests in doctest_docstrings.A
+   1 tests in doctest_docstrings.A.method
+   1 tests in doctest_docstrings.B
+4 tests in 5 items.
+4 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>In cases where you have tests that you want to include with your
+source code, but do not want to have appear in the help for your
+module, you need to put them somewhere other than the docstrings.
+<a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> also looks for a module-level variable called
+<tt class="docutils literal"><span class="pre">__test__</span></tt> and uses it to locate other tests.  <tt class="docutils literal"><span class="pre">__test__</span></tt> should
+be a dictionary mapping test set names (as strings) to strings,
+modules, classes, or functions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">doctest_private_tests_external</span>
+
+<span class="n">__test__</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;numbers&#39;</span><span class="p">:</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">&gt;&gt;&gt; my_function(2, 3)</span>
+<span class="s">6</span>
+
+<span class="s">&gt;&gt;&gt; my_function(2.0, 3)</span>
+<span class="s">6.0</span>
+<span class="s">&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="s">&#39;strings&#39;</span><span class="p">:</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">&gt;&gt;&gt; my_function(&#39;a&#39;, 3)</span>
+<span class="s">&#39;aaa&#39;</span>
+
+<span class="s">&gt;&gt;&gt; my_function(3, &#39;a&#39;)</span>
+<span class="s">&#39;aaa&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="s">&#39;external&#39;</span><span class="p">:</span><span class="n">doctest_private_tests_external</span><span class="p">,</span>
+    
+    <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a * b</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>If the value associated with a key is a string, it is treated as a
+docstring and scanned for tests.  If the value is a class or function,
+<a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> searchs them recursivesly for docstrings, which are
+then scanned for tests.  In this example, the module
+<tt class="xref py py-mod docutils literal"><span class="pre">doctest_private_tests_external</span></tt> has a single test in its
+docstring.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># encoding: utf-8</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2010 Doug Hellmann.  All rights reserved.</span>
+<span class="c">#</span>
+<span class="sd">&quot;&quot;&quot;External tests associated with doctest_private_tests.py.</span>
+
+<span class="sd">&gt;&gt;&gt; my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2)</span>
+<span class="sd">[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> finds a total of five tests to run.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_private_tests.py
+
+Trying:
+    my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2)
+Expecting:
+    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]
+ok
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(2.0, 3)
+Expecting:
+    6.0
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+Trying:
+    my_function(3, &#39;a&#39;)
+Expecting:
+    &#39;aaa&#39;
+ok
+2 items had no tests:
+    doctest_private_tests
+    doctest_private_tests.my_function
+3 items passed all tests:
+   1 tests in doctest_private_tests.__test__.external
+   2 tests in doctest_private_tests.__test__.numbers
+   2 tests in doctest_private_tests.__test__.strings
+5 tests in 5 items.
+5 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+</div>
+<div class="section" id="external-documentation">
+<h2>External Documentation<a class="headerlink" href="#external-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Mixing tests in with your code isn&#8217;t the only way to use
+<a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a>.  Examples embedded in external project documentation
+files, such as reStructuredText files, can be used as well.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a*b</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    
+</pre></div>
+</div>
+<p>The help for <tt class="xref py py-mod docutils literal"><span class="pre">doctest_in_help</span></tt> is saved to a separate file,
+<tt class="docutils literal"><span class="pre">doctest_in_help.rst</span></tt>.  The examples illustrating how to use the
+module are included with the help text, and <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> can be used
+to find and run them.</p>
+<div class="highlight-python"><div class="highlight"><pre>===============================
+ How to Use doctest_in_help.py
+===============================
+
+This library is very simple, since it only has one function called
+``my_function()``.
+
+Numbers
+=======
+
+``my_function()`` returns the product of its arguments.  For numbers,
+that value is equivalent to using the ``*`` operator.
+
+::
+
+    &gt;&gt;&gt; from doctest_in_help import my_function
+    &gt;&gt;&gt; my_function(2, 3)
+    6
+
+It also works with floating point values.
+
+::
+
+    &gt;&gt;&gt; my_function(2.0, 3)
+    6.0
+
+Non-Numbers
+===========
+
+Because ``*`` is also defined on data types other than numbers,
+``my_function()`` works just as well if one of the arguments is a
+string, list, or tuple.
+
+::
+
+    &gt;&gt;&gt; my_function(&#39;a&#39;, 3)
+    &#39;aaa&#39;
+
+    &gt;&gt;&gt; my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2)
+    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]
+</pre></div>
+</div>
+<p>The tests in the text file can be run from the command line, just as
+with the Python source modules.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_in_help.rst
+
+Trying:
+    from doctest_in_help import my_function
+Expecting nothing
+ok
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(2.0, 3)
+Expecting:
+    6.0
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+Trying:
+    my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2)
+Expecting:
+    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]
+ok
+1 items passed all tests:
+   5 tests in doctest_in_help.rst
+5 tests in 1 items.
+5 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>Normally <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> sets up the test execution environment to
+include the members of the module being tested, so your tests don&#8217;t
+need to import the module explicitly.  In this case, however, the
+tests aren&#8217;t defined in a Python module, <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> does not know
+how to set up the global namespace, so the examples need to do the
+import work themselves.  All of the tests in a given file share the
+same execution context, so importing the module once at the top of the
+file is enough.</p>
+</div>
+<div class="section" id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
+<p>The previous examples all use the command line test runner built into
+<a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a>.  It is easy and convenient for a single module, but
+will quickly become tedious as your package spreads out into multiple
+files.  There are several alternative approaches.</p>
+<div class="section" id="by-module">
+<h3>By Module<a class="headerlink" href="#by-module" title="Permalink to this headline">¶</a></h3>
+<p>You can include instructions to run <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> against your source
+at the bottom of your modules.  Use <tt class="xref py py-func docutils literal"><span class="pre">testmod()</span></tt> without any
+arguments to test the current module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; my_function(2, 3)</span>
+<span class="sd">    6</span>
+<span class="sd">    &gt;&gt;&gt; my_function(&#39;a&#39;, 3)</span>
+<span class="sd">    &#39;aaa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+</pre></div>
+</div>
+<p>Ensure the tests are only run when the module is called as a main
+program by invoking <tt class="xref py py-func docutils literal"><span class="pre">testmod()</span></tt> only if the current module name is
+<tt class="docutils literal"><span class="pre">__main__</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python doctest_testmod.py -v
+
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+1 items had no tests:
+    __main__
+1 items passed all tests:
+   2 tests in __main__.my_function
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>The first argument to <tt class="xref py py-func docutils literal"><span class="pre">testmod()</span></tt> is a module containing code to
+be scanned for tests.  This feature lets you create a separate test
+script that imports your real code and runs the tests in each module
+one after another.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">doctest_simple</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">doctest_simple</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>You can build a test suite for your project by importing each module
+and running its tests.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python doctest_testmod_other_module.py -v
+
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+1 items had no tests:
+    doctest_simple
+1 items passed all tests:
+   2 tests in doctest_simple.my_function
+2 tests in 2 items.
+2 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-file">
+<h3>By File<a class="headerlink" href="#by-file" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref py py-func docutils literal"><span class="pre">testfile()</span></tt> works in a way similar to <tt class="xref py py-func docutils literal"><span class="pre">testmod()</span></tt>, allowing
+you to explicitly invoke the tests in an external file from within
+your test program.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">doctest</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testfile</span><span class="p">(</span><span class="s">&#39;doctest_in_help.rst&#39;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python doctest_testfile.py -v
+
+Trying:
+    from doctest_in_help import my_function
+Expecting nothing
+ok
+Trying:
+    my_function(2, 3)
+Expecting:
+    6
+ok
+Trying:
+    my_function(2.0, 3)
+Expecting:
+    6.0
+ok
+Trying:
+    my_function(&#39;a&#39;, 3)
+Expecting:
+    &#39;aaa&#39;
+ok
+Trying:
+    my_function([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;], 2)
+Expecting:
+    [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;]
+ok
+1 items passed all tests:
+   5 tests in doctest_in_help.rst
+5 tests in 1 items.
+5 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>Both <tt class="xref py py-func docutils literal"><span class="pre">testmod()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">testfile()</span></tt> include optional parameters
+to let you control the behavior of the tests through the
+<a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> options, global namespace for the tests, etc.  Refer to
+the standard library documentation for more details if you need those
+features &#8211; most of the time you won&#8217;t need them.</p>
+</div>
+<div class="section" id="unittest-suite">
+<h3>Unittest Suite<a class="headerlink" href="#unittest-suite" title="Permalink to this headline">¶</a></h3>
+<p>If you use both <a class="reference internal" href="../unittest/index.html#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a> and <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> for testing the
+same code in different situations, you may find the <a class="reference internal" href="../unittest/index.html#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a>
+integration in <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> useful for running the tests together.
+Two classes, <tt class="xref py py-class docutils literal"><span class="pre">DocTestSuite</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">DocFileSuite</span></tt> create
+test suites compatible with the test-runner API of <a class="reference internal" href="../unittest/index.html#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">doctest</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="kn">import</span> <span class="nn">doctest_simple</span>
+
+<span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestSuite</span><span class="p">()</span>
+<span class="n">suite</span><span class="o">.</span><span class="n">addTest</span><span class="p">(</span><span class="n">doctest</span><span class="o">.</span><span class="n">DocTestSuite</span><span class="p">(</span><span class="n">doctest_simple</span><span class="p">))</span>
+<span class="n">suite</span><span class="o">.</span><span class="n">addTest</span><span class="p">(</span><span class="n">doctest</span><span class="o">.</span><span class="n">DocFileSuite</span><span class="p">(</span><span class="s">&#39;doctest_in_help.rst&#39;</span><span class="p">))</span>
+
+<span class="n">runner</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The tests from each source are collapsed into a single outcome,
+instead of being reported individually.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python doctest_unittest.py
+
+my_function (doctest_simple)
+Doctest: doctest_simple.my_function ... ok
+doctest_in_help.rst
+Doctest: doctest_in_help.rst ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.003s
+
+OK
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="test-context">
+<h2>Test Context<a class="headerlink" href="#test-context" title="Permalink to this headline">¶</a></h2>
+<p>The execution context created by <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> as it runs tests
+contains a copy of the module-level globals for the module containing
+your code.  This isolates the tests from each other somewhat, so they
+are less likely to interfere with one another.  Each test source
+(function, class, module) has its own set of global values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TestGlobals</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; var = &#39;value&#39;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;var&#39; in globals()</span>
+<span class="sd">        True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">two</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;var&#39; in globals()</span>
+<span class="sd">        False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+</pre></div>
+</div>
+<p><tt class="xref py py-class docutils literal"><span class="pre">TestGlobals</span></tt> has two methods, <tt class="xref py py-func docutils literal"><span class="pre">one()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">two()</span></tt>.
+The tests in the docstring for <tt class="xref py py-func docutils literal"><span class="pre">one()</span></tt> set a global variable, and
+the test for <tt class="xref py py-func docutils literal"><span class="pre">two()</span></tt> looks for it (expecting not to find it).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_test_globals.py
+
+Trying:
+    var = &#39;value&#39;
+Expecting nothing
+ok
+Trying:
+    &#39;var&#39; in globals()
+Expecting:
+    True
+ok
+Trying:
+    &#39;var&#39; in globals()
+Expecting:
+    False
+ok
+2 items had no tests:
+    doctest_test_globals
+    doctest_test_globals.TestGlobals
+2 items passed all tests:
+   2 tests in doctest_test_globals.TestGlobals.one
+   1 tests in doctest_test_globals.TestGlobals.two
+3 tests in 4 items.
+3 passed and 0 failed.
+Test passed.
+</pre></div>
+</div>
+<p>That does not mean the tests <em>cannot</em> interfere with each other,
+though, if they change the contents of mutable variables defined in
+the module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">_module_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">class</span> <span class="nc">TestGlobals</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; TestGlobals().one()</span>
+<span class="sd">        &gt;&gt;&gt; &#39;var&#39; in _module_data</span>
+<span class="sd">        True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_module_data</span><span class="p">[</span><span class="s">&#39;var&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;value&#39;</span>
+
+    <span class="k">def</span> <span class="nf">two</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; &#39;var&#39; in _module_data</span>
+<span class="sd">        False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+</pre></div>
+</div>
+<p>The module varabile <tt class="docutils literal"><span class="pre">_module_data</span></tt> is changed by the tests for
+<tt class="xref py py-func docutils literal"><span class="pre">one()</span></tt>, causing the test for <tt class="xref py py-func docutils literal"><span class="pre">two()</span></tt> to fail.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m doctest -v doctest_mutable_globals.py
+
+Trying:
+    TestGlobals().one()
+Expecting nothing
+ok
+Trying:
+    &#39;var&#39; in _module_data
+Expecting:
+    True
+ok
+Trying:
+    &#39;var&#39; in _module_data
+Expecting:
+    False
+**********************************************************************
+File &quot;doctest_mutable_globals.py&quot;, line 24, in doctest_mutable_globals.TestGlobals.two
+Failed example:
+    &#39;var&#39; in _module_data
+Expected:
+    False
+Got:
+    True
+2 items had no tests:
+    doctest_mutable_globals
+    doctest_mutable_globals.TestGlobals
+1 items passed all tests:
+   2 tests in doctest_mutable_globals.TestGlobals.one
+**********************************************************************
+1 items had failures:
+   1 of   1 in doctest_mutable_globals.TestGlobals.two
+3 tests in 4 items.
+2 passed and 1 failed.
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+<p>If you need to set global values for the tests, to parameterize them
+for an environment for example, you can pass values to <tt class="xref py py-func docutils literal"><span class="pre">testmod()</span></tt>
+and <tt class="xref py py-func docutils literal"><span class="pre">testfile()</span></tt> and have the context set up using data you
+control.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/doctest.html">doctest</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://blip.tv/file/3332763">The Mighty Dictionary</a></dt>
+<dd>Presentation by Brandon Rhodes at PyCon 2010 about the
+internal operations of the <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>.</dd>
+<dt><a class="reference internal" href="../difflib/index.html#module-difflib" title="difflib: Compare sequences, especially lines of text."><tt class="xref py py-mod docutils literal"><span class="pre">difflib</span></tt></a></dt>
+<dd>Python&#8217;s sequence difference computation library, used to
+produce the ndiff output.</dd>
+<dt><a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a></dt>
+<dd>As well as being the documentation processing tool for
+Python&#8217;s standard library, Sphinx has been adopted by many
+third-party projects because it is easy to use and produces
+clean output in several digital and print formats.  Sphinx
+includes an extension for running doctests as is processes
+your documentation, so you know your examples are always
+accurate.</dd>
+<dt><a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/">nose</a></dt>
+<dd>Third-party test runner with <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> support.</dd>
+<dt><a class="reference external" href="http://codespeak.net/py/dist/test/">py.test</a></dt>
+<dd>Third-party test runner with <a class="reference internal" href="#module-doctest" title="doctest: Write automated tests as part of the documentation for a module."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> support.</dd>
+<dt><a class="reference external" href="http://packages.python.org/manuel/">Manuel</a></dt>
+<dd>Third-party documentation-based test runner with more advanced
+test case extraction and integration with Sphinx.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../pydoc/index.html" title="pydoc – Online help for Python modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../dev_tools.html" title="Development Tools"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../dev_tools.html" >Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

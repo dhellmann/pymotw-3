@@ -1,0 +1,1019 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>optparse &#8211; Command line option parser to replace getopt. - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Generic Operating System Services" href="../generic_os.html" />
+    <link rel="next" title="argparse – Command line option and argument parsing." href="../argparse/index.html" />
+    <link rel="prev" title="getopt – Command line option parsing" href="../getopt/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">optparse &#8211; Command line option parser to replace getopt.</a><ul>
+<li><a class="reference internal" href="#creating-an-optionparser">Creating an OptionParser</a><ul>
+<li><a class="reference internal" href="#defining-options">Defining Options</a></li>
+<li><a class="reference internal" href="#parsing-a-command-line">Parsing a Command Line</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#short-and-long-form-options">Short and Long-Form Options</a></li>
+<li><a class="reference internal" href="#comparing-with-getopt">Comparing with getopt</a></li>
+<li><a class="reference internal" href="#option-values">Option Values</a><ul>
+<li><a class="reference internal" href="#setting-defaults">Setting Defaults</a></li>
+<li><a class="reference internal" href="#type-conversion">Type Conversion</a></li>
+<li><a class="reference internal" href="#enumerations">Enumerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#option-actions">Option Actions</a><ul>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#boolean-flags">Boolean Flags</a></li>
+<li><a class="reference internal" href="#repeating-options">Repeating Options</a></li>
+<li><a class="reference internal" href="#callbacks">Callbacks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#help-messages">Help Messages</a><ul>
+<li><a class="reference internal" href="#organizing-options">Organizing Options</a></li>
+<li><a class="reference internal" href="#application-settings">Application Settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../getopt/index.html" title="previous chapter"><strong>Previous:</strong> getopt &#8211; Command line option parsing</a><br/>
+          <a href="../argparse/index.html" title="next chapter"><strong>Next:</strong> argparse &#8211; Command line option and argument parsing.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/optparse/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../argparse/index.html" title="argparse – Command line option and argument parsing."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../getopt/index.html" title="getopt – Command line option parsing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" accesskey="U">Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-optparse">
+<span id="optparse-command-line-option-parser-to-replace-getopt"></span><h1>optparse &#8211; Command line option parser to replace getopt.<a class="headerlink" href="#module-optparse" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Command line option parser to replace <a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.3</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> module is a modern alternative for command line
+option parsing that offers several features not available in
+<a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>, including type conversion, option callbacks, and
+automatic help generation. There are many more features to
+<a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> than can be covered here, but this section will
+introduce some of the more commonly used capabilities.</p>
+<div class="section" id="creating-an-optionparser">
+<h2>Creating an OptionParser<a class="headerlink" href="#creating-an-optionparser" title="Permalink to this headline">¶</a></h2>
+<p>There are two phases to parsing options with <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a>. First,
+the <tt class="xref py py-class docutils literal"><span class="pre">OptionParser</span></tt> instance is constructed and configured with
+the expected options. Then a sequence of options is fed in and
+processed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Usually, once the parser has been created, each option is added to the
+parser explicitly, with information about what to do when the option
+is encountered on the command line. It is also possible to pass a list
+of options to the <tt class="xref py py-class docutils literal"><span class="pre">OptionParser</span></tt> constructor, but that form is
+not used as frequently.</p>
+<div class="section" id="defining-options">
+<h3>Defining Options<a class="headerlink" href="#defining-options" title="Permalink to this headline">¶</a></h3>
+<p>Options should be added one at a time using the <tt class="xref py py-func docutils literal"><span class="pre">add_option()</span></tt>
+method. Any un-named string arguments at the beginning of the argument
+list are treated as option names. To create aliases for an option
+(i.e., to have a short and long form of the same option), simply pass
+multiple names.</p>
+</div>
+<div class="section" id="parsing-a-command-line">
+<h3>Parsing a Command Line<a class="headerlink" href="#parsing-a-command-line" title="Permalink to this headline">¶</a></h3>
+<p>After all of the options are defined, the command line is parsed by
+passing a sequence of argument strings to <tt class="xref py py-func docutils literal"><span class="pre">parse_args()</span></tt>. By
+default, the arguments are taken from <tt class="docutils literal"><span class="pre">sys.argv[1:]</span></tt>, but a list can
+be passed explicitly as well. The options are processed using the
+GNU/POSIX syntax, so option and argument values can be mixed in the
+sequence.</p>
+<p>The return value from <tt class="xref py py-func docutils literal"><span class="pre">parse_args()</span></tt> is a two-part tuple
+containing an <tt class="xref py py-class docutils literal"><span class="pre">Values</span></tt> instance and the list of arguments to
+the command that were not interpreted as options. The default
+processing action for options is to store the value using the name
+given in the <em>dest</em> argument to <tt class="xref py py-func docutils literal"><span class="pre">add_option()</span></tt>.  The
+<tt class="xref py py-class docutils literal"><span class="pre">Values</span></tt> instance returned by <tt class="xref py py-func docutils literal"><span class="pre">parse_args()</span></tt> holds the
+option values as attributes, so if an option&#8217;s <tt class="xref py py-data docutils literal"><span class="pre">dest</span></tt> is set to
+<tt class="docutils literal"><span class="pre">&quot;myoption&quot;</span></tt>, the value is accessed as <tt class="docutils literal"><span class="pre">options.myoption</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="short-and-long-form-options">
+<h2>Short and Long-Form Options<a class="headerlink" href="#short-and-long-form-options" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple example with three different options: a boolean
+option (<tt class="docutils literal"><span class="pre">-a</span></tt>), a simple string option (<tt class="docutils literal"><span class="pre">-b</span></tt>), and an integer
+option (<tt class="docutils literal"><span class="pre">-c</span></tt>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;int&quot;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="s">&#39;-bval&#39;</span><span class="p">,</span> <span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The options on the command line are parsed with the same rules that
+<tt class="xref py py-func docutils literal"><span class="pre">getopt.gnu_getopt()</span></tt> uses, so there are two ways to pass values
+to single character options. The example above uses both forms,
+<tt class="docutils literal"><span class="pre">-bval</span></tt> and <tt class="docutils literal"><span class="pre">-c</span> <span class="pre">val</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_short.py
+
+(&lt;Values at 0x1004cf488: {&#39;a&#39;: True, &#39;c&#39;: 3, &#39;b&#39;: &#39;val&#39;}&gt;, [])
+</pre></div>
+</div>
+<p>Notice that the type of the value associated with <tt class="docutils literal"><span class="pre">'c'</span></tt> in the
+output is an integer, since the <tt class="xref py py-class docutils literal"><span class="pre">OptionParser</span></tt> was told to
+convert the argument before storing it.</p>
+<p>Unlike with <a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>, &#8220;long&#8221; option names are not handled any
+differently by <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--noarg&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--witharg&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;witharg&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--witharg2&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;witharg2&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;int&quot;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span> <span class="s">&#39;--noarg&#39;</span><span class="p">,</span> <span class="s">&#39;--witharg&#39;</span><span class="p">,</span> <span class="s">&#39;val&#39;</span><span class="p">,</span> <span class="s">&#39;--witharg2=3&#39;</span> <span class="p">])</span>
+</pre></div>
+</div>
+<p>And the results are similar:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_long.py
+
+(&lt;Values at 0x1004d9488: {&#39;noarg&#39;: True, &#39;witharg&#39;: &#39;val&#39;, &#39;witharg2&#39;: 3}&gt;, [])
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-with-getopt">
+<h2>Comparing with getopt<a class="headerlink" href="#comparing-with-getopt" title="Permalink to this headline">¶</a></h2>
+<p>Since <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> is supposed to replace <a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>, this
+example re-implements the same example program used in the section
+about <a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;ARGV      :&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="s">&#39;--output&#39;</span><span class="p">,</span> 
+                  <span class="n">dest</span><span class="o">=</span><span class="s">&quot;output_filename&quot;</span><span class="p">,</span> 
+                  <span class="n">default</span><span class="o">=</span><span class="s">&quot;default.out&quot;</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span> <span class="s">&#39;--verbose&#39;</span><span class="p">,</span>
+                  <span class="n">dest</span><span class="o">=</span><span class="s">&quot;verbose&quot;</span><span class="p">,</span>
+                  <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                  <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--version&#39;</span><span class="p">,</span>
+                  <span class="n">dest</span><span class="o">=</span><span class="s">&quot;version&quot;</span><span class="p">,</span>
+                  <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                  <span class="nb">type</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">options</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;VERSION   :&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">version</span>
+<span class="k">print</span> <span class="s">&#39;VERBOSE   :&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">verbose</span>
+<span class="k">print</span> <span class="s">&#39;OUTPUT    :&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">output_filename</span>
+<span class="k">print</span> <span class="s">&#39;REMAINING :&#39;</span><span class="p">,</span> <span class="n">remainder</span>
+</pre></div>
+</div>
+<p>Notice how the options <tt class="docutils literal"><span class="pre">-o</span></tt> and <tt class="docutils literal"><span class="pre">--output</span></tt> are aliased by being
+added at the same time. Either option can be used on the command line.
+The short form:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_getoptcomparison.py -o output.txt
+
+ARGV      : [&#39;-o&#39;, &#39;output.txt&#39;]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : output.txt
+REMAINING : []
+</pre></div>
+</div>
+<p>or the long form:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_getoptcomparison.py --output output.txt
+
+ARGV      : [&#39;--output&#39;, &#39;output.txt&#39;]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : output.txt
+REMAINING : []
+</pre></div>
+</div>
+<p>Any unique prefix of the long option can also be used:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_getoptcomparison.py --out output.txt
+
+ARGV      : [&#39;--out&#39;, &#39;output.txt&#39;]
+VERSION   : 1.0
+VERBOSE   : False
+OUTPUT    : output.txt
+REMAINING : []
+</pre></div>
+</div>
+</div>
+<div class="section" id="option-values">
+<h2>Option Values<a class="headerlink" href="#option-values" title="Permalink to this headline">¶</a></h2>
+<p>The default processing action is to store the argument to the option.
+If a type is provided, the argument value is converted to that type
+before it is stored.</p>
+<div class="section" id="setting-defaults">
+<h3>Setting Defaults<a class="headerlink" href="#setting-defaults" title="Permalink to this headline">¶</a></h3>
+<p>Since options are by definition optional, applications should
+establish default behavior when an option is not given on the command
+line.  A default value for an individual option can be provided when
+the option is defined.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;default value&quot;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">options</span><span class="o">.</span><span class="n">o</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_default.py
+
+default value
+
+$ python optparse_default.py -o &quot;different value&quot;
+
+different value
+</pre></div>
+</div>
+<p>Defaults can also be loaded after the options are defined using
+keyword arguments to <tt class="xref py py-func docutils literal"><span class="pre">set_defaults()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">o</span><span class="o">=</span><span class="s">&#39;default value&#39;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">options</span><span class="o">.</span><span class="n">o</span>
+</pre></div>
+</div>
+<p>This form is useful when loading defaults from a configuration file or
+other source, instead of hard-coding them.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_set_defaults.py
+
+default value
+
+$ python optparse_set_defaults.py -o &quot;different value&quot;
+
+different value
+</pre></div>
+</div>
+<p>All defined options are available as attributes of the <tt class="xref py py-class docutils literal"><span class="pre">Values</span></tt>
+instance returned by <tt class="xref py py-func docutils literal"><span class="pre">parse_args()</span></tt> so applications do not need to
+check for the presence of an option before trying to use its value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">options</span><span class="o">.</span><span class="n">o</span>
+</pre></div>
+</div>
+<p>If no default value is given for an option, and the option is not
+specified on the command line, its value is <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_no_default.py
+
+None
+
+$ python optparse_no_default.py -o &quot;different value&quot;
+
+different value
+</pre></div>
+</div>
+</div>
+<div class="section" id="type-conversion">
+<h3>Type Conversion<a class="headerlink" href="#type-conversion" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> will convert option values from strings to integers,
+floats, longs, and complex values.  To enable the conversion, specify
+the <em>type</em> of the option as an argument to <tt class="xref py py-func docutils literal"><span class="pre">add_option()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;int&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;long&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;complex&quot;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;int    : </span><span class="si">%-16r</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">i</span><span class="p">),</span> <span class="n">options</span><span class="o">.</span><span class="n">i</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;float  : </span><span class="si">%-16r</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">f</span><span class="p">),</span> <span class="n">options</span><span class="o">.</span><span class="n">f</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;long   : </span><span class="si">%-16r</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">l</span><span class="p">),</span> <span class="n">options</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;complex: </span><span class="si">%-16r</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">c</span><span class="p">),</span> <span class="n">options</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If an option&#8217;s value cannot be converted to the specified type, an
+error is printed and the program exits.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_types.py -i 1 -f 3.14 -l 1000000 -c 1+2j
+
+int    : &lt;type &#39;int&#39;&gt;     1
+float  : &lt;type &#39;float&#39;&gt;   3.14
+long   : &lt;type &#39;long&#39;&gt;    1000000
+complex: &lt;type &#39;complex&#39;&gt; (1+2j)
+
+$ python optparse_types.py -i a
+
+Usage: optparse_types.py [options]
+
+optparse_types.py: error: option -i: invalid integer value: &#39;a&#39;
+</pre></div>
+</div>
+<p>Custom conversions can be created by subclassing the <tt class="xref py py-class docutils literal"><span class="pre">Option</span></tt>
+class.  See the standard library documentation for complete details.</p>
+</div>
+<div class="section" id="enumerations">
+<h3>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="xref py py-const docutils literal"><span class="pre">choice</span></tt> type provides validation using a list of candidate
+strings.  Set <em>type</em> to choice and provide the list of valid values
+using the <em>choices</em> argument to <tt class="xref py py-func docutils literal"><span class="pre">add_option()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;choice&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">])</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Choice:&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+<p>Invalid inputs result in an error message that shows the allowed list
+of values.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_choice.py -c a
+
+Choice: a
+
+$ python optparse_choice.py -c b
+
+Choice: b
+
+$ python optparse_choice.py -c d
+
+Usage: optparse_choice.py [options]
+
+optparse_choice.py: error: option -c: invalid choice: &#39;d&#39; (choose from
+ &#39;a&#39;, &#39;b&#39;, &#39;c&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="option-actions">
+<h2>Option Actions<a class="headerlink" href="#option-actions" title="Permalink to this headline">¶</a></h2>
+<p>Unlike <a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a>, which only <em>parses</em> the options, <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a>
+is a full option <em>processing</em> library. Options can trigger different
+actions, specified by the action argument to
+<tt class="xref py py-func docutils literal"><span class="pre">add_option()</span></tt>. Supported actions include storing the argument
+(singly, or as part of a list), storing a constant value when the
+option is encountered (including special handling for true/false
+values for boolean switches), counting the number of times an option
+is seen, and calling a callback.  The default action is
+<tt class="xref py py-const docutils literal"><span class="pre">store</span></tt>, and does not need to be specified explicitly.</p>
+<div class="section" id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
+<p>When options represent a selection of fixed alternatives, such as
+operating modes of an application, creating separate explicit options
+makes it easier to document them.  The <tt class="xref py py-const docutils literal"><span class="pre">store_const</span></tt> action is
+intended for this purpose.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--earth&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_const&quot;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;earth&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;element&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;earth&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--air&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;air&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;element&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--water&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;element&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--fire&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;fire&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;element&#39;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">options</span><span class="o">.</span><span class="n">element</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-const docutils literal"><span class="pre">store_const</span></tt> action associates a constant value in the
+application with the option specified by the user.  Several options
+can be configured to store different constant values to the same
+<em>dest</em> name, so the application only has to check a single setting.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_store_const.py
+
+earth
+
+$ python optparse_store_const.py --fire
+
+fire
+</pre></div>
+</div>
+</div>
+<div class="section" id="boolean-flags">
+<h3>Boolean Flags<a class="headerlink" href="#boolean-flags" title="Permalink to this headline">¶</a></h3>
+<p>Boolean options are implemented using special actions for storing true
+and false constant values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-t&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;flag&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_false&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;flag&#39;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Flag:&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">flag</span>
+</pre></div>
+</div>
+<p>True and false versions of the same flag can be created by configuring
+their <em>dest</em> name to the same value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_boolean.py
+
+Flag: False
+
+$ python optparse_boolean.py -t
+
+Flag: True
+
+$ python optparse_boolean.py -f
+
+Flag: False
+</pre></div>
+</div>
+</div>
+<div class="section" id="repeating-options">
+<h3>Repeating Options<a class="headerlink" href="#repeating-options" title="Permalink to this headline">¶</a></h3>
+<p>There are three ways to handle repeated options.  The default is to
+overwrite any existing value so that the last option specified is
+used.  The <tt class="xref py py-const docutils literal"><span class="pre">store</span></tt> action works this way.</p>
+<p>Using the <tt class="xref py py-const docutils literal"><span class="pre">append</span></tt> action, it is possible to accumulate values
+as an option is repeated, creating a list of values.  Append mode is
+useful when multiple responses are allowed, and specifying them
+separately is easier for the user than constructing a parsable syntax.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-o&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;append&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;outputs&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[])</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">options</span><span class="o">.</span><span class="n">outputs</span>
+</pre></div>
+</div>
+<p>The order of the values given on the command line is preserved, in
+case it is important for the application.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_append.py
+
+[]
+
+$ python optparse_append.py -o a.out
+
+[&#39;a.out&#39;]
+
+$ python optparse_append.py -o a.out -o b.out
+
+[&#39;a.out&#39;, &#39;b.out&#39;]
+</pre></div>
+</div>
+<p>Sometimes it is enough to know how many times an option was given, and
+the associated value is not needed.  For example, many applications
+allow the user to repeat the <tt class="docutils literal"><span class="pre">-v</span></tt> option to increase the level of
+verbosity of their output.  The <tt class="xref py py-const docutils literal"><span class="pre">count</span></tt> action increments a
+value each time the option appears.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;count&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;verbosity&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-q&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;verbosity&#39;</span><span class="p">)</span>
+
+<span class="n">options</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">options</span><span class="o">.</span><span class="n">verbosity</span>
+</pre></div>
+</div>
+<p>Since the <tt class="docutils literal"><span class="pre">-v</span></tt> option doesn&#8217;t take an argument, it can be repeated
+using the syntax <tt class="docutils literal"><span class="pre">-vv</span></tt> as well as through separate individual
+options.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_count.py
+
+1
+
+$ python optparse_count.py -v
+
+2
+
+$ python optparse_count.py -v -v
+
+3
+
+$ python optparse_count.py -vv
+
+3
+
+$ python optparse_count.py -q
+
+0
+</pre></div>
+</div>
+</div>
+<div class="section" id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h3>
+<p>Beside saving the arguments for options directly, it is possible to
+define callback functions to be invoked when the option is encountered
+on the command line. Callbacks for options take four arguments: the
+<tt class="xref py py-class docutils literal"><span class="pre">Option</span></tt> instance causing the callback, the option string from
+the command line, any argument value associated with the option, and
+the <tt class="xref py py-class docutils literal"><span class="pre">OptionParser</span></tt> instance doing the parsing work.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="k">def</span> <span class="nf">flag_callback</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">opt_str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;flag_callback:&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">option:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">opt_str:&#39;</span><span class="p">,</span> <span class="n">opt_str</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">value:&#39;</span><span class="p">,</span> <span class="n">value</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">parser:&#39;</span><span class="p">,</span> <span class="n">parser</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">with_callback</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">opt_str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;with_callback:&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">option:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">opt_str:&#39;</span><span class="p">,</span> <span class="n">opt_str</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">value:&#39;</span><span class="p">,</span> <span class="n">value</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">parser:&#39;</span><span class="p">,</span> <span class="n">parser</span>
+    <span class="k">return</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--flag&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;callback&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">flag_callback</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--with&#39;</span><span class="p">,</span> 
+                  <span class="n">action</span><span class="o">=</span><span class="s">&quot;callback&quot;</span><span class="p">,</span>
+                  <span class="n">callback</span><span class="o">=</span><span class="n">with_callback</span><span class="p">,</span>
+                  <span class="nb">type</span><span class="o">=</span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+                  <span class="n">help</span><span class="o">=</span><span class="s">&quot;Include optional feature&quot;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s">&#39;--with&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;--flag&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>In this example, the <tt class="docutils literal"><span class="pre">--with</span></tt> option is configured to take a string
+argument (other types such as integers and floats are support as
+well).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_callback.py
+
+with_callback:
+        option: &lt;Option at 0x1004cf2d8: --with&gt;
+        opt_str: --with
+        value: foo
+        parser: &lt;optparse.OptionParser instance at 0x1004675a8&gt;
+flag_callback:
+        option: &lt;Option at 0x100467830: --flag&gt;
+        opt_str: --flag
+        value: None
+        parser: &lt;optparse.OptionParser instance at 0x1004675a8&gt;
+</pre></div>
+</div>
+<p>Callbacks can be configured to take multiple arguments using the <em>nargs</em>
+option.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="k">def</span> <span class="nf">with_callback</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">opt_str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;with_callback:&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">option:&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">opt_str:&#39;</span><span class="p">,</span> <span class="n">opt_str</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">value:&#39;</span><span class="p">,</span> <span class="n">value</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">parser:&#39;</span><span class="p">,</span> <span class="n">parser</span>
+    <span class="k">return</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--with&#39;</span><span class="p">,</span> 
+                  <span class="n">action</span><span class="o">=</span><span class="s">&quot;callback&quot;</span><span class="p">,</span>
+                  <span class="n">callback</span><span class="o">=</span><span class="n">with_callback</span><span class="p">,</span>
+                  <span class="nb">type</span><span class="o">=</span><span class="s">&quot;string&quot;</span><span class="p">,</span>
+                  <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                  <span class="n">help</span><span class="o">=</span><span class="s">&quot;Include optional feature&quot;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span><span class="s">&#39;--with&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>In this case, the arguments are passed to the callback function as a tuple via
+the value argument.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_callback_nargs.py
+
+with_callback:
+        option: &lt;Option at 0x100467758: --with&gt;
+        opt_str: --with
+        value: (&#39;foo&#39;, &#39;bar&#39;)
+        parser: &lt;optparse.OptionParser instance at 0x1004674d0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="help-messages">
+<h2>Help Messages<a class="headerlink" href="#help-messages" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">OptionParser</span></tt> automatically includes a help option to all
+option sets, so the user can pass <tt class="docutils literal"><span class="pre">--help</span></tt> on the command line to
+see instructions for running the program. The help message includes
+all of the options with an indication of whether or not they take an
+argument. It is also possible to pass help text to
+<tt class="xref py py-class docutils literal"><span class="pre">add_option()</span></tt> to give a more verbose description of an option.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--no-foo&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> 
+                  <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                  <span class="n">dest</span><span class="o">=</span><span class="s">&quot;foo&quot;</span><span class="p">,</span>
+                  <span class="n">help</span><span class="o">=</span><span class="s">&quot;Turn off foo&quot;</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--with&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Include optional feature&quot;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The options are listed in alphabetical order, with aliases included on
+the same line. When the option takes an argument, the <tt class="docutils literal"><span class="pre">dest</span></tt> name is
+included as an argument name in the help output. The help text is
+printed in the right column.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_help.py --help
+
+Usage: optparse_help.py [options]
+
+Options:
+  -h, --help   show this help message and exit
+  --no-foo     Turn off foo
+  --with=WITH  Include optional feature
+</pre></div>
+</div>
+<p>The name <tt class="docutils literal"><span class="pre">WITH</span></tt> printed with the option <tt class="docutils literal"><span class="pre">--with</span></tt> comes from the
+destination variable for the option.  For cases where the internal
+variable name is descriptive enough to serve in the documentation, the
+<em>metavar</em> argument can be used to set a different name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--no-foo&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> 
+                  <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+                  <span class="n">dest</span><span class="o">=</span><span class="s">&quot;foo&quot;</span><span class="p">,</span>
+                  <span class="n">help</span><span class="o">=</span><span class="s">&quot;Turn off foo&quot;</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--with&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Include optional feature&quot;</span><span class="p">,</span>
+                  <span class="n">metavar</span><span class="o">=</span><span class="s">&#39;feature_NAME&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The value is printed exactly as it is given, without any changes to
+capitalization or punctuation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_metavar.py -h
+
+Usage: optparse_metavar.py [options]
+
+Options:
+  -h, --help           show this help message and exit
+  --no-foo             Turn off foo
+  --with=feature_NAME  Include optional feature
+</pre></div>
+</div>
+<div class="section" id="organizing-options">
+<h3>Organizing Options<a class="headerlink" href="#organizing-options" title="Permalink to this headline">¶</a></h3>
+<p>Many applications include sets of related options.  For example,
+<strong class="command">rpm</strong> includes separate options for each of its operating
+modes.  <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> uses <em>option groups</em> to organize options in
+the help output.  The option values are all still saved in a single
+<tt class="xref py py-class docutils literal"><span class="pre">Values</span></tt> instance, so the namespace for option names is still
+flat.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">()</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-q&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;query&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;mode&#39;</span><span class="p">,</span>
+                  <span class="n">help</span><span class="o">=</span><span class="s">&#39;Query&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-i&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;install&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;mode&#39;</span><span class="p">,</span>
+                  <span class="n">help</span><span class="o">=</span><span class="s">&#39;Install&#39;</span><span class="p">)</span>
+
+<span class="n">query_opts</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionGroup</span><span class="p">(</span>
+    <span class="n">parser</span><span class="p">,</span> <span class="s">&#39;Query Options&#39;</span><span class="p">,</span>
+    <span class="s">&#39;These options control the query mode.&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="n">query_opts</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;query_mode&#39;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;List contents&#39;</span><span class="p">)</span>
+<span class="n">query_opts</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;file&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;query_mode&#39;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Show owner of file&#39;</span><span class="p">)</span>
+<span class="n">query_opts</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_const&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;query_mode&#39;</span><span class="p">,</span>
+                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Show all packages&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option_group</span><span class="p">(</span><span class="n">query_opts</span><span class="p">)</span>
+
+<span class="n">install_opts</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionGroup</span><span class="p">(</span>
+    <span class="n">parser</span><span class="p">,</span> <span class="s">&#39;Installation Options&#39;</span><span class="p">,</span>
+    <span class="s">&#39;These options control installation.&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="n">install_opts</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--hash&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Show hash marks as progress indication&#39;</span><span class="p">)</span>
+<span class="n">install_opts</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;--force&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;install_force&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Install, regardless of depdencies or existing version&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option_group</span><span class="p">(</span><span class="n">install_opts</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Each group has its own section title and description, and the options
+are displayed together.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_groups.py -h
+
+Usage: optparse_groups.py [options]
+
+Options:
+  -h, --help  show this help message and exit
+  -q          Query
+  -i          Install
+
+  Query Options:
+    These options control the query mode.
+
+    -l        List contents
+    -f        Show owner of file
+    -a        Show all packages
+
+  Installation Options:
+    These options control installation.
+
+    --hash    Show hash marks as progress indication
+    --force   Install, regardless of depdencies or existing version
+</pre></div>
+</div>
+</div>
+<div class="section" id="application-settings">
+<h3>Application Settings<a class="headerlink" href="#application-settings" title="Permalink to this headline">¶</a></h3>
+<p>The automatic help generation facilities support configuration
+settings to control several aspects of the help output.  The program&#8217;s
+<em>usage</em> string, which shows how the positional arguments are expected,
+can be set when the <tt class="xref py py-class docutils literal"><span class="pre">OptionParser</span></tt> is created.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="s">&#39;%prog [options] &lt;arg1&gt; &lt;arg2&gt; [&lt;arg3&gt;...]&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;int&quot;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The literal value <tt class="docutils literal"><span class="pre">%prog</span></tt> is expanded to the name of the program at
+runtime, so it can reflect the full path to the script.  If the script
+is run by <strong class="command">python</strong>, instead of running directly, the script
+name is used.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_usage.py -h
+
+Usage: optparse_usage.py [options] &lt;arg1&gt; &lt;arg2&gt; [&lt;arg3&gt;...]
+
+Options:
+  -h, --help  show this help message and exit
+  -a
+  -b B
+  -c C
+</pre></div>
+</div>
+<p>The program name can be changed using the <em>prog</em> argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="s">&#39;%prog [options] &lt;arg1&gt; &lt;arg2&gt; [&lt;arg3&gt;...]&#39;</span><span class="p">,</span>
+                               <span class="n">prog</span><span class="o">=</span><span class="s">&#39;my_program_name&#39;</span><span class="p">,</span>
+                               <span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-b&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;int&quot;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It is generally a bad idea to hard-code the program name in this way,
+though, because if the program is renamed the help will not reflect
+the change.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_prog.py -h
+
+Usage: my_program_name [options] &lt;arg1&gt; &lt;arg2&gt; [&lt;arg3&gt;...]
+
+Options:
+  -h, --help  show this help message and exit
+  -a
+  -b B
+  -c C
+</pre></div>
+</div>
+<p>The application version can be set using the <em>version</em> argument.  When
+a value is provided, <a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> automatically adds a
+<tt class="docutils literal"><span class="pre">--version</span></tt> option to the parser.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">optparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">(</span><span class="n">usage</span><span class="o">=</span><span class="s">&#39;%prog [options] &lt;arg1&gt; &lt;arg2&gt; [&lt;arg3&gt;...]&#39;</span><span class="p">,</span>
+                               <span class="n">version</span><span class="o">=</span><span class="s">&#39;1.0&#39;</span><span class="p">,</span>
+                               <span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When the user runs the program with the <tt class="docutils literal"><span class="pre">--version</span></tt> option,
+<a class="reference internal" href="#module-optparse" title="optparse: Command line option parser to replace :mod:`getopt`."><tt class="xref py py-mod docutils literal"><span class="pre">optparse</span></tt></a> prints the version string and then exits.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python optparse_version.py -h
+
+Usage: optparse_version.py [options] &lt;arg1&gt; &lt;arg2&gt; [&lt;arg3&gt;...]
+
+Options:
+  --version   show program&#39;s version number and exit
+  -h, --help  show this help message and exit
+
+$ python optparse_version.py --version
+
+1.0
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/optparse.html">optparse</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../getopt/index.html#module-getopt" title="getopt: Command line option parsing"><tt class="xref py py-mod docutils literal"><span class="pre">getopt</span></tt></a></dt>
+<dd>The getopt module, replaced by optparse.</dd>
+<dt><a class="reference internal" href="../argparse/index.html#module-argparse" title="argparse: Command line option and argument parsing."><tt class="xref py py-mod docutils literal"><span class="pre">argparse</span></tt></a></dt>
+<dd>Newer replacement for optparse.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../argparse/index.html" title="argparse – Command line option and argument parsing."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../getopt/index.html" title="getopt – Command line option parsing"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../generic_os.html" >Generic Operating System Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

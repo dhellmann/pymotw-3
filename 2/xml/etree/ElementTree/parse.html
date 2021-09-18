@@ -1,0 +1,888 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Parsing XML Documents - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../../../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../../../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../../../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../../../_static/jquery.js"></script>
+<script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="contents" title="Global table of contents" href="../../../contents.html" />
+    <link rel="index" title="Global index" href="../../../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../../../index.html" />
+    <link rel="up" title="xml.etree.ElementTree – XML Manipulation API" href="index.html" />
+    <link rel="next" title="Creating XML Documents" href="create.html" />
+    <link rel="prev" title="xml.etree.ElementTree – XML Manipulation API" href="index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../../../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../../../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Parsing XML Documents</a><ul>
+<li><a class="reference internal" href="#parsing-an-entire-document">Parsing an Entire Document</a></li>
+<li><a class="reference internal" href="#traversing-the-parsed-tree">Traversing the Parsed Tree</a></li>
+<li><a class="reference internal" href="#finding-nodes-in-a-document">Finding Nodes in a Document</a></li>
+<li><a class="reference internal" href="#parsed-node-attributes">Parsed Node Attributes</a></li>
+<li><a class="reference internal" href="#watching-events-while-parsing">Watching Events While Parsing</a></li>
+<li><a class="reference internal" href="#creating-a-custom-tree-builder">Creating a Custom Tree Builder</a></li>
+<li><a class="reference internal" href="#parsing-strings">Parsing Strings</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../../../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="index.html" title="previous chapter"><strong>Previous:</strong> xml.etree.ElementTree &#8211; XML Manipulation API</a><br/>
+          <a href="create.html" title="next chapter"><strong>Next:</strong> Creating XML Documents</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../../../_sources/xml/etree/ElementTree/parse.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../../../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../../../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="create.html" title="Creating XML Documents"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="xml.etree.ElementTree – XML Manipulation API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../../../markup.html" >Structured Markup Processing Tools</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">xml.etree.ElementTree &#8211; XML Manipulation API</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="parsing-xml-documents">
+<span id="xml-etree-elementtree-parsing"></span><h1>Parsing XML Documents<a class="headerlink" href="#parsing-xml-documents" title="Permalink to this headline">¶</a></h1>
+<p>Parsed XML documents are represented in memory by <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt>
+and <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> objects connected into a tree structure based on
+the way the nodes in the XML document are nested.</p>
+<div class="section" id="parsing-an-entire-document">
+<h2>Parsing an Entire Document<a class="headerlink" href="#parsing-an-entire-document" title="Permalink to this headline">¶</a></h2>
+<p>Parsing an entire document with <tt class="xref py py-func docutils literal"><span class="pre">parse()</span></tt> returns an
+<tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> instance.  The tree knows about all of the data
+in the input document, and the nodes of the tree can be searched or
+manipulated in place.  While this flexibility can make working with
+the parsed document a little easier, it typically takes more memory
+than an event-based parsing approach since the entire document must be
+loaded at one time.</p>
+<p>The memory footprint of small, simple documents such as this list of
+podcasts represented as an <a class="reference external" href="http://www.opml.org/">OPML</a> outline is not significant:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;opml</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;title&gt;</span>My Podcasts<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;dateCreated&gt;</span>Sun, 07 Mar 2010 15:53:26 GMT<span class="nt">&lt;/dateCreated&gt;</span>
+	<span class="nt">&lt;dateModified&gt;</span>Sun, 07 Mar 2010 15:53:26 GMT<span class="nt">&lt;/dateModified&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Science and Tech&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;APM: Future Tense&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://www.publicradio.org/columns/futuretense/podcast.xml&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.publicradio.org/columns/futuretense/&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Engines Of Our Ingenuity Podcast&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://www.npr.org/rss/podcast.php?id=510030&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.uh.edu/engines/engines.htm&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Science &amp;#38; the City&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://www.nyas.org/Podcasts/Atom.axd&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.nyas.org/WhatWeDo/SciencetheCity.aspx&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/outline&gt;</span>
+  <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Books and Fiction&quot;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Podiobooker&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://feeds.feedburner.com/podiobooks&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.podiobooks.com/blog&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;The Drabblecast&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://web.me.com/normsherman/Site/Podcast/rss.xml&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://web.me.com/normsherman/Site/Podcast/Podcast.html&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;tor.com / category / tordotstories&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://www.tor.com/rss/category/TorDotStories&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.tor.com/&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/outline&gt;</span>
+  <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Computers and Programming&quot;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;MacBreak Weekly&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://leo.am/podcasts/mbw&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://twit.tv/mbw&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;FLOSS Weekly&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://leo.am/podcasts/floss&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://twit.tv&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Core Intuition&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://www.coreint.org/podcast.xml&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.coreint.org/&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/outline&gt;</span>
+  <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Python&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;PyCon Podcast&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://advocacy.python.org/podcasts/pycon.rss&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://advocacy.python.org/podcasts/&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;A Little Bit of Python&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://advocacy.python.org/podcasts/littlebit.rss&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://advocacy.python.org/podcasts/&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Django Dose Everything Feed&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://djangodose.com/everything/feed/&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/outline&gt;</span>
+  <span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;Miscelaneous&quot;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;outline</span> <span class="na">text=</span><span class="s">&quot;dhellmann&#39;s CastSampler Feed&quot;</span> <span class="na">type=</span><span class="s">&quot;rss&quot;</span> 
+             <span class="na">xmlUrl=</span><span class="s">&quot;http://www.castsampler.com/cast/feed/rss/dhellmann/&quot;</span> 
+             <span class="na">htmlUrl=</span><span class="s">&quot;http://www.castsampler.com/users/dhellmann/&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/outline&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/opml&gt;</span>
+</pre></div>
+</div>
+<p>To parse the file, pass an open file handle to <tt class="xref py py-func docutils literal"><span class="pre">parse()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">tree</span>
+</pre></div>
+</div>
+<p>It will read the data, parse the XML, and return an
+<tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> object.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_parse_opml.py
+
+&lt;xml.etree.ElementTree.ElementTree object at 0x10048cfd0&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="traversing-the-parsed-tree">
+<h2>Traversing the Parsed Tree<a class="headerlink" href="#traversing-the-parsed-tree" title="Permalink to this headline">¶</a></h2>
+<p>To visit all of the children in order, use <tt class="xref py py-func docutils literal"><span class="pre">iter()</span></tt> to create a
+generator that iterates over the <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">node</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span>
+</pre></div>
+</div>
+<p>This example prints the entire tree, one tag at a time.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_dump_opml.py
+
+opml {&#39;version&#39;: &#39;1.0&#39;}
+head {}
+title {}
+dateCreated {}
+dateModified {}
+body {}
+outline {&#39;text&#39;: &#39;Science and Tech&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://www.publicradio.org/columns/futuretense/podcast.xml&#39;, &#39;text&#39;: &#39;APM: Future Tense&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.publicradio.org/columns/futuretense/&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://www.npr.org/rss/podcast.php?id=510030&#39;, &#39;text&#39;: &#39;Engines Of Our Ingenuity Podcast&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.uh.edu/engines/engines.htm&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://www.nyas.org/Podcasts/Atom.axd&#39;, &#39;text&#39;: &#39;Science &amp; the City&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.nyas.org/WhatWeDo/SciencetheCity.aspx&#39;}
+outline {&#39;text&#39;: &#39;Books and Fiction&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://feeds.feedburner.com/podiobooks&#39;, &#39;text&#39;: &#39;Podiobooker&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.podiobooks.com/blog&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://web.me.com/normsherman/Site/Podcast/rss.xml&#39;, &#39;text&#39;: &#39;The Drabblecast&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://web.me.com/normsherman/Site/Podcast/Podcast.html&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://www.tor.com/rss/category/TorDotStories&#39;, &#39;text&#39;: &#39;tor.com / category / tordotstories&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.tor.com/&#39;}
+outline {&#39;text&#39;: &#39;Computers and Programming&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://leo.am/podcasts/mbw&#39;, &#39;text&#39;: &#39;MacBreak Weekly&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://twit.tv/mbw&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://leo.am/podcasts/floss&#39;, &#39;text&#39;: &#39;FLOSS Weekly&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://twit.tv&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://www.coreint.org/podcast.xml&#39;, &#39;text&#39;: &#39;Core Intuition&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.coreint.org/&#39;}
+outline {&#39;text&#39;: &#39;Python&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://advocacy.python.org/podcasts/pycon.rss&#39;, &#39;text&#39;: &#39;PyCon Podcast&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://advocacy.python.org/podcasts/&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://advocacy.python.org/podcasts/littlebit.rss&#39;, &#39;text&#39;: &#39;A Little Bit of Python&#39;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://advocacy.python.org/podcasts/&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://djangodose.com/everything/feed/&#39;, &#39;text&#39;: &#39;Django Dose Everything Feed&#39;, &#39;type&#39;: &#39;rss&#39;}
+outline {&#39;text&#39;: &#39;Miscelaneous&#39;}
+outline {&#39;xmlUrl&#39;: &#39;http://www.castsampler.com/cast/feed/rss/dhellmann/&#39;, &#39;text&#39;: &quot;dhellmann&#39;s CastSampler Feed&quot;, &#39;type&#39;: &#39;rss&#39;, &#39;htmlUrl&#39;: &#39;http://www.castsampler.com/users/dhellmann/&#39;}
+</pre></div>
+</div>
+<p>To print only the groups of names and feed URLs for the podcasts,
+leaving out of all of the data in the header section by iterating over
+only the <tt class="docutils literal"><span class="pre">outline</span></tt> nodes and print the <em>text</em> and <em>xmlUrl</em>
+attributes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s">&#39;outline&#39;</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">and</span> <span class="n">url</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%s</span><span class="s"> :: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">'outline'</span></tt> argument to <tt class="xref py py-func docutils literal"><span class="pre">iter()</span></tt> means processing is limited
+to only nodes with the tag <tt class="docutils literal"><span class="pre">'outline'</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_show_feed_urls.py
+
+Science and Tech
+  APM: Future Tense :: http://www.publicradio.org/columns/futuretense/podcast.xml
+  Engines Of Our Ingenuity Podcast :: http://www.npr.org/rss/podcast.php?id=510030
+  Science &amp; the City :: http://www.nyas.org/Podcasts/Atom.axd
+Books and Fiction
+  Podiobooker :: http://feeds.feedburner.com/podiobooks
+  The Drabblecast :: http://web.me.com/normsherman/Site/Podcast/rss.xml
+  tor.com / category / tordotstories :: http://www.tor.com/rss/category/TorDotStories
+Computers and Programming
+  MacBreak Weekly :: http://leo.am/podcasts/mbw
+  FLOSS Weekly :: http://leo.am/podcasts/floss
+  Core Intuition :: http://www.coreint.org/podcast.xml
+Python
+  PyCon Podcast :: http://advocacy.python.org/podcasts/pycon.rss
+  A Little Bit of Python :: http://advocacy.python.org/podcasts/littlebit.rss
+  Django Dose Everything Feed :: http://djangodose.com/everything/feed/
+Miscelaneous
+  dhellmann&#39;s CastSampler Feed :: http://www.castsampler.com/cast/feed/rss/dhellmann/
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-nodes-in-a-document">
+<h2>Finding Nodes in a Document<a class="headerlink" href="#finding-nodes-in-a-document" title="Permalink to this headline">¶</a></h2>
+<p>Walking the entire tree like this searching for relevant nodes can be
+error prone.  The example above had to look at each outline node to
+determine if it was a group (nodes with only a <tt class="xref py py-attr docutils literal"><span class="pre">text</span></tt> attribute)
+or podcast (with both <tt class="xref py py-attr docutils literal"><span class="pre">text</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">xmlUrl</span></tt>).  To produce a
+simple list of the podcast feed URLs, without names or groups, for a
+podcast downloader application, the logic could be simplified using
+<tt class="xref py py-func docutils literal"><span class="pre">findall()</span></tt> to look for nodes with more descriptive search
+characteristics.</p>
+<p>As a first pass at converting the above example, we can construct an
+<a class="reference external" href="http://www.w3.org/TR/xpath/">XPath</a> argument to look for all outline nodes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;.//outline&#39;</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">url</span>
+</pre></div>
+</div>
+<p>The logic in this version is not substantially different than the
+version using <tt class="xref py py-func docutils literal"><span class="pre">getiterator()</span></tt>.  It still has to check for the
+presence of the URL, except that it does not print the group name when
+the URL is not found.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_find_feeds_by_tag.py
+
+http://www.publicradio.org/columns/futuretense/podcast.xml
+http://www.npr.org/rss/podcast.php?id=510030
+http://www.nyas.org/Podcasts/Atom.axd
+http://feeds.feedburner.com/podiobooks
+http://web.me.com/normsherman/Site/Podcast/rss.xml
+http://www.tor.com/rss/category/TorDotStories
+http://leo.am/podcasts/mbw
+http://leo.am/podcasts/floss
+http://www.coreint.org/podcast.xml
+http://advocacy.python.org/podcasts/pycon.rss
+http://advocacy.python.org/podcasts/littlebit.rss
+http://djangodose.com/everything/feed/
+http://www.castsampler.com/cast/feed/rss/dhellmann/
+</pre></div>
+</div>
+<p>Another version can take advantage of the fact that the outline nodes
+are only nested two levels deep.  Changing the search path to
+<tt class="docutils literal"><span class="pre">.//outline/outline</span></tt> mean the loop will process only the second
+level of outline nodes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;.//outline/outline&#39;</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">url</span>
+</pre></div>
+</div>
+<p>All of those outline nodes nested two levels deep in the input are
+expected to have the <em>xmlURL</em> attribute refering to the podcast feed,
+so the loop can skip checking for for the attribute before using it.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_find_feeds_by_structure.py
+
+http://www.publicradio.org/columns/futuretense/podcast.xml
+http://www.npr.org/rss/podcast.php?id=510030
+http://www.nyas.org/Podcasts/Atom.axd
+http://feeds.feedburner.com/podiobooks
+http://web.me.com/normsherman/Site/Podcast/rss.xml
+http://www.tor.com/rss/category/TorDotStories
+http://leo.am/podcasts/mbw
+http://leo.am/podcasts/floss
+http://www.coreint.org/podcast.xml
+http://advocacy.python.org/podcasts/pycon.rss
+http://advocacy.python.org/podcasts/littlebit.rss
+http://djangodose.com/everything/feed/
+http://www.castsampler.com/cast/feed/rss/dhellmann/
+</pre></div>
+</div>
+<p>This version is limited to the existing structure, though, so if the
+outline nodes are ever rearranged into a deeper tree it will stop
+working.</p>
+</div>
+<div class="section" id="parsed-node-attributes">
+<h2>Parsed Node Attributes<a class="headerlink" href="#parsed-node-attributes" title="Permalink to this headline">¶</a></h2>
+<p>The items returned by <tt class="xref py py-func docutils literal"><span class="pre">findall()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">iter()</span></tt> are
+<tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> objects, each representing a node in the XML parse
+tree.  Each <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> has attributes for accessing data pulled
+out of the XML.  This can be illustrated with a somewhat more
+contrived example input file, <tt class="docutils literal"><span class="pre">data.xml</span></tt>:</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;top&gt;</span>
+  <span class="nt">&lt;child&gt;</span>This child contains text.<span class="nt">&lt;/child&gt;</span>
+  <span class="nt">&lt;child_with_tail&gt;</span>This child has regular text.<span class="nt">&lt;/child_with_tail&gt;</span>And &quot;tail&quot; text.
+  <span class="nt">&lt;with_attributes</span> <span class="na">name=</span><span class="s">&quot;value&quot;</span> <span class="na">foo=</span><span class="s">&quot;bar&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;entity_expansion</span> <span class="na">attribute=</span><span class="s">&quot;This &amp;#38; That&quot;</span><span class="nt">&gt;</span>That <span class="ni">&amp;#38;</span> This<span class="nt">&lt;/entity_expansion&gt;</span>
+<span class="nt">&lt;/top&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>The &#8220;attributes&#8221; of a node are available in the <tt class="xref py py-attr docutils literal"><span class="pre">attrib</span></tt>
+property, which acts like a dictionary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data.xml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;./with_attributes&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">node</span><span class="o">.</span><span class="n">tag</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-4s</span><span class="s"> = &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p>The node on line five of the input file has two attributes,
+<tt class="xref py py-attr docutils literal"><span class="pre">name</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">foo</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_node_attributes.py
+
+with_attributes
+  foo  = &quot;bar&quot;
+  name = &quot;value&quot;
+</pre></div>
+</div>
+<p>The text content of the nodes is available, along with the &#8220;tail&#8221; text
+that comes after the end of a close tag.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data.xml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;./child&#39;</span><span class="p">,</span> <span class="s">&#39;./child_with_tail&#39;</span> <span class="p">]:</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">node</span><span class="o">.</span><span class="n">tag</span>
+    <span class="k">print</span> <span class="s">&#39;  child node text:&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">text</span>
+    <span class="k">print</span> <span class="s">&#39;  and tail text  :&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">tail</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">child</span></tt> node on line three contains embedded text, and the node
+on line four has text with a tail (including any whitespace).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_node_text.py
+
+child
+  child node text: This child contains text.
+  and tail text  :
+
+child_with_tail
+  child node text: This child has regular text.
+  and tail text  : And &quot;tail&quot; text.
+</pre></div>
+</div>
+<p>XML entity references embedded in the document are conveniently
+converted to the appropriate characters before values are returned.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data.xml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;entity_expansion&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">node</span><span class="o">.</span><span class="n">tag</span>
+<span class="k">print</span> <span class="s">&#39;  in attribute:&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;attribute&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;  in text     :&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+<p>The automatic conversion mean the implementation detail of
+representing certain characters in an XML document can be ignored.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_entity_references.py
+
+entity_expansion
+  in attribute: This &amp; That
+  in text     : That &amp; This
+</pre></div>
+</div>
+</div>
+<div class="section" id="watching-events-while-parsing">
+<h2>Watching Events While Parsing<a class="headerlink" href="#watching-events-while-parsing" title="Permalink to this headline">¶</a></h2>
+<p>The other API useful for processing XML documents is event-based.  The
+parser generates <tt class="docutils literal"><span class="pre">start</span></tt> events for opening tags and <tt class="docutils literal"><span class="pre">end</span></tt> events
+for closing tags.  Data can be extracted from the document during the
+parsing phase by iterating over the event stream, which is convenient
+if it is not necessary to manipulate the entire document afterwards
+and there is no need to hold the entire parsed document in memory.</p>
+<p><tt class="xref py py-func docutils literal"><span class="pre">iterparse()</span></tt> returns an iterable that produces tuples
+containing the name of the event and the node triggering the event.
+Events can be one of:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">start</span></tt></dt>
+<dd>A new tag has been encountered.  The closing angle bracket of the
+tag was processed, but not the contents.</dd>
+<dt><tt class="docutils literal"><span class="pre">end</span></tt></dt>
+<dd>The closing angle bracket of a closing tag has been processed.  All
+of the children were already processed.</dd>
+<dt><tt class="docutils literal"><span class="pre">start-ns</span></tt></dt>
+<dd>Start a namespace declaration.</dd>
+<dt><tt class="docutils literal"><span class="pre">end-ns</span></tt></dt>
+<dd>End a namespace declaration.</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">iterparse</span>
+
+<span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">prefix_width</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">prefix_dots</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span> <span class="o">*</span> <span class="n">prefix_width</span>
+<span class="n">line_template</span> <span class="o">=</span> <span class="s">&#39;{prefix:&lt;0.{prefix_len}}{event:&lt;8}{suffix:&lt;{suffix_len}} {node.tag:&lt;12} {node_id}&#39;</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iterparse</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">,</span> <span class="s">&#39;start-ns&#39;</span><span class="p">,</span> <span class="s">&#39;end-ns&#39;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s">&#39;end&#39;</span><span class="p">:</span>
+        <span class="n">depth</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="n">prefix_len</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">*</span> <span class="mi">2</span>
+    
+    <span class="k">print</span> <span class="n">line_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">prefix_dots</span><span class="p">,</span>
+                               <span class="n">prefix_len</span><span class="o">=</span><span class="n">prefix_len</span><span class="p">,</span>
+                               <span class="n">suffix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+                               <span class="n">suffix_len</span><span class="o">=</span><span class="p">(</span><span class="n">prefix_width</span> <span class="o">-</span> <span class="n">prefix_len</span><span class="p">),</span>
+                               <span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span>
+                               <span class="n">node_id</span><span class="o">=</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">),</span>
+                               <span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">,</span>
+                               <span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s">&#39;start&#39;</span><span class="p">:</span>
+        <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>By default, only <tt class="docutils literal"><span class="pre">end</span></tt> events are generated.  To see other events,
+pass the list of desired event names to <tt class="xref py py-func docutils literal"><span class="pre">iterparse()</span></tt>, as in
+this example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_show_all_events.py
+
+start            opml         4299786128
+..start          head         4299786192
+....start        title        4299786256
+....end          title        4299786256
+....start        dateCreated  4299786448
+....end          dateCreated  4299786448
+....start        dateModified 4299786640
+....end          dateModified 4299786640
+..end            head         4299786192
+..start          body         4299787024
+....start        outline      4299787088
+......start      outline      4299787152
+......end        outline      4299787152
+......start      outline      4299787216
+......end        outline      4299787216
+......start      outline      4299787280
+......end        outline      4299787280
+....end          outline      4299787088
+....start        outline      4299787344
+......start      outline      4299787472
+......end        outline      4299787472
+......start      outline      4299787408
+......end        outline      4299787408
+......start      outline      4299787536
+......end        outline      4299787536
+....end          outline      4299787344
+....start        outline      4299787600
+......start      outline      4299787728
+......end        outline      4299787728
+......start      outline      4299787920
+......end        outline      4299787920
+......start      outline      4299787856
+......end        outline      4299787856
+....end          outline      4299787600
+....start        outline      4299788048
+......start      outline      4299788112
+......end        outline      4299788112
+......start      outline      4299788176
+......end        outline      4299788176
+......start      outline      4299792464
+......end        outline      4299792464
+....end          outline      4299788048
+....start        outline      4299792592
+......start      outline      4299792720
+......end        outline      4299792720
+....end          outline      4299792592
+..end            body         4299787024
+end              opml         4299786128
+</pre></div>
+</div>
+<p>The event-style of processing is more natural for some operations,
+such as converting XML input to some other format.  This technique can
+be used to convert list of podcasts from the earlier examples from an
+XML file to a CSV file, so they can be loaded into a spreadsheet or
+database application.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">iterparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONNUMERIC</span><span class="p">)</span>
+
+<span class="n">group_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iterparse</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s">&#39;outline&#39;</span><span class="p">:</span>
+        <span class="c"># Ignore anything not part of the outline</span>
+        <span class="k">continue</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">):</span>
+        <span class="c"># Remember the current group</span>
+        <span class="n">group_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Output a podcast entry</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span> <span class="p">(</span><span class="n">group_name</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span>
+                          <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">],</span>
+                          <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;htmlUrl&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+                          <span class="p">)</span>
+                         <span class="p">)</span>
+</pre></div>
+</div>
+<p>This conversion program does not need to hold the entire parsed input
+file in memory, and processing each node as it is encountered in the
+input is more efficient.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_write_podcast_csv.py
+
+&quot;Science and Tech&quot;,&quot;APM: Future Tense&quot;,&quot;http://www.publicradio.org/columns/futuretense/podcast.xml&quot;,&quot;http://www.publicradio.org/columns/futuretense/&quot;
+&quot;Science and Tech&quot;,&quot;Engines Of Our Ingenuity Podcast&quot;,&quot;http://www.npr.org/rss/podcast.php?id=510030&quot;,&quot;http://www.uh.edu/engines/engines.htm&quot;
+&quot;Science and Tech&quot;,&quot;Science &amp; the City&quot;,&quot;http://www.nyas.org/Podcasts/Atom.axd&quot;,&quot;http://www.nyas.org/WhatWeDo/SciencetheCity.aspx&quot;
+&quot;Books and Fiction&quot;,&quot;Podiobooker&quot;,&quot;http://feeds.feedburner.com/podiobooks&quot;,&quot;http://www.podiobooks.com/blog&quot;
+&quot;Books and Fiction&quot;,&quot;The Drabblecast&quot;,&quot;http://web.me.com/normsherman/Site/Podcast/rss.xml&quot;,&quot;http://web.me.com/normsherman/Site/Podcast/Podcast.html&quot;
+&quot;Books and Fiction&quot;,&quot;tor.com / category / tordotstories&quot;,&quot;http://www.tor.com/rss/category/TorDotStories&quot;,&quot;http://www.tor.com/&quot;
+&quot;Computers and Programming&quot;,&quot;MacBreak Weekly&quot;,&quot;http://leo.am/podcasts/mbw&quot;,&quot;http://twit.tv/mbw&quot;
+&quot;Computers and Programming&quot;,&quot;FLOSS Weekly&quot;,&quot;http://leo.am/podcasts/floss&quot;,&quot;http://twit.tv&quot;
+&quot;Computers and Programming&quot;,&quot;Core Intuition&quot;,&quot;http://www.coreint.org/podcast.xml&quot;,&quot;http://www.coreint.org/&quot;
+&quot;Python&quot;,&quot;PyCon Podcast&quot;,&quot;http://advocacy.python.org/podcasts/pycon.rss&quot;,&quot;http://advocacy.python.org/podcasts/&quot;
+&quot;Python&quot;,&quot;A Little Bit of Python&quot;,&quot;http://advocacy.python.org/podcasts/littlebit.rss&quot;,&quot;http://advocacy.python.org/podcasts/&quot;
+&quot;Python&quot;,&quot;Django Dose Everything Feed&quot;,&quot;http://djangodose.com/everything/feed/&quot;,&quot;&quot;
+&quot;Miscelaneous&quot;,&quot;dhellmann&#39;s CastSampler Feed&quot;,&quot;http://www.castsampler.com/cast/feed/rss/dhellmann/&quot;,&quot;http://www.castsampler.com/users/dhellmann/&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-custom-tree-builder">
+<h2>Creating a Custom Tree Builder<a class="headerlink" href="#creating-a-custom-tree-builder" title="Permalink to this headline">¶</a></h2>
+<p>A potentially more efficient means of handling parse events is to
+replace the standard tree builder behavior with a custom version.  The
+<tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> parser uses an <tt class="xref py py-class docutils literal"><span class="pre">XMLTreeBuilder</span></tt> to process
+the XML and call methods on a target class to save the results.  The
+usual output is an <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt> instance created by the
+default <tt class="xref py py-class docutils literal"><span class="pre">TreeBuilder</span></tt> class.  Replacing <tt class="xref py py-class docutils literal"><span class="pre">TreeBuilder</span></tt>
+with another class allows it to receive the events before the
+<tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> nodes are instantiated, saving that portion of the
+overhead.</p>
+<p>The XML-to-CSV converter from the previous section can be translated
+to a tree builder.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">XMLTreeBuilder</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">PodcastListToCSV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputFile</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">outputFile</span><span class="p">,</span> <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONNUMERIC</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">attrib</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="o">!=</span> <span class="s">&#39;outline&#39;</span><span class="p">:</span>
+            <span class="c"># Ignore anything not part of the outline</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">):</span>
+            <span class="c"># Remember the current group</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">group_name</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Output a podcast entry</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span> <span class="n">attrib</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">],</span>
+                                   <span class="n">attrib</span><span class="p">[</span><span class="s">&#39;xmlUrl&#39;</span><span class="p">],</span>
+                                   <span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;htmlUrl&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+                                   <span class="p">)</span>
+                                  <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="c"># Ignore closing tags</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c"># Ignore data inside nodes</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Nothing special to do here</span>
+        <span class="k">return</span>
+
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">PodcastListToCSV</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">XMLTreeBuilder</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;podcasts.opml&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-class docutils literal"><span class="pre">PodcastListToCSV</span></tt> implements the <tt class="xref py py-class docutils literal"><span class="pre">TreeBuilder</span></tt>
+protocol.  Each time a new XML tag is encountered, <tt class="xref py py-func docutils literal"><span class="pre">start()</span></tt> is
+called with the tag name and attributes.  When a closing tag is seen
+<tt class="xref py py-func docutils literal"><span class="pre">end()</span></tt> is called with the name.  In between, <tt class="xref py py-func docutils literal"><span class="pre">data()</span></tt> is
+called when a node has content (the tree builder is expected to keep
+up with the &#8220;current&#8221; node).  When all of the input is processed,
+<tt class="xref py py-func docutils literal"><span class="pre">close()</span></tt> is called.  It can return a value, which will be
+returned to the user of the <tt class="xref py py-class docutils literal"><span class="pre">XMLTreeBuilder</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_podcast_csv_treebuilder.py
+
+&quot;Science and Tech&quot;,&quot;APM: Future Tense&quot;,&quot;http://www.publicradio.org/columns/futuretense/podcast.xml&quot;,&quot;http://www.publicradio.org/columns/futuretense/&quot;
+&quot;Science and Tech&quot;,&quot;Engines Of Our Ingenuity Podcast&quot;,&quot;http://www.npr.org/rss/podcast.php?id=510030&quot;,&quot;http://www.uh.edu/engines/engines.htm&quot;
+&quot;Science and Tech&quot;,&quot;Science &amp; the City&quot;,&quot;http://www.nyas.org/Podcasts/Atom.axd&quot;,&quot;http://www.nyas.org/WhatWeDo/SciencetheCity.aspx&quot;
+&quot;Books and Fiction&quot;,&quot;Podiobooker&quot;,&quot;http://feeds.feedburner.com/podiobooks&quot;,&quot;http://www.podiobooks.com/blog&quot;
+&quot;Books and Fiction&quot;,&quot;The Drabblecast&quot;,&quot;http://web.me.com/normsherman/Site/Podcast/rss.xml&quot;,&quot;http://web.me.com/normsherman/Site/Podcast/Podcast.html&quot;
+&quot;Books and Fiction&quot;,&quot;tor.com / category / tordotstories&quot;,&quot;http://www.tor.com/rss/category/TorDotStories&quot;,&quot;http://www.tor.com/&quot;
+&quot;Computers and Programming&quot;,&quot;MacBreak Weekly&quot;,&quot;http://leo.am/podcasts/mbw&quot;,&quot;http://twit.tv/mbw&quot;
+&quot;Computers and Programming&quot;,&quot;FLOSS Weekly&quot;,&quot;http://leo.am/podcasts/floss&quot;,&quot;http://twit.tv&quot;
+&quot;Computers and Programming&quot;,&quot;Core Intuition&quot;,&quot;http://www.coreint.org/podcast.xml&quot;,&quot;http://www.coreint.org/&quot;
+&quot;Python&quot;,&quot;PyCon Podcast&quot;,&quot;http://advocacy.python.org/podcasts/pycon.rss&quot;,&quot;http://advocacy.python.org/podcasts/&quot;
+&quot;Python&quot;,&quot;A Little Bit of Python&quot;,&quot;http://advocacy.python.org/podcasts/littlebit.rss&quot;,&quot;http://advocacy.python.org/podcasts/&quot;
+&quot;Python&quot;,&quot;Django Dose Everything Feed&quot;,&quot;http://djangodose.com/everything/feed/&quot;,&quot;&quot;
+&quot;Miscelaneous&quot;,&quot;dhellmann&#39;s CastSampler Feed&quot;,&quot;http://www.castsampler.com/cast/feed/rss/dhellmann/&quot;,&quot;http://www.castsampler.com/users/dhellmann/&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-strings">
+<h2>Parsing Strings<a class="headerlink" href="#parsing-strings" title="Permalink to this headline">¶</a></h2>
+<p>To work with smaller bits of XML text, especially string literals as
+might be embedded in the source of a program, use <tt class="xref py py-func docutils literal"><span class="pre">XML()</span></tt> and
+the string containing the XML to be parsed as the only argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">XML</span>
+
+<span class="n">parsed</span> <span class="o">=</span> <span class="n">XML</span><span class="p">(</span><span class="s">&#39;&#39;&#39;</span>
+<span class="s">&lt;root&gt;</span>
+<span class="s">  &lt;group&gt;</span>
+<span class="s">    &lt;child id=&quot;a&quot;&gt;This is child &quot;a&quot;.&lt;/child&gt;</span>
+<span class="s">    &lt;child id=&quot;b&quot;&gt;This is child &quot;b&quot;.&lt;/child&gt;</span>
+<span class="s">  &lt;/group&gt;</span>
+<span class="s">  &lt;group&gt;</span>
+<span class="s">    &lt;child id=&quot;c&quot;&gt;This is child &quot;c&quot;.&lt;/child&gt;</span>
+<span class="s">  &lt;/group&gt;</span>
+<span class="s">&lt;/root&gt;</span>
+<span class="s">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;parsed =&#39;</span><span class="p">,</span> <span class="n">parsed</span>
+
+<span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">parsed</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span>
+    <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&#39;  text: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span>
+    <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">tail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">elem</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">print</span> <span class="s">&#39;  tail: &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">elem</span><span class="o">.</span><span class="n">tail</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%-4s</span><span class="s"> = &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Notice that unlike with <tt class="xref py py-func docutils literal"><span class="pre">parse()</span></tt>, the return value is an
+<tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> instance instead of an <tt class="xref py py-class docutils literal"><span class="pre">ElementTree</span></tt>.  An
+<tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> supports the iterator protocol directly, so there is
+no need to call <tt class="xref py py-func docutils literal"><span class="pre">getiterator()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_XML.py
+
+parsed = &lt;Element &#39;root&#39; at 0x100497710&gt;
+group
+
+group
+</pre></div>
+</div>
+<p>For structured XML that uses the <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> attribute to identify
+unique nodes of interest, <tt class="xref py py-func docutils literal"><span class="pre">XMLID()</span></tt> is a convenient way to
+access the parse results.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">XMLID</span>
+
+<span class="n">tree</span><span class="p">,</span> <span class="n">id_map</span> <span class="o">=</span> <span class="n">XMLID</span><span class="p">(</span><span class="s">&#39;&#39;&#39;</span>
+<span class="s">&lt;root&gt;</span>
+<span class="s">  &lt;group&gt;</span>
+<span class="s">    &lt;child id=&quot;a&quot;&gt;This is child &quot;a&quot;.&lt;/child&gt;</span>
+<span class="s">    &lt;child id=&quot;b&quot;&gt;This is child &quot;b&quot;.&lt;/child&gt;</span>
+<span class="s">  &lt;/group&gt;</span>
+<span class="s">  &lt;group&gt;</span>
+<span class="s">    &lt;child id=&quot;c&quot;&gt;This is child &quot;c&quot;.&lt;/child&gt;</span>
+<span class="s">  &lt;/group&gt;</span>
+<span class="s">&lt;/root&gt;</span>
+<span class="s">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">id_map</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">XMLID()</span></tt> returns the parsed tree as an <tt class="xref py py-class docutils literal"><span class="pre">Element</span></tt> object,
+along with a dictionary mapping the <tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> attribute strings to
+the individual nodes in the tree.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ElementTree_XMLID.py
+
+a = &lt;Element &#39;child&#39; at 0x100497850&gt;
+b = &lt;Element &#39;child&#39; at 0x100497910&gt;
+c = &lt;Element &#39;child&#39; at 0x100497b50&gt;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Outline Processor Markup Language, <a class="reference external" href="http://www.opml.org/">OPML</a></dt>
+<dd>Dave Winer&#8217;s OPML specification and documentation.</dd>
+<dt>XML Path Language, <a class="reference external" href="http://www.w3.org/TR/xpath/">XPath</a></dt>
+<dd>A syntax for identifying parts of an XML document.</dd>
+<dt><a class="reference external" href="http://effbot.org/zone/element-xpath.htm">XPath Support in ElementTree</a></dt>
+<dd>Part of Fredrick Lundh&#8217;s original documentation for ElementTree.</dd>
+<dt><a class="reference internal" href="../../../csv/index.html#module-csv" title="csv: Read and write comma separated value files."><tt class="xref py py-mod docutils literal"><span class="pre">csv</span></tt></a></dt>
+<dd>Read and write comma-separated-value files</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="create.html" title="Creating XML Documents"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="xml.etree.ElementTree – XML Manipulation API"
+             >previous</a> |</li>
+        <li><a href="../../../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../../../markup.html" >Structured Markup Processing Tools</a> &raquo;</li>
+          <li><a href="index.html" >xml.etree.ElementTree &#8211; XML Manipulation API</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../../../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>mailbox &#8211; Access and manipulate email archives - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Data Handling" href="../internet_data.html" />
+    <link rel="next" title="mhlib – Work with MH mailboxes" href="../mhlib/index.html" />
+    <link rel="prev" title="json – JavaScript Object Notation Serializer" href="../json/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">mailbox &#8211; Access and manipulate email archives</a><ul>
+<li><a class="reference internal" href="#mbox">mbox</a><ul>
+<li><a class="reference internal" href="#creating-an-mbox-mailbox">Creating an mbox mailbox</a></li>
+<li><a class="reference internal" href="#reading-an-mbox-mailbox">Reading an mbox Mailbox</a></li>
+<li><a class="reference internal" href="#removing-messages-from-an-mbox-mailbox">Removing Messages from an mbox Mailbox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#maildir">Maildir</a><ul>
+<li><a class="reference internal" href="#creating-a-maildir-mailbox">Creating a Maildir Mailbox</a></li>
+<li><a class="reference internal" href="#reading-a-maildir-mailbox">Reading a Maildir Mailbox</a></li>
+<li><a class="reference internal" href="#removing-messages-from-a-maildir-mailbox">Removing Messages from a Maildir Mailbox</a></li>
+<li><a class="reference internal" href="#maildir-folders">Maildir folders</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-formats">Other Formats</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../json/index.html" title="previous chapter"><strong>Previous:</strong> json &#8211; JavaScript Object Notation Serializer</a><br/>
+          <a href="../mhlib/index.html" title="next chapter"><strong>Next:</strong> mhlib &#8211; Work with MH mailboxes</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/mailbox/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../mhlib/index.html" title="mhlib – Work with MH mailboxes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../json/index.html" title="json – JavaScript Object Notation Serializer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_data.html" accesskey="U">Internet Data Handling</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-mailbox">
+<span id="mailbox-access-and-manipulate-email-archives"></span><h1>mailbox &#8211; Access and manipulate email archives<a class="headerlink" href="#module-mailbox" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Work with email messages in various local file formats.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.4 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-mailbox" title="mailbox: Access and manipulate email archives."><tt class="xref py py-mod docutils literal"><span class="pre">mailbox</span></tt></a> module defines a common API for accessing email
+messages stored in local disk formats, including:</p>
+<ul class="simple">
+<li>Maildir</li>
+<li>mbox</li>
+<li>MH</li>
+<li>Babyl</li>
+<li>MMDF</li>
+</ul>
+<p>There are base classes for <tt class="xref py py-class docutils literal"><span class="pre">Mailbox</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Message</span></tt>, and
+each mailbox format includes a corresponding pair of subclasses to
+implement the details for that format.</p>
+<div class="section" id="mbox">
+<h2>mbox<a class="headerlink" href="#mbox" title="Permalink to this headline">¶</a></h2>
+<p>The mbox format is the simplest to illustrate in documentation, since
+it is entirely plain text.  Each mailbox is stored as a single file,
+with all of the messages concatenated together.  Each time a line
+starting with &#8220;From &#8221; (<tt class="docutils literal"><span class="pre">From</span></tt> followed by a single space) is
+encountered it is treated as the beginning of a new message.  Any time
+those characters appear at the beginning of a line in the message
+body, they are escaped by prefixing the line with &#8220;<tt class="docutils literal"><span class="pre">&gt;</span></tt>&#8221;.</p>
+<div class="section" id="creating-an-mbox-mailbox">
+<h3>Creating an mbox mailbox<a class="headerlink" href="#creating-an-mbox-mailbox" title="Permalink to this headline">¶</a></h3>
+<p>Instantiate the <tt class="docutils literal"><span class="pre">email.mbox</span></tt> class by passing the filename to the
+constructor.  If the file does not exist, it is created when you add
+messages to it using <tt class="docutils literal"><span class="pre">add()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+<span class="kn">import</span> <span class="nn">email.utils</span>
+
+<span class="n">from_addr</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Author&#39;</span><span class="p">,</span> <span class="s">&#39;author@example.com&#39;</span><span class="p">))</span>
+<span class="n">to_addr</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Recipient&#39;</span><span class="p">,</span> <span class="s">&#39;recipient@example.com&#39;</span><span class="p">))</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mbox</span><span class="p">(</span><span class="s">&#39;example.mbox&#39;</span><span class="p">)</span>
+<span class="n">mbox</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mboxMessage</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_unixfrom</span><span class="p">(</span><span class="s">&#39;author Sat Feb  7 01:05:34 2009&#39;</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Sample message 1&#39;</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span><span class="s">&#39;This is the body.</span><span class="se">\n</span><span class="s">From (should be escaped).</span><span class="se">\n</span><span class="s">There are 3 lines.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mboxMessage</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_unixfrom</span><span class="p">(</span><span class="s">&#39;author&#39;</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Sample message 2&#39;</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span><span class="s">&#39;This is the second body.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;example.mbox&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The result of this script is a new mailbox file with 2 email messages.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_mbox_create.py
+
+From MAILER-DAEMON Thu Feb 21 11:35:54 2013
+From: Author &lt;author@example.com&gt;
+To: Recipient &lt;recipient@example.com&gt;
+Subject: Sample message 1
+
+This is the body.
+&gt;From (should be escaped).
+There are 3 lines.
+
+From MAILER-DAEMON Thu Feb 21 11:35:54 2013
+From: Author &lt;author@example.com&gt;
+To: Recipient &lt;recipient@example.com&gt;
+Subject: Sample message 2
+
+This is the second body.
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-an-mbox-mailbox">
+<h3>Reading an mbox Mailbox<a class="headerlink" href="#reading-an-mbox-mailbox" title="Permalink to this headline">¶</a></h3>
+<p>To read an existing mailbox, open it and treat the mbox object like a
+dictionary.  They keys are arbitrary values defined by the mailbox
+instance and are not necessary meaningful other than as internal
+identifiers for message objects.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mbox</span><span class="p">(</span><span class="s">&#39;example.mbox&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">mbox</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">message</span><span class="p">[</span><span class="s">&#39;subject&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You can iterate over the open mailbox but notice that, unlike with
+dictionaries, the default iterator for a mailbox works on the <em>values</em>
+instead of the <em>keys</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_mbox_read.py
+
+Sample message 1
+Sample message 2
+</pre></div>
+</div>
+</div>
+<div class="section" id="removing-messages-from-an-mbox-mailbox">
+<h3>Removing Messages from an mbox Mailbox<a class="headerlink" href="#removing-messages-from-an-mbox-mailbox" title="Permalink to this headline">¶</a></h3>
+<p>To remove an existing message from an mbox file, use its key with
+<tt class="docutils literal"><span class="pre">remove()</span></tt> or use <tt class="docutils literal"><span class="pre">del</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mbox</span><span class="p">(</span><span class="s">&#39;example.mbox&#39;</span><span class="p">)</span>
+<span class="n">to_remove</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">mbox</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s">&#39;2&#39;</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;subject&#39;</span><span class="p">]:</span>
+        <span class="k">print</span> <span class="s">&#39;Removing:&#39;</span><span class="p">,</span> <span class="n">key</span>
+        <span class="n">to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">mbox</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
+        <span class="n">mbox</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;example.mbox&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice the use of <tt class="docutils literal"><span class="pre">lock()</span></tt> and <tt class="docutils literal"><span class="pre">unlock()</span></tt> to prevent issues from
+simultaneous access to the file, and <tt class="docutils literal"><span class="pre">flush()</span></tt> to force the changes
+to be written to disk.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_mbox_remove.py
+
+Removing: 1
+From MAILER-DAEMON Thu Feb 21 11:35:54 2013
+From: Author &lt;author@example.com&gt;
+To: Recipient &lt;recipient@example.com&gt;
+Subject: Sample message 1
+
+This is the body.
+&gt;From (should be escaped).
+There are 3 lines.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="maildir">
+<h2>Maildir<a class="headerlink" href="#maildir" title="Permalink to this headline">¶</a></h2>
+<p>The Maildir format was created to eliminate the problem of concurrent
+modification to an mbox file.  Instead of using a single file, the
+mailbox is organized as directory where each message is contained in
+its own file.  This also allows mailboxes to be nested, and so the API
+for a Maildir mailbox is extended with methods to work with
+sub-folders.</p>
+<div class="section" id="creating-a-maildir-mailbox">
+<h3>Creating a Maildir Mailbox<a class="headerlink" href="#creating-a-maildir-mailbox" title="Permalink to this headline">¶</a></h3>
+<p>The only real difference between using a Maildir and mbox is that to
+instantiate the <tt class="docutils literal"><span class="pre">email.Maildir</span></tt> object we need to pass the directory
+containing the mailbox to the constructor.  As before, if it does not
+exist, the mailbox is created when you add messages to it using
+<tt class="docutils literal"><span class="pre">add()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+<span class="kn">import</span> <span class="nn">email.utils</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">from_addr</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Author&#39;</span><span class="p">,</span> <span class="s">&#39;author@example.com&#39;</span><span class="p">))</span>
+<span class="n">to_addr</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formataddr</span><span class="p">((</span><span class="s">&#39;Recipient&#39;</span><span class="p">,</span> <span class="s">&#39;recipient@example.com&#39;</span><span class="p">))</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">Maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+<span class="n">mbox</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mboxMessage</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_unixfrom</span><span class="p">(</span><span class="s">&#39;author Sat Feb  7 01:05:34 2009&#39;</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Sample message 1&#39;</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span><span class="s">&#39;This is the body.</span><span class="se">\n</span><span class="s">From (will not be escaped).</span><span class="se">\n</span><span class="s">There are 3 lines.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">mboxMessage</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_unixfrom</span><span class="p">(</span><span class="s">&#39;author Sat Feb  7 01:05:34 2009&#39;</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_addr</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Sample message 2&#39;</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span><span class="s">&#39;This is the second body.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">unlock</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">dirname</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Directories:&#39;</span><span class="p">,</span> <span class="n">subdirs</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">fullname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="s">&#39;***&#39;</span><span class="p">,</span> <span class="n">fullname</span>
+        <span class="k">print</span> <span class="nb">open</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">20</span>
+</pre></div>
+</div>
+<p>Since we have added messages to the mailbox, they go to the &#8220;new&#8221;
+subdirectory.  Once they are &#8220;read&#8221; a client could move them to the
+&#8220;cur&#8221; subdirectory.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Although it is safe to write to the same maildir from multiple
+processes, <tt class="docutils literal"><span class="pre">add()</span></tt> is not thread-safe, so make sure you use a
+semaphore or other locking device to prevent simultaneous
+modifications to the mailbox from multiple threads of the same
+process.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_maildir_create.py
+
+Example
+        Directories: [&#39;cur&#39;, &#39;new&#39;, &#39;tmp&#39;]
+Example/cur
+        Directories: []
+Example/new
+        Directories: []
+
+*** Example/new/1361446554.M933748P13757Q1.hubert.local
+From: Author &lt;author@example.com&gt;
+To: Recipient &lt;recipient@example.com&gt;
+Subject: Sample message 1
+
+This is the body.
+From (will not be escaped).
+There are 3 lines.
+
+********************
+
+*** Example/new/1361446554.M963206P13757Q2.hubert.local
+From: Author &lt;author@example.com&gt;
+To: Recipient &lt;recipient@example.com&gt;
+Subject: Sample message 2
+
+This is the second body.
+
+********************
+Example/tmp
+        Directories: []
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-a-maildir-mailbox">
+<h3>Reading a Maildir Mailbox<a class="headerlink" href="#reading-a-maildir-mailbox" title="Permalink to this headline">¶</a></h3>
+<p>Reading from an existing Maildir mailbox works just like with mbox.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">Maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">mbox</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">message</span><span class="p">[</span><span class="s">&#39;subject&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Notice that the messages are not guaranteed to be read in any
+particular order.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_maildir_read.py
+
+Sample message 2
+Sample message 1
+</pre></div>
+</div>
+</div>
+<div class="section" id="removing-messages-from-a-maildir-mailbox">
+<h3>Removing Messages from a Maildir Mailbox<a class="headerlink" href="#removing-messages-from-a-maildir-mailbox" title="Permalink to this headline">¶</a></h3>
+<p>To remove an existing message from a Maildir mailbox, use its key with
+<tt class="docutils literal"><span class="pre">remove()</span></tt> or use <tt class="docutils literal"><span class="pre">del</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">Maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+<span class="n">to_remove</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">mbox</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s">&#39;2&#39;</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;subject&#39;</span><span class="p">]:</span>
+        <span class="k">print</span> <span class="s">&#39;Removing:&#39;</span><span class="p">,</span> <span class="n">key</span>
+        <span class="n">to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">mbox</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
+        <span class="n">mbox</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">mbox</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">dirname</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">Directories:&#39;</span><span class="p">,</span> <span class="n">subdirs</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">fullname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="s">&#39;***&#39;</span><span class="p">,</span> <span class="n">fullname</span>
+        <span class="k">print</span> <span class="nb">open</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">20</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_maildir_remove.py
+
+Removing: 1361446554.M963206P13757Q2.hubert.local
+Example
+        Directories: [&#39;cur&#39;, &#39;new&#39;, &#39;tmp&#39;]
+Example/cur
+        Directories: []
+Example/new
+        Directories: []
+
+*** Example/new/1361446554.M933748P13757Q1.hubert.local
+From: Author &lt;author@example.com&gt;
+To: Recipient &lt;recipient@example.com&gt;
+Subject: Sample message 1
+
+This is the body.
+From (will not be escaped).
+There are 3 lines.
+
+********************
+Example/tmp
+        Directories: []
+</pre></div>
+</div>
+</div>
+<div class="section" id="maildir-folders">
+<h3>Maildir folders<a class="headerlink" href="#maildir-folders" title="Permalink to this headline">¶</a></h3>
+<p>Subdirectories or <em>folders</em> of a Maildir mailbox can be managed
+directly through the methods of the Maildir class.  Callers can list,
+retrieve, create, and remove sub-folders for a given mailbox.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mailbox</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">show_maildir</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;find </span><span class="si">%s</span><span class="s"> -print&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="n">mbox</span> <span class="o">=</span> <span class="n">mailbox</span><span class="o">.</span><span class="n">Maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Before:&#39;</span><span class="p">,</span> <span class="n">mbox</span><span class="o">.</span><span class="n">list_folders</span><span class="p">()</span>
+<span class="n">show_maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+<span class="k">print</span>
+
+<span class="n">mbox</span><span class="o">.</span><span class="n">add_folder</span><span class="p">(</span><span class="s">&#39;subfolder&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;subfolder created:&#39;</span><span class="p">,</span> <span class="n">mbox</span><span class="o">.</span><span class="n">list_folders</span><span class="p">()</span>
+<span class="n">show_maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+
+<span class="n">subfolder</span> <span class="o">=</span> <span class="n">mbox</span><span class="o">.</span><span class="n">get_folder</span><span class="p">(</span><span class="s">&#39;subfolder&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;subfolder contents:&#39;</span><span class="p">,</span> <span class="n">subfolder</span><span class="o">.</span><span class="n">list_folders</span><span class="p">()</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+<span class="k">print</span>
+
+<span class="n">subfolder</span><span class="o">.</span><span class="n">add_folder</span><span class="p">(</span><span class="s">&#39;second_level&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;second_level created:&#39;</span><span class="p">,</span> <span class="n">subfolder</span><span class="o">.</span><span class="n">list_folders</span><span class="p">()</span>
+<span class="n">show_maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;#&#39;</span> <span class="o">*</span> <span class="mi">30</span>
+<span class="k">print</span>
+
+<span class="n">subfolder</span><span class="o">.</span><span class="n">remove_folder</span><span class="p">(</span><span class="s">&#39;second_level&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;second_level removed:&#39;</span><span class="p">,</span> <span class="n">subfolder</span><span class="o">.</span><span class="n">list_folders</span><span class="p">()</span>
+<span class="n">show_maildir</span><span class="p">(</span><span class="s">&#39;Example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The directory name for the folder is constructed by prefixing the
+folder name with <tt class="docutils literal"><span class="pre">.</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python mailbox_maildir_folders.py
+
+Example
+Example/cur
+Example/new
+Example/new/1361446554.M933748P13757Q1.hubert.local
+Example/tmp
+Example
+Example/.subfolder
+Example/.subfolder/cur
+Example/.subfolder/maildirfolder
+Example/.subfolder/new
+Example/.subfolder/tmp
+Example/cur
+Example/new
+Example/new/1361446554.M933748P13757Q1.hubert.local
+Example/tmp
+Example
+Example/.subfolder
+Example/.subfolder/.second_level
+Example/.subfolder/.second_level/cur
+Example/.subfolder/.second_level/maildirfolder
+Example/.subfolder/.second_level/new
+Example/.subfolder/.second_level/tmp
+Example/.subfolder/cur
+Example/.subfolder/maildirfolder
+Example/.subfolder/new
+Example/.subfolder/tmp
+Example/cur
+Example/new
+Example/new/1361446554.M933748P13757Q1.hubert.local
+Example/tmp
+Example
+Example/.subfolder
+Example/.subfolder/cur
+Example/.subfolder/maildirfolder
+Example/.subfolder/new
+Example/.subfolder/tmp
+Example/cur
+Example/new
+Example/new/1361446554.M933748P13757Q1.hubert.local
+Example/tmp
+Before: []
+
+##############################
+
+subfolder created: [&#39;subfolder&#39;]
+subfolder contents: []
+
+##############################
+
+second_level created: [&#39;second_level&#39;]
+
+##############################
+
+second_level removed: []
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="other-formats">
+<h2>Other Formats<a class="headerlink" href="#other-formats" title="Permalink to this headline">¶</a></h2>
+<p>MH is another multi-file mailbox format used by some mail handlers.
+Babyl and MMDF are single-file formats with different message
+separators than mbox.  None seem to be as popular as mbox or Maildir.
+The single-file formats support the same API as mbox, and MH includes
+the folder-related methods found in the Maildir class.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/mailbox.html">mailbox</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt>mbox manpage from qmail</dt>
+<dd><a class="reference external" href="http://www.qmail.org/man/man5/mbox.html">http://www.qmail.org/man/man5/mbox.html</a></dd>
+<dt>maildir manpage from qmail</dt>
+<dd><a class="reference external" href="http://www.qmail.org/man/man5/maildir.html">http://www.qmail.org/man/man5/maildir.html</a></dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt></dt>
+<dd>The email module.</dd>
+<dt><a class="reference internal" href="../mhlib/index.html#module-mhlib" title="mhlib: Work with MH mailboxes"><tt class="xref py py-mod docutils literal"><span class="pre">mhlib</span></tt></a></dt>
+<dd>The mhlib module.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../mhlib/index.html" title="mhlib – Work with MH mailboxes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../json/index.html" title="json – JavaScript Object Notation Serializer"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_data.html" >Internet Data Handling</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

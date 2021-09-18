@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Data Persistence and Exchange - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Features of the Standard Library" href="index.html" />
+    <link rel="next" title="In-Memory Data Structures" href="data_structures.html" />
+    <link rel="prev" title="Features of the Standard Library" href="index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Persistence and Exchange</a><ul>
+<li><a class="reference internal" href="#serializing-objects">Serializing Objects</a></li>
+<li><a class="reference internal" href="#storing-serialized-objects">Storing Serialized Objects</a></li>
+<li><a class="reference internal" href="#relational-databases">Relational Databases</a></li>
+<li><a class="reference internal" href="#data-exchange-through-standard-formats">Data Exchange Through Standard Formats</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="index.html" title="previous chapter"><strong>Previous:</strong> Features of the Standard Library</a><br/>
+          <a href="data_structures.html" title="next chapter"><strong>Next:</strong> In-Memory Data Structures</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/articles/data_persistence.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_structures.html" title="In-Memory Data Structures"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Features of the Standard Library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Features of the Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="data-persistence-and-exchange">
+<span id="article-data-persistence"></span><h1>Data Persistence and Exchange<a class="headerlink" href="#data-persistence-and-exchange" title="Permalink to this headline">¶</a></h1>
+<p>Python provides several modules for storing data.  There are basically two aspects to persistence: converting the in-memory object back and forth into a format for saving it, and working with the storage of the converted data.</p>
+<div class="section" id="serializing-objects">
+<h2>Serializing Objects<a class="headerlink" href="#serializing-objects" title="Permalink to this headline">¶</a></h2>
+<p>Python includes two modules capable of converting objects into a transmittable or storable format (<em>serializing</em>): <a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> and <a class="reference internal" href="../json/index.html#module-json" title="json: JavaScript Object Notation Serializer"><tt class="xref py py-mod docutils literal"><span class="pre">json</span></tt></a>.  It is most common to use <a class="reference internal" href="../pickle/index.html#module-pickle" title="pickle: Python object serialization"><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>, since there is a fast C implementation and it is integrated with some of the other standard library modules that actually store the serialized data, such as <a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a>.  Web-based applications may want to examine <a class="reference internal" href="../json/index.html#module-json" title="json: JavaScript Object Notation Serializer"><tt class="xref py py-mod docutils literal"><span class="pre">json</span></tt></a>, however, since it integrates better with some of the existing web service storage applications.</p>
+</div>
+<div class="section" id="storing-serialized-objects">
+<h2>Storing Serialized Objects<a class="headerlink" href="#storing-serialized-objects" title="Permalink to this headline">¶</a></h2>
+<p>Once the in-memory object is converted to a storable format, the next step is to decide how to store the data.  A simple flat-file with serialized objects written one after the other works for data that does not need to be indexed in any way.  But Python includes a collection of modules for storing key-value pairs in a simple database using one of the DBM format variants.</p>
+<p>The simplest interface to take advantage of the DBM format is provided by <a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a>.  Simply open the shelve file, and access it through a dictionary-like API.  Objects saved to the shelve are automatically pickled and saved without any extra work on your part.</p>
+<p>One drawback of shelve is that with the default interface you can&#8217;t guarantee which DBM format will be used.  That won&#8217;t matter if your application doesn&#8217;t need to share the database files between hosts with different libraries, but if that is needed you can use one of the classes in the module to ensure a specific format is selected (<a class="reference internal" href="../shelve/index.html#shelve-shelf-types"><em>Specific Shelf Types</em></a>).</p>
+<p>If you&#8217;re going to be passing a lot of data around via JSON anyway, using <a class="reference internal" href="../json/index.html#module-json" title="json: JavaScript Object Notation Serializer"><tt class="xref py py-mod docutils literal"><span class="pre">json</span></tt></a> and <a class="reference internal" href="../anydbm/index.html#module-anydbm" title="anydbm: anydbm provides a generic dictionary-like interface to DBM-style, string-keyed databases"><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a> can provide another persistence mechanism.  Since the DBM database keys and values must be strings, however, the objects won&#8217;t be automatically re-created when you access the value in the database.</p>
+</div>
+<div class="section" id="relational-databases">
+<h2>Relational Databases<a class="headerlink" href="#relational-databases" title="Permalink to this headline">¶</a></h2>
+<p>The excellent <a class="reference internal" href="../sqlite3/index.html#module-sqlite3" title="sqlite3: Embedded relational database"><tt class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></tt></a> in-process relational database is available with most Python distributions.  It stores its database in memory or in a local file, and all access is from within the same process, so there is no network lag.  The compact nature of <a class="reference internal" href="../sqlite3/index.html#module-sqlite3" title="sqlite3: Embedded relational database"><tt class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></tt></a> makes it especially well suited for embedding in desktop applications or development versions of web apps.</p>
+<p>All access to the database is through the Python DBI 2.0 API, by default, as no object relational mapper (ORM) is included.  The most popular general purpose ORM is <a class="reference external" href="http://www.sqlalchemy.org/">SQLAlchemy</a>, but others such as Django&#8217;s native ORM layer also support SQLite.  SQLAlchemy is easy to install and set up, but if your objects aren&#8217;t very complicated and you are worried about overhead, you may want to use the DBI interface directly.</p>
+</div>
+<div class="section" id="data-exchange-through-standard-formats">
+<h2>Data Exchange Through Standard Formats<a class="headerlink" href="#data-exchange-through-standard-formats" title="Permalink to this headline">¶</a></h2>
+<p>Although not usually considered a true persistence format <a class="reference internal" href="../csv/index.html#module-csv" title="csv: Read and write comma separated value files."><tt class="xref py py-mod docutils literal"><span class="pre">csv</span></tt></a>, or comma-separated-value, files can be an effective way to migrate data between applications.  Most spreadsheet programs and databases support both export and import using CSV, so dumping data to a CSV file is frequently the simplest way to move data out of your application and into an analysis tool.</p>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_structures.html" title="In-Memory Data Structures"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Features of the Standard Library"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="index.html" >Features of the Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

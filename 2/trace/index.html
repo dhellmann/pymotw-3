@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>trace &#8211; Follow Python statements as they are executed - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Debugging and Profiling" href="../profilers.html" />
+    <link rel="next" title="Python Runtime Services" href="../runtime_services.html" />
+    <link rel="prev" title="timeit – Time the execution of small bits of Python code." href="../timeit/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">trace &#8211; Follow Python statements as they are executed</a><ul>
+<li><a class="reference internal" href="#command-line-interface">Command Line Interface</a><ul>
+<li><a class="reference internal" href="#tracing-execution">Tracing Execution</a></li>
+<li><a class="reference internal" href="#code-coverage">Code Coverage</a></li>
+<li><a class="reference internal" href="#calling-relationships">Calling Relationships</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#programming-interface">Programming Interface</a><ul>
+<li><a class="reference internal" href="#saving-result-data">Saving Result Data</a></li>
+<li><a class="reference internal" href="#trace-options">Trace Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../timeit/index.html" title="previous chapter"><strong>Previous:</strong> timeit &#8211; Time the execution of small bits of Python code.</a><br/>
+          <a href="../runtime_services.html" title="next chapter"><strong>Next:</strong> Python Runtime Services</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/trace/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../runtime_services.html" title="Python Runtime Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../timeit/index.html" title="timeit – Time the execution of small bits of Python code."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../profilers.html" accesskey="U">Debugging and Profiling</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-trace">
+<span id="trace-follow-python-statements-as-they-are-executed"></span><h1>trace &#8211; Follow Python statements as they are executed<a class="headerlink" href="#module-trace" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Monitor which statements and functions are executed as a program runs to produce coverage and call-graph information.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">2.3 and later</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-trace" title="trace: Follow Python statements as they are executed."><tt class="xref py py-mod docutils literal"><span class="pre">trace</span></tt></a> module helps you understand the way your program
+runs.  You can trace the statements executed, produce coverage
+reports, and investigate the relationships between functions that call
+each other.</p>
+<div class="section" id="command-line-interface">
+<h2>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
+<p>It is easy use <a class="reference internal" href="#module-trace" title="trace: Follow Python statements as they are executed."><tt class="xref py py-mod docutils literal"><span class="pre">trace</span></tt></a> directly from the command line.  Given the
+following Python scripts as input:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">recurse</span> <span class="kn">import</span> <span class="n">recurse</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;This is the main program.&#39;</span>
+    <span class="n">recurse</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;recurse(</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">level</span>
+    <span class="k">if</span> <span class="n">level</span><span class="p">:</span>
+        <span class="n">recurse</span><span class="p">(</span><span class="n">level</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">not_called</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;This function is never called.&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="tracing-execution">
+<h3>Tracing Execution<a class="headerlink" href="#tracing-execution" title="Permalink to this headline">¶</a></h3>
+<p>We can see which statements are being executed as the program runs
+using the <em class="xref std std-option">--trace</em> option.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m trace --trace trace_example/main.py
+
+ --- modulename: main, funcname: &lt;module&gt;
+main.py(7): &quot;&quot;&quot;
+main.py(12): from recurse import recurse
+ --- modulename: recurse, funcname: &lt;module&gt;
+recurse.py(7): &quot;&quot;&quot;
+recurse.py(12): def recurse(level):
+recurse.py(18): def not_called():
+main.py(14): def main():
+main.py(19): if __name__ == &#39;__main__&#39;:
+main.py(20):     main()
+ --- modulename: main, funcname: main
+main.py(15):     print &#39;This is the main program.&#39;
+This is the main program.
+main.py(16):     recurse(2)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(2)
+recurse.py(14):     if level:
+recurse.py(15):         recurse(level-1)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(1)
+recurse.py(14):     if level:
+recurse.py(15):         recurse(level-1)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(0)
+recurse.py(14):     if level:
+recurse.py(16):     return
+recurse.py(16):     return
+recurse.py(16):     return
+main.py(17):     return
+ --- modulename: trace, funcname: _unsettrace
+trace.py(80):         sys.settrace(None)
+</pre></div>
+</div>
+<p>The first part of the output shows some setup operations performed by
+<a class="reference internal" href="#module-trace" title="trace: Follow Python statements as they are executed."><tt class="xref py py-mod docutils literal"><span class="pre">trace</span></tt></a>.  The rest of the output shows the entry into each
+function, including the module where the function is located, and then
+the lines of the source file as they are executed.  You can see that
+<tt class="xref py py-func docutils literal"><span class="pre">recurse()</span></tt> is entered three times, as you would expect from the
+way it is called in <tt class="xref py py-func docutils literal"><span class="pre">main()</span></tt>.</p>
+</div>
+<div class="section" id="code-coverage">
+<h3>Code Coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h3>
+<p>Running <a class="reference internal" href="#module-trace" title="trace: Follow Python statements as they are executed."><tt class="xref py py-mod docutils literal"><span class="pre">trace</span></tt></a> from the command line with the <em class="xref std std-option">--count</em>
+option will produce code coverage report information, so you can see
+which lines are run and which are skipped.  Since your program is
+usually made up of multiple files, a separate coverage report is
+produced for each.  By default the coverage report files are written
+to the same directory as the module, named after the module but with a
+<tt class="docutils literal"><span class="pre">.cover</span></tt> extension instead of <tt class="docutils literal"><span class="pre">.py</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m trace --count trace_example/main.py
+
+This is the main program.
+recurse(2)
+recurse(1)
+recurse(0)
+</pre></div>
+</div>
+<p>And two output files, <tt class="docutils literal"><span class="pre">trace_example/main.cover</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>       
+    1: from recurse import recurse
+       
+    1: def main():
+    1:     print &#39;This is the main program.&#39;
+    1:     recurse(2)
+    1:     return
+       
+    1: if __name__ == &#39;__main__&#39;:
+    1:     main()
+</pre></div>
+</div>
+<p>and <tt class="docutils literal"><span class="pre">trace_example/recurse.cover</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>       
+    1: def recurse(level):
+    3:     print &#39;recurse(%s)&#39; % level
+    3:     if level:
+    2:         recurse(level-1)
+    3:     return
+       
+    1: def not_called():
+           print &#39;This function is never called.&#39;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although the line <tt class="docutils literal"><span class="pre">def</span> <span class="pre">recurse(level):</span></tt> has a count of <tt class="docutils literal"><span class="pre">1</span></tt>,
+that does not mean the function was only run once.  It means the
+function <em>definition</em> was only executed once.</p>
+</div>
+<p>It is also possible to run the program several times, perhaps with
+different options, to save the coverage data and produce a combined
+report.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m trace --coverdir coverdir1 --count --file coverdir1/coverage\
+_report.dat trace_example/main.py
+
+Skipping counts file &#39;coverdir1/coverage_report.dat&#39;: [Errno 2] No such file or directory: &#39;coverdir1/coverage_report.dat&#39;
+This is the main program.
+recurse(2)
+recurse(1)
+recurse(0)
+
+$ python -m trace --coverdir coverdir1 --count --file coverdir1/coverage\
+_report.dat trace_example/main.py
+
+This is the main program.
+recurse(2)
+recurse(1)
+recurse(0)
+
+$ python -m trace --coverdir coverdir1 --count --file coverdir1/coverage\
+_report.dat trace_example/main.py
+
+This is the main program.
+recurse(2)
+recurse(1)
+recurse(0)
+</pre></div>
+</div>
+<p>Once the coverage information is recorded to the <tt class="docutils literal"><span class="pre">.cover</span></tt> files, you
+can produce reports with the <em class="xref std std-option">--report</em> option.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m trace --coverdir coverdir1 --report --summary --missing --fi\
+le coverdir1/coverage_report.dat trace_example/main.py
+
+lines   cov%   module   (path)
+  515     0%   trace   (/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/trace.py)
+    8   100%   trace_example.main   (trace_example/main.py)
+    8    87%   trace_example.recurse   (trace_example/recurse.py)
+</pre></div>
+</div>
+<p>Since the program ran three times, the coverage report shows values
+three times higher than the first report.  The <em class="xref std std-option">--summary</em>
+option adds the percent covered information to the output above.  The
+<tt class="docutils literal"><span class="pre">recurse</span></tt> module is only 87% covered.  A quick look at the cover
+file for recurse shows that the body of <tt class="docutils literal"><span class="pre">not_called()</span></tt> is indeed
+never run, indicated by the <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;&gt;&gt;&gt;</span></tt> prefix.</p>
+<div class="highlight-python"><div class="highlight"><pre>       
+    3: def recurse(level):
+    9:     print &#39;recurse(%s)&#39; % level
+    9:     if level:
+    6:         recurse(level-1)
+    9:     return
+       
+    3: def not_called():
+&gt;&gt;&gt;&gt;&gt;&gt;     print &#39;This function is never called.&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-relationships">
+<h3>Calling Relationships<a class="headerlink" href="#calling-relationships" title="Permalink to this headline">¶</a></h3>
+<p>In addition to coverage information, <a class="reference internal" href="#module-trace" title="trace: Follow Python statements as they are executed."><tt class="xref py py-mod docutils literal"><span class="pre">trace</span></tt></a> will collect and
+report on the relationships between functions that call each other.</p>
+<p>For a simple list of the functions called, use <em class="xref std std-option">--listfuncs</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m trace --listfuncs trace_example/main.py
+
+This is the main program.
+recurse(2)
+recurse(1)
+recurse(0)
+
+functions called:
+filename: /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/trace.py, modulename: trace, funcname: _unsettrace
+filename: trace_example/main.py, modulename: main, funcname: &lt;module&gt;
+filename: trace_example/main.py, modulename: main, funcname: main
+filename: trace_example/recurse.py, modulename: recurse, funcname: &lt;module&gt;
+filename: trace_example/recurse.py, modulename: recurse, funcname: recurse
+</pre></div>
+</div>
+<p>For more details about who is doing the calling, use
+<em class="xref std std-option">--trackcalls</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m trace --listfuncs --trackcalls trace_example/main.py
+
+This is the main program.
+recurse(2)
+recurse(1)
+recurse(0)
+
+calling relationships:
+
+*** /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/trace.py ***
+    trace.Trace.runctx -&gt; trace._unsettrace
+  --&gt; trace_example/main.py
+    trace.Trace.runctx -&gt; main.&lt;module&gt;
+
+*** trace_example/main.py ***
+    main.&lt;module&gt; -&gt; main.main
+  --&gt; trace_example/recurse.py
+    main.&lt;module&gt; -&gt; recurse.&lt;module&gt;
+    main.main -&gt; recurse.recurse
+
+*** trace_example/recurse.py ***
+    recurse.recurse -&gt; recurse.recurse
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="programming-interface">
+<h2>Programming Interface<a class="headerlink" href="#programming-interface" title="Permalink to this headline">¶</a></h2>
+<p>For a little more control over the trace interface, you can invoke it
+from within your program using a <tt class="xref py py-class docutils literal"><span class="pre">Trace</span></tt> object.
+<tt class="xref py py-class docutils literal"><span class="pre">Trace</span></tt> lets you set up fixtures and other dependencies before
+running a single function or execing a Python command to be traced.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">trace</span>
+<span class="kn">from</span> <span class="nn">trace_example.recurse</span> <span class="kn">import</span> <span class="n">recurse</span>
+
+<span class="n">tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">tracer</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;recurse(2)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since the example only traces into the <tt class="xref py py-func docutils literal"><span class="pre">recurse()</span></tt> function, no
+information from <tt class="docutils literal"><span class="pre">main.py</span></tt> is included in the output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python trace_run.py
+
+ --- modulename: trace_run, funcname: &lt;module&gt;
+&lt;string&gt;(1):   --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(2)
+recurse.py(14):     if level:
+recurse.py(15):         recurse(level-1)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(1)
+recurse.py(14):     if level:
+recurse.py(15):         recurse(level-1)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(0)
+recurse.py(14):     if level:
+recurse.py(16):     return
+recurse.py(16):     return
+recurse.py(16):     return
+</pre></div>
+</div>
+<p>That same output could have been produced with the <tt class="xref py py-func docutils literal"><span class="pre">runfunc()</span></tt>
+method, too.  <tt class="xref py py-func docutils literal"><span class="pre">runfunc()</span></tt> accepts arbitrary positional and
+keyword arguments, which are passed to the function when it is called
+by the tracer.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">trace</span>
+<span class="kn">from</span> <span class="nn">trace_example.recurse</span> <span class="kn">import</span> <span class="n">recurse</span>
+
+<span class="n">tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">tracer</span><span class="o">.</span><span class="n">runfunc</span><span class="p">(</span><span class="n">recurse</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python trace_runfunc.py
+
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(2)
+recurse.py(14):     if level:
+recurse.py(15):         recurse(level-1)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(1)
+recurse.py(14):     if level:
+recurse.py(15):         recurse(level-1)
+ --- modulename: recurse, funcname: recurse
+recurse.py(13):     print &#39;recurse(%s)&#39; % level
+recurse(0)
+recurse.py(14):     if level:
+recurse.py(16):     return
+recurse.py(16):     return
+recurse.py(16):     return
+</pre></div>
+</div>
+<div class="section" id="saving-result-data">
+<h3>Saving Result Data<a class="headerlink" href="#saving-result-data" title="Permalink to this headline">¶</a></h3>
+<p>Counts and coverage information can be recorded as well, just as with
+the command line interface.  The data must be saved explicitly, using
+the <tt class="xref py py-class docutils literal"><span class="pre">CoverageResults</span></tt> instance from the <tt class="xref py py-class docutils literal"><span class="pre">Trace</span></tt> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">trace</span>
+<span class="kn">from</span> <span class="nn">trace_example.recurse</span> <span class="kn">import</span> <span class="n">recurse</span>
+
+<span class="n">tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">tracer</span><span class="o">.</span><span class="n">runfunc</span><span class="p">(</span><span class="n">recurse</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+<span class="n">results</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="n">coverdir</span><span class="o">=</span><span class="s">&#39;coverdir2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python trace_CoverageResults.py
+
+recurse(2)
+recurse(1)
+recurse(0)
+
+$ find coverdir2
+
+coverdir2
+coverdir2/trace_example.recurse.cover
+</pre></div>
+</div>
+<p>And the contents of <tt class="docutils literal"><span class="pre">coverdir2/trace_example.recurse.cover</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>       #!/usr/bin/env python
+       # encoding: utf-8
+       #
+       # Copyright (c) 2008 Doug Hellmann All rights reserved.
+       #
+       &quot;&quot;&quot;
+&gt;&gt;&gt;&gt;&gt;&gt; &quot;&quot;&quot;
+       
+       #__version__ = &quot;$Id$&quot;
+       #end_pymotw_header
+       
+&gt;&gt;&gt;&gt;&gt;&gt; def recurse(level):
+    3:     print &#39;recurse(%s)&#39; % level
+    3:     if level:
+    2:         recurse(level-1)
+    3:     return
+       
+&gt;&gt;&gt;&gt;&gt;&gt; def not_called():
+&gt;&gt;&gt;&gt;&gt;&gt;     print &#39;This function is never called.&#39;
+</pre></div>
+</div>
+<p>To save the counts data for generating reports, use the <em>infile</em> and
+<em>outfile</em> argument to <tt class="xref py py-class docutils literal"><span class="pre">Trace</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">trace</span>
+<span class="kn">from</span> <span class="nn">trace_example.recurse</span> <span class="kn">import</span> <span class="n">recurse</span>
+
+<span class="n">tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="s">&#39;trace_report.dat&#39;</span><span class="p">)</span>
+<span class="n">tracer</span><span class="o">.</span><span class="n">runfunc</span><span class="p">(</span><span class="n">recurse</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">report_tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="s">&#39;trace_report.dat&#39;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+<span class="n">results</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="n">summary</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">coverdir</span><span class="o">=</span><span class="s">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pass a filename to <em>infile</em> to read previously stored data, and a
+filename to <em>outfile</em> to write new results after tracing.  If <em>infile</em>
+and <em>outfile</em> are the same, it has the effect of updating the file
+with cummulative data.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python trace_report.py
+
+recurse(2)
+recurse(1)
+recurse(0)
+lines   cov%   module   (path)
+    8    50%   trace_example.recurse   (/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/trace/trace_example/recurse.py)
+</pre></div>
+</div>
+</div>
+<div class="section" id="trace-options">
+<h3>Trace Options<a class="headerlink" href="#trace-options" title="Permalink to this headline">¶</a></h3>
+<p>The constructor for <tt class="xref py py-class docutils literal"><span class="pre">Trace</span></tt> takes several optional parameters
+to control runtime behavior.</p>
+<dl class="docutils">
+<dt><em>count</em></dt>
+<dd>Boolean.  Turns on line number counting.  Defaults to True.</dd>
+<dt><em>countfuncs</em></dt>
+<dd>Boolean.  Turns on list of functions called during the run.
+Defaults to False.</dd>
+<dt><em>countcallers</em></dt>
+<dd>Boolean.  Turns on tracking for callers and callees.  Defaults to
+False.</dd>
+<dt><em>ignoremods</em></dt>
+<dd>Sequence.  List of modules or packages to ignore when tracking
+coverage.  Defaults to an empty tuple.</dd>
+<dt><em>ignoredirs</em></dt>
+<dd>Sequence.  List of directories containing modules or packages to be
+ignored.  Defaults to an empty tuple.</dd>
+<dt><em>infile</em></dt>
+<dd>Name of the file containing cached count values.  Defaults to None.</dd>
+<dt><em>outfile</em></dt>
+<dd>Name of the file to use for storing cached count files.  Defaults to
+None, and data is not stored.</dd>
+</dl>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/trace.html">trace</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../sys/tracing.html#sys-tracing"><em>Tracing a Program As It Runs</em></a></dt>
+<dd>The <a class="reference internal" href="../sys/index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> module includes facilities for adding your own
+tracing function to the interpreter at run-time.</dd>
+<dt><a class="reference external" href="http://nedbatchelder.com/code/modules/coverage.html">coverage.py</a></dt>
+<dd>Ned Batchelder&#8217;s coverage module.</dd>
+<dt><a class="reference external" href="http://darcs.idyll.org/~t/projects/figleaf/doc/">figleaf</a></dt>
+<dd>Titus Brown&#8217;s coverage app.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../runtime_services.html" title="Python Runtime Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../timeit/index.html" title="timeit – Time the execution of small bits of Python code."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../profilers.html" >Debugging and Profiling</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

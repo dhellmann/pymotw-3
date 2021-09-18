@@ -1,0 +1,1194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Modules and Imports - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="sys – System-specific Configuration" href="index.html" />
+    <link rel="next" title="sysconfig – Interpreter Compile-time Configuration" href="../sysconfig/index.html" />
+    <link rel="prev" title="Low-level Thread Support" href="threads.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules and Imports</a><ul>
+<li><a class="reference internal" href="#imported-modules">Imported Modules</a></li>
+<li><a class="reference internal" href="#built-in-modules">Built-in Modules</a></li>
+<li><a class="reference internal" href="#import-path">Import Path</a></li>
+<li><a class="reference internal" href="#custom-importers">Custom Importers</a><ul>
+<li><a class="reference internal" href="#finders">Finders</a></li>
+<li><a class="reference internal" href="#importing-from-a-shelve">Importing from a Shelve</a></li>
+<li><a class="reference internal" href="#packages">Packages</a></li>
+<li><a class="reference internal" href="#reloading">Reloading</a></li>
+<li><a class="reference internal" href="#import-errors">Import Errors</a></li>
+<li><a class="reference internal" href="#package-data">Package Data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#importer-cache">Importer Cache</a></li>
+<li><a class="reference internal" href="#meta-path">Meta Path</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="threads.html" title="previous chapter"><strong>Previous:</strong> Low-level Thread Support</a><br/>
+          <a href="../sysconfig/index.html" title="next chapter"><strong>Next:</strong> sysconfig &#8211; Interpreter Compile-time Configuration</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/sys/imports.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sysconfig/index.html" title="sysconfig – Interpreter Compile-time Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="threads.html" title="Low-level Thread Support"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="modules-and-imports">
+<span id="sys-imports"></span><h1>Modules and Imports<a class="headerlink" href="#modules-and-imports" title="Permalink to this headline">¶</a></h1>
+<p>Most Python programs end up as a combination of several modules with a
+main application importing them. Whether using the features of the
+standard library, or organizing custom code in separate files to make
+it easier to maintain, understanding and managing the dependencies for
+a program is an important aspect of development. <a class="reference internal" href="index.html#module-sys" title="sys: System-specific configuration"><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> includes
+information about the modules available to an application, either as
+built-ins or after being imported.  It also defines hooks for
+overriding the standard import behavior for special cases.</p>
+<div class="section" id="imported-modules">
+<span id="sys-modules"></span><h2>Imported Modules<a class="headerlink" href="#imported-modules" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-data docutils literal"><span class="pre">sys.modules</span></tt> is a dictionary mapping the names of imported
+modules to the module object holding the code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">name_text</span> <span class="o">=</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">name_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The contents of <tt class="xref py py-data docutils literal"><span class="pre">sys.modules</span></tt> change as new modules are imported.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_modules.py
+
+UserDict, __builtin__, __main__, _abcoll, _codecs, _sre, _warnings,
+_weakref, _weakrefset, abc, codecs, copy_reg, encodings,
+encodings.__builtin__, encodings.aliases, encodings.codecs,
+encodings.encodings, encodings.utf_8, errno, exceptions, genericpath,
+linecache, os, os.path, posix, posixpath, re, signal, site,
+sphinxcontrib, sre_compile, sre_constants, sre_parse, stat, string,
+strop, sys, textwrap, types, warnings, zipimport
+</pre></div>
+</div>
+</div>
+<div class="section" id="built-in-modules">
+<h2>Built-in Modules<a class="headerlink" href="#built-in-modules" title="Permalink to this headline">¶</a></h2>
+<p>The Python interpreter can be compiled with some C modules built right
+in, so they do not need to be distributed as separate shared
+libraries. These modules don&#8217;t appear in the list of imported modules
+managed in <tt class="xref py py-data docutils literal"><span class="pre">sys.modules</span></tt> because they were not technically
+imported. The only way to find the available built-in modules is
+through <tt class="xref py py-data docutils literal"><span class="pre">sys.builtin_module_names</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>The output of this script will vary, especially if run with a
+custom-built version of the interpreter.  This output was created
+using a copy of the interpreter installed from the standard python.org
+installer for OS X.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_builtins.py
+
+__builtin__
+__main__
+_ast
+_codecs
+_sre
+_symtable
+_warnings
+_weakref
+errno
+exceptions
+gc
+imp
+marshal
+posix
+pwd
+signal
+sys
+thread
+xxsubtype
+zipimport
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://svn.python.org/view/python/trunk/README?view=markup">Build instructions</a></dt>
+<dd>Instructions for building Python, from the README distributed with the source.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="import-path">
+<span id="sys-path"></span><h2>Import Path<a class="headerlink" href="#import-path" title="Permalink to this headline">¶</a></h2>
+<p>The search path for modules is managed as a Python list saved in
+<tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt>. The default contents of the path include the directory
+of the script used to start the application and the current working
+directory.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>The first directory in the search path is the home for the sample
+script itself. That is followed by a series of platform-specific paths
+where compiled extension modules (written in C) might be installed,
+and then the global <tt class="docutils literal"><span class="pre">site-packages</span></tt> directory is listed last.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_path_show.py
+/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-darwin
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/lib-tk
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-mac
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-mac/lib-scriptpackages
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
+</pre></div>
+</div>
+<p>The import search path list can be modified before starting the
+interpreter by setting the shell variable <tt class="xref py py-data docutils literal"><span class="pre">PYTHONPATH</span></tt> to a
+colon-separated list of directories.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ PYTHONPATH=/my/private/site-packages:/my/shared/site-packages python sys_path_show.py
+/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys
+/my/private/site-packages
+/my/shared/site-packages
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-darwin
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/lib-tk
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-mac
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-mac/lib-scriptpackages
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages
+</pre></div>
+</div>
+<p>A program can also modify its path by adding elements to
+<tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt> directly.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span> <span class="ow">or</span> <span class="s">&#39;.&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Base directory:&#39;</span><span class="p">,</span> <span class="n">base_dir</span>
+
+<span class="c"># Insert the package_dir_a directory at the front of the path.</span>
+<span class="n">package_dir_a</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">&#39;package_dir_a&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">package_dir_a</span><span class="p">)</span>
+
+<span class="c"># Import the example module</span>
+<span class="kn">import</span> <span class="nn">example</span>
+<span class="k">print</span> <span class="s">&#39;Imported example from:&#39;</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">__file__</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">DATA</span>
+
+<span class="c"># Make package_dir_b the first directory in the search path</span>
+<span class="n">package_dir_b</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">&#39;package_dir_b&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">package_dir_b</span><span class="p">)</span>
+
+<span class="c"># Reload the module to get the other version</span>
+<span class="nb">reload</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Reloaded example from:&#39;</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">__file__</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">DATA</span>
+</pre></div>
+</div>
+<p>Reloading an imported module re-imports the file, and uses the same
+<tt class="xref py py-class docutils literal"><span class="pre">module</span></tt> object to hold the results.  Changing the path between
+the initial import and the call to <tt class="xref py py-func docutils literal"><span class="pre">reload()</span></tt> means a different
+module may be loaded the second time.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_path_modify.py
+
+Base directory: .
+Imported example from: ./package_dir_a/example.pyc
+        This is example A
+Reloaded example from: ./package_dir_b/example.pyc
+        This is example B
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-importers">
+<h2>Custom Importers<a class="headerlink" href="#custom-importers" title="Permalink to this headline">¶</a></h2>
+<p>Modifying the search path lets a programmer control how standard
+Python modules are found, but what if a program needs to import code
+from somewhere other than the usual <tt class="docutils literal"><span class="pre">.py</span></tt> or <tt class="docutils literal"><span class="pre">.pyc</span></tt> files on the
+filesystem? <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> solves this problem by introducing the idea of
+<em>import hooks</em> that can trap an attempt to find a module on the search
+path and take alternative measures to load the code from somewhere
+else or apply pre-processing to it.</p>
+<div class="section" id="finders">
+<h3>Finders<a class="headerlink" href="#finders" title="Permalink to this headline">¶</a></h3>
+<p>Custom importers are implemented in two separate phases. The <em>finder</em>
+is responsible for locating a module and providing a <em>loader</em> to
+manage the actual import. Adding a custom module finder is as simple
+as appending a factory to the <tt class="xref py py-data docutils literal"><span class="pre">sys.path_hooks</span></tt> list. On import,
+each part of the path is given to a finder until one claims support
+(by not raising <a class="reference internal" href="../exceptions/index.html#exceptions-importerror"><em>ImportError</em></a>). That
+finder is then responsible for searching data storage represented by
+its path entry for named modules.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">NoisyImportFinder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="n">PATH_TRIGGER</span> <span class="o">=</span> <span class="s">&#39;NoisyImportFinder_PATH_TRIGGER&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_entry</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Checking NoisyImportFinder support for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">path_entry</span>
+        <span class="k">if</span> <span class="n">path_entry</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PATH_TRIGGER</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;NoisyImportFinder does not work for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">path_entry</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">()</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">find_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;NoisyImportFinder looking for &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">fullname</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoisyImportFinder</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NoisyImportFinder</span><span class="o">.</span><span class="n">PATH_TRIGGER</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">target_module</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Import failed:&#39;</span><span class="p">,</span> <span class="n">e</span>
+</pre></div>
+</div>
+<p>This example illustrates how the finders are instantiated and
+queried. The <tt class="xref py py-class docutils literal"><span class="pre">NoisyImportFinder</span></tt> raises <a class="reference internal" href="../exceptions/index.html#exceptions-importerror"><em>ImportError</em></a> when instantiated with a path entry that
+does not match its special trigger value, which is obviously not a
+real path on the filesystem. This test prevents the
+<tt class="xref py py-class docutils literal"><span class="pre">NoisyImportFinder</span></tt> from breaking imports of real modules.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_path_hooks_noisy.py
+
+Checking NoisyImportFinder support for NoisyImportFinder_PATH_TRIGGER
+NoisyImportFinder looking for &quot;target_module&quot;
+Checking NoisyImportFinder support for /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys
+NoisyImportFinder does not work for /Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys
+Import failed: No module named target_module
+</pre></div>
+</div>
+</div>
+<div class="section" id="importing-from-a-shelve">
+<h3>Importing from a Shelve<a class="headerlink" href="#importing-from-a-shelve" title="Permalink to this headline">¶</a></h3>
+<p>When the finder locates a module, it is responsible for returning a
+<em>loader</em> capable of importing that module.  This example illustrates a
+custom importer that saves its module contents in a database created
+by <a class="reference internal" href="../shelve/index.html#module-shelve" title="shelve: Persistent storage of arbitrary Python objects"><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a>.</p>
+<p>The first step is to create a script to populate the shelf with a
+package containing a sub-module and sub-package.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shelve</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/pymotw_import_example.shelve&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;data:README&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">==============</span>
+<span class="s">package README</span>
+<span class="s">==============</span>
+
+<span class="s">This is the README for ``package``.</span>
+<span class="s">&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;package.__init__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">print &#39;package imported&#39;</span>
+<span class="s">message = &#39;This message is in package.__init__&#39;</span>
+<span class="s">&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;package.module1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">print &#39;package.module1 imported&#39;</span>
+<span class="s">message = &#39;This message is in package.module1&#39;</span>
+<span class="s">&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;package.subpackage.__init__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">print &#39;package.subpackage imported&#39;</span>
+<span class="s">message = &#39;This message is in package.subpackage.__init__&#39;</span>
+<span class="s">&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;package.subpackage.module2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">print &#39;package.subpackage.module2 imported&#39;</span>
+<span class="s">message = &#39;This message is in package.subpackage.module2&#39;</span>
+<span class="s">&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="p">[</span><span class="s">&#39;package.with_error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">print &#39;package.with_error being imported&#39;</span>
+<span class="s">raise ValueError(&#39;raising exception to break import&#39;)</span>
+<span class="s">&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Created </span><span class="si">%s</span><span class="s"> with:&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">key</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A real packaging script would read the contents from the filesystem,
+but using hard-coded values is sufficient for a simple example like
+this.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_shelve_importer_create.py
+
+Created /tmp/pymotw_import_example.shelve with:
+        data:README
+        package.__init__
+        package.module1
+        package.subpackage.__init__
+        package.subpackage.module2
+        package.with_error
+</pre></div>
+</div>
+<p>Next, it needs to provide finder and loader classes that know how to
+look in a shelf for the source of a module or package.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shelve</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="nd">@contextlib.contextmanager</span>
+<span class="k">def</span> <span class="nf">shelve_context</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Context manager to make shelves work with &#39;with&#39; statement.&quot;&quot;&quot;</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">db</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    
+<span class="k">def</span> <span class="nf">_mk_init_name</span><span class="p">(</span><span class="n">fullname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the name of the __init__ module for a given package name.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fullname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.__init__&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">fullname</span>
+    <span class="k">return</span> <span class="n">fullname</span> <span class="o">+</span> <span class="s">&#39;.__init__&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_get_key_name</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Look in an open shelf for fullname or fullname.__init__, return the name found.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fullname</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fullname</span>
+    <span class="n">init_name</span> <span class="o">=</span> <span class="n">_mk_init_name</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">init_name</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">init_name</span>
+    <span class="k">return</span> <span class="bp">None</span>
+    
+
+<span class="k">class</span> <span class="nc">ShelveFinder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find modules collected in a shelve archive.&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_entry</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path_entry</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># Test the path_entry to see if it is a valid shelf</span>
+            <span class="k">with</span> <span class="n">shelve_context</span><span class="p">(</span><span class="n">path_entry</span><span class="p">):</span>
+                <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;new shelf added to import path:&#39;</span><span class="p">,</span> <span class="n">path_entry</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span> <span class="o">=</span> <span class="n">path_entry</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;&lt;</span><span class="si">%s</span><span class="s"> for &quot;</span><span class="si">%s</span><span class="s">&quot;&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">find_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span>
+        <span class="k">print</span> <span class="s">&#39;looking for &quot;</span><span class="si">%s</span><span class="s">&quot; in </span><span class="si">%s</span><span class="s"> ...&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span>
+        <span class="k">with</span> <span class="n">shelve_context</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">key_name</span> <span class="o">=</span> <span class="n">_get_key_name</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key_name</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;found it as </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">key_name</span>
+                <span class="k">return</span> <span class="n">ShelveLoader</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;not found&#39;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="k">class</span> <span class="nc">ShelveLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load source for modules from shelve databases.&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_entry</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span> <span class="o">=</span> <span class="n">path_entry</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">_get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">):</span>
+        <span class="c"># Make up a fake filename that starts with the path entry</span>
+        <span class="c"># so pkgutil.get_data() works correctly.</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">get_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;loading source for &quot;</span><span class="si">%s</span><span class="s">&quot; from shelf&#39;</span> <span class="o">%</span> <span class="n">fullname</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">shelve_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+                <span class="n">key_name</span> <span class="o">=</span> <span class="n">_get_key_name</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">key_name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">db</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s">&#39;could not find source for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">fullname</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;could not load source:&#39;</span><span class="p">,</span> <span class="n">e</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            
+    <span class="k">def</span> <span class="nf">get_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">):</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;compiling code for &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">fullname</span>
+        <span class="k">return</span> <span class="nb">compile</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filename</span><span class="p">(</span><span class="n">fullname</span><span class="p">),</span> <span class="s">&#39;exec&#39;</span><span class="p">,</span> <span class="n">dont_inherit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;looking for data in </span><span class="si">%s</span><span class="s"> for &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IOError</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">key_name</span> <span class="o">=</span> <span class="s">&#39;data:&#39;</span> <span class="o">+</span> <span class="n">path</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">shelve_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">db</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c"># Convert all errors to IOError</span>
+            <span class="k">raise</span> <span class="ne">IOError</span>
+        
+    <span class="k">def</span> <span class="nf">is_package</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">):</span>
+        <span class="n">init_name</span> <span class="o">=</span> <span class="n">_mk_init_name</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">shelve_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span><span class="p">)</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">init_name</span> <span class="ow">in</span> <span class="n">db</span>
+
+    <span class="k">def</span> <span class="nf">load_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">):</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fullname</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;reusing existing module from previous import of &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">fullname</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;creating a new module object for &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">fullname</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">imp</span><span class="o">.</span><span class="n">new_module</span><span class="p">(</span><span class="n">fullname</span><span class="p">))</span>
+
+        <span class="c"># Set a few properties required by PEP 302</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__file__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filename</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">fullname</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__path__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__loader__</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__package__</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_package</span><span class="p">(</span><span class="n">fullname</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&#39;adding path for package&#39;</span>
+            <span class="c"># Set __path__ for packages</span>
+            <span class="c"># so we can find the sub-modules.</span>
+            <span class="n">mod</span><span class="o">.</span><span class="n">__path__</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span> <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;imported as regular module&#39;</span>
+        
+        <span class="k">print</span> <span class="s">&#39;execing source...&#39;</span>
+        <span class="k">exec</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">mod</span><span class="o">.</span><span class="n">__dict__</span>
+        <span class="k">print</span> <span class="s">&#39;done&#39;</span>
+        <span class="k">return</span> <span class="n">mod</span>
+        
+</pre></div>
+</div>
+<p>Now <tt class="xref py py-class docutils literal"><span class="pre">ShelveFinder</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">ShelveLoader</span></tt> can be used to
+import code from a shelf. For example, importing the <tt class="xref py py-mod docutils literal"><span class="pre">package</span></tt>
+created above:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys_shelve_importer</span>
+
+<span class="k">def</span> <span class="nf">show_module_details</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;  message    :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">message</span>
+    <span class="k">print</span> <span class="s">&#39;  __name__   :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">print</span> <span class="s">&#39;  __package__:&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__package__</span>
+    <span class="k">print</span> <span class="s">&#39;  __file__   :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__file__</span>
+    <span class="k">print</span> <span class="s">&#39;  __path__   :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__path__</span>
+    <span class="k">print</span> <span class="s">&#39;  __loader__ :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__loader__</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/pymotw_import_example.shelve&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sys_shelve_importer</span><span class="o">.</span><span class="n">ShelveFinder</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Import of &quot;package&quot;:&#39;</span>
+<span class="kn">import</span> <span class="nn">package</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Examine package details:&#39;</span>
+<span class="n">show_module_details</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Global settings:&#39;</span>
+<span class="k">print</span> <span class="s">&#39;sys.modules entry:&#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s">&#39;package&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The shelf is added to the import path the first time an import occurs
+after the path is modified. The finder recognizes the shelf and
+returns a loader, which is used for all imports from that shelf. The
+initial package-level import creates a new module object and then
+execs the source loaded from the shelf, using the new module as the
+namespace so that names defined in the source are preserved as
+module-level attributes.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_shelve_importer_package.py
+
+Import of &quot;package&quot;:
+new shelf added to import path: /tmp/pymotw_import_example.shelve
+looking for &quot;package&quot; in /tmp/pymotw_import_example.shelve ... found i
+t as package.__init__
+loading source for &quot;package&quot; from shelf
+creating a new module object for &quot;package&quot;
+adding path for package
+execing source...
+package imported
+done
+
+Examine package details:
+  message    : This message is in package.__init__
+  __name__   : package
+  __package__:
+  __file__   : /tmp/pymotw_import_example.shelve/package
+  __path__   : [&#39;/tmp/pymotw_import_example.shelve&#39;]
+  __loader__ : &lt;sys_shelve_importer.ShelveLoader object at 0x100473950
+&gt;
+
+Global settings:
+sys.modules entry: &lt;module &#39;package&#39; from &#39;/tmp/pymotw_import_example.
+shelve/package&#39;&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="packages">
+<h3>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h3>
+<p>The loading of other modules and sub-packages proceeds in the same way.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys_shelve_importer</span>
+
+<span class="k">def</span> <span class="nf">show_module_details</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;  message    :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">message</span>
+    <span class="k">print</span> <span class="s">&#39;  __name__   :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">print</span> <span class="s">&#39;  __package__:&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__package__</span>
+    <span class="k">print</span> <span class="s">&#39;  __file__   :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__file__</span>
+    <span class="k">print</span> <span class="s">&#39;  __path__   :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__path__</span>
+    <span class="k">print</span> <span class="s">&#39;  __loader__ :&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">__loader__</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/pymotw_import_example.shelve&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sys_shelve_importer</span><span class="o">.</span><span class="n">ShelveFinder</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Import of &quot;package.module1&quot;:&#39;</span>
+<span class="kn">import</span> <span class="nn">package.module1</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Examine package.module1 details:&#39;</span>
+<span class="n">show_module_details</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">module1</span><span class="p">)</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Import of &quot;package.subpackage.module2&quot;:&#39;</span>
+<span class="kn">import</span> <span class="nn">package.subpackage.module2</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Examine package.subpackage.module2 details:&#39;</span>
+<span class="n">show_module_details</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">subpackage</span><span class="o">.</span><span class="n">module2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_shelve_importer_module.py
+
+
+Import of &quot;package.module1&quot;:
+new shelf added to import path: /tmp/pymotw_import_example.shelve
+looking for &quot;package&quot; in /tmp/pymotw_import_example.shelve ... found i
+t as package.__init__
+loading source for &quot;package&quot; from shelf
+creating a new module object for &quot;package&quot;
+adding path for package
+execing source...
+package imported
+done
+looking for &quot;package.module1&quot; in /tmp/pymotw_import_example.shelve ...
+ found it as package.module1
+loading source for &quot;package.module1&quot; from shelf
+creating a new module object for &quot;package.module1&quot;
+imported as regular module
+execing source...
+package.module1 imported
+done
+
+Examine package.module1 details:
+  message    : This message is in package.module1
+  __name__   : package.module1
+  __package__: package
+  __file__   : /tmp/pymotw_import_example.shelve/package.module1
+  __path__   : /tmp/pymotw_import_example.shelve
+  __loader__ : &lt;sys_shelve_importer.ShelveLoader object at 0x100473a90
+&gt;
+
+Import of &quot;package.subpackage.module2&quot;:
+looking for &quot;package.subpackage&quot; in /tmp/pymotw_import_example.shelve
+... found it as package.subpackage.__init__
+loading source for &quot;package.subpackage&quot; from shelf
+creating a new module object for &quot;package.subpackage&quot;
+adding path for package
+execing source...
+package.subpackage imported
+done
+looking for &quot;package.subpackage.module2&quot; in /tmp/pymotw_import_example
+.shelve ... found it as package.subpackage.module2
+loading source for &quot;package.subpackage.module2&quot; from shelf
+creating a new module object for &quot;package.subpackage.module2&quot;
+imported as regular module
+execing source...
+package.subpackage.module2 imported
+done
+
+Examine package.subpackage.module2 details:
+  message    : This message is in package.subpackage.module2
+  __name__   : package.subpackage.module2
+  __package__: package.subpackage
+  __file__   : /tmp/pymotw_import_example.shelve/package.subpackage.mo
+dule2
+  __path__   : /tmp/pymotw_import_example.shelve
+  __loader__ : &lt;sys_shelve_importer.ShelveLoader object at 0x1006db990
+&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="reloading">
+<h3>Reloading<a class="headerlink" href="#reloading" title="Permalink to this headline">¶</a></h3>
+<p>Reloading a module is handled slightly differently. Instead of
+creating a new module object, the existing module is re-used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys_shelve_importer</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/pymotw_import_example.shelve&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sys_shelve_importer</span><span class="o">.</span><span class="n">ShelveFinder</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;First import of &quot;package&quot;:&#39;</span>
+<span class="kn">import</span> <span class="nn">package</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Reloading &quot;package&quot;:&#39;</span>
+<span class="nb">reload</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By re-using the same object, existing references to the module are
+preserved even if class or function definitions are modified by the
+reload.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_shelve_importer_reload.py
+
+First import of &quot;package&quot;:
+new shelf added to import path: /tmp/pymotw_import_example.shelve
+looking for &quot;package&quot; in /tmp/pymotw_import_example.shelve ... found i
+t as package.__init__
+loading source for &quot;package&quot; from shelf
+creating a new module object for &quot;package&quot;
+adding path for package
+execing source...
+package imported
+done
+
+Reloading &quot;package&quot;:
+looking for &quot;package&quot; in /tmp/pymotw_import_example.shelve ... found i
+t as package.__init__
+loading source for &quot;package&quot; from shelf
+reusing existing module from previous import of &quot;package&quot;
+adding path for package
+execing source...
+package imported
+done
+</pre></div>
+</div>
+</div>
+<div class="section" id="import-errors">
+<h3>Import Errors<a class="headerlink" href="#import-errors" title="Permalink to this headline">¶</a></h3>
+<p>When a module cannot be located by any finder, <a class="reference internal" href="../exceptions/index.html#exceptions-importerror"><em>ImportError</em></a> is raised by the main import code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys_shelve_importer</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/pymotw_import_example.shelve&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sys_shelve_importer</span><span class="o">.</span><span class="n">ShelveFinder</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">package.module3</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Failed to import:&#39;</span><span class="p">,</span> <span class="n">e</span>
+</pre></div>
+</div>
+<p>Other errors during the import are propagated.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_shelve_importer_missing.py
+
+new shelf added to import path: /tmp/pymotw_import_example.shelve
+looking for &quot;package&quot; in /tmp/pymotw_import_example.shelve ... found i
+t as package.__init__
+loading source for &quot;package&quot; from shelf
+creating a new module object for &quot;package&quot;
+adding path for package
+execing source...
+package imported
+done
+looking for &quot;package.module3&quot; in /tmp/pymotw_import_example.shelve ...
+ not found
+Failed to import: No module named module3
+</pre></div>
+</div>
+</div>
+<div class="section" id="package-data">
+<h3>Package Data<a class="headerlink" href="#package-data" title="Permalink to this headline">¶</a></h3>
+<p>In addition to defining the API loading executable Python code,
+<span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a> defines an optional API for retrieving package data
+intended for distributing data files, documentation, and other
+non-code resources used by a package. By implementing <tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt>,
+a loader can allow calling applications to support retrieval of data
+associated with the package without considering how the package is
+actually installed (especially without assuming that the package is
+stored as files on a filesystem).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys_shelve_importer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;/tmp/pymotw_import_example.shelve&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sys_shelve_importer</span><span class="o">.</span><span class="n">ShelveFinder</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">package</span>
+
+<span class="n">readme_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">__path__</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;README&#39;</span><span class="p">)</span>
+
+<span class="c">#readme = package.__loader__.get_data(readme_path)</span>
+<span class="n">readme</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;README&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">readme</span>
+
+<span class="n">foo_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">__path__</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;foo&#39;</span><span class="p">)</span>
+<span class="c">#foo = package.__loader__.get_data(foo_path)</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">foo</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> takes a path based on the module or package that owns
+the data, and returns the contents of the resource &#8220;file&#8221; as a string,
+or raises <a class="reference internal" href="../exceptions/index.html#exceptions-ioerror"><em>IOError</em></a> if the resource does not
+exist.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_shelve_importer_get_data.py
+
+new shelf added to import path: /tmp/pymotw_import_example.shelve
+looking for &quot;package&quot; in /tmp/pymotw_import_example.shelve ... found i
+t as package.__init__
+loading source for &quot;package&quot; from shelf
+creating a new module object for &quot;package&quot;
+adding path for package
+execing source...
+package imported
+done
+looking for data in /tmp/pymotw_import_example.shelve for &quot;/tmp/pymotw
+_import_example.shelve/README&quot;
+
+==============
+package README
+==============
+
+This is the README for ``package``.
+
+looking for data in /tmp/pymotw_import_example.shelve for &quot;/tmp/pymotw
+_import_example.shelve/foo&quot;
+Traceback (most recent call last):
+  File &quot;sys_shelve_importer_get_data.py&quot;, line 29, in &lt;module&gt;
+    foo = pkgutil.get_data(&#39;package&#39;, &#39;foo&#39;)
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.
+7/pkgutil.py&quot;, line 583, in get_data
+    return loader.get_data(resource_name)
+  File &quot;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys/sys_shelve_im
+porter.py&quot;, line 116, in get_data
+    raise IOError
+IOError
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="../pkgutil/index.html#module-pkgutil" title="pkgutil: Package utilities"><tt class="xref py py-mod docutils literal"><span class="pre">pkgutil</span></tt></a></dt>
+<dd>Includes <tt class="xref py py-func docutils literal"><span class="pre">get_data()</span></tt> for retrieving data from a package.</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="importer-cache">
+<h2>Importer Cache<a class="headerlink" href="#importer-cache" title="Permalink to this headline">¶</a></h2>
+<p>Searching through all of the hooks each time a module is imported can
+become expensive. To save time, <tt class="xref py py-data docutils literal"><span class="pre">sys.path_importer_cache</span></tt> is
+maintained as a mapping between a path entry and the loader that can
+use the value to find modules.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">print</span> <span class="s">&#39;PATH:&#39;</span><span class="p">,</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;IMPORTERS:&#39;</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cache_value</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path_importer_cache</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="s">&#39;...&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">: </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cache_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A cache value of <tt class="docutils literal"><span class="pre">None</span></tt> means to use the default filesystem
+loader. Each missing directory is associated with an
+<tt class="xref py py-class docutils literal"><span class="pre">imp.NullImporter</span></tt> instance, since modules cannot be imported
+from directories that do not exist. In the example output below,
+several <tt class="xref py py-class docutils literal"><span class="pre">zipimport.zipimporter</span></tt> instances are used to manage EGG
+files found on the path.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_path_importer_cache.py
+
+PATH:[&#39;/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys&#39;,
+ &#39;/Users/dhellmann/Documents/PyMOTW/sphinx-graphviz-paragraphs&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/site-packages/distribute-
+0.6.14-py2.7.egg&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/site-packages/pip-0.8.1-p
+y2.7.egg&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python27.zip&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site
+-packages/distribute-0.6.10-py2.7.egg&#39;,
+ &#39;/Users/dhellmann/Devel/virtualenvwrapper/virtualenvwrapper&#39;,
+ &#39;/Users/dhellmann/Devel/virtualenvwrapper/bitbucket&#39;,
+ &#39;/Users/dhellmann/Devel/virtualenvwrapper/emacs-desktop&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/plat-darwin&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/plat-mac&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/plat-mac/lib-scriptpackag
+es&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/lib-tk&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/lib-old&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/lib-dynload&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat
+-darwin&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-
+tk&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat
+-mac&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat
+-mac/lib-scriptpackages&#39;,
+ &#39;/Users/dhellmann/Envs/pymotw/lib/python2.7/site-packages&#39;,
+ &#39;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site
+-packages&#39;]
+
+IMPORTERS:
+/Users/dhellmann/Documents/PyMOTW/src/PyMOTW/sys: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/lib-old: &lt;imp.NullImporter
+object at 0x1002ae0d0&gt;
+/Users/dhellmann/Devel/virtualenvwrapper/virtualenvwrapper: None
+sys_path_importer_cache.py: &lt;imp.NullImporter object at 0x1002ae0e0&gt;
+/Users/dhellmann/Devel/virtualenvwrapper/bitbucket: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/site-packages: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/site-packages/distribute-0.
+6.14-py2.7.egg: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/encodings: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7: None
+/Users/dhellmann/Envs/pymotw/lib/python27.zip: &lt;imp.NullImporter objec
+t at 0x1002ae080&gt;
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk
+: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/plat-darwin: &lt;imp.NullImpor
+ter object at 0x1002ae090&gt;
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/site-packages/pip-0.8.1-py2
+.7.egg: None
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-p
+ackages: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/lib-dynload: None
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-d
+arwin: None
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-m
+ac/lib-scriptpackages: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/plat-mac: &lt;imp.NullImporter
+ object at 0x1002ae0a0&gt;
+/Users/dhellmann/Devel/virtualenvwrapper/emacs-desktop: None
+/Users/dhellmann/Documents/PyMOTW/sphinx-graphviz-paragraphs: None
+.../lib/python2.7/: None
+/Users/dhellmann/Envs/pymotw/lib/python2.7/plat-mac/lib-scriptpackages
+: &lt;imp.NullImporter object at 0x1002ae0b0&gt;
+.../lib/python27.zip: &lt;imp.NullImporter object at 0x1002ae030&gt;
+/Users/dhellmann/Envs/pymotw/lib/python2.7/lib-tk: &lt;imp.NullImporter o
+bject at 0x1002ae0c0&gt;
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-p
+ackages/distribute-0.6.10-py2.7.egg: None
+/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-m
+ac: None
+</pre></div>
+</div>
+</div>
+<div class="section" id="meta-path">
+<h2>Meta Path<a class="headerlink" href="#meta-path" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-data docutils literal"><span class="pre">sys.meta_path</span></tt> further extends the sources of potential
+imports by allowing a finder to be searched <em>before</em> the regular
+<tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt> is scanned. The API for a finder on the meta-path is
+the same as for a regular path. The difference is that the meta-finder
+is not limited to a single entry in <tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt>, it can search
+anywhere at all.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys_shelve_importer</span>
+<span class="kn">import</span> <span class="nn">imp</span>
+
+
+<span class="k">class</span> <span class="nc">NoisyMetaImportFinder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Creating NoisyMetaImportFinder for </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">find_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;NoisyMetaImportFinder looking for &quot;</span><span class="si">%s</span><span class="s">&quot; with path &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">name_parts</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name_parts</span> <span class="ow">and</span> <span class="n">name_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39; ... found prefix, returning loader&#39;</span>
+            <span class="k">return</span> <span class="n">NoisyMetaImportLoader</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39; ... not the right prefix, cannot load&#39;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="k">class</span> <span class="nc">NoisyMetaImportLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_entry</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_entry</span> <span class="o">=</span> <span class="n">path_entry</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">load_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;loading </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">fullname</span>
+        <span class="k">if</span> <span class="n">fullname</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">fullname</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">imp</span><span class="o">.</span><span class="n">new_module</span><span class="p">(</span><span class="n">fullname</span><span class="p">))</span>
+
+        <span class="c"># Set a few properties required by PEP 302</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__file__</span> <span class="o">=</span> <span class="n">fullname</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">fullname</span>
+        <span class="c"># always looks like a package</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__path__</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;path-entry-goes-here&#39;</span> <span class="p">]</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__loader__</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">__package__</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="k">return</span> <span class="n">mod</span>
+
+
+<span class="c"># Install the meta-path finder</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoisyMetaImportFinder</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">))</span>
+
+<span class="c"># Import some modules that are &quot;found&quot; by the meta-path finder</span>
+<span class="k">print</span>
+<span class="kn">import</span> <span class="nn">foo</span>
+
+<span class="k">print</span>
+<span class="kn">import</span> <span class="nn">foo.bar</span>
+
+<span class="c"># Import a module that is not found</span>
+<span class="k">print</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">bar</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Each finder on the meta-path is interrogated before <tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt>
+is searched, so there is always an opportunity to have a central
+importer load modules without explicitly modifying <tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt>.
+Once the module is &#8220;found&#8221;, the loader API works in the same way as
+for regular loaders (although this example is truncated for
+simplicity).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python sys_meta_path.py
+
+Creating NoisyMetaImportFinder for foo
+
+NoisyMetaImportFinder looking for &quot;foo&quot; with path &quot;None&quot;
+ ... found prefix, returning loader
+loading foo
+
+NoisyMetaImportFinder looking for &quot;foo.bar&quot; with path &quot;[&#39;path-entry-goes-here&#39;]&quot;
+ ... found prefix, returning loader
+loading foo.bar
+
+NoisyMetaImportFinder looking for &quot;bar&quot; with path &quot;None&quot;
+ ... not the right prefix, cannot load
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><span class="target" id="index-2"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0302"><strong>PEP 302</strong></a></dt>
+<dd>Import Hooks</dd>
+<dt><a class="reference internal" href="../imp/index.html#module-imp" title="imp: Interface to module import mechanism."><tt class="xref py py-mod docutils literal"><span class="pre">imp</span></tt></a></dt>
+<dd>The imp module provides tools used by importers.</dd>
+<dt><a class="reference internal" href="../zipimport/index.html#module-zipimport" title="zipimport: Load Python code from inside ZIP archives."><tt class="xref py py-mod docutils literal"><span class="pre">zipimport</span></tt></a></dt>
+<dd>Implements importing Python modules from inside ZIP archives.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">importlib</span></tt></dt>
+<dd>Base classes and other tools for creating custom importers.</dd>
+<dt><a class="reference external" href="http://peak.telecommunity.com/DevCenter/PythonEggs">The Quick Guide to Python Eggs</a></dt>
+<dd>PEAK documentation for working with EGGs.</dd>
+<dt><a class="reference external" href="http://us.pycon.org/2010/conference/talks/?filter=core">Import this, that, and the other thing: custom importers</a></dt>
+<dd>Brett Cannon&#8217;s PyCon 2010 presentation.</dd>
+<dt><a class="reference external" href="http://docs.python.org/py3k/library/importlib.html">Python 3 stdlib module &#8220;importlib&#8221;</a></dt>
+<dd>Python 3.x includes abstract base classes that makes it easier to create custom importers.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../sysconfig/index.html" title="sysconfig – Interpreter Compile-time Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="threads.html" title="Low-level Thread Support"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../runtime_services.html" >Python Runtime Services</a> &raquo;</li>
+          <li><a href="index.html" >sys &#8211; System-specific Configuration</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

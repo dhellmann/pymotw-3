@@ -1,0 +1,944 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>exceptions &#8211; Built-in error classes - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Built-in Objects" href="../builtins.html" />
+    <link rel="next" title="String Services" href="../string_services.html" />
+    <link rel="prev" title="Built-in Objects" href="../builtins.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">exceptions &#8211; Built-in error classes</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#base-classes">Base Classes</a><ul>
+<li><a class="reference internal" href="#baseexception">BaseException</a></li>
+<li><a class="reference internal" href="#exception">Exception</a></li>
+<li><a class="reference internal" href="#standarderror">StandardError</a></li>
+<li><a class="reference internal" href="#arithmeticerror">ArithmeticError</a></li>
+<li><a class="reference internal" href="#lookuperror">LookupError</a></li>
+<li><a class="reference internal" href="#environmenterror">EnvironmentError</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#raised-exceptions">Raised Exceptions</a><ul>
+<li><a class="reference internal" href="#assertionerror">AssertionError</a></li>
+<li><a class="reference internal" href="#attributeerror">AttributeError</a></li>
+<li><a class="reference internal" href="#eoferror">EOFError</a></li>
+<li><a class="reference internal" href="#floatingpointerror">FloatingPointError</a></li>
+<li><a class="reference internal" href="#generatorexit">GeneratorExit</a></li>
+<li><a class="reference internal" href="#ioerror">IOError</a></li>
+<li><a class="reference internal" href="#importerror">ImportError</a></li>
+<li><a class="reference internal" href="#indexerror">IndexError</a></li>
+<li><a class="reference internal" href="#keyerror">KeyError</a></li>
+<li><a class="reference internal" href="#keyboardinterrupt">KeyboardInterrupt</a></li>
+<li><a class="reference internal" href="#memoryerror">MemoryError</a></li>
+<li><a class="reference internal" href="#nameerror">NameError</a></li>
+<li><a class="reference internal" href="#notimplementederror">NotImplementedError</a></li>
+<li><a class="reference internal" href="#oserror">OSError</a></li>
+<li><a class="reference internal" href="#overflowerror">OverflowError</a></li>
+<li><a class="reference internal" href="#referenceerror">ReferenceError</a></li>
+<li><a class="reference internal" href="#runtimeerror">RuntimeError</a></li>
+<li><a class="reference internal" href="#stopiteration">StopIteration</a></li>
+<li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
+<li><a class="reference internal" href="#systemerror">SystemError</a></li>
+<li><a class="reference internal" href="#systemexit">SystemExit</a></li>
+<li><a class="reference internal" href="#typeerror">TypeError</a></li>
+<li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
+<li><a class="reference internal" href="#unicodeerror">UnicodeError</a></li>
+<li><a class="reference internal" href="#valueerror">ValueError</a></li>
+<li><a class="reference internal" href="#zerodivisionerror">ZeroDivisionError</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#warning-categories">Warning Categories</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../builtins.html" title="previous chapter"><strong>Previous:</strong> Built-in Objects</a><br/>
+          <a href="../string_services.html" title="next chapter"><strong>Next:</strong> String Services</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/exceptions/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../string_services.html" title="String Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../builtins.html" title="Built-in Objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../builtins.html" accesskey="U">Built-in Objects</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-exceptions">
+<span id="exceptions-built-in-error-classes"></span><h1>exceptions &#8211; Built-in error classes<a class="headerlink" href="#module-exceptions" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">The exceptions module defines the built-in errors used throughout the standard library and by the interpreter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5 and later</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>In the past, Python has supported simple string messages as exceptions as well as classes.  Since 1.5, all of the standard library modules use classes for exceptions.  Starting with Python 2.5, string exceptions result in a DeprecationWarning, and support for string exceptions will be removed in the future.</p>
+</div>
+<div class="section" id="base-classes">
+<h2>Base Classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h2>
+<p>The exception classes are defined in a hierarchy, described in the standard library documentation.  In addition to the obvious organizational benefits, exception inheritance is useful because related exceptions can be caught by catching their base class.  In most cases, these base classes are not intended to be raised directly.</p>
+<div class="section" id="baseexception">
+<h3>BaseException<a class="headerlink" href="#baseexception" title="Permalink to this headline">¶</a></h3>
+<p>Base class for all exceptions.  Implements logic for creating a string
+representation of the exception using str() from the arguments passed
+to the constructor.</p>
+</div>
+<div class="section" id="exception">
+<h3>Exception<a class="headerlink" href="#exception" title="Permalink to this headline">¶</a></h3>
+<p>Base class for exceptions that do not result in quitting the running application.
+All user-defined exceptions should use Exception as a base class.</p>
+</div>
+<div class="section" id="standarderror">
+<h3>StandardError<a class="headerlink" href="#standarderror" title="Permalink to this headline">¶</a></h3>
+<p>Base class for built-in exceptions used in the standard library.</p>
+</div>
+<div class="section" id="arithmeticerror">
+<h3>ArithmeticError<a class="headerlink" href="#arithmeticerror" title="Permalink to this headline">¶</a></h3>
+<p>Base class for math-related errors.</p>
+</div>
+<div class="section" id="lookuperror">
+<h3>LookupError<a class="headerlink" href="#lookuperror" title="Permalink to this headline">¶</a></h3>
+<p>Base class for errors raised when something can&#8217;t be found.</p>
+</div>
+<div class="section" id="environmenterror">
+<h3>EnvironmentError<a class="headerlink" href="#environmenterror" title="Permalink to this headline">¶</a></h3>
+<p>Base class for errors that come from outside of Python (the operating
+system, filesystem, etc.).</p>
+</div>
+</div>
+<div class="section" id="raised-exceptions">
+<h2>Raised Exceptions<a class="headerlink" href="#raised-exceptions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="assertionerror">
+<span id="exceptions-assertionerror"></span><h3>AssertionError<a class="headerlink" href="#assertionerror" title="Permalink to this headline">¶</a></h3>
+<p>An AssertionError is raised by a failed <tt class="docutils literal"><span class="pre">assert</span></tt> statement.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">assert</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;The assertion failed&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_AssertionError_assert.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_AssertionError_assert.py&quot;, line 12, in &lt;module&gt;
+    assert False, &#39;The assertion failed&#39;
+AssertionError: The assertion failed
+</pre></div>
+</div>
+<p>It is also used in the <a class="reference internal" href="../unittest/index.html#module-unittest" title="unittest: Automated testing framework"><tt class="xref py py-mod docutils literal"><span class="pre">unittest</span></tt></a> module in methods like <tt class="docutils literal"><span class="pre">failIf()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">AssertionExample</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_AssertionError_unittest.py
+
+F
+======================================================================
+FAIL: test (__main__.AssertionExample)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;exceptions_AssertionError_unittest.py&quot;, line 17, in test
+    self.failUnless(False)
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+</pre></div>
+</div>
+</div>
+<div class="section" id="attributeerror">
+<span id="exceptions-attributeerror"></span><h3>AttributeError<a class="headerlink" href="#attributeerror" title="Permalink to this headline">¶</a></h3>
+<p>When an attribute reference or assignment fails, AttributeError is
+raised.  For example, when trying to reference an attribute that does
+not exist:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">NoAttributes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">NoAttributes</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">o</span><span class="o">.</span><span class="n">attribute</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_AttributeError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_AttributeError.py&quot;, line 16, in &lt;module&gt;
+    print o.attribute
+AttributeError: &#39;NoAttributes&#39; object has no attribute &#39;attribute&#39;
+</pre></div>
+</div>
+<p>Or when trying to modify a read-only attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;This is the attribute value&#39;</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">o</span><span class="o">.</span><span class="n">attribute</span>
+<span class="n">o</span><span class="o">.</span><span class="n">attribute</span> <span class="o">=</span> <span class="s">&#39;New value&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_AttributeError_assignment.py
+
+This is the attribute value
+Traceback (most recent call last):
+  File &quot;exceptions_AttributeError_assignment.py&quot;, line 20, in &lt;module&gt;
+    o.attribute = &#39;New value&#39;
+AttributeError: can&#39;t set attribute
+</pre></div>
+</div>
+</div>
+<div class="section" id="eoferror">
+<h3>EOFError<a class="headerlink" href="#eoferror" title="Permalink to this headline">¶</a></h3>
+<p>An EOFError is raised when a built-in function like <tt class="docutils literal"><span class="pre">input()</span></tt> or
+<tt class="docutils literal"><span class="pre">raw_input()</span></tt> do not read any data before encountering the end of
+their input stream.  The file methods like <tt class="docutils literal"><span class="pre">read()</span></tt> return an empty
+string at the end of the file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;prompt:&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;READ:&#39;</span><span class="p">,</span> <span class="n">data</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ echo hello | python PyMOTW/exceptions/exceptions_EOFError.py
+prompt:READ: hello
+prompt:Traceback (most recent call last):
+  File &quot;PyMOTW/exceptions/exceptions_EOFError.py&quot;, line 13, in &lt;module&gt;
+    data = raw_input(&#39;prompt:&#39;)
+EOFError: EOF when reading a line
+</pre></div>
+</div>
+</div>
+<div class="section" id="floatingpointerror">
+<h3>FloatingPointError<a class="headerlink" href="#floatingpointerror" title="Permalink to this headline">¶</a></h3>
+<p>Raised by floating point operations that result in errors, when
+floating point exception control (fpectl) is turned on.  Enabling
+<tt class="xref py py-mod docutils literal"><span class="pre">fpectl</span></tt> requires an interpreter compiled with the
+<tt class="docutils literal"><span class="pre">--with-fpectl</span></tt> flag.  Using <tt class="xref py py-mod docutils literal"><span class="pre">fpectl</span></tt> is <a class="reference external" href="https://docs.python.org/2/library/fpectl.html">discouraged in the
+stdlib docs</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">fpectl</span>
+
+<span class="k">print</span> <span class="s">&#39;Control off:&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">fpectl</span><span class="o">.</span><span class="n">turnon_sigfpe</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Control on:&#39;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generatorexit">
+<h3>GeneratorExit<a class="headerlink" href="#generatorexit" title="Permalink to this headline">¶</a></h3>
+<p>Raised inside a generator the generator&#8217;s <tt class="docutils literal"><span class="pre">close()</span></tt> method is called.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">my_generator</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&#39;Yielding&#39;</span><span class="p">,</span> <span class="n">i</span>
+            <span class="k">yield</span> <span class="n">i</span>
+    <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Exiting early&#39;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">my_generator</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">g</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_GeneratorExit.py
+
+Yielding 0
+0
+Exiting early
+</pre></div>
+</div>
+</div>
+<div class="section" id="ioerror">
+<span id="exceptions-ioerror"></span><h3>IOError<a class="headerlink" href="#ioerror" title="Permalink to this headline">¶</a></h3>
+<p>Raised when input or output fails, for example if a disk fills up or
+an input file does not exist.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/does/not/exist&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_IOError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_IOError.py&quot;, line 12, in &lt;module&gt;
+    f = open(&#39;/does/not/exist&#39;, &#39;r&#39;)
+IOError: [Errno 2] No such file or directory: &#39;/does/not/exist&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="importerror">
+<span id="exceptions-importerror"></span><h3>ImportError<a class="headerlink" href="#importerror" title="Permalink to this headline">¶</a></h3>
+<p>Raised when a module, or member of a module, cannot be imported.
+There are a few conditions where an ImportError might be raised.</p>
+<ol class="arabic simple">
+<li>If a module does not exist.</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">module_does_not_exist</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_ImportError_nomodule.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_ImportError_nomodule.py&quot;, line 12, in &lt;module&gt;
+    import module_does_not_exist
+ImportError: No module named module_does_not_exist
+</pre></div>
+</div>
+<p>2. If <tt class="docutils literal"><span class="pre">from</span> <span class="pre">X</span> <span class="pre">import</span> <span class="pre">Y</span></tt> is used and Y cannot be found inside the
+module X, an ImportError is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">exceptions</span> <span class="kn">import</span> <span class="n">MadeUpName</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_ImportError_missingname.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_ImportError_missingname.py&quot;, line 12, in &lt;module&gt;
+    from exceptions import MadeUpName
+ImportError: cannot import name MadeUpName
+</pre></div>
+</div>
+</div>
+<div class="section" id="indexerror">
+<h3>IndexError<a class="headerlink" href="#indexerror" title="Permalink to this headline">¶</a></h3>
+<p>An IndexError is raised when a sequence reference is out of range.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">my_seq</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">]</span>
+<span class="k">print</span> <span class="n">my_seq</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_IndexError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_IndexError.py&quot;, line 13, in &lt;module&gt;
+    print my_seq[3]
+IndexError: list index out of range
+</pre></div>
+</div>
+</div>
+<div class="section" id="keyerror">
+<span id="exceptions-keyerror"></span><h3>KeyError<a class="headerlink" href="#keyerror" title="Permalink to this headline">¶</a></h3>
+<p>Similarly, a KeyError is raised when a value is not found as a key of a dictionary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span> <span class="p">}</span>
+<span class="k">print</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_KeyError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_KeyError.py&quot;, line 13, in &lt;module&gt;
+    print d[&#39;c&#39;]
+KeyError: &#39;c&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="keyboardinterrupt">
+<span id="exceptions-keyboardinterrupt"></span><h3>KeyboardInterrupt<a class="headerlink" href="#keyboardinterrupt" title="Permalink to this headline">¶</a></h3>
+<p>A KeyboardInterrupt occurs whenever the user presses Ctrl-C (or
+Delete) to stop a running program.  Unlike most of the other
+exceptions, KeyboardInterrupt inherits directly from BaseException to
+avoid being caught by global exception handlers that catch Exception.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Press Return or Ctrl-C:&#39;</span><span class="p">,</span>
+    <span class="n">ignored</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Caught exception:&#39;</span><span class="p">,</span> <span class="n">err</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Caught KeyboardInterrupt&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;No exception&#39;</span>
+</pre></div>
+</div>
+<p>Pressing Ctrl-C at the prompt causes a KeyboardInterrupt exception.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_KeyboardInterrupt.py
+Press Return or Ctrl-C: ^CCaught KeyboardInterrupt
+</pre></div>
+</div>
+</div>
+<div class="section" id="memoryerror">
+<h3>MemoryError<a class="headerlink" href="#memoryerror" title="Permalink to this headline">¶</a></h3>
+<p>If your program runs out of memory and it is possible to recover (by
+deleting some objects, for example), a MemoryError is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="c"># Try to create a MemoryError by allocating a lot of memory</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">30</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">MemoryError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;(error, discarding existing list)&#39;</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_MemoryError.py
+python(49670) malloc: *** mmap(size=1073745920) failed (error code=12)
+*** error: can&#39;t allocate region
+*** set a breakpoint in malloc_error_break to debug
+python(49670) malloc: *** mmap(size=1073745920) failed (error code=12)
+*** error: can&#39;t allocate region
+*** set a breakpoint in malloc_error_break to debug
+python(49670) malloc: *** mmap(size=1073745920) failed (error code=12)
+*** error: can&#39;t allocate region
+*** set a breakpoint in malloc_error_break to debug
+0 1
+0 2
+0 3
+(error, discarding existing list)
+1 1
+1 2
+1 3
+(error, discarding existing list)
+2 1
+2 2
+2 3
+(error, discarding existing list)
+</pre></div>
+</div>
+</div>
+<div class="section" id="nameerror">
+<h3>NameError<a class="headerlink" href="#nameerror" title="Permalink to this headline">¶</a></h3>
+<p>NameErrors are raised when your code refers to a name that does not
+exist in the current scope.  For example, an unqualified variable
+name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">unknown_name</span>
+
+<span class="n">func</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_NameError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_NameError.py&quot;, line 15, in &lt;module&gt;
+    func()
+  File &quot;exceptions_NameError.py&quot;, line 13, in func
+    print unknown_name
+NameError: global name &#39;unknown_name&#39; is not defined
+</pre></div>
+</div>
+</div>
+<div class="section" id="notimplementederror">
+<span id="exceptions-notimplementederror"></span><h3>NotImplementedError<a class="headerlink" href="#notimplementederror" title="Permalink to this headline">¶</a></h3>
+<p>User-defined base classes can raise NotImplementedError to indicate
+that a method or behavior needs to be defined by a subclass,
+simulating an <em>interface</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BaseClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Defines the interface&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The interface, not implemented&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&#39;.do_something&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SubClass</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implementes the interface&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;really does something&quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s">&#39; doing something!&#39;</span>
+
+<span class="n">SubClass</span><span class="p">()</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+<span class="n">BaseClass</span><span class="p">()</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_NotImplementedError.py
+
+SubClass doing something!
+Traceback (most recent call last):
+  File &quot;exceptions_NotImplementedError.py&quot;, line 27, in &lt;module&gt;
+    BaseClass().do_something()
+  File &quot;exceptions_NotImplementedError.py&quot;, line 18, in do_something
+    raise NotImplementedError(self.__class__.__name__ + &#39;.do_something&#39;)
+NotImplementedError: BaseClass.do_something
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../abc/index.html#module-abc" title="abc: Abstract Base Classes"><tt class="xref py py-mod docutils literal"><span class="pre">abc</span></tt></a> - Abstract base classes</p>
+</div>
+</div>
+<div class="section" id="oserror">
+<span id="exceptions-oserror"></span><h3>OSError<a class="headerlink" href="#oserror" title="Permalink to this headline">¶</a></h3>
+<p>OSError serves as the error class for the <a class="reference internal" href="../os/index.html#module-os" title="os: Portable access to operating system specific features."><tt class="xref py py-mod docutils literal"><span class="pre">os</span></tt></a> module, and is
+raised when an error comes back from an os-specific function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">ttyname</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_OSError.py
+
+0 /dev/ttys000
+1
+Traceback (most recent call last):
+  File &quot;exceptions_OSError.py&quot;, line 15, in &lt;module&gt;
+    print i, os.ttyname(i)
+OSError: [Errno 25] Inappropriate ioctl for device
+</pre></div>
+</div>
+</div>
+<div class="section" id="overflowerror">
+<span id="exceptions-overflowerror"></span><h3>OverflowError<a class="headerlink" href="#overflowerror" title="Permalink to this headline">¶</a></h3>
+<p>When an arithmetic operation exceeds the limits of the variable type,
+an OverflowError is raise.  Long integers allocate more space as
+values grow, so they end up raising MemoryError.  Floating point
+exception handling is not standardized, so floats are not checked.
+Regular integers are converted to long values as needed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="s">&#39;Regular integer: (maxint=</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span> <span class="o">*</span> <span class="mi">3</span>
+    <span class="k">print</span> <span class="s">&#39;No overflow for &#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s">&#39;i =&#39;</span><span class="p">,</span> <span class="n">i</span>
+<span class="k">except</span> <span class="ne">OverflowError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Overflowed at &#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">err</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Long integer:&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%2d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="il">2L</span> <span class="o">**</span> <span class="n">i</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;Floating point values:&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">**</span><span class="n">i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="k">except</span> <span class="ne">OverflowError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Overflowed after &#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_OverflowError.py
+
+Regular integer: (maxint=9223372036854775807)
+No overflow for  &lt;type &#39;long&#39;&gt; i = 27670116110564327421
+
+Long integer:
+ 0 1
+10 1024
+20 1048576
+30 1073741824
+40 1099511627776
+50 1125899906842624
+60 1152921504606846976
+70 1180591620717411303424
+80 1208925819614629174706176
+90 1237940039285380274899124224
+
+Floating point values:
+0 1.23794003929e+27
+1 1.53249554087e+54
+2 2.34854258277e+108
+3 5.5156522631e+216
+Overflowed after  5.5156522631e+216 (34, &#39;Result too large&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="referenceerror">
+<h3>ReferenceError<a class="headerlink" href="#referenceerror" title="Permalink to this headline">¶</a></h3>
+<p>When a <a class="reference internal" href="../weakref/index.html#module-weakref" title="weakref: Refer to an &quot;expensive&quot; object, but allow it to be garbage collected if there are no other non-weak references."><tt class="xref py py-mod docutils literal"><span class="pre">weakref</span></tt></a> proxy is used to access an object that has
+already been garbage collected, a ReferenceError occurs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="k">class</span> <span class="nc">ExpensiveObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;(Deleting </span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="bp">self</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">ExpensiveObject</span><span class="p">(</span><span class="s">&#39;obj&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">print</span> <span class="s">&#39;AFTER:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_ReferenceError.py
+
+BEFORE: obj
+(Deleting &lt;__main__.ExpensiveObject object at 0x10046e4d0&gt;)
+AFTER:
+Traceback (most recent call last):
+  File &quot;exceptions_ReferenceError.py&quot;, line 26, in &lt;module&gt;
+    print &#39;AFTER:&#39;, p.name
+ReferenceError: weakly-referenced object no longer exists
+</pre></div>
+</div>
+</div>
+<div class="section" id="runtimeerror">
+<span id="exceptions-runtimeerror"></span><h3>RuntimeError<a class="headerlink" href="#runtimeerror" title="Permalink to this headline">¶</a></h3>
+<p>A RuntimeError exception is used when no other more specific exception
+applies.  The interpreter does not raise this exception itself very
+often, but some user code does.</p>
+</div>
+<div class="section" id="stopiteration">
+<h3>StopIteration<a class="headerlink" href="#stopiteration" title="Permalink to this headline">¶</a></h3>
+<p>When an iterator is done, it&#8217;s <tt class="docutils literal"><span class="pre">next()</span></tt> method raises StopIteration.
+This exception is not considered an error.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">l</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">i</span><span class="o">=</span><span class="nb">iter</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">i</span>
+<span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_StopIteration.py
+
+&lt;listiterator object at 0x10045f650&gt;
+0
+1
+2
+Traceback (most recent call last):
+  File &quot;exceptions_StopIteration.py&quot;, line 19, in &lt;module&gt;
+    print i.next()
+StopIteration
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror">
+<h3>SyntaxError<a class="headerlink" href="#syntaxerror" title="Permalink to this headline">¶</a></h3>
+<p>A SyntaxError occurs any time the parser finds source code it does not
+understand.  This can be while importing a module, invoking <tt class="docutils literal"><span class="pre">exec</span></tt>,
+or calling <tt class="docutils literal"><span class="pre">eval()</span></tt>.  Attributes of the exception can be used to
+find exactly what part of the input text caused the exception.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;five times three&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Syntax error </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">): </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> \
+        <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">err</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_SyntaxError.py
+
+Syntax error &lt;string&gt; (1-10): five times three
+invalid syntax (&lt;string&gt;, line 1)
+</pre></div>
+</div>
+</div>
+<div class="section" id="systemerror">
+<h3>SystemError<a class="headerlink" href="#systemerror" title="Permalink to this headline">¶</a></h3>
+<p>When an error occurs in the interpreter itself and there is some
+chance of continuing to run successfully, it raises a SystemError.
+SystemErrors probably indicate a bug in the interpreter and should be
+reported to the maintainer.</p>
+</div>
+<div class="section" id="systemexit">
+<span id="exceptions-systemexit"></span><h3>SystemExit<a class="headerlink" href="#systemexit" title="Permalink to this headline">¶</a></h3>
+<p>When <tt class="docutils literal"><span class="pre">sys.exit()</span></tt> is called, it raises SystemExit instead of exiting
+immediately.  This allows cleanup code in <tt class="docutils literal"><span class="pre">try:finally</span></tt> blocks to
+run and special environments (like debuggers and test frameworks) to
+catch the exception and avoid exiting.</p>
+</div>
+<div class="section" id="typeerror">
+<span id="exceptions-typeerror"></span><h3>TypeError<a class="headerlink" href="#typeerror" title="Permalink to this headline">¶</a></h3>
+<p>TypeErrors are caused by combining the wrong type of objects, or
+calling a function with the wrong type of object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;tuple&#39;</span><span class="p">,)</span> <span class="o">+</span> <span class="s">&#39;string&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_TypeError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_TypeError.py&quot;, line 12, in &lt;module&gt;
+    result = (&#39;tuple&#39;,) + &#39;string&#39;
+TypeError: can only concatenate tuple (not &quot;str&quot;) to tuple
+</pre></div>
+</div>
+</div>
+<div class="section" id="unboundlocalerror">
+<h3>UnboundLocalError<a class="headerlink" href="#unboundlocalerror" title="Permalink to this headline">¶</a></h3>
+<p>An UnboundLocalError is a type of NameError specific to local variable
+names.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">throws_global_name_error</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">unknown_global_name</span>
+
+<span class="k">def</span> <span class="nf">throws_unbound_local</span><span class="p">():</span>
+    <span class="n">local_val</span> <span class="o">=</span> <span class="n">local_val</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">print</span> <span class="n">local_val</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">throws_global_name_error</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Global name error:&#39;</span><span class="p">,</span> <span class="n">err</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">throws_unbound_local</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">UnboundLocalError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Local name error:&#39;</span><span class="p">,</span> <span class="n">err</span>
+</pre></div>
+</div>
+<p>The difference between the global NameError and the UnboundLocal is
+the way the name is used.  Because the name &#8220;local_val&#8221; appears on the
+left side of an expression, it is interpreted as a local variable
+name.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_UnboundLocalError.py
+
+Global name error: global name &#39;unknown_global_name&#39; is not defined
+Local name error: local variable &#39;local_val&#39; referenced before assignment
+</pre></div>
+</div>
+</div>
+<div class="section" id="unicodeerror">
+<span id="exceptions-unicodeerror"></span><h3>UnicodeError<a class="headerlink" href="#unicodeerror" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref py py-class docutils literal"><span class="pre">UnicodeError</span></tt> is a subclass of <tt class="xref py py-class docutils literal"><span class="pre">ValueError</span></tt> and is
+raised when a Unicode problem occurs.  There are separate subclasses
+for <tt class="xref py py-class docutils literal"><span class="pre">UnicodeEncodeError</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">UnicodeDecodeError</span></tt>, and
+<tt class="xref py py-class docutils literal"><span class="pre">UnicodeTranslateError</span></tt>.</p>
+</div>
+<div class="section" id="valueerror">
+<span id="exceptions-valueerror"></span><h3>ValueError<a class="headerlink" href="#valueerror" title="Permalink to this headline">¶</a></h3>
+<p>A ValueError is used when a function receives a value that has the
+right type but an invalid value.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_ValueError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_ValueError.py&quot;, line 12, in &lt;module&gt;
+    print chr(1024)
+ValueError: chr() arg not in range(256)
+</pre></div>
+</div>
+</div>
+<div class="section" id="zerodivisionerror">
+<span id="exceptions-zerodivisionerror"></span><h3>ZeroDivisionError<a class="headerlink" href="#zerodivisionerror" title="Permalink to this headline">¶</a></h3>
+<p>When zero shows up in the denominator of a division operation, a
+ZeroDivisionError is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python exceptions_ZeroDivisionError.py
+
+Traceback (most recent call last):
+  File &quot;exceptions_ZeroDivisionError.py&quot;, line 12, in &lt;module&gt;
+    print 1/0
+ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="warning-categories">
+<span id="exceptions-warning"></span><h2>Warning Categories<a class="headerlink" href="#warning-categories" title="Permalink to this headline">¶</a></h2>
+<p>There are also several exceptions defined for use with the <a class="reference internal" href="../warnings/index.html#module-warnings" title="warnings: Deliver non-fatal alerts to the user about issues encountered when running a program."><tt class="xref py py-mod docutils literal"><span class="pre">warnings</span></tt></a> module.</p>
+<dl class="docutils">
+<dt>Warning</dt>
+<dd>The base class for all warnings.</dd>
+<dt>UserWarning</dt>
+<dd>Base class for warnings coming from user code.</dd>
+</dl>
+<dl class="docutils" id="exceptions-deprecationwarning">
+<dt>DeprecationWarning</dt>
+<dd>Used for features no longer being maintained.</dd>
+<dt>PendingDeprecationWarning</dt>
+<dd>Used for features that are soon going to be deprecated.</dd>
+<dt>SyntaxWarning</dt>
+<dd>Used for questionable syntax.</dd>
+</dl>
+<dl class="docutils" id="exceptions-runtimewarning">
+<dt>RuntimeWarning</dt>
+<dd>Used for events that happen at runtime that might cause problems.</dd>
+<dt>FutureWarning</dt>
+<dd>Warning about changes to the language or library that are coming at a later time.</dd>
+<dt>ImportWarning</dt>
+<dd>Warn about problems importing a module.</dd>
+<dt>UnicodeWarning</dt>
+<dd>Warn about problems with unicode text.</dd>
+</dl>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/exceptions.html">exceptions</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../warnings/index.html#module-warnings" title="warnings: Deliver non-fatal alerts to the user about issues encountered when running a program."><tt class="xref py py-mod docutils literal"><span class="pre">warnings</span></tt></a></dt>
+<dd>Non-error warning messages.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../string_services.html" title="String Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../builtins.html" title="Built-in Objects"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../builtins.html" >Built-in Objects</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

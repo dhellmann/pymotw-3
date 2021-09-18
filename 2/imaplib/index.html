@@ -1,0 +1,1098 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>imaplib - IMAP4 client library - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Internet Protocols and Support" href="../internet_protocols.html" />
+    <link rel="next" title="SimpleXMLRPCServer – Implements an XML-RPC server." href="../SimpleXMLRPCServer/index.html" />
+    <link rel="prev" title="Cookie – HTTP Cookies" href="../Cookie/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">imaplib - IMAP4 client library</a><ul>
+<li><a class="reference internal" href="#variations">Variations</a></li>
+<li><a class="reference internal" href="#connecting-to-a-server">Connecting to a Server</a><ul>
+<li><a class="reference internal" href="#authentication-failure">Authentication Failure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-configuration">Example Configuration</a></li>
+<li><a class="reference internal" href="#listing-mailboxes">Listing Mailboxes</a></li>
+<li><a class="reference internal" href="#mailbox-status">Mailbox Status</a></li>
+<li><a class="reference internal" href="#selecting-a-mailbox">Selecting a Mailbox</a></li>
+<li><a class="reference internal" href="#searching-for-messages">Searching for Messages</a></li>
+<li><a class="reference internal" href="#search-criteria">Search Criteria</a></li>
+<li><a class="reference internal" href="#fetching-messages">Fetching Messages</a></li>
+<li><a class="reference internal" href="#whole-messages">Whole Messages</a></li>
+<li><a class="reference internal" href="#uploading-messages">Uploading Messages</a></li>
+<li><a class="reference internal" href="#moving-and-copying-messages">Moving and Copying Messages</a></li>
+<li><a class="reference internal" href="#deleting-messages">Deleting Messages</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../Cookie/index.html" title="previous chapter"><strong>Previous:</strong> Cookie &#8211; HTTP Cookies</a><br/>
+          <a href="../SimpleXMLRPCServer/index.html" title="next chapter"><strong>Next:</strong> SimpleXMLRPCServer &#8211; Implements an XML-RPC server.</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/imaplib/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../SimpleXMLRPCServer/index.html" title="SimpleXMLRPCServer – Implements an XML-RPC server."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../Cookie/index.html" title="Cookie – HTTP Cookies"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" accesskey="U">Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-imaplib">
+<span id="imaplib-imap4-client-library"></span><h1>imaplib - IMAP4 client library<a class="headerlink" href="#module-imaplib" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Client library for IMAP4 communication.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5.2 and later</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#module-imaplib" title="imaplib: IMAP4 client library"><tt class="xref py py-mod docutils literal"><span class="pre">imaplib</span></tt></a> implements a client for communicating with Internet
+Message Access Protocol (IMAP) version 4 servers.  The IMAP protocol
+defines a set of <em>commands</em> sent to the server and the responses
+delivered back to the client.  Most of the commands are available as
+methods of the <tt class="xref py py-class docutils literal"><span class="pre">IMAP4</span></tt> object used to communicate with the
+server.</p>
+<p>These examples discuss part of the IMAP protocol, but are by no means
+complete.  Refer to <span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc3501.html"><strong>RFC 3501</strong></a> for complete details.</p>
+<div class="section" id="variations">
+<h2>Variations<a class="headerlink" href="#variations" title="Permalink to this headline">¶</a></h2>
+<p>There are 3 client classes for communicating with servers using
+various mechanisms.  The first, <tt class="xref py py-class docutils literal"><span class="pre">IMAP4</span></tt>, uses clear text
+sockets; <tt class="xref py py-class docutils literal"><span class="pre">IMAP4_SSL</span></tt> uses encrypted communication over SSL
+sockets; and <tt class="xref py py-class docutils literal"><span class="pre">IMAP4_stream</span></tt> uses the standard input and
+standard output of an external command.  All of the examples below
+will use <tt class="xref py py-class docutils literal"><span class="pre">IMAP4_SSL</span></tt>.</p>
+</div>
+<div class="section" id="connecting-to-a-server">
+<h2>Connecting to a Server<a class="headerlink" href="#connecting-to-a-server" title="Permalink to this headline">¶</a></h2>
+<p>There are two steps for establishing a connection with an IMAP server.
+First, set up the socket connection itself.  Second, authenticate as a
+user with an account on the server.  The following example code will
+read server and user information from a configuration file.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You probably do not want to store email passwords in clear text,
+but handling encryption will distract from the rest of the examples.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">open_connection</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="c"># Read the config file</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/.pymotw&#39;</span><span class="p">)])</span>
+
+    <span class="c"># Connect to the server</span>
+    <span class="n">hostname</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">,</span> <span class="s">&#39;hostname&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="k">print</span> <span class="s">&#39;Connecting to&#39;</span><span class="p">,</span> <span class="n">hostname</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">imaplib</span><span class="o">.</span><span class="n">IMAP4_SSL</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span>
+
+    <span class="c"># Login to our account</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;account&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;account&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="k">print</span> <span class="s">&#39;Logging in as&#39;</span><span class="p">,</span> <span class="n">username</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">connection</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">open_connection</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">c</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When run, <tt class="xref py py-func docutils literal"><span class="pre">open_connection()</span></tt> reads the configuration
+information from a file in your home directory, then opens the
+<tt class="xref py py-class docutils literal"><span class="pre">IMAP4_SSL</span></tt> connection and authenticates.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_connect.py
+Connecting to mail.example.com
+Logging in as example
+&lt;imaplib.IMAP4_SSL instance at 0x928cb0&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The other examples below will reuse this module, to avoid duplicating the code.</p>
+</div>
+<div class="section" id="authentication-failure">
+<h3>Authentication Failure<a class="headerlink" href="#authentication-failure" title="Permalink to this headline">¶</a></h3>
+<p>If the connection is established but authentication fails, an
+exception is raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># Read the config file</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/.pymotw&#39;</span><span class="p">)])</span>
+
+<span class="c"># Connect to the server</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;server&#39;</span><span class="p">,</span> <span class="s">&#39;hostname&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Connecting to&#39;</span><span class="p">,</span> <span class="n">hostname</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">imaplib</span><span class="o">.</span><span class="n">IMAP4_SSL</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span>
+
+<span class="c"># Login to our account</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;account&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">)</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s">&#39;this_is_the_wrong_password&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Logging in as&#39;</span><span class="p">,</span> <span class="n">username</span>
+<span class="n">connection</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_connect_fail.py
+Connecting to mail.example.com
+Logging in as example
+Traceback (most recent call last):
+  File &quot;/Users/dhellmann/Documents/PyMOTW/in_progress/imaplib/PyMOTW/imaplib/imaplib_connect_fail.py&quot;, line 29, in &lt;module&gt;
+    connection.login(username, password)
+  File &quot;/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/imaplib.py&quot;, line 501, in login
+    raise self.error(dat[-1])
+imaplib.error: Authentication failed.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="example-configuration">
+<h2>Example Configuration<a class="headerlink" href="#example-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The example account has 4 mailboxes, <tt class="docutils literal"><span class="pre">INBOX</span></tt>, <tt class="docutils literal"><span class="pre">Apple</span> <span class="pre">Mail</span> <span class="pre">To</span> <span class="pre">Do</span></tt>,
+<tt class="docutils literal"><span class="pre">Archive</span></tt>, and <tt class="docutils literal"><span class="pre">2008</span></tt> (a sub-folder of <tt class="docutils literal"><span class="pre">Archive</span></tt>).  The mailbox
+hierarchy looks like:</p>
+<ul class="simple">
+<li>INBOX</li>
+<li>Apple Mail To Do</li>
+<li>Archive<ul>
+<li>2008</li>
+</ul>
+</li>
+</ul>
+<p>There is one unread message in the <tt class="docutils literal"><span class="pre">INBOX</span></tt> folder, and one read
+message in <tt class="docutils literal"><span class="pre">Archive/2008</span></tt>.</p>
+</div>
+<div class="section" id="listing-mailboxes">
+<h2>Listing Mailboxes<a class="headerlink" href="#listing-mailboxes" title="Permalink to this headline">¶</a></h2>
+<p>To retrieve the mailboxes available for an account, use the
+<tt class="xref py py-meth docutils literal"><span class="pre">list()</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">imaplib_connect</span> <span class="kn">import</span> <span class="n">open_connection</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">typ</span>
+    <span class="k">print</span> <span class="s">&#39;Response:&#39;</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The return value is a tuple with a response code and the data returned
+by the server.  The response code is <tt class="docutils literal"><span class="pre">OK</span></tt>, unless there has been an
+error.  The data for <tt class="xref py py-meth docutils literal"><span class="pre">list()</span></tt> is a sequence of strings
+containing <em>flags</em>, the <em>hierarchy delimiter</em>, and <em>mailbox name</em> for
+each mailbox.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_list.py
+Response code: OK
+Response:
+[&#39;(\\HasNoChildren) &quot;.&quot; INBOX&#39;,
+ &#39;(\\HasNoChildren) &quot;.&quot; &quot;Apple Mail To Do&quot;&#39;,
+ &#39;(\\HasChildren) &quot;.&quot; &quot;Archive&quot;&#39;,
+ &#39;(\\HasNoChildren) &quot;.&quot; &quot;Archive.2008&quot;&#39;]
+</pre></div>
+</div>
+<p>Each response string can be split into 3 parts using <a class="reference internal" href="../re/index.html#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> or
+<a class="reference internal" href="../csv/index.html#module-csv" title="csv: Read and write comma separated value files."><tt class="xref py py-mod docutils literal"><span class="pre">csv</span></tt></a> (see <a class="reference external" href="http://snipplr.com/view/7955/imap-backup-script/">IMAP Backup Script</a> for an example using
+<a class="reference internal" href="../csv/index.html#module-csv" title="csv: Read and write comma separated value files."><tt class="xref py py-mod docutils literal"><span class="pre">csv</span></tt></a>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">imaplib_connect</span> <span class="kn">import</span> <span class="n">open_connection</span>
+
+<span class="n">list_response_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\((?P&lt;flags&gt;.*?)\) &quot;(?P&lt;delimiter&gt;.*)&quot; (?P&lt;name&gt;.*)&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">parse_list_response</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">list_response_pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">mailbox_name</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">open_connection</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">typ</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Server response:&#39;</span><span class="p">,</span> <span class="n">line</span>
+        <span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">parse_list_response</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Parsed response:&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that the server quotes the mailbox name if it includes spaces,
+but we need to strip those quotes to use the mailbox name in other
+calls back to the server later.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_list_parse.py
+Response code: OK
+Server response: (\HasNoChildren) &quot;.&quot; INBOX
+Parsed response: (&#39;\\HasNoChildren&#39;, &#39;.&#39;, &#39;INBOX&#39;)
+Server response: (\HasNoChildren) &quot;.&quot; &quot;Apple Mail To Do&quot;
+Parsed response: (&#39;\\HasNoChildren&#39;, &#39;.&#39;, &#39;Apple Mail To Do&#39;)
+Server response: (\HasChildren) &quot;.&quot; &quot;Archive&quot;
+Parsed response: (&#39;\\HasChildren&#39;, &#39;.&#39;, &#39;Archive&#39;)
+Server response: (\HasNoChildren) &quot;.&quot; &quot;Archive.2008&quot;
+Parsed response: (&#39;\\HasNoChildren&#39;, &#39;.&#39;, &#39;Archive.2008&#39;)
+</pre></div>
+</div>
+<p><tt class="xref py py-meth docutils literal"><span class="pre">list()</span></tt> takes arguments to let you ask for mailboxes in part of
+the hierarchy.  For example, to list sub-folders of <tt class="docutils literal"><span class="pre">Archive</span></tt>, you
+can pass a value as the <em>directory</em> argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+
+<span class="kn">from</span> <span class="nn">imaplib_connect</span> <span class="kn">import</span> <span class="n">open_connection</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">open_connection</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="s">&#39;Archive&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">typ</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Server response:&#39;</span><span class="p">,</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>Only the single subfolder is returned:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_list_subfolders.py
+Response code: OK
+Server response: (\HasNoChildren) &quot;.&quot; &quot;Archive.2008&quot;
+</pre></div>
+</div>
+<p>Alternately, to list folders matching a pattern you can pass the
+<em>pattern</em> argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+
+<span class="kn">from</span> <span class="nn">imaplib_connect</span> <span class="kn">import</span> <span class="n">open_connection</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">open_connection</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39;*Archive*&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">typ</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Server response:&#39;</span><span class="p">,</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>In this case, both <tt class="docutils literal"><span class="pre">Archive</span></tt> and <tt class="docutils literal"><span class="pre">Archive.2008</span></tt> are included in
+the response.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_list_pattern.py
+Response code: OK
+Server response: (\HasChildren) &quot;.&quot; &quot;Archive&quot;
+Server response: (\HasNoChildren) &quot;.&quot; &quot;Archive.2008&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="mailbox-status">
+<h2>Mailbox Status<a class="headerlink" href="#mailbox-status" title="Permalink to this headline">¶</a></h2>
+<p>Use <tt class="xref py py-meth docutils literal"><span class="pre">status()</span></tt> to ask for aggregated information about the
+contents.  The standard defines these <em>status conditions</em>:</p>
+<dl class="docutils">
+<dt>MESSAGES</dt>
+<dd>The number of messages in the mailbox.</dd>
+<dt>RECENT</dt>
+<dd>The number of messages with the Recent flag set.</dd>
+<dt>UIDNEXT</dt>
+<dd>The next unique identifier value of the mailbox.</dd>
+<dt>UIDVALIDITY</dt>
+<dd>The unique identifier validity value of the mailbox.</dd>
+<dt>UNSEEN</dt>
+<dd>The number of messages which do not have the Seen flag set.</dd>
+</dl>
+<p>The status conditions must be formatted as a space separated string
+enclosed in parentheses, the encoding for a &#8220;list&#8221; in the IMAP4
+specification.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">imaplib_connect</span> <span class="kn">import</span> <span class="n">open_connection</span>
+<span class="kn">from</span> <span class="nn">imaplib_list_parse</span> <span class="kn">import</span> <span class="n">parse_list_response</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">open_connection</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">parse_list_response</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">c</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">mailbox_name</span><span class="p">,</span> <span class="s">&#39;(MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)&#39;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+        
+</pre></div>
+</div>
+<p>The return value is the usual tuple containing a response code and a
+list of information from the server.  In this case, the list contains
+a single string formatted with the name of the mailbox in quotes, then
+the status conditions and values in parentheses.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_status.py
+(&#39;OK&#39;, [&#39;&quot;INBOX&quot; (MESSAGES 1 RECENT 0 UIDNEXT 3 UIDVALIDITY 1222003700 UNSEEN 1)&#39;])
+(&#39;OK&#39;, [&#39;&quot;Apple Mail To Do&quot; (MESSAGES 0 RECENT 0 UIDNEXT 1 UIDVALIDITY 1222003706 UNSEEN 0)&#39;])
+(&#39;OK&#39;, [&#39;&quot;Archive&quot; (MESSAGES 0 RECENT 0 UIDNEXT 1 UIDVALIDITY 1222003809 UNSEEN 0)&#39;])
+(&#39;OK&#39;, [&#39;&quot;Archive.2008&quot; (MESSAGES 1 RECENT 0 UIDNEXT 2 UIDVALIDITY 1222003831 UNSEEN 0)&#39;])
+</pre></div>
+</div>
+</div>
+<div class="section" id="selecting-a-mailbox">
+<h2>Selecting a Mailbox<a class="headerlink" href="#selecting-a-mailbox" title="Permalink to this headline">¶</a></h2>
+<p>The basic mode of operation, once the client is authenticated, is to
+<em>select</em> a mailbox and then interrogate the server regarding messages
+in the mailbox.  The connection is stateful, so once a mailbox is
+selected all commands operate on messages in that mailbox until a new
+mailbox is selected.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">typ</span><span class="p">,</span> <span class="n">data</span>
+    <span class="n">num_msgs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">print</span> <span class="s">&#39;There are </span><span class="si">%d</span><span class="s"> messages in INBOX&#39;</span> <span class="o">%</span> <span class="n">num_msgs</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The response data contains the total number of messages in the
+mailbox.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_select.py
+OK [&#39;1&#39;]
+There are 1 messages in INBOX
+</pre></div>
+</div>
+<p>If an invalid mailbox is specified, the response code is <tt class="docutils literal"><span class="pre">NO</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;Does Not Exist&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">typ</span><span class="p">,</span> <span class="n">data</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The data contains an error message describing the problem.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_select_invalid.py
+NO [&quot;Mailbox doesn&#39;t exist: Does Not Exist&quot;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="searching-for-messages">
+<h2>Searching for Messages<a class="headerlink" href="#searching-for-messages" title="Permalink to this headline">¶</a></h2>
+<p>Once the mailbox is selected, use <tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt> to retrieve the ids
+of messages in the mailbox.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+<span class="kn">from</span> <span class="nn">imaplib_list_parse</span> <span class="kn">import</span> <span class="n">parse_list_response</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">mailbox_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">mailbox_data</span><span class="p">:</span>
+        <span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">parse_list_response</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">mailbox_name</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">msg_ids</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;ALL&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">mailbox_name</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">msg_ids</span>        
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Message ids are assigned by the server, and are implementation
+dependent.  The IMAP4 protocol makes a distinction between sequential
+ids for messages at a given point in time during a transaction and UID
+identifiers for messages, but not all servers seem to bother.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_search_all.py
+INBOX OK [&#39;1&#39;]
+Apple Mail To Do OK [&#39;&#39;]
+Archive OK [&#39;&#39;]
+Archive.2008 OK [&#39;1&#39;]
+</pre></div>
+</div>
+<p>In this case, <tt class="docutils literal"><span class="pre">INBOX</span></tt> and <tt class="docutils literal"><span class="pre">Archive.2008</span></tt> each have a diffrerent
+message with id <tt class="docutils literal"><span class="pre">1</span></tt>.  The other mailboxes are empty.</p>
+</div>
+<div class="section" id="search-criteria">
+<h2>Search Criteria<a class="headerlink" href="#search-criteria" title="Permalink to this headline">¶</a></h2>
+<p>A variety of other search criteria can be used, including looking at
+dates for the message, flags, and other headers.  Refer to section
+6.4.4. of <span class="target" id="index-1"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc3501.html"><strong>RFC 3501</strong></a> for complete details.</p>
+<p>As one example, to look for messages with <tt class="docutils literal"><span class="pre">'test</span> <span class="pre">message</span> <span class="pre">2'</span></tt> in the
+subject, the search criteria could be constructed as:</p>
+<div class="highlight-python"><div class="highlight"><pre>(SUBJECT &quot;test message 2&quot;)
+</pre></div>
+</div>
+<p>This example finds all messages with the title &#8220;test message 2&#8221; in all
+mailboxes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+<span class="kn">from</span> <span class="nn">imaplib_list_parse</span> <span class="kn">import</span> <span class="n">parse_list_response</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">mailbox_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">mailbox_data</span><span class="p">:</span>
+        <span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">parse_list_response</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">mailbox_name</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">msg_ids</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;(SUBJECT &quot;test message 2&quot;)&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">mailbox_name</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">msg_ids</span>        
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>There is only one such message in the account, and it is in the
+<tt class="docutils literal"><span class="pre">INBOX</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_search_subject.py
+INBOX OK [&#39;1&#39;]
+Apple Mail To Do OK [&#39;&#39;]
+Archive OK [&#39;&#39;]
+Archive.2008 OK [&#39;&#39;]
+</pre></div>
+</div>
+<p>Search criteria can also be combined.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+<span class="kn">from</span> <span class="nn">imaplib_list_parse</span> <span class="kn">import</span> <span class="n">parse_list_response</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">mailbox_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">mailbox_data</span><span class="p">:</span>
+        <span class="n">flags</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">mailbox_name</span> <span class="o">=</span> <span class="n">parse_list_response</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">mailbox_name</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">msg_ids</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;(FROM &quot;Doug&quot; SUBJECT &quot;test message 2&quot;)&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">mailbox_name</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">msg_ids</span>        
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The combination is treated as a logical <em>and</em> operation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_search_from.py
+INBOX OK [&#39;1&#39;]
+Apple Mail To Do OK [&#39;&#39;]
+Archive OK [&#39;&#39;]
+Archive.2008 OK [&#39;&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="fetching-messages">
+<h2>Fetching Messages<a class="headerlink" href="#fetching-messages" title="Permalink to this headline">¶</a></h2>
+<p>The identifiers returned by <tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt> are used to retrieve the
+contents, or partial contents, of messages for further processing via
+<tt class="xref py py-meth docutils literal"><span class="pre">fetch()</span></tt>.  <tt class="xref py py-meth docutils literal"><span class="pre">fetch()</span></tt> takes 2 arguments, the message ids
+to fetch and the portion(s) of the message to retrieve.</p>
+<p>The <em>message_ids</em> argument is a comma separated list of ids (<tt class="docutils literal"><span class="pre">&quot;1&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;1,2&quot;</span></tt>) or id ranges (<tt class="docutils literal"><span class="pre">1:2</span></tt>).  The <em>message_parts</em> argument is an
+IMAP list of message segment names.  As with search criteria for
+<tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt>, the IMAP protocol specifies named message segments
+so clients can efficiently retrieve only the parts of the message they
+actually need.  For example, to print the headers of the messages in a
+mailbox, we could <tt class="xref py py-meth docutils literal"><span class="pre">fetch()</span></tt> the headers using
+<tt class="docutils literal"><span class="pre">BODY.PEEK[HEADER]</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Another way to fetch the headers would be simply <tt class="docutils literal"><span class="pre">BODY[HEADERS]</span></tt>,
+but that form implicitly marks the message as read, which is
+undesirable in many cases.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">imaplib</span><span class="o">.</span><span class="n">Debug</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;(BODY.PEEK[HEADER] FLAGS)&#39;</span><span class="p">)</span>
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">msg_data</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The return value of <tt class="xref py py-meth docutils literal"><span class="pre">fetch()</span></tt> has been partially parsed so it is
+somewhat harder to work with than the return value of <tt class="xref py py-meth docutils literal"><span class="pre">list()</span></tt>.
+If we turn on debugging, we can see the complete interaction between
+the client and server to understand why this is so.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_fetch_raw.py
+  13:12.54 imaplib version 2.58
+  13:12.54 new IMAP4 connection, tag=CFKH
+  13:12.54 &lt; * OK dovecot ready.
+  13:12.54 &gt; CFKH0 CAPABILITY
+  13:12.54 &lt; * CAPABILITY IMAP4rev1 SORT THREAD=REFERENCES MULTIAPPEND UNSELECT IDLE CHILDREN LISTEXT LIST-SUBSCRIBED NAMESPACE AUTH=PLAIN
+  13:12.54 &lt; CFKH0 OK Capability completed.
+  13:12.54 CAPABILITIES: (&#39;IMAP4REV1&#39;, &#39;SORT&#39;, &#39;THREAD=REFERENCES&#39;, &#39;MULTIAPPEND&#39;, &#39;UNSELECT&#39;, &#39;IDLE&#39;, &#39;CHILDREN&#39;, &#39;LISTEXT&#39;, &#39;LIST-SUBSCRIBED&#39;, &#39;NAMESPACE&#39;, &#39;AUTH=PLAIN&#39;)
+  13:12.54 &gt; CFKH1 LOGIN example &quot;password&quot;
+  13:13.18 &lt; CFKH1 OK Logged in.
+  13:13.18 &gt; CFKH2 EXAMINE INBOX
+  13:13.20 &lt; * FLAGS (\Answered \Flagged \Deleted \Seen \Draft $NotJunk $Junk)
+  13:13.20 &lt; * OK [PERMANENTFLAGS ()] Read-only mailbox.
+  13:13.20 &lt; * 2 EXISTS
+  13:13.20 &lt; * 1 RECENT
+  13:13.20 &lt; * OK [UNSEEN 1] First unseen.
+  13:13.20 &lt; * OK [UIDVALIDITY 1222003700] UIDs valid
+  13:13.20 &lt; * OK [UIDNEXT 4] Predicted next UID
+  13:13.20 &lt; CFKH2 OK [READ-ONLY] Select completed.
+  13:13.20 &gt; CFKH3 FETCH 1 (BODY.PEEK[HEADER] FLAGS)
+  13:13.20 &lt; * 1 FETCH (FLAGS ($NotJunk) BODY[HEADER] {595}
+  13:13.20 read literal size 595
+  13:13.20 &lt; )
+  13:13.20 &lt; CFKH3 OK Fetch completed.
+  13:13.20 &gt; CFKH4 CLOSE
+  13:13.21 &lt; CFKH4 OK Close completed.
+  13:13.21 &gt; CFKH5 LOGOUT
+  13:13.21 &lt; * BYE Logging out
+  13:13.21 BYE response: Logging out
+  13:13.21 &lt; CFKH5 OK Logout completed.
+[(&#39;1 (FLAGS ($NotJunk) BODY[HEADER] {595}&#39;,
+  &#39;Return-Path: &lt;dhellmann@example.com&gt;\r\nReceived: from example.com (localhost [127.0.0.1])\r\n\tby example.com (8.13.4/8.13.4) with ESMTP id m8LDTGW4018260\r\n\tfor &lt;example@example.com&gt;; Sun, 21 Sep 2008 09:29:16 -0400\r\nReceived: (from dhellmann@localhost)\r\n\tby example.com (8.13.4/8.13.4/Submit) id m8LDTGZ5018259\r\n\tfor example@example.com; Sun, 21 Sep 2008 09:29:16 -0400\r\nDate: Sun, 21 Sep 2008 09:29:16 -0400\r\nFrom: Doug Hellmann &lt;dhellmann@example.com&gt;\r\nMessage-Id: &lt;200809211329.m8LDTGZ5018259@example.com&gt;\r\nTo: example@example.com\r\nSubject: test message 2\r\n\r\n&#39;),
+ &#39;)&#39;]
+</pre></div>
+</div>
+<p>The response from the <tt class="docutils literal"><span class="pre">FETCH</span></tt> command starts with the flags, then
+indicates that there are 595 bytes of header data.  The client
+contructs a tuple with the response for the message, and then closes
+the sequence with a single string containing the <tt class="docutils literal"><span class="pre">)</span></tt> the server
+sends at the end of the fetch response.  Because of this formatting,
+it may be easier to fetch different pieces of information separately,
+or to recombine the response and parse it yourself.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="k">print</span> <span class="s">&#39;HEADER:&#39;</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;(BODY.PEEK[HEADER])&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">response_part</span> <span class="ow">in</span> <span class="n">msg_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_part</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">response_part</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="k">print</span> <span class="s">&#39;BODY TEXT:&#39;</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;(BODY.PEEK[TEXT])&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">response_part</span> <span class="ow">in</span> <span class="n">msg_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_part</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">response_part</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">FLAGS:&#39;</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;(FLAGS)&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">response_part</span> <span class="ow">in</span> <span class="n">msg_data</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">response_part</span>
+        <span class="k">print</span> <span class="n">imaplib</span><span class="o">.</span><span class="n">ParseFlags</span><span class="p">(</span><span class="n">response_part</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Fetching values separately has the added benefit of making it easy to
+use <tt class="xref py py-func docutils literal"><span class="pre">ParseFlags()</span></tt> to parse the flags from the response.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_fetch_separately.py
+HEADER:
+Return-Path: &lt;dhellmann@example.com&gt;
+Received: from example.com (localhost [127.0.0.1])
+    by example.com (8.13.4/8.13.4) with ESMTP id m8LDTGW4018260
+    for &lt;example@example.com&gt;; Sun, 21 Sep 2008 09:29:16 -0400
+Received: (from dhellmann@localhost)
+    by example.com (8.13.4/8.13.4/Submit) id m8LDTGZ5018259
+    for example@example.com; Sun, 21 Sep 2008 09:29:16 -0400
+Date: Sun, 21 Sep 2008 09:29:16 -0400
+From: Doug Hellmann &lt;dhellmann@example.com&gt;
+Message-Id: &lt;200809211329.m8LDTGZ5018259@example.com&gt;
+To: example@example.com
+Subject: test message 2
+
+
+BODY TEXT:
+second message
+
+
+FLAGS:
+1 (FLAGS ($NotJunk))
+(&#39;$NotJunk&#39;,)
+</pre></div>
+</div>
+</div>
+<div class="section" id="whole-messages">
+<h2>Whole Messages<a class="headerlink" href="#whole-messages" title="Permalink to this headline">¶</a></h2>
+<p>As illustrated above, the client can ask the server for individual
+parts of the message separately.  It is also possible to retrieve the
+entire message as an <span class="target" id="index-2"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> formatted mail message and parse it
+with classes from the <tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt> module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">email</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="n">typ</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;(RFC822)&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">response_part</span> <span class="ow">in</span> <span class="n">msg_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_part</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message_from_string</span><span class="p">(</span><span class="n">response_part</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;subject&#39;</span><span class="p">,</span> <span class="s">&#39;to&#39;</span><span class="p">,</span> <span class="s">&#39;from&#39;</span> <span class="p">]:</span>
+                <span class="k">print</span> <span class="s">&#39;</span><span class="si">%-8s</span><span class="s">: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">msg</span><span class="p">[</span><span class="n">header</span><span class="p">])</span>
+
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The parser in the <tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt> module make it very easy to access and
+manipulate messages.  This example prints just a few of the headers
+for each message.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_fetch_rfc822.py
+SUBJECT : test message 2
+TO      : example@example.com
+FROM    : Doug Hellmann &lt;dhellmann@example.com&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="uploading-messages">
+<h2>Uploading Messages<a class="headerlink" href="#uploading-messages" title="Permalink to this headline">¶</a></h2>
+<p>To add a new message to a mailbox, pass it to the <tt class="xref py py-meth docutils literal"><span class="pre">append()</span></tt>
+method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">email.message</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">new_message</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">Message</span><span class="p">()</span>
+<span class="n">new_message</span><span class="o">.</span><span class="n">set_unixfrom</span><span class="p">(</span><span class="s">&#39;pymotw&#39;</span><span class="p">)</span>
+<span class="n">new_message</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;subject goes here&#39;</span>
+<span class="n">new_message</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;pymotw@example.com&#39;</span>
+<span class="n">new_message</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;example@example.com&#39;</span>
+<span class="n">new_message</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span><span class="s">&#39;This is the body of the message.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">new_message</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">imaplib</span><span class="o">.</span><span class="n">Time2Internaldate</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_message</span><span class="p">))</span>
+    
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">)</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="p">[</span><span class="n">msg_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;ALL&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">msg_ids</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">typ</span><span class="p">,</span> <span class="n">msg_data</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&#39;(BODY.PEEK[HEADER])&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">response_part</span> <span class="ow">in</span> <span class="n">msg_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_part</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="si">%s</span><span class="s">:&#39;</span> <span class="o">%</span> <span class="n">num</span>
+                <span class="k">print</span> <span class="n">response_part</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>pymotw
+Subject: subject goes here
+From: pymotw@example.com
+To: example@example.com
+
+This is the body of the message.
+
+
+1:
+Return-Path: &lt;dhellmann@example.com&gt;
+Received: from example.com (localhost [127.0.0.1])
+    by example.com (8.13.4/8.13.4) with ESMTP id m8LDTGW4018260
+    for &lt;example@example.com&gt;; Sun, 21 Sep 2008 09:29:16 -0400
+Received: (from dhellmann@localhost)
+    by example.com (8.13.4/8.13.4/Submit) id m8LDTGZ5018259
+    for example@example.com; Sun, 21 Sep 2008 09:29:16 -0400
+Date: Sun, 21 Sep 2008 09:29:16 -0400
+From: Doug Hellmann &lt;dhellmann@example.com&gt;
+Message-Id: &lt;200809211329.m8LDTGZ5018259@example.com&gt;
+To: example@example.com
+Subject: test message 2
+
+
+
+2:
+Return-Path: &lt;doug.hellmann@example.com&gt;
+Message-Id: &lt;0D9C3C50-462A-4FD7-9E5A-11EE222D721D@example.com&gt;
+From: Doug Hellmann &lt;doug.hellmann@example.com&gt;
+To: example@example.com
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Apple Message framework v929.2)
+Subject: lorem ipsum
+Date: Sun, 21 Sep 2008 12:53:16 -0400
+X-Mailer: Apple Mail (2.929.2)
+
+
+
+3:
+pymotw
+Subject: subject goes here
+From: pymotw@example.com
+To: example@example.com
+</pre></div>
+</div>
+</div>
+<div class="section" id="moving-and-copying-messages">
+<h2>Moving and Copying Messages<a class="headerlink" href="#moving-and-copying-messages" title="Permalink to this headline">¶</a></h2>
+<p>Once a message is on the server, it can be moved or copied without
+downloading it using <tt class="xref py py-meth docutils literal"><span class="pre">move()</span></tt> or <a class="reference internal" href="../copy/index.html#module-copy" title="copy: Provides functions for duplicating objects using shallow or deep copy semantics."><tt class="xref py py-meth docutils literal"><span class="pre">copy()</span></tt></a>.  These methods
+operate on message id ranges, just as <tt class="xref py py-meth docutils literal"><span class="pre">fetch()</span></tt> does.</p>
+<p>This example script creates a new mailbox under <tt class="docutils literal"><span class="pre">Archive</span></tt> and copies
+the read messages from <tt class="docutils literal"><span class="pre">INBOX</span></tt> into it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c"># Find the &quot;SEEN&quot; messages in INBOX</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;INBOX&#39;</span><span class="p">)</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="p">[</span><span class="n">response</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;SEEN&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">typ</span> <span class="o">!=</span> <span class="s">&#39;OK&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    
+    <span class="c"># Create a new mailbox, &quot;Archive.Today&quot;</span>
+    <span class="n">msg_ids</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">create_response</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">&#39;Archive.Today&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;CREATED Archive.Today:&#39;</span><span class="p">,</span> <span class="n">create_response</span>
+    
+    <span class="c"># Copy the messages</span>
+    <span class="k">print</span> <span class="s">&#39;COPYING:&#39;</span><span class="p">,</span> <span class="n">msg_ids</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">msg_ids</span><span class="p">,</span> <span class="s">&#39;Archive.Today&#39;</span><span class="p">)</span>
+    
+    <span class="c"># Look at the results</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;Archive.Today&#39;</span><span class="p">)</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="p">[</span><span class="n">response</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;ALL&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;COPIED:&#39;</span><span class="p">,</span> <span class="n">response</span>
+    
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+    
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_archive_read.py
+CREATED Archive.Today: [&#39;Create completed.&#39;]
+COPYING: 1,2
+COPIED: 1 2
+</pre></div>
+</div>
+<p>Running the same script again shows the importance to checking return
+codes.  Instead of raising an exception, the call to <tt class="xref py py-meth docutils literal"><span class="pre">create()</span></tt>
+to make the new mailbox reports that the mailbox already exists.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_archive_read.py
+CREATED Archive.Today: [&#39;Mailbox exists.&#39;]
+COPYING: 1,2
+COPIED: 1 2 3 4
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-messages">
+<h2>Deleting Messages<a class="headerlink" href="#deleting-messages" title="Permalink to this headline">¶</a></h2>
+<p>Although most modern mail clients use a &#8220;Trash folder&#8221; model for
+working with deleted messages, the messages are not usually moved into
+an actual folder.  Instead, their flags are updated to add
+<tt class="docutils literal"><span class="pre">\Deleted</span></tt>.  <em>Emptying the trash</em> is implemented through an
+<tt class="docutils literal"><span class="pre">EXPUNGE</span></tt> command.  This example script finds the archived messages
+with &#8220;Lorem ipsum&#8221; in the subject, sets the deleted flag, then shows
+that the messages are still present in the folder by querying the
+server again.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">imaplib</span>
+<span class="kn">import</span> <span class="nn">imaplib_connect</span>
+<span class="kn">from</span> <span class="nn">imaplib_list_parse</span> <span class="kn">import</span> <span class="n">parse_list_response</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">imaplib_connect</span><span class="o">.</span><span class="n">open_connection</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;Archive.Today&#39;</span><span class="p">)</span>
+
+    <span class="c"># What ids are in the mailbox?</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="p">[</span><span class="n">msg_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;ALL&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Starting messages:&#39;</span><span class="p">,</span> <span class="n">msg_ids</span>
+    
+    <span class="c"># Find the message(s)</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="p">[</span><span class="n">msg_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;(SUBJECT &quot;Lorem ipsum&quot;)&#39;</span><span class="p">)</span>
+    <span class="n">msg_ids</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg_ids</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s">&#39;Matching messages:&#39;</span><span class="p">,</span> <span class="n">msg_ids</span>
+    
+    <span class="c"># What are the current flags?</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">msg_ids</span><span class="p">,</span> <span class="s">&#39;(FLAGS)&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Flags before:&#39;</span><span class="p">,</span> <span class="n">response</span>
+    
+    <span class="c"># Change the Deleted flag</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">msg_ids</span><span class="p">,</span> <span class="s">&#39;+FLAGS&#39;</span><span class="p">,</span> <span class="s">r&#39;(\Deleted)&#39;</span><span class="p">)</span>
+    
+    <span class="c"># What are the flags now?</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">msg_ids</span><span class="p">,</span> <span class="s">&#39;(FLAGS)&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Flags after:&#39;</span><span class="p">,</span> <span class="n">response</span>
+    
+    <span class="c"># Really delete the message.</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">expunge</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Expunged:&#39;</span><span class="p">,</span> <span class="n">response</span>
+    
+    <span class="c"># What ids are left in the mailbox?</span>
+    <span class="n">typ</span><span class="p">,</span> <span class="p">[</span><span class="n">msg_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;ALL&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Remaining messages:&#39;</span><span class="p">,</span> <span class="n">msg_ids</span>
+    
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example explicitly calls <tt class="xref py py-meth docutils literal"><span class="pre">expunge()</span></tt> to remove the
+messages, but calling <tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt> has the same effect.  The
+difference is the client is not notified about the deletions when you
+call <tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python imaplib_delete_messages.py
+Starting messages: 1 2 3 4
+Matching messages: 1,3
+Flags before: [&#39;1 (FLAGS (\\Seen $NotJunk))&#39;, &#39;3 (FLAGS (\\Seen \\Recent $NotJunk))&#39;]
+Flags after: [&#39;1 (FLAGS (\\Deleted \\Seen $NotJunk))&#39;,
+&#39;3 (FLAGS (\\Deleted \\Seen \\Recent $NotJunk))&#39;]
+Expunged: [&#39;1&#39;, &#39;2&#39;]
+Remaining messages: 1 2
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/imaplib.html">imaplib</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://www.imap.org/about/whatisIMAP.html">What is IMAP?</a></dt>
+<dd>imap.org description of the IMAP protocol</dd>
+<dt><a class="reference external" href="http://www.washington.edu/imap/">University of Washington IMAP Information Center</a></dt>
+<dd>Good resource for IMAP information, along with source code.</dd>
+<dt><span class="target" id="index-3"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc3501.html"><strong>RFC 3501</strong></a></dt>
+<dd>Internet Message Access Protocol</dd>
+<dt><span class="target" id="index-4"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a></dt>
+<dd>Internet Message Format</dd>
+<dt><a class="reference external" href="http://snipplr.com/view/7955/imap-backup-script/">IMAP Backup Script</a></dt>
+<dd>A script to backup email from an IMAP server.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">rfc822</span></tt></dt>
+<dd>The <tt class="xref py py-mod docutils literal"><span class="pre">rfc822</span></tt> module includes an <span class="target" id="index-5"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a> / <span class="target" id="index-6"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2822.html"><strong>RFC 2822</strong></a> parser</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt></dt>
+<dd>The <tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt> module for parsing email messages.</dd>
+<dt><a class="reference internal" href="../mailbox/index.html#module-mailbox" title="mailbox: Access and manipulate email archives."><tt class="xref py py-mod docutils literal"><span class="pre">mailbox</span></tt></a></dt>
+<dd>Local mailbox parser.</dd>
+<dt><a class="reference internal" href="../ConfigParser/index.html#module-ConfigParser" title="ConfigParser: Read/write configuration files similar to Windows INI files"><tt class="xref py py-mod docutils literal"><span class="pre">ConfigParser</span></tt></a></dt>
+<dd>Read and write configuration files.</dd>
+<dt><a class="reference external" href="http://freshfoo.com/wiki/CodeIndex">IMAPClient</a></dt>
+<dd>A higher-level client for talking to IMAP servers, written by Menno Smits.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../SimpleXMLRPCServer/index.html" title="SimpleXMLRPCServer – Implements an XML-RPC server."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../Cookie/index.html" title="Cookie – HTTP Cookies"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../internet_protocols.html" >Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,2484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>re &#8211; Regular Expressions - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="String Services" href="../string_services.html" />
+    <link rel="next" title="struct – Working with Binary Data" href="../struct/index.html" />
+    <link rel="prev" title="StringIO and cStringIO – Work with text buffers using file-like API" href="../StringIO/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">re &#8211; Regular Expressions</a><ul>
+<li><a class="reference internal" href="#finding-patterns-in-text">Finding Patterns in Text</a></li>
+<li><a class="reference internal" href="#compiling-expressions">Compiling Expressions</a></li>
+<li><a class="reference internal" href="#multiple-matches">Multiple Matches</a></li>
+<li><a class="reference internal" href="#pattern-syntax">Pattern Syntax</a><ul>
+<li><a class="reference internal" href="#repetition">Repetition</a></li>
+<li><a class="reference internal" href="#character-sets">Character Sets</a></li>
+<li><a class="reference internal" href="#escape-codes">Escape Codes</a></li>
+<li><a class="reference internal" href="#anchoring">Anchoring</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#constraining-the-search">Constraining the Search</a></li>
+<li><a class="reference internal" href="#dissecting-matches-with-groups">Dissecting Matches with Groups</a></li>
+<li><a class="reference internal" href="#search-options">Search Options</a><ul>
+<li><a class="reference internal" href="#case-insensitive-matching">Case-insensitive Matching</a></li>
+<li><a class="reference internal" href="#input-with-multiple-lines">Input with Multiple Lines</a></li>
+<li><a class="reference internal" href="#unicode">Unicode</a></li>
+<li><a class="reference internal" href="#verbose-expression-syntax">Verbose Expression Syntax</a></li>
+<li><a class="reference internal" href="#embedding-flags-in-patterns">Embedding Flags in Patterns</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#looking-ahead-or-behind">Looking Ahead, or Behind</a></li>
+<li><a class="reference internal" href="#self-referencing-expressions">Self-referencing Expressions</a></li>
+<li><a class="reference internal" href="#modifying-strings-with-patterns">Modifying Strings with Patterns</a></li>
+<li><a class="reference internal" href="#splitting-with-patterns">Splitting with Patterns</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../StringIO/index.html" title="previous chapter"><strong>Previous:</strong> StringIO and cStringIO &#8211; Work with text buffers using file-like API</a><br/>
+          <a href="../struct/index.html" title="next chapter"><strong>Next:</strong> struct &#8211; Working with Binary Data</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/re/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../struct/index.html" title="struct – Working with Binary Data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../StringIO/index.html" title="StringIO and cStringIO – Work with text buffers using file-like API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" accesskey="U">String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-re">
+<span id="re-regular-expressions"></span><h1>re &#8211; Regular Expressions<a class="headerlink" href="#module-re" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Searching within and changing text using formal patterns.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">1.5 and later</td>
+</tr>
+</tbody>
+</table>
+<p><em>Regular expressions</em> are text matching patterns described with a
+formal syntax.  The patterns are interpreted as a set of instructions,
+which are then executed with a string as input to produce a matching
+subset or modified version of the original.  The term &#8220;regular
+expressions&#8221; is frequently shortened to as &#8220;regex&#8221; or &#8220;regexp&#8221; in
+conversation.  Expressions can include literal text matching,
+repetition, pattern-composition, branching, and other sophisticated
+rules.  A large number of parsing problems are easier to solve with a
+regular expression than by creating a special-purpose lexer and
+parser.</p>
+<p>Regular expressions are typically used in applications that involve a
+lot of text processing.  For example, they are commonly used as search
+patterns in text editing programs used by developers, including vi,
+emacs, and modern IDEs.  They are also an integral part of Unix
+command line utilities such as sed, grep, and awk.  Many programming
+languages include support for regular expressions in the language
+syntax (Perl, Ruby, Awk, and Tcl).  Other languages, such as C, C++,
+and Python supports regular expressions through extension libraries.</p>
+<p>There are multiple open source implementations of regular expressions,
+each sharing a common core syntax but with different extensions or
+modifications to their advanced features.  The syntax used in Python&#8217;s
+<a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> module is based on the syntax used for regular expressions
+in Perl, with a few Python-specific enhancements.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although the formal definition of &#8220;regular expression&#8221; is limited
+to expressions that describe regular languages, some of the
+extensions supported by <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> go beyond describing regular
+languages.  The term &#8220;regular expression&#8221; is used here in a more
+general sense to mean any expression that can be evaluated by
+Python&#8217;s <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> module.</p>
+</div>
+<div class="section" id="finding-patterns-in-text">
+<h2>Finding Patterns in Text<a class="headerlink" href="#finding-patterns-in-text" title="Permalink to this headline">¶</a></h2>
+<p>The most common use for <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> is to search for patterns in text.
+This example looks for two literal strings, <tt class="docutils literal"><span class="pre">'this'</span></tt> and <tt class="docutils literal"><span class="pre">'that'</span></tt>,
+in a text string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;this&#39;</span><span class="p">,</span> <span class="s">&#39;that&#39;</span> <span class="p">]</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Does this text match the pattern?&#39;</span>
+
+<span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Looking for &quot;</span><span class="si">%s</span><span class="s">&quot; in &quot;</span><span class="si">%s</span><span class="s">&quot; -&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">),</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span>  <span class="n">text</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;found a match!&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;no match&#39;</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> takes the pattern and text to scan, and returns a
+<tt class="xref py py-class docutils literal"><span class="pre">Match</span></tt> object when the pattern is found.  If the pattern is
+not found, <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> returns <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_simple.py
+
+Looking for &quot;this&quot; in &quot;Does this text match the pattern?&quot; -&gt; found a match!
+Looking for &quot;that&quot; in &quot;Does this text match the pattern?&quot; -&gt; no match
+</pre></div>
+</div>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">Match</span></tt> object returned by <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> holds information
+about the nature of the match, including the original input string,
+the regular expression used, and the location within the original
+string where the pattern occurs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;this&#39;</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Does this text match the pattern?&#39;</span>
+
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&#39;Found &quot;</span><span class="si">%s</span><span class="s">&quot; in &quot;</span><span class="si">%s</span><span class="s">&quot; from </span><span class="si">%d</span><span class="s"> to </span><span class="si">%d</span><span class="s"> (&quot;</span><span class="si">%s</span><span class="s">&quot;)&#39;</span> <span class="o">%</span> \
+    <span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">re</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">start()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">end()</span></tt> methods give the integer indexes
+into the string showing where the text matched by the pattern occurs.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_simple_match.py
+
+Found &quot;this&quot; in &quot;Does this text match the pattern?&quot; from 5 to 9 (&quot;this&quot;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="compiling-expressions">
+<h2>Compiling Expressions<a class="headerlink" href="#compiling-expressions" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> includes module-level functions for working with regular
+expressions as text strings, but it is usually more efficient to
+<em>compile</em> the expressions your program uses frequently.  The
+<tt class="xref py py-func docutils literal"><span class="pre">compile()</span></tt> function converts an expression string into a
+<tt class="xref py py-class docutils literal"><span class="pre">RegexObject</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c"># Pre-compile the patterns</span>
+<span class="n">regexes</span> <span class="o">=</span> <span class="p">[</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">&#39;this&#39;</span><span class="p">,</span>
+                                     <span class="s">&#39;that&#39;</span><span class="p">,</span>
+                                     <span class="p">]</span>
+            <span class="p">]</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Does this text match the pattern?&#39;</span>
+
+<span class="k">for</span> <span class="n">regex</span> <span class="ow">in</span> <span class="n">regexes</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Looking for &quot;</span><span class="si">%s</span><span class="s">&quot; in &quot;</span><span class="si">%s</span><span class="s">&quot; -&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">),</span>
+
+    <span class="k">if</span> <span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;found a match!&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;no match&#39;</span>
+</pre></div>
+</div>
+<p>The module-level functions maintain a cache of compiled expressions,
+but the size of the cache is limited and using compiled expressions
+directly means you can avoid the cache lookup overhead.  By
+pre-compiling any expressions your module uses when the module is
+loaded you shift the compilation work to application startup time,
+instead of a point where the program is responding to a user action.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_simple_compiled.py
+
+Looking for &quot;this&quot; in &quot;Does this text match the pattern?&quot; -&gt; found a match!
+Looking for &quot;that&quot; in &quot;Does this text match the pattern?&quot; -&gt; no match
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-matches">
+<h2>Multiple Matches<a class="headerlink" href="#multiple-matches" title="Permalink to this headline">¶</a></h2>
+<p>So far the example patterns have all used <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> to look for
+single instances of literal text strings.  The <tt class="xref py py-func docutils literal"><span class="pre">findall()</span></tt>
+function returns all of the substrings of the input that match the
+pattern without overlapping.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;abbaaabbbbaaaaa&#39;</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;ab&#39;</span>
+
+<span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Found &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">match</span>
+</pre></div>
+</div>
+<p>There are two instances of <tt class="docutils literal"><span class="pre">ab</span></tt> in the input string.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_findall.py
+
+Found &quot;ab&quot;
+Found &quot;ab&quot;
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">finditer()</span></tt> returns an iterator that produces <tt class="xref py py-class docutils literal"><span class="pre">Match</span></tt>
+instances instead of the strings returned by <tt class="xref py py-func docutils literal"><span class="pre">findall()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;abbaaabbbbaaaaa&#39;</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;ab&#39;</span>
+
+<span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Found &quot;</span><span class="si">%s</span><span class="s">&quot; at </span><span class="si">%d</span><span class="s">:</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">],</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example finds the same two occurrences of <tt class="docutils literal"><span class="pre">ab</span></tt>, and the
+<tt class="xref py py-class docutils literal"><span class="pre">Match</span></tt> instance shows where they are in the original input.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_finditer.py
+
+Found &quot;ab&quot; at 0:2
+Found &quot;ab&quot; at 5:7
+</pre></div>
+</div>
+</div>
+<div class="section" id="pattern-syntax">
+<h2>Pattern Syntax<a class="headerlink" href="#pattern-syntax" title="Permalink to this headline">¶</a></h2>
+<p>Regular expressions support more powerful patterns than simple literal
+text strings.  Patterns can repeat, can be anchored to different
+logical locations within the input, and can be expressed in compact
+forms that don&#8217;t require every literal character be present in the
+pattern.  All of these features are used by combining literal text
+values with <em>metacharacters</em> that are part of the regular expression
+pattern syntax implemented by <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a>.  The following examples will
+use this test program to explore variations in patterns.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">test_patterns</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;Given source text and a list of patterns, look for</span>
+<span class="sd">    matches for each pattern within the text and print</span>
+<span class="sd">    them to stdout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Show the character positions and input text</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="ow">or</span> <span class="s">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+    <span class="k">print</span> <span class="n">text</span>
+
+    <span class="c"># Look for each pattern in the text and print the results</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="s">&#39;Matching &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">pattern</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%2d</span><span class="s"> : </span><span class="si">%2d</span><span class="s"> = &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> \
+                <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">])</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;ab&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The output of <tt class="xref py py-func docutils literal"><span class="pre">test_patterns()</span></tt> shows the input text, including
+the character positions, as well as the substring range from each
+portion of the input that matches the pattern.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_test_patterns.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;ab&quot;
+   0 :  1 = &quot;ab&quot;
+   5 :  6 = &quot;ab&quot;
+</pre></div>
+</div>
+<div class="section" id="repetition">
+<h3>Repetition<a class="headerlink" href="#repetition" title="Permalink to this headline">¶</a></h3>
+<p>There are five ways to express repetition in a pattern.  A pattern
+followed by the metacharacter <tt class="docutils literal"><span class="pre">*</span></tt> is repeated zero or more times
+(allowing a pattern to repeat zero times means it does not need to
+appear at all to match).  Replace the <tt class="docutils literal"><span class="pre">*</span></tt> with <tt class="docutils literal"><span class="pre">+</span></tt> and the pattern
+must appear at least once.  Using <tt class="docutils literal"><span class="pre">?</span></tt> means the pattern appears zero
+or one time.  For a specific number of occurrences, use <tt class="docutils literal"><span class="pre">{m}</span></tt> after
+the pattern, where <em>m</em> is replaced with the number of times the
+pattern should repeat.  And finally, to allow a variable but limited
+number of repetitions, use <tt class="docutils literal"><span class="pre">{m,n}</span></tt> where <em>m</em> is the minimum number
+of repetitions and <em>n</em> is the maximum.  Leaving out <em>n</em> (<tt class="docutils literal"><span class="pre">{m,}</span></tt>)
+means the value appears at least <em>m</em> times, with no maximum.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;ab*&#39;</span><span class="p">,</span>     <span class="c"># a followed by zero or more b</span>
+                <span class="s">&#39;ab+&#39;</span><span class="p">,</span>     <span class="c"># a followed by one or more b</span>
+                <span class="s">&#39;ab?&#39;</span><span class="p">,</span>     <span class="c"># a followed by zero or one b</span>
+                <span class="s">&#39;ab{3}&#39;</span><span class="p">,</span>   <span class="c"># a followed by three b</span>
+                <span class="s">&#39;ab{2,3}&#39;</span><span class="p">,</span> <span class="c"># a followed by two to three b</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>Notice how many more matches there are for <tt class="docutils literal"><span class="pre">ab*</span></tt> and <tt class="docutils literal"><span class="pre">ab?</span></tt> than
+<tt class="docutils literal"><span class="pre">ab+</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_repetition.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;ab*&quot;
+   0 :  2 = &quot;abb&quot;
+   3 :  3 = &quot;a&quot;
+   4 :  4 = &quot;a&quot;
+   5 :  9 = &quot;abbbb&quot;
+  10 : 10 = &quot;a&quot;
+  11 : 11 = &quot;a&quot;
+  12 : 12 = &quot;a&quot;
+  13 : 13 = &quot;a&quot;
+  14 : 14 = &quot;a&quot;
+
+Matching &quot;ab+&quot;
+   0 :  2 = &quot;abb&quot;
+   5 :  9 = &quot;abbbb&quot;
+
+Matching &quot;ab?&quot;
+   0 :  1 = &quot;ab&quot;
+   3 :  3 = &quot;a&quot;
+   4 :  4 = &quot;a&quot;
+   5 :  6 = &quot;ab&quot;
+  10 : 10 = &quot;a&quot;
+  11 : 11 = &quot;a&quot;
+  12 : 12 = &quot;a&quot;
+  13 : 13 = &quot;a&quot;
+  14 : 14 = &quot;a&quot;
+
+Matching &quot;ab{3}&quot;
+   5 :  8 = &quot;abbb&quot;
+
+Matching &quot;ab{2,3}&quot;
+   0 :  2 = &quot;abb&quot;
+   5 :  8 = &quot;abbb&quot;
+</pre></div>
+</div>
+<p>The normal processing for a repetition instruction is to consume as
+much of the input as possible while matching the pattern.  This
+so-called <em>greedy</em> behavior may result in fewer individual matches, or
+the matches may include more of the input text than intended.
+Greediness can be turned off by following the repetition instruction
+with <tt class="docutils literal"><span class="pre">?</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;ab*?&#39;</span><span class="p">,</span>     <span class="c"># a followed by zero or more b</span>
+                <span class="s">&#39;ab+?&#39;</span><span class="p">,</span>     <span class="c"># a followed by one or more b</span>
+                <span class="s">&#39;ab??&#39;</span><span class="p">,</span>     <span class="c"># a followed by zero or one b</span>
+                <span class="s">&#39;ab{3}?&#39;</span><span class="p">,</span>   <span class="c"># a followed by three b</span>
+                <span class="s">&#39;ab{2,3}?&#39;</span><span class="p">,</span> <span class="c"># a followed by two to three b</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>Disabling greedy consumption of the input for any of the patterns
+where zero occurences of <tt class="docutils literal"><span class="pre">b</span></tt> are allowed means the matched substring
+does not include any <tt class="docutils literal"><span class="pre">b</span></tt> characters.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_repetition_non_greedy.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;ab*?&quot;
+   0 :  0 = &quot;a&quot;
+   3 :  3 = &quot;a&quot;
+   4 :  4 = &quot;a&quot;
+   5 :  5 = &quot;a&quot;
+  10 : 10 = &quot;a&quot;
+  11 : 11 = &quot;a&quot;
+  12 : 12 = &quot;a&quot;
+  13 : 13 = &quot;a&quot;
+  14 : 14 = &quot;a&quot;
+
+Matching &quot;ab+?&quot;
+   0 :  1 = &quot;ab&quot;
+   5 :  6 = &quot;ab&quot;
+
+Matching &quot;ab??&quot;
+   0 :  0 = &quot;a&quot;
+   3 :  3 = &quot;a&quot;
+   4 :  4 = &quot;a&quot;
+   5 :  5 = &quot;a&quot;
+  10 : 10 = &quot;a&quot;
+  11 : 11 = &quot;a&quot;
+  12 : 12 = &quot;a&quot;
+  13 : 13 = &quot;a&quot;
+  14 : 14 = &quot;a&quot;
+
+Matching &quot;ab{3}?&quot;
+   5 :  8 = &quot;abbb&quot;
+
+Matching &quot;ab{2,3}?&quot;
+   0 :  2 = &quot;abb&quot;
+   5 :  7 = &quot;abb&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="character-sets">
+<h3>Character Sets<a class="headerlink" href="#character-sets" title="Permalink to this headline">¶</a></h3>
+<p>A <em>character set</em> is a group of characters, any one of which can match
+at that point in the pattern.  For example, <tt class="docutils literal"><span class="pre">[ab]</span></tt> would match
+either <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;[ab]&#39;</span><span class="p">,</span>    <span class="c"># either a or b</span>
+                <span class="s">&#39;a[ab]+&#39;</span><span class="p">,</span>  <span class="c"># a followed by one or more a or b</span>
+                <span class="s">&#39;a[ab]+?&#39;</span><span class="p">,</span> <span class="c"># a followed by one or more a or b, not greedy</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>The greedy form of the expression, <tt class="docutils literal"><span class="pre">a[ab]+</span></tt>, consumes the entire
+string because the first letter is <tt class="docutils literal"><span class="pre">a</span></tt> and every subsequent
+character is either <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_charset.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;[ab]&quot;
+   0 :  0 = &quot;a&quot;
+   1 :  1 = &quot;b&quot;
+   2 :  2 = &quot;b&quot;
+   3 :  3 = &quot;a&quot;
+   4 :  4 = &quot;a&quot;
+   5 :  5 = &quot;a&quot;
+   6 :  6 = &quot;b&quot;
+   7 :  7 = &quot;b&quot;
+   8 :  8 = &quot;b&quot;
+   9 :  9 = &quot;b&quot;
+  10 : 10 = &quot;a&quot;
+  11 : 11 = &quot;a&quot;
+  12 : 12 = &quot;a&quot;
+  13 : 13 = &quot;a&quot;
+  14 : 14 = &quot;a&quot;
+
+Matching &quot;a[ab]+&quot;
+   0 : 14 = &quot;abbaaabbbbaaaaa&quot;
+
+Matching &quot;a[ab]+?&quot;
+   0 :  1 = &quot;ab&quot;
+   3 :  4 = &quot;aa&quot;
+   5 :  6 = &quot;ab&quot;
+  10 : 11 = &quot;aa&quot;
+  12 : 13 = &quot;aa&quot;
+</pre></div>
+</div>
+<p>A character set can also be used to exclude specific characters.  The
+special marker <tt class="docutils literal"><span class="pre">^</span></tt> means to look for characters not in the set
+following.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;This is some text -- with punctuation.&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;[^-. ]+&#39;</span><span class="p">,</span>  <span class="c"># sequences without -, ., or space</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>This pattern finds all of the substrings that do not contain the
+characters <tt class="docutils literal"><span class="pre">-</span></tt>, <tt class="docutils literal"><span class="pre">.</span></tt>, or a space.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_charset_exclude.py
+
+
+          1111111111222222222233333333
+01234567890123456789012345678901234567
+This is some text -- with punctuation.
+
+Matching &quot;[^-. ]+&quot;
+   0 :  3 = &quot;This&quot;
+   5 :  6 = &quot;is&quot;
+   8 : 11 = &quot;some&quot;
+  13 : 16 = &quot;text&quot;
+  21 : 24 = &quot;with&quot;
+  26 : 36 = &quot;punctuation&quot;
+</pre></div>
+</div>
+<p>As character sets grow larger, typing every character that should (or
+should not) match becomes tedious.  A more compact format using
+<em>character ranges</em> lets you define a character set to include all of
+the contiguous characters between a start and stop point.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;This is some text -- with punctuation.&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;[a-z]+&#39;</span><span class="p">,</span>      <span class="c"># sequences of lower case letters</span>
+                <span class="s">&#39;[A-Z]+&#39;</span><span class="p">,</span>      <span class="c"># sequences of upper case letters</span>
+                <span class="s">&#39;[a-zA-Z]+&#39;</span><span class="p">,</span>   <span class="c"># sequences of lower or upper case letters</span>
+                <span class="s">&#39;[A-Z][a-z]+&#39;</span><span class="p">,</span> <span class="c"># one upper case letter followed by lower case letters</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>Here the range <tt class="docutils literal"><span class="pre">a-z</span></tt> includes the lower case ASCII letters, and the
+range <tt class="docutils literal"><span class="pre">A-Z</span></tt> includes the upper case ASCII letters.  The ranges can
+also be combined into a single character set.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_charset_ranges.py
+
+
+          1111111111222222222233333333
+01234567890123456789012345678901234567
+This is some text -- with punctuation.
+
+Matching &quot;[a-z]+&quot;
+   1 :  3 = &quot;his&quot;
+   5 :  6 = &quot;is&quot;
+   8 : 11 = &quot;some&quot;
+  13 : 16 = &quot;text&quot;
+  21 : 24 = &quot;with&quot;
+  26 : 36 = &quot;punctuation&quot;
+
+Matching &quot;[A-Z]+&quot;
+   0 :  0 = &quot;T&quot;
+
+Matching &quot;[a-zA-Z]+&quot;
+   0 :  3 = &quot;This&quot;
+   5 :  6 = &quot;is&quot;
+   8 : 11 = &quot;some&quot;
+  13 : 16 = &quot;text&quot;
+  21 : 24 = &quot;with&quot;
+  26 : 36 = &quot;punctuation&quot;
+
+Matching &quot;[A-Z][a-z]+&quot;
+   0 :  3 = &quot;This&quot;
+</pre></div>
+</div>
+<p>As a special case of a character set the metacharacter dot, or period
+(<tt class="docutils literal"><span class="pre">.</span></tt>), indicates that the pattern should match any single character
+in that position.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;a.&#39;</span><span class="p">,</span>   <span class="c"># a followed by any one character</span>
+                <span class="s">&#39;b.&#39;</span><span class="p">,</span>   <span class="c"># b followed by any one character</span>
+                <span class="s">&#39;a.*b&#39;</span><span class="p">,</span> <span class="c"># a followed by anything, ending in b</span>
+                <span class="s">&#39;a.*?b&#39;</span><span class="p">,</span> <span class="c"># a followed by anything, ending in b</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>Combining dot with repetition can result in very long matches, unless
+the non-greedy form is used.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_charset_dot.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;a.&quot;
+   0 :  1 = &quot;ab&quot;
+   3 :  4 = &quot;aa&quot;
+   5 :  6 = &quot;ab&quot;
+  10 : 11 = &quot;aa&quot;
+  12 : 13 = &quot;aa&quot;
+
+Matching &quot;b.&quot;
+   1 :  2 = &quot;bb&quot;
+   6 :  7 = &quot;bb&quot;
+   8 :  9 = &quot;bb&quot;
+
+Matching &quot;a.*b&quot;
+   0 :  9 = &quot;abbaaabbbb&quot;
+
+Matching &quot;a.*?b&quot;
+   0 :  1 = &quot;ab&quot;
+   3 :  6 = &quot;aaab&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="escape-codes">
+<h3>Escape Codes<a class="headerlink" href="#escape-codes" title="Permalink to this headline">¶</a></h3>
+<p>An even more compact representation uses escape codes for several
+pre-defined character sets.  The escape codes recognized by <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a>
+are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">\d</span></tt></td>
+<td>a digit</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">\D</span></tt></td>
+<td>a non-digit</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">\s</span></tt></td>
+<td>whitespace (tab, space, newline, etc.)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">\S</span></tt></td>
+<td>non-whitespace</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">\w</span></tt></td>
+<td>alphanumeric</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">\W</span></tt></td>
+<td>non-alphanumeric</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Escapes are indicated by prefixing the character with a backslash
+(<tt class="docutils literal"><span class="pre">\</span></tt>). Unfortunately, a backslash must itself be escaped in
+normal Python strings, and that results in expressions that are
+difficult to read.  Using <em>raw</em> strings, created by prefixing the
+literal value with <tt class="docutils literal"><span class="pre">r</span></tt>, for creating regular expressions
+eliminates this problem and maintains readability.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;This is a prime #1 example!&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">r&#39;\d+&#39;</span><span class="p">,</span> <span class="c"># sequence of digits</span>
+                <span class="s">r&#39;\D+&#39;</span><span class="p">,</span> <span class="c"># sequence of non-digits</span>
+                <span class="s">r&#39;\s+&#39;</span><span class="p">,</span> <span class="c"># sequence of whitespace</span>
+                <span class="s">r&#39;\S+&#39;</span><span class="p">,</span> <span class="c"># sequence of non-whitespace</span>
+                <span class="s">r&#39;\w+&#39;</span><span class="p">,</span> <span class="c"># alphanumeric characters</span>
+                <span class="s">r&#39;\W+&#39;</span><span class="p">,</span> <span class="c"># non-alphanumeric</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>These sample expressions combine escape codes with repetition to find
+sequences of like characters in the input string.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_escape_codes.py
+
+
+          11111111112222222
+012345678901234567890123456
+This is a prime #1 example!
+
+Matching &quot;\d+&quot;
+  17 : 17 = &quot;1&quot;
+
+Matching &quot;\D+&quot;
+   0 : 16 = &quot;This is a prime #&quot;
+  18 : 26 = &quot; example!&quot;
+
+Matching &quot;\s+&quot;
+   4 :  4 = &quot; &quot;
+   7 :  7 = &quot; &quot;
+   9 :  9 = &quot; &quot;
+  15 : 15 = &quot; &quot;
+  18 : 18 = &quot; &quot;
+
+Matching &quot;\S+&quot;
+   0 :  3 = &quot;This&quot;
+   5 :  6 = &quot;is&quot;
+   8 :  8 = &quot;a&quot;
+  10 : 14 = &quot;prime&quot;
+  16 : 17 = &quot;#1&quot;
+  19 : 26 = &quot;example!&quot;
+
+Matching &quot;\w+&quot;
+   0 :  3 = &quot;This&quot;
+   5 :  6 = &quot;is&quot;
+   8 :  8 = &quot;a&quot;
+  10 : 14 = &quot;prime&quot;
+  17 : 17 = &quot;1&quot;
+  19 : 25 = &quot;example&quot;
+
+Matching &quot;\W+&quot;
+   4 :  4 = &quot; &quot;
+   7 :  7 = &quot; &quot;
+   9 :  9 = &quot; &quot;
+  15 : 16 = &quot; #&quot;
+  18 : 18 = &quot; &quot;
+  26 : 26 = &quot;!&quot;
+</pre></div>
+</div>
+<p>To match the characters that are part of the regular expression
+syntax, escape the characters in the search pattern.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">r&#39;\d+ \D+ \s+ \S+ \w+ \W+&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">r&#39;</span><span class="se">\\</span><span class="s">d\+&#39;</span><span class="p">,</span>
+                <span class="s">r&#39;</span><span class="se">\\</span><span class="s">D\+&#39;</span><span class="p">,</span>
+                <span class="s">r&#39;</span><span class="se">\\</span><span class="s">s\+&#39;</span><span class="p">,</span>
+                <span class="s">r&#39;</span><span class="se">\\</span><span class="s">S\+&#39;</span><span class="p">,</span>
+                <span class="s">r&#39;</span><span class="se">\\</span><span class="s">w\+&#39;</span><span class="p">,</span>
+                <span class="s">r&#39;</span><span class="se">\\</span><span class="s">W\+&#39;</span><span class="p">,</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>These patterns escape the backslash and plus characters, since as
+metacharacters both have special meaning in a regular expression.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_escape_escapes.py
+
+
+          1111111111222
+01234567890123456789012
+\d+ \D+ \s+ \S+ \w+ \W+
+
+Matching &quot;\\d\+&quot;
+   0 :  2 = &quot;\d+&quot;
+
+Matching &quot;\\D\+&quot;
+   4 :  6 = &quot;\D+&quot;
+
+Matching &quot;\\s\+&quot;
+   8 : 10 = &quot;\s+&quot;
+
+Matching &quot;\\S\+&quot;
+  12 : 14 = &quot;\S+&quot;
+
+Matching &quot;\\w\+&quot;
+  16 : 18 = &quot;\w+&quot;
+
+Matching &quot;\\W\+&quot;
+  20 : 22 = &quot;\W+&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="anchoring">
+<h3>Anchoring<a class="headerlink" href="#anchoring" title="Permalink to this headline">¶</a></h3>
+<p>In addition to describing the content of a pattern to match, you can
+also specify the relative location in the input text where the pattern
+should appear using <em>anchoring</em> instructions.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">^</span></tt></td>
+<td>start of string, or line</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">$</span></tt></td>
+<td>end of string, or line</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">\A</span></tt></td>
+<td>start of string</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">\Z</span></tt></td>
+<td>end of string</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">\b</span></tt></td>
+<td>empty string at the beginning or end of a word</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">\B</span></tt></td>
+<td>empty string not at the beginning or end of a word</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;This is some text -- with punctuation.&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">r&#39;^\w+&#39;</span><span class="p">,</span>     <span class="c"># word at start of string</span>
+                <span class="s">r&#39;\A\w+&#39;</span><span class="p">,</span>    <span class="c"># word at start of string</span>
+                <span class="s">r&#39;\w+\S*$&#39;</span><span class="p">,</span>  <span class="c"># word at end of string, with optional punctuation</span>
+                <span class="s">r&#39;\w+\S*\Z&#39;</span><span class="p">,</span> <span class="c"># word at end of string, with optional punctuation</span>
+                <span class="s">r&#39;\w*t\w*&#39;</span><span class="p">,</span>  <span class="c"># word containing &#39;t&#39;</span>
+                <span class="s">r&#39;\bt\w+&#39;</span><span class="p">,</span>   <span class="c"># &#39;t&#39; at start of word</span>
+                <span class="s">r&#39;\w+t\b&#39;</span><span class="p">,</span>   <span class="c"># &#39;t&#39; at end of word</span>
+                <span class="s">r&#39;\Bt\B&#39;</span><span class="p">,</span>    <span class="c"># &#39;t&#39;, not start or end of word</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>The patterns in the example for matching words at the beginning and
+end of the string are different because the word at the end of the
+string is followed by punctuation to terminate the sentence.  The
+pattern <tt class="docutils literal"><span class="pre">\w+$</span></tt> would not match, since <tt class="docutils literal"><span class="pre">.</span></tt> is not considered an
+alphanumeric character.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_anchoring.py
+
+
+          1111111111222222222233333333
+01234567890123456789012345678901234567
+This is some text -- with punctuation.
+
+Matching &quot;^\w+&quot;
+   0 :  3 = &quot;This&quot;
+
+Matching &quot;\A\w+&quot;
+   0 :  3 = &quot;This&quot;
+
+Matching &quot;\w+\S*$&quot;
+  26 : 37 = &quot;punctuation.&quot;
+
+Matching &quot;\w+\S*\Z&quot;
+  26 : 37 = &quot;punctuation.&quot;
+
+Matching &quot;\w*t\w*&quot;
+  13 : 16 = &quot;text&quot;
+  21 : 24 = &quot;with&quot;
+  26 : 36 = &quot;punctuation&quot;
+
+Matching &quot;\bt\w+&quot;
+  13 : 16 = &quot;text&quot;
+
+Matching &quot;\w+t\b&quot;
+  13 : 16 = &quot;text&quot;
+
+Matching &quot;\Bt\B&quot;
+  23 : 23 = &quot;t&quot;
+  30 : 30 = &quot;t&quot;
+  33 : 33 = &quot;t&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="constraining-the-search">
+<h2>Constraining the Search<a class="headerlink" href="#constraining-the-search" title="Permalink to this headline">¶</a></h2>
+<p>In situations where you know in advance that only a subset of the full
+input should be searched, you can further constrain the regular
+expression match by telling <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> to limit the search range.  For
+example, if your pattern must appear at the front of the input, then
+using <tt class="xref py py-func docutils literal"><span class="pre">match()</span></tt> instead of <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> will anchor the search
+without having to explicitly include an anchor in the search pattern.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;is&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Text   :&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Pattern:&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Match  :&#39;</span><span class="p">,</span> <span class="n">m</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Search :&#39;</span><span class="p">,</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>Since the literal text <tt class="docutils literal"><span class="pre">is</span></tt> does not appear at the start of the
+input text, it is not found using <tt class="xref py py-func docutils literal"><span class="pre">match()</span></tt>.  The sequence appears
+two other times in the text, though, so <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> finds it.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_match.py
+
+Text   : This is some text -- with punctuation.
+Pattern: is
+Match  : None
+Search : &lt;_sre.SRE_Match object at 0x100452988&gt;
+</pre></div>
+</div>
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> method of a compiled regular expression accepts
+optional <em>start</em> and <em>end</em> position parameters to limit the search to
+a substring of the input.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\b\w*is\w*\b&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%2d</span><span class="s"> : </span><span class="si">%2d</span><span class="s"> = &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> \
+        <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">])</span>
+    <span class="c"># Move forward in text for the next search</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">e</span>
+    
+</pre></div>
+</div>
+<p>This example implements a less efficient form of <tt class="xref py py-func docutils literal"><span class="pre">iterall()</span></tt>.
+Each time a match is found, the end position of that match is used for
+the next search.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_search_substring.py
+
+Text: This is some text -- with punctuation.
+
+   0 :  3 = &quot;This&quot;
+   5 :  6 = &quot;is&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="dissecting-matches-with-groups">
+<h2>Dissecting Matches with Groups<a class="headerlink" href="#dissecting-matches-with-groups" title="Permalink to this headline">¶</a></h2>
+<p>Searching for pattern matches is the basis of the powerful
+capabilities provided by regular expressions.  Adding <em>groups</em> to a
+pattern lets you isolate parts of the matching text, expanding those
+capabilities to create a parser.  Groups are defined by enclosing
+patterns in parentheses (<tt class="docutils literal"><span class="pre">(</span></tt> and <tt class="docutils literal"><span class="pre">)</span></tt>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span> <span class="s">&#39;a(ab)&#39;</span><span class="p">,</span>    <span class="c"># &#39;a&#39; followed by literal &#39;ab&#39;</span>
+                <span class="s">&#39;a(a*b*)&#39;</span><span class="p">,</span>  <span class="c"># &#39;a&#39; followed by 0-n &#39;a&#39; and 0-n &#39;b&#39;</span>
+                <span class="s">&#39;a(ab)*&#39;</span><span class="p">,</span>   <span class="c"># &#39;a&#39; followed by 0-n &#39;ab&#39;</span>
+                <span class="s">&#39;a(ab)+&#39;</span><span class="p">,</span>   <span class="c"># &#39;a&#39; followed by 1-n &#39;ab&#39;</span>
+                <span class="p">])</span>
+</pre></div>
+</div>
+<p>Any complete regular expression can be converted to a group and nested
+within a larger expression.  All of the repetition modifiers can be
+applied to a group as a whole, requiring the entire group pattern to
+repeat.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;a(ab)&quot;
+   4 :  6 = &quot;aab&quot;
+
+Matching &quot;a(a*b*)&quot;
+   0 :  2 = &quot;abb&quot;
+   3 :  9 = &quot;aaabbbb&quot;
+  10 : 14 = &quot;aaaaa&quot;
+
+Matching &quot;a(ab)*&quot;
+   0 :  0 = &quot;a&quot;
+   3 :  3 = &quot;a&quot;
+   4 :  6 = &quot;aab&quot;
+  10 : 10 = &quot;a&quot;
+  11 : 11 = &quot;a&quot;
+  12 : 12 = &quot;a&quot;
+  13 : 13 = &quot;a&quot;
+  14 : 14 = &quot;a&quot;
+
+Matching &quot;a(ab)+&quot;
+   4 :  6 = &quot;aab&quot;
+</pre></div>
+</div>
+<p>To access the substrings matched by the individual groups within a
+pattern, use the <tt class="xref py py-func docutils literal"><span class="pre">groups()</span></tt> method of the <tt class="xref py py-class docutils literal"><span class="pre">Match</span></tt> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+
+<span class="k">print</span> <span class="n">text</span>
+<span class="k">print</span>
+
+<span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">r&#39;^(\w+)&#39;</span><span class="p">,</span>           <span class="c"># word at start of string</span>
+                 <span class="s">r&#39;(\w+)\S*$&#39;</span><span class="p">,</span>        <span class="c"># word at end of string, with optional punctuation</span>
+                 <span class="s">r&#39;(\bt\w+)\W+(\w+)&#39;</span><span class="p">,</span> <span class="c"># word starting with &#39;t&#39; then another word</span>
+                 <span class="s">r&#39;(\w+t)\b&#39;</span><span class="p">,</span>         <span class="c"># word ending with &#39;t&#39;</span>
+                 <span class="p">]:</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Matching &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">pattern</span>
+    <span class="k">print</span> <span class="s">&#39;  &#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">Match.groups()</span></tt> returns a sequence of strings in the order of the
+group within the expression that matches the string.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups_match.py
+
+This is some text -- with punctuation.
+
+Matching &quot;^(\w+)&quot;
+   (&#39;This&#39;,)
+
+Matching &quot;(\w+)\S*$&quot;
+   (&#39;punctuation&#39;,)
+
+Matching &quot;(\bt\w+)\W+(\w+)&quot;
+   (&#39;text&#39;, &#39;with&#39;)
+
+Matching &quot;(\w+t)\b&quot;
+   (&#39;text&#39;,)
+</pre></div>
+</div>
+<p>If you are using grouping to find parts of the string, but you don&#8217;t
+need all of the parts matched by groups, you can ask for the match of
+only a single group with <tt class="xref py py-func docutils literal"><span class="pre">group()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Input text            :&#39;</span><span class="p">,</span> <span class="n">text</span>
+
+<span class="c"># word starting with &#39;t&#39; then another word</span>
+<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;(\bt\w+)\W+(\w+)&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Pattern               :&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">.</span><span class="n">pattern</span>
+
+<span class="n">match</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Entire match          :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Word starting with &quot;t&quot;:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Word after &quot;t&quot; word   :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Group <tt class="docutils literal"><span class="pre">0</span></tt> represents the string matched by the entire expression,
+and sub-groups are numbered starting with <tt class="docutils literal"><span class="pre">1</span></tt> in the order their
+left parenthesis appears in the expression.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups_individual.py
+
+Input text            : This is some text -- with punctuation.
+Pattern               : (\bt\w+)\W+(\w+)
+Entire match          : text -- with
+Word starting with &quot;t&quot;: text
+Word after &quot;t&quot; word   : with
+</pre></div>
+</div>
+<p>Python extends the basic grouping syntax to add <em>named groups</em>.  Using
+names to refer to groups makes it easier to modify the pattern over
+time, without having to also modify the code using the match results.
+To set the name of a group, use the syntax <tt class="docutils literal"><span class="pre">(P?&lt;name&gt;pattern)</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+
+<span class="k">print</span> <span class="n">text</span>
+<span class="k">print</span>
+
+<span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="p">[</span> <span class="s">r&#39;^(?P&lt;first_word&gt;\w+)&#39;</span><span class="p">,</span>
+                 <span class="s">r&#39;(?P&lt;last_word&gt;\w+)\S*$&#39;</span><span class="p">,</span>
+                 <span class="s">r&#39;(?P&lt;t_word&gt;\bt\w+)\W+(?P&lt;other_word&gt;\w+)&#39;</span><span class="p">,</span>
+                 <span class="s">r&#39;(?P&lt;ends_with_t&gt;\w+t)\b&#39;</span><span class="p">,</span>
+                 <span class="p">]:</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Matching &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">pattern</span>
+    <span class="k">print</span> <span class="s">&#39;  &#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;  &#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Use <tt class="xref py py-func docutils literal"><span class="pre">groupdict()</span></tt> to retrieve the dictionary mapping group names
+to substrings from the match.  Named patterns are included in the
+ordered sequence returned by <tt class="xref py py-func docutils literal"><span class="pre">groups()</span></tt>, as well.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups_named.py
+
+This is some text -- with punctuation.
+
+Matching &quot;^(?P&lt;first_word&gt;\w+)&quot;
+   (&#39;This&#39;,)
+   {&#39;first_word&#39;: &#39;This&#39;}
+
+Matching &quot;(?P&lt;last_word&gt;\w+)\S*$&quot;
+   (&#39;punctuation&#39;,)
+   {&#39;last_word&#39;: &#39;punctuation&#39;}
+
+Matching &quot;(?P&lt;t_word&gt;\bt\w+)\W+(?P&lt;other_word&gt;\w+)&quot;
+   (&#39;text&#39;, &#39;with&#39;)
+   {&#39;other_word&#39;: &#39;with&#39;, &#39;t_word&#39;: &#39;text&#39;}
+
+Matching &quot;(?P&lt;ends_with_t&gt;\w+t)\b&quot;
+   (&#39;text&#39;,)
+   {&#39;ends_with_t&#39;: &#39;text&#39;}
+</pre></div>
+</div>
+<p>An updated version of <tt class="xref py py-func docutils literal"><span class="pre">test_patterns()</span></tt> that shows the numbered
+and named groups matched by a pattern will make the following examples
+easier to follow.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">test_patterns</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">&quot;&quot;&quot;Given source text and a list of patterns, look for</span>
+<span class="sd">    matches for each pattern within the text and print</span>
+<span class="sd">    them to stdout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Show the character positions and input text</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="ow">or</span> <span class="s">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+    <span class="k">print</span> <span class="n">text</span>
+
+    <span class="c"># Look for each pattern in the text and print the results</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+        <span class="k">print</span>
+        <span class="k">print</span> <span class="s">&#39;Matching &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">pattern</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&#39;  </span><span class="si">%2d</span><span class="s"> : </span><span class="si">%2d</span><span class="s"> = &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> \
+                <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">])</span>
+            <span class="k">print</span> <span class="s">&#39;    Groups:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">():</span>
+                <span class="k">print</span> <span class="s">&#39;    Named groups:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+            <span class="k">print</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>Since a group is itself a complete regular expression, groups can be
+nested within other groups to build even more complicated expressions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns_groups</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span><span class="s">r&#39;a((a*)(b*))&#39;</span><span class="p">,</span> <span class="c"># &#39;a&#39; followed by 0-n &#39;a&#39; and 0-n &#39;b&#39;</span>
+               <span class="p">])</span>
+</pre></div>
+</div>
+<p>In this case, the group <tt class="docutils literal"><span class="pre">(a*)</span></tt> matches an empty string, so the
+return value from <tt class="xref py py-func docutils literal"><span class="pre">groups()</span></tt> includes that empty string as the
+matched value.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups_nested.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;a((a*)(b*))&quot;
+   0 :  2 = &quot;abb&quot;
+    Groups: (&#39;bb&#39;, &#39;&#39;, &#39;bb&#39;)
+
+   3 :  9 = &quot;aaabbbb&quot;
+    Groups: (&#39;aabbbb&#39;, &#39;aa&#39;, &#39;bbbb&#39;)
+
+  10 : 14 = &quot;aaaaa&quot;
+    Groups: (&#39;aaaa&#39;, &#39;aaaa&#39;, &#39;&#39;)
+</pre></div>
+</div>
+<p>Groups are also useful for specifying alternative patterns.  Use <tt class="docutils literal"><span class="pre">|</span></tt>
+to indicate that one pattern or another should match.  Consider the
+placement of the <tt class="docutils literal"><span class="pre">|</span></tt> carefully, though.  The first expression in
+this example matches a sequence of <tt class="docutils literal"><span class="pre">a</span></tt> followed by a sequence
+consisting entirely of a single letter, <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt>.  The second
+pattern matches <tt class="docutils literal"><span class="pre">a</span></tt> followed by a sequence that may include <em>either</em>
+<tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt>.  The patterns are similar, but the resulting matches
+are completely different.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns_groups</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span><span class="s">r&#39;a((a+)|(b+))&#39;</span><span class="p">,</span> <span class="c"># &#39;a&#39; followed by a sequence of &#39;a&#39; or sequence of &#39;b&#39;</span>
+               <span class="s">r&#39;a((a|b)+)&#39;</span><span class="p">,</span>    <span class="c"># &#39;a&#39; followed by a sequence of &#39;a&#39; or &#39;b&#39;</span>
+               <span class="p">])</span>
+</pre></div>
+</div>
+<p>When an alternative group is not matched, but the entire pattern does
+match, the return value of <tt class="xref py py-func docutils literal"><span class="pre">groups()</span></tt> includes a <tt class="docutils literal"><span class="pre">None</span></tt> value at
+the point in the sequence where the alternative group should appear.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups_alternative.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;a((a+)|(b+))&quot;
+   0 :  2 = &quot;abb&quot;
+    Groups: (&#39;bb&#39;, None, &#39;bb&#39;)
+
+   3 :  5 = &quot;aaa&quot;
+    Groups: (&#39;aa&#39;, &#39;aa&#39;, None)
+
+  10 : 14 = &quot;aaaaa&quot;
+    Groups: (&#39;aaaa&#39;, &#39;aaaa&#39;, None)
+
+
+Matching &quot;a((a|b)+)&quot;
+   0 : 14 = &quot;abbaaabbbbaaaaa&quot;
+    Groups: (&#39;bbaaabbbbaaaaa&#39;, &#39;a&#39;)
+</pre></div>
+</div>
+<p>Defining a group containing a sub-pattern is also useful in cases
+where the string matching the sub-pattern is not part of what you want
+to extract from the full text.  These groups are called
+<em>non-capturing</em>.  To create a non-capturing group, use the syntax
+<tt class="docutils literal"><span class="pre">(?:pattern)</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">re_test_patterns_groups</span> <span class="kn">import</span> <span class="n">test_patterns</span>
+
+<span class="n">test_patterns</span><span class="p">(</span><span class="s">&#39;abbaaabbbbaaaaa&#39;</span><span class="p">,</span>
+              <span class="p">[</span><span class="s">r&#39;a((a+)|(b+))&#39;</span><span class="p">,</span>     <span class="c"># capturing form</span>
+               <span class="s">r&#39;a((?:a+)|(?:b+))&#39;</span><span class="p">,</span> <span class="c"># non-capturing</span>
+               <span class="p">])</span>
+</pre></div>
+</div>
+<p>Compare the groups returned for the capturing and non-capturing forms
+of a pattern that matches the same results.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_groups_non_capturing.py
+
+
+          11111
+012345678901234
+abbaaabbbbaaaaa
+
+Matching &quot;a((a+)|(b+))&quot;
+   0 :  2 = &quot;abb&quot;
+    Groups: (&#39;bb&#39;, None, &#39;bb&#39;)
+
+   3 :  5 = &quot;aaa&quot;
+    Groups: (&#39;aa&#39;, &#39;aa&#39;, None)
+
+  10 : 14 = &quot;aaaaa&quot;
+    Groups: (&#39;aaaa&#39;, &#39;aaaa&#39;, None)
+
+
+Matching &quot;a((?:a+)|(?:b+))&quot;
+   0 :  2 = &quot;abb&quot;
+    Groups: (&#39;bb&#39;,)
+
+   3 :  5 = &quot;aaa&quot;
+    Groups: (&#39;aa&#39;,)
+
+  10 : 14 = &quot;aaaaa&quot;
+    Groups: (&#39;aaaa&#39;,)
+</pre></div>
+</div>
+</div>
+<div class="section" id="search-options">
+<h2>Search Options<a class="headerlink" href="#search-options" title="Permalink to this headline">¶</a></h2>
+<p>You can change the way the matching engine processes an expression
+using option flags.  The flags can be combined using a bitwise or
+operation, and passed to <tt class="xref py py-func docutils literal"><span class="pre">compile()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt>,
+<tt class="xref py py-func docutils literal"><span class="pre">match()</span></tt>, and other functions that accept a pattern for
+searching.</p>
+<div class="section" id="case-insensitive-matching">
+<h3>Case-insensitive Matching<a class="headerlink" href="#case-insensitive-matching" title="Permalink to this headline">¶</a></h3>
+<p><tt class="xref py py-const docutils literal"><span class="pre">IGNORECASE</span></tt> causes literal characters and character ranges in
+the pattern to match both upper and lower case characters.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">r&#39;\bT\w+&#39;</span>
+<span class="n">with_case</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+<span class="n">without_case</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Text            :&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Pattern         :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span> <span class="s">&#39;Case-sensitive  :&#39;</span><span class="p">,</span> <span class="n">with_case</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Case-insensitive:&#39;</span><span class="p">,</span> <span class="n">without_case</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since the pattern includes the literal <tt class="docutils literal"><span class="pre">T</span></tt>, without setting
+<tt class="xref py py-const docutils literal"><span class="pre">IGNORECASE</span></tt> the only match is the word <tt class="docutils literal"><span class="pre">This</span></tt>.  When case is
+ignored, <tt class="docutils literal"><span class="pre">text</span></tt> also matches.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_flags_ignorecase.py
+
+Text            : This is some text -- with punctuation.
+Pattern         : \bT\w+
+Case-sensitive  : [&#39;This&#39;]
+Case-insensitive: [&#39;This&#39;, &#39;text&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-with-multiple-lines">
+<h3>Input with Multiple Lines<a class="headerlink" href="#input-with-multiple-lines" title="Permalink to this headline">¶</a></h3>
+<p>There are two flags that effect how searching in multi-line input
+works.  The <tt class="xref py py-const docutils literal"><span class="pre">MULTILINE</span></tt> flag controls how the pattern matching
+code processes anchoring instructions for text containing newline
+characters.  When multiline mode is turned on, the anchor rules for
+<tt class="docutils literal"><span class="pre">^</span></tt> and <tt class="docutils literal"><span class="pre">$</span></tt> apply at the beginning and end of each line, in
+addition to the entire string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.</span><span class="se">\n</span><span class="s">And a second line.&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">r&#39;(^\w+)|(\w+\S*$)&#39;</span>
+<span class="n">single_line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+<span class="n">multiline</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Text        :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Pattern     :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span> <span class="s">&#39;Single Line :&#39;</span><span class="p">,</span> <span class="n">single_line</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Multline    :&#39;</span><span class="p">,</span> <span class="n">multiline</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The pattern in the example matches the first or last word of the
+input.  It matches <tt class="docutils literal"><span class="pre">line.</span></tt> at the end of the string, even though
+there is no newline.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_flags_multiline.py
+
+Text        : &#39;This is some text -- with punctuation.\nAnd a second line.&#39;
+Pattern     : (^\w+)|(\w+\S*$)
+Single Line : [(&#39;This&#39;, &#39;&#39;), (&#39;&#39;, &#39;line.&#39;)]
+Multline    : [(&#39;This&#39;, &#39;&#39;), (&#39;&#39;, &#39;punctuation.&#39;), (&#39;And&#39;, &#39;&#39;), (&#39;&#39;, &#39;line.&#39;)]
+</pre></div>
+</div>
+<p><tt class="xref py py-const docutils literal"><span class="pre">DOTALL</span></tt> is the other flag related to multiline text.  Normally
+the dot character <tt class="docutils literal"><span class="pre">.</span></tt> matches everything in the input text except a
+newline character.  The flag allows dot to match newlines as well.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.</span><span class="se">\n</span><span class="s">And a second line.&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">r&#39;.+&#39;</span>
+<span class="n">no_newlines</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+<span class="n">dotall</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Text        :&#39;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Pattern     :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span> <span class="s">&#39;No newlines :&#39;</span><span class="p">,</span> <span class="n">no_newlines</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Dotall      :&#39;</span><span class="p">,</span> <span class="n">dotall</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Without the flag, each line of the input text matches the pattern
+separately.  Adding the flag causes the entire string to be consumed.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_flags_dotall.py
+
+Text        : &#39;This is some text -- with punctuation.\nAnd a second line.&#39;
+Pattern     : .+
+No newlines : [&#39;This is some text -- with punctuation.&#39;, &#39;And a second line.&#39;]
+Dotall      : [&#39;This is some text -- with punctuation.\nAnd a second line.&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="unicode">
+<h3>Unicode<a class="headerlink" href="#unicode" title="Permalink to this headline">¶</a></h3>
+<p>Under Python 2, <tt class="xref py py-class docutils literal"><span class="pre">str</span></tt> objects use the ASCII character set, and
+regular expression processing assumes that the pattern and input text
+are both ASCII.  The escape codes described earlier are defined in
+terms of ASCII by default.  Those assumptions mean that the pattern
+<tt class="docutils literal"><span class="pre">\w+</span></tt> will match the word &#8220;French&#8221; but not &#8220;Français&#8221;, since the
+<tt class="docutils literal"><span class="pre">ç</span></tt> is not part of the ASCII character set.  To enable Unicode
+matching in Python 2, add the <tt class="xref py py-const docutils literal"><span class="pre">UNICODE</span></tt> flag when compiling the
+pattern.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c"># Set standard output encoding to UTF-8.</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">getwriter</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">u&#39;Français złoty Österreich&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">ur&#39;\w+&#39;</span>
+<span class="n">ascii_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+<span class="n">unicode_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Text    :&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Pattern :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span> <span class="s">&#39;ASCII   :&#39;</span><span class="p">,</span> <span class="s">u&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ascii_pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">&#39;Unicode :&#39;</span><span class="p">,</span> <span class="s">u&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">unicode_pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The other escape sequences (<tt class="docutils literal"><span class="pre">\W</span></tt>, <tt class="docutils literal"><span class="pre">\b</span></tt>, <tt class="docutils literal"><span class="pre">\B</span></tt>, <tt class="docutils literal"><span class="pre">\d</span></tt>, <tt class="docutils literal"><span class="pre">\D</span></tt>,
+<tt class="docutils literal"><span class="pre">\s</span></tt>, and <tt class="docutils literal"><span class="pre">\S</span></tt>) are also processed differently for Unicode text.
+Instead of assuming the members of the character set identified by the
+escape sequence, the regular expression engine consults the Unicode
+database to find the properties of each character.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_flags_unicode.py
+
+Text    : Français złoty Österreich
+Pattern : \w+
+ASCII   : Fran, ais, z, oty, sterreich
+Unicode : Français, złoty, Österreich
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Python 3 uses Unicode for all strings by default, so the flag is not
+necessary.</p>
+</div>
+</div>
+<div class="section" id="verbose-expression-syntax">
+<h3>Verbose Expression Syntax<a class="headerlink" href="#verbose-expression-syntax" title="Permalink to this headline">¶</a></h3>
+<p>The compact format of regular expression syntax can become a hindrance
+as expressions grow more complicated.  As the number of groups in your
+expression increases, you will have trouble keeping track of why each
+element is needed and how exactly the parts of the expression
+interact.  Using named groups helps mitigate these issues, but a
+better solution is to use <em>verbose mode</em> expressions, which allow you
+to add comments and extra whitespace.</p>
+<p>A pattern to validate email addresses will illustrate how verbose mode
+makes working with regular expressions easier.  The first version
+recognizes addresses that end in one of three top-level domains,
+<tt class="docutils literal"><span class="pre">.com</span></tt>, <tt class="docutils literal"><span class="pre">.org</span></tt>, and <tt class="docutils literal"><span class="pre">.edu</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;[\w\d.+-]+@([\w\d.]+\.)+(com|org|edu)&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;first.last+category@gmail.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;valid-address@mail.example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;not-valid@example.foo&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Matches&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+    
+</pre></div>
+</div>
+<p>This expression is already complex.  There are several character
+classes, groups, and repetition expressions.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_email_compact.py
+
+
+Candidate: first.last@example.com
+  Matches
+
+Candidate: first.last+category@gmail.com
+  Matches
+
+Candidate: valid-address@mail.example.com
+  Matches
+
+Candidate: not-valid@example.foo
+  No match
+</pre></div>
+</div>
+<p>Converting the expression to a more verbose format will make it easier
+to extend.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    [\w\d.+-]+       # username</span>
+<span class="sd">    @</span>
+<span class="sd">    ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">    (com|org|edu)    # we should support more top-level domains</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;first.last+category@gmail.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;valid-address@mail.example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;not-valid@example.foo&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Matches&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+    
+</pre></div>
+</div>
+<p>The expression matches the same inputs, but in this extended format it
+is easier to read.  The comments also help identify different parts of
+the pattern so that it can be expanded to match more inputs.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_email_verbose.py
+
+
+Candidate: first.last@example.com
+  Matches
+
+Candidate: first.last+category@gmail.com
+  Matches
+
+Candidate: valid-address@mail.example.com
+  Matches
+
+Candidate: not-valid@example.foo
+  No match
+</pre></div>
+</div>
+<p>This expanded version parses inputs that include a person&#8217;s name and
+email address, as might appear in an email header.  The name comes
+first and stands on its own, and the email address follows surrounded
+by angle brackets (<tt class="docutils literal"><span class="pre">&lt;</span></tt> and <tt class="docutils literal"><span class="pre">&gt;</span></tt>).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">    # A name is made up of letters, and may include &quot;.&quot; for title</span>
+<span class="sd">    # abbreviations and middle initials.</span>
+<span class="sd">    ((?P&lt;name&gt;</span>
+<span class="sd">       ([\w.,]+\s+)*[\w.,]+)</span>
+<span class="sd">       \s*</span>
+<span class="sd">       # Email addresses are wrapped in angle brackets: &lt; &gt;</span>
+<span class="sd">       # but we only want one if we found a name, so keep</span>
+<span class="sd">       # the start bracket in this group.</span>
+<span class="sd">       &lt;</span>
+<span class="sd">    )? # the entire name is optional</span>
+
+<span class="sd">    # The address itself: username@domain.tld</span>
+<span class="sd">    (?P&lt;email&gt;</span>
+<span class="sd">      [\w\d.+-]+       # username</span>
+<span class="sd">      @</span>
+<span class="sd">      ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">      (com|org|edu)    # limit the allowed top-level domains</span>
+<span class="sd">    )</span>
+
+<span class="sd">    &gt;? # optional closing angle bracket</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;first.last+category@gmail.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;valid-address@mail.example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;not-valid@example.foo&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;No Brackets first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First Last&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First Middle Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First M. Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;&lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match name :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s">&#39;  Match email:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;email&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>As with other programming languages, the ability to insert comments
+into verbose regular expressions helps with their maintainability.
+This final version includes implementation notes to future maintainers
+and whitespace to separate the groups from each other and highlight
+their nesting level.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_email_with_name.py
+
+
+Candidate: first.last@example.com
+  Match name : None
+  Match email: first.last@example.com
+
+Candidate: first.last+category@gmail.com
+  Match name : None
+  Match email: first.last+category@gmail.com
+
+Candidate: valid-address@mail.example.com
+  Match name : None
+  Match email: valid-address@mail.example.com
+
+Candidate: not-valid@example.foo
+  No match
+
+Candidate: First Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: No Brackets first.last@example.com
+  Match name : None
+  Match email: first.last@example.com
+
+Candidate: First Last
+  No match
+
+Candidate: First Middle Last &lt;first.last@example.com&gt;
+  Match name : First Middle Last
+  Match email: first.last@example.com
+
+Candidate: First M. Last &lt;first.last@example.com&gt;
+  Match name : First M. Last
+  Match email: first.last@example.com
+
+Candidate: &lt;first.last@example.com&gt;
+  Match name : None
+  Match email: first.last@example.com
+</pre></div>
+</div>
+</div>
+<div class="section" id="embedding-flags-in-patterns">
+<h3>Embedding Flags in Patterns<a class="headerlink" href="#embedding-flags-in-patterns" title="Permalink to this headline">¶</a></h3>
+<p>In situations where you cannot add flags when compiling an expression,
+such as when you are passing a pattern to a library function that will
+compile it later, you can embed the flags inside the expression string
+itself.  For example, to turn case-insensitive matching on, add
+<tt class="docutils literal"><span class="pre">(?i)</span></tt> to the beginning of the expression.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;This is some text -- with punctuation.&#39;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s">r&#39;(?i)\bT\w+&#39;</span>
+<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39;Text      :&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Pattern   :&#39;</span><span class="p">,</span> <span class="n">pattern</span>
+<span class="k">print</span> <span class="s">&#39;Matches   :&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because the options control the way the entire expression is evaluated
+or parsed, they should always come at the beginning of the expression.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_flags_embedded.py
+
+Text      : This is some text -- with punctuation.
+Pattern   : (?i)\bT\w+
+Matches   : [&#39;This&#39;, &#39;text&#39;]
+</pre></div>
+</div>
+<p>The abbreviations for all of the flags are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="63%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Flag</th>
+<th class="head">Abbreviation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="xref py py-const docutils literal"><span class="pre">IGNORECASE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">i</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-const docutils literal"><span class="pre">MULTILINE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">m</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-const docutils literal"><span class="pre">DOTALL</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">s</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-const docutils literal"><span class="pre">UNICODE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">u</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-const docutils literal"><span class="pre">VERBOSE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Embedded flags can be combined by placing them within the same group.
+For example, <tt class="docutils literal"><span class="pre">(?imu)</span></tt> turns on case-insensitive matching for
+multiline Unicode strings.</p>
+</div>
+</div>
+<div class="section" id="looking-ahead-or-behind">
+<h2>Looking Ahead, or Behind<a class="headerlink" href="#looking-ahead-or-behind" title="Permalink to this headline">¶</a></h2>
+<p>There are many cases where it is useful to match a part of a pattern
+only if some other part will also match.  For example, in the email
+parsing expression the angle brackets were each marked as optional.
+Really, though, the brackets should be paired, and the expression
+should only match if both are present, or neither are.  This modified
+version of the expression uses a <em>positive look ahead</em> assertion to
+match the pair.  The look ahead assertion syntax is <tt class="docutils literal"><span class="pre">(?=pattern)</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    # A name is made up of letters, and may include &quot;.&quot; for title</span>
+<span class="sd">    # abbreviations and middle initials.</span>
+<span class="sd">    ((?P&lt;name&gt;</span>
+<span class="sd">       ([\w.,]+\s+)*[\w.,]+</span>
+<span class="sd">     )</span>
+<span class="sd">     \s+</span>
+<span class="sd">    ) # name is no longer optional</span>
+
+<span class="sd">    # LOOKAHEAD</span>
+<span class="sd">    # Email addresses are wrapped in angle brackets, but we only want</span>
+<span class="sd">    # the brackets if they are both there, or neither are.</span>
+<span class="sd">    (?= (&lt;.*&gt;$)       # remainder wrapped in angle brackets</span>
+<span class="sd">        |</span>
+<span class="sd">        ([^&lt;].*[^&gt;]$) # remainder *not* wrapped in angle brackets</span>
+<span class="sd">      )</span>
+
+<span class="sd">    &lt;? # optional opening angle bracket</span>
+
+<span class="sd">    # The address itself: username@domain.tld</span>
+<span class="sd">    (?P&lt;email&gt;</span>
+<span class="sd">      [\w\d.+-]+       # username</span>
+<span class="sd">      @</span>
+<span class="sd">      ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">      (com|org|edu)    # limit the allowed top-level domains</span>
+<span class="sd">    )</span>
+
+<span class="sd">    &gt;? # optional closing angle bracket</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;First Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;No Brackets first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;Open Bracket &lt;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;Close Bracket first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match name :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s">&#39;  Match email:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;email&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>There are several important changes in this version of the expression.
+First, the name portion is no longer optional.  That means stand-alone
+addresses do not match, but it also prevents improperly formatted
+name/address combinations from matching.  The positive look ahead rule
+after the &#8220;name&#8221; group asserts that the remainder of the string is
+either wrapped with a pair of angle brackets, or there is not a
+mismatched bracket; the brackets are either both present or neither
+is.  The look ahead is expressed as a group, but the match for a look
+ahead group does not consume any of the input text, so the rest of the
+pattern picks up from the same spot after the look ahead matches.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_look_ahead.py
+
+
+Candidate: First Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: No Brackets first.last@example.com
+  Match name : No Brackets
+  Match email: first.last@example.com
+
+Candidate: Open Bracket &lt;first.last@example.com
+  No match
+
+Candidate: Close Bracket first.last@example.com&gt;
+  No match
+</pre></div>
+</div>
+<p>A <em>negative look ahead</em> assertion (<tt class="docutils literal"><span class="pre">(?!pattern)</span></tt>) says that the
+pattern does not match the text following the current point.  For
+example, the email recognition pattern could be modified to ignore
+<tt class="docutils literal"><span class="pre">noreply</span></tt> mailing addresses commonly used by automated systems.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    ^</span>
+
+<span class="sd">    # An address: username@domain.tld</span>
+
+<span class="sd">    # Ignore noreply addresses</span>
+<span class="sd">    (?!noreply@.*$)</span>
+
+<span class="sd">    [\w\d.+-]+       # username</span>
+<span class="sd">    @</span>
+<span class="sd">    ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">    (com|org|edu)    # limit the allowed top-level domains</span>
+
+<span class="sd">    $</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;noreply@example.com&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match:&#39;</span><span class="p">,</span> <span class="n">candidate</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">():</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>The address starting <tt class="docutils literal"><span class="pre">noreply</span></tt> does not match the pattern, since the
+look ahead assertion fails.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_negative_look_ahead.py
+
+
+Candidate: first.last@example.com
+  Match: first.last@example.com
+
+Candidate: noreply@example.com
+  No match
+</pre></div>
+</div>
+<p>Instead of looking ahead for <tt class="docutils literal"><span class="pre">noreply</span></tt> in the username portion of
+the email address, the pattern can also be written using a <em>negative
+look behind</em> assertion after the username is matched using the syntax
+<tt class="docutils literal"><span class="pre">(?&lt;!pattern)</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    ^</span>
+
+<span class="sd">    # An address: username@domain.tld</span>
+
+<span class="sd">    [\w\d.+-]+       # username</span>
+
+<span class="sd">    # Ignore noreply addresses</span>
+<span class="sd">    (?&lt;!noreply)</span>
+
+<span class="sd">    @</span>
+<span class="sd">    ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">    (com|org|edu)    # limit the allowed top-level domains</span>
+
+<span class="sd">    $</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;noreply@example.com&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match:&#39;</span><span class="p">,</span> <span class="n">candidate</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">():</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>Looking backwards works a little differently than looking ahead, in
+that the expression must use a fixed length pattern.  Repetitions are
+allowed, as long as there is a fixed number (no wildcards or ranges).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_negative_look_behind.py
+
+
+Candidate: first.last@example.com
+  Match: first.last@example.com
+
+Candidate: noreply@example.com
+  No match
+</pre></div>
+</div>
+<p>A <em>positive look behind</em> assertion can be used to find text following
+a pattern using the syntax <tt class="docutils literal"><span class="pre">(?&lt;=pattern)</span></tt>.  For example, this
+expression finds Twitter handles.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">twitter</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    # A twitter handle: @username</span>
+<span class="sd">    (?&lt;=@)</span>
+<span class="sd">    ([\w\d_]+)       # username</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;This text includes two Twitter handles.</span>
+<span class="s">One for @ThePSF, and one for the author, @doughellmann.</span>
+<span class="s">&#39;&#39;&#39;</span>
+
+<span class="k">print</span> <span class="n">text</span>
+<span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">twitter</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Handle:&#39;</span><span class="p">,</span> <span class="n">match</span>
+</pre></div>
+</div>
+<p>The pattern matches sequences of characters that can make up a Twitter
+handle, as long as they are preceded by an <tt class="docutils literal"><span class="pre">&#64;</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_look_behind.py
+
+This text includes two Twitter handles.
+One for @ThePSF, and one for the author, @doughellmann.
+
+Handle: ThePSF
+Handle: doughellmann
+</pre></div>
+</div>
+</div>
+<div class="section" id="self-referencing-expressions">
+<h2>Self-referencing Expressions<a class="headerlink" href="#self-referencing-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Matched values can be used in later parts of an expression.  For
+example, the email example can be updated to match only addresses
+composed of the first and last name of the person by including
+back-references to those groups.  The easiest way to achieve this is
+by referring to the previously matched group by id number, using
+<tt class="docutils literal"><span class="pre">\num</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">r&#39;&#39;&#39;</span>
+
+<span class="sd">    # The regular name</span>
+<span class="sd">    (\w+)               # first name</span>
+<span class="sd">    \s+</span>
+<span class="sd">    (([\w.]+)\s+)?      # optional middle name or initial</span>
+<span class="sd">    (\w+)               # last name</span>
+
+<span class="sd">    \s+</span>
+
+<span class="sd">    &lt;</span>
+
+<span class="sd">    # The address: first_name.last_name@domain.tld</span>
+<span class="sd">    (?P&lt;email&gt;</span>
+<span class="sd">      \1               # first name</span>
+<span class="sd">      \.</span>
+<span class="sd">      \4               # last name</span>
+<span class="sd">      @</span>
+<span class="sd">      ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">      (com|org|edu)    # limit the allowed top-level domains</span>
+<span class="sd">    )</span>
+
+<span class="sd">    &gt;</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;First Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;Different Name &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First Middle Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First M. Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match name :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;  Match email:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>Although the syntax is simple, creating back-references by numerical
+id has a couple of disadvantages.  From a practical standpoint, as the
+expression changes, you must count the groups again and possibly
+update every reference.  The other disadvantage is that only 99
+references can be made this way, because if the id number is three
+digits long it will be interpreted as an octal character value instead
+of a group reference.  On the other hand, if you have more than 99
+groups in your expression you will have more serious maintenance
+challenges than not being able to refer to some of the groups in the
+expression.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_refer_to_group.py
+
+
+Candidate: First Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: Different Name &lt;first.last@example.com&gt;
+  No match
+
+Candidate: First Middle Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: First M. Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+</pre></div>
+</div>
+<p>Python&#8217;s expression parser includes an extension that uses
+<tt class="docutils literal"><span class="pre">(?P=name)</span></tt> to refer to the value of a named group matched earlier
+in the expression.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">    # The regular name</span>
+<span class="sd">    (?P&lt;first_name&gt;\w+)</span>
+<span class="sd">    \s+</span>
+<span class="sd">    (([\w.]+)\s+)?      # optional middle name or initial</span>
+<span class="sd">    (?P&lt;last_name&gt;\w+)</span>
+
+<span class="sd">    \s+</span>
+
+<span class="sd">    &lt;</span>
+
+<span class="sd">    # The address: first_name.last_name@domain.tld</span>
+<span class="sd">    (?P&lt;email&gt;</span>
+<span class="sd">      (?P=first_name)</span>
+<span class="sd">      \.</span>
+<span class="sd">      (?P=last_name)</span>
+<span class="sd">      @</span>
+<span class="sd">      ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">      (com|org|edu)    # limit the allowed top-level domains</span>
+<span class="sd">    )</span>
+
+<span class="sd">    &gt;</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;First Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;Different Name &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First Middle Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;First M. Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match name :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;first_name&#39;</span><span class="p">],</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;last_name&#39;</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s">&#39;  Match email:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;email&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>The address expression is compiled with the <tt class="xref py py-const docutils literal"><span class="pre">IGNORECASE</span></tt> flag
+on, since proper names are normally capitalized but email addresses
+are not.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_refer_to_named_group.py
+
+
+Candidate: First Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: Different Name &lt;first.last@example.com&gt;
+  No match
+
+Candidate: First Middle Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: First M. Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+</pre></div>
+</div>
+<p>The other mechanism for using back-references in expressions lets you
+choose a different pattern based on whether or not a previous group
+matched.  The email pattern can be corrected so that the angle
+brackets are required if a name is present, and not if the email
+address is by itself.  The syntax for testing to see if a group has
+matched is <tt class="docutils literal"><span class="pre">(?(id)yes-expression|no-expression)</span></tt>, where <em>id</em> is the
+group name or number, <em>yes-expression</em> is the pattern to use if the
+group has a value and <em>no-expression</em> is the pattern to use otherwise.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    ^</span>
+
+<span class="sd">    # A name is made up of letters, and may include &quot;.&quot; for title</span>
+<span class="sd">    # abbreviations and middle initials.</span>
+<span class="sd">    (?P&lt;name&gt;</span>
+<span class="sd">       ([\w.]+\s+)*[\w.]+</span>
+<span class="sd">     )?</span>
+<span class="sd">    \s*</span>
+
+<span class="sd">    # Email addresses are wrapped in angle brackets, but we only want</span>
+<span class="sd">    # the brackets if we found a name.</span>
+<span class="sd">    (?(name)</span>
+<span class="sd">      # remainder wrapped in angle brackets because we have a name</span>
+<span class="sd">      (?P&lt;brackets&gt;(?=(&lt;.*&gt;$)))</span>
+<span class="sd">      |</span>
+<span class="sd">      # remainder does not include angle brackets without name</span>
+<span class="sd">      (?=([^&lt;].*[^&gt;]$))</span>
+<span class="sd">     )</span>
+
+<span class="sd">    # Only look for a bracket if our look ahead assertion found both</span>
+<span class="sd">    # of them.</span>
+<span class="sd">    (?(brackets)&lt;|\s*)</span>
+
+<span class="sd">    # The address itself: username@domain.tld</span>
+<span class="sd">    (?P&lt;email&gt;</span>
+<span class="sd">      [\w\d.+-]+       # username</span>
+<span class="sd">      @</span>
+<span class="sd">      ([\w\d.]+\.)+    # domain name prefix</span>
+<span class="sd">      (com|org|edu)    # limit the allowed top-level domains</span>
+<span class="sd">     )</span>
+
+<span class="sd">    # Only look for a bracket if our look ahead assertion found both</span>
+<span class="sd">    # of them.</span>
+<span class="sd">    (?(brackets)&gt;|\s*)</span>
+
+<span class="sd">    $</span>
+<span class="sd">    &#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">u&#39;First Last &lt;first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;No Brackets first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;Open Bracket &lt;first.last@example.com&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;Close Bracket first.last@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="s">u&#39;no.brackets@example.com&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
+    <span class="k">print</span>
+    <span class="k">print</span> <span class="s">&#39;Candidate:&#39;</span><span class="p">,</span> <span class="n">candidate</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  Match name :&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s">&#39;  Match email:&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="s">&#39;email&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;  No match&#39;</span>
+</pre></div>
+</div>
+<p>This version of the email address parser uses two tests.  If the
+<tt class="docutils literal"><span class="pre">name</span></tt> group matches, then the look ahead assertion requires both
+angle brackets and sets up the <tt class="docutils literal"><span class="pre">brackets</span></tt> group.  If <tt class="docutils literal"><span class="pre">name</span></tt> is not
+matched, the assertion requires the rest of the text not have angle
+brackets around it.  Later, if the <tt class="docutils literal"><span class="pre">brackets</span></tt> group is set, the
+actual pattern matching code consumes the brackets in the input using
+literal patterns, otherwise it consumes any blank space.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_id.py
+
+
+Candidate: First Last &lt;first.last@example.com&gt;
+  Match name : First Last
+  Match email: first.last@example.com
+
+Candidate: No Brackets first.last@example.com
+  No match
+
+Candidate: Open Bracket &lt;first.last@example.com
+  No match
+
+Candidate: Close Bracket first.last@example.com&gt;
+  No match
+
+Candidate: no.brackets@example.com
+  Match name : None
+  Match email: no.brackets@example.com
+</pre></div>
+</div>
+</div>
+<div class="section" id="modifying-strings-with-patterns">
+<h2>Modifying Strings with Patterns<a class="headerlink" href="#modifying-strings-with-patterns" title="Permalink to this headline">¶</a></h2>
+<p>In addition to searching through text, <a class="reference internal" href="#module-re" title="re: Searching within and changing text using formal patterns."><tt class="xref py py-mod docutils literal"><span class="pre">re</span></tt></a> also supports
+modifying text using regular expressions as the search mechanism, and
+the replacements can reference groups matched in the regex as part of
+the substitution text.  Use <tt class="xref py py-func docutils literal"><span class="pre">sub()</span></tt> to replace all occurances of a
+pattern with another string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">bold</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\*{2}(.*?)\*{2}&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Make this **bold**.  This **too**.&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Bold:&#39;</span><span class="p">,</span> <span class="n">bold</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;&lt;b&gt;\1&lt;/b&gt;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>References to the text matched by the pattern can be inserted using
+the <tt class="docutils literal"><span class="pre">\num</span></tt> syntax used for back-references above.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_sub.py
+
+Text: Make this **bold**.  This **too**.
+Bold: Make this &lt;b&gt;bold&lt;/b&gt;.  This &lt;b&gt;too&lt;/b&gt;.
+</pre></div>
+</div>
+<p>To use named groups in the substitution, use the syntax <tt class="docutils literal"><span class="pre">\g&lt;name&gt;</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">bold</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\*{2}(?P&lt;bold_text&gt;.*?)\*{2}&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Make this **bold**.  This **too**.&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Bold:&#39;</span><span class="p">,</span> <span class="n">bold</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;&lt;b&gt;\g&lt;bold_text&gt;&lt;/b&gt;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">\g&lt;name&gt;</span></tt> syntax also works with numbered references, and using
+it eliminates any ambiguity between group numbers and surrounding
+literal digits.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_sub_named_groups.py
+
+Text: Make this **bold**.  This **too**.
+Bold: Make this &lt;b&gt;bold&lt;/b&gt;.  This &lt;b&gt;too&lt;/b&gt;.
+</pre></div>
+</div>
+<p>Pass a value to <em>count</em> to limit the number of substitutions
+performed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">bold</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\*{2}(.*?)\*{2}&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Make this **bold**.  This **too**.&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Bold:&#39;</span><span class="p">,</span> <span class="n">bold</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;&lt;b&gt;\1&lt;/b&gt;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Only the first substitution is made because <em>count</em> is <tt class="docutils literal"><span class="pre">1</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_sub_count.py
+
+Text: Make this **bold**.  This **too**.
+Bold: Make this &lt;b&gt;bold&lt;/b&gt;.  This **too**.
+</pre></div>
+</div>
+<p><tt class="xref py py-func docutils literal"><span class="pre">subn()</span></tt> works just like <tt class="xref py py-func docutils literal"><span class="pre">sub()</span></tt> except that it returns both
+the modified string and the count of substitutions made.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">bold</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\*{2}(.*?)\*{2}&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Make this **bold**.  This **too**.&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;Text:&#39;</span><span class="p">,</span> <span class="n">text</span>
+<span class="k">print</span> <span class="s">&#39;Bold:&#39;</span><span class="p">,</span> <span class="n">bold</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="s">r&#39;&lt;b&gt;\1&lt;/b&gt;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The search pattern matches twice in the example.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_subn.py
+
+Text: Make this **bold**.  This **too**.
+Bold: (&#39;Make this &lt;b&gt;bold&lt;/b&gt;.  This &lt;b&gt;too&lt;/b&gt;.&#39;, 2)
+</pre></div>
+</div>
+</div>
+<div class="section" id="splitting-with-patterns">
+<h2>Splitting with Patterns<a class="headerlink" href="#splitting-with-patterns" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-func docutils literal"><span class="pre">str.split()</span></tt> is one of the most frequently used methods for
+breaking apart strings to parse them.  It only supports using literal
+values as separators, though, and sometimes a regular expression is
+necessary if the input is not consistently formatted.  For example,
+many plain text markup languages define paragraph separators as two or
+more newline (<tt class="docutils literal"><span class="pre">\n</span></tt>) characters.  In this case, <tt class="xref py py-func docutils literal"><span class="pre">str.split()</span></tt>
+cannot be used because of the &#8220;or more&#8221; part of the definition.</p>
+<p>A strategy for identifying paragraphs using <tt class="xref py py-func docutils literal"><span class="pre">findall()</span></tt> would use
+a pattern like <tt class="docutils literal"><span class="pre">(.+?)\n{2,}</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Paragraph one</span><span class="se">\n</span><span class="s">on two lines.</span><span class="se">\n\n</span><span class="s">Paragraph two.</span><span class="se">\n\n\n</span><span class="s">Paragraph three.&#39;</span>
+
+<span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">para</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&#39;(.+?)\n{2,}&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)):</span>
+    <span class="k">print</span> <span class="n">num</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">para</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>That pattern fails for paragraphs at the end of the input text, as
+illustrated by the fact that &#8220;Paragraph three.&#8221; is not part of the
+output.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_paragraphs_findall.py
+
+0 &#39;Paragraph one\non two lines.&#39;
+
+1 &#39;Paragraph two.&#39;
+</pre></div>
+</div>
+<p>Extending the pattern to say that a paragraph ends with two or more
+newlines, or the end of input, fixes the problem but makes the pattern
+more complicated.  Converting to <tt class="xref py py-func docutils literal"><span class="pre">re.split()</span></tt> instead of
+<tt class="xref py py-func docutils literal"><span class="pre">re.findall()</span></tt> handles the boundary condition automatically and
+keeps the pattern simple.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Paragraph one</span><span class="se">\n</span><span class="s">on two lines.</span><span class="se">\n\n</span><span class="s">Paragraph two.</span><span class="se">\n\n\n</span><span class="s">Paragraph three.&#39;</span>
+
+<span class="k">print</span> <span class="s">&#39;With findall:&#39;</span>
+<span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">para</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&#39;(.+?)(\n{2,}|$)&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)):</span>
+    <span class="k">print</span> <span class="n">num</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">para</span><span class="p">)</span>
+    <span class="k">print</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;With split:&#39;</span>
+<span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">para</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">r&#39;\n{2,}&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)):</span>
+    <span class="k">print</span> <span class="n">num</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">para</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>The pattern argument to <tt class="xref py py-func docutils literal"><span class="pre">split()</span></tt> expresses the markup
+specification more precisely: Two or more newline characters mark a
+separator point between paragraphs in the input string.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_split.py
+
+With findall:
+0 (&#39;Paragraph one\non two lines.&#39;, &#39;\n\n&#39;)
+
+1 (&#39;Paragraph two.&#39;, &#39;\n\n\n&#39;)
+
+2 (&#39;Paragraph three.&#39;, &#39;&#39;)
+
+
+With split:
+0 &#39;Paragraph one\non two lines.&#39;
+
+1 &#39;Paragraph two.&#39;
+
+2 &#39;Paragraph three.&#39;
+</pre></div>
+</div>
+<p>Enclosing the expression in parentheses to define a group causes
+<tt class="xref py py-func docutils literal"><span class="pre">split()</span></tt> to work more like <tt class="xref py py-func docutils literal"><span class="pre">str.partition()</span></tt>, so it returns
+the separator values as well as the other parts of the string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Paragraph one</span><span class="se">\n</span><span class="s">on two lines.</span><span class="se">\n\n</span><span class="s">Paragraph two.</span><span class="se">\n\n\n</span><span class="s">Paragraph three.&#39;</span>
+
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&#39;With split:&#39;</span>
+<span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">para</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">r&#39;(\n{2,})&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)):</span>
+    <span class="k">print</span> <span class="n">num</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">para</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>The output now includes each paragraph, as well as the sequence of
+newlines separating them.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python re_split_groups.py
+
+
+With split:
+0 &#39;Paragraph one\non two lines.&#39;
+
+1 &#39;\n\n&#39;
+
+2 &#39;Paragraph two.&#39;
+
+3 &#39;\n\n\n&#39;
+
+4 &#39;Paragraph three.&#39;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://docs.python.org/2.7/library/re.html">re</a></dt>
+<dd>The standard library documentation for this module.</dd>
+<dt><a class="reference external" href="http://docs.python.org/howto/regex.html">Regular Expression HOWTO</a></dt>
+<dd>Andrew Kuchling&#8217;s introduction to regular expressions for Python developers.</dd>
+<dt><a class="reference external" href="http://kodos.sourceforge.net/">Kodos</a></dt>
+<dd>An interactive regular expression testing tool by Phil Schwartz.</dd>
+<dt><a class="reference external" href="http://www.pythonregex.com/">Python Regular Expression Testing Tool</a></dt>
+<dd>A web-based tool for testing regular expressions created by
+David Naffziger at BrandVerity.com.  Inspired by Kodos.</dd>
+<dt><a class="reference external" href="http://en.wikipedia.org/wiki/Regular_expressions">Wikipedia: Regular expression</a></dt>
+<dd>General introduction to regular expression concepts and techniques.</dd>
+<dt><a class="reference internal" href="../locale/index.html#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a></dt>
+<dd>Use the <a class="reference internal" href="../locale/index.html#module-locale" title="locale: POSIX cultural localization API"><tt class="xref py py-mod docutils literal"><span class="pre">locale</span></tt></a> module to set your language
+configuration when working with Unicode text.</dd>
+<dt><tt class="xref py py-mod docutils literal"><span class="pre">unicodedata</span></tt></dt>
+<dd>Programmatic access to the Unicode character property database.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../struct/index.html" title="struct – Working with Binary Data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../StringIO/index.html" title="StringIO and cStringIO – Work with text buffers using file-like API"
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../string_services.html" >String Services</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

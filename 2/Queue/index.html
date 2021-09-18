@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Queue &#8211; A thread-safe FIFO implementation - Python Module of the Week</title>
+
+<link rel="stylesheet" href="../_static/default.css" 
+    type="text/css" />
+<style>
+    body {
+        margin: 8px;
+    }
+    .highlight {
+        background-color: white;
+        border: 0;
+    }
+    .highlight pre {
+        background-color: white;
+    }
+</style>
+
+<link href="../_static/css/leaves.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann"
+      href="http://feeds.feedburner.com/DougHellmann" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Project Releases"
+      href="http://feeds.feedburner.com/DougHellmann-Releases" />
+<link rel="alternate" type="application/atom+xml"
+      title="Doug Hellmann Links"
+      href="http://feeds.feedburner.com/DougHellmannLinkBlog" />
+
+
+
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '../',
+      VERSION:     '1.133',
+      COLLAPSE_MODINDEX: false,
+      FILE_SUFFIX: '.html'
+  };
+</script>
+
+<script type="text/javascript" src="../_static/jquery.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="contents" title="Global table of contents" href="../contents.html" />
+    <link rel="index" title="Global index" href="../genindex.html" />
+    <link rel="top" title="Python Module of the Week" href="../index.html" />
+    <link rel="up" title="Data Types" href="../data_types.html" />
+    <link rel="next" title="weakref – Garbage-collectable references to objects" href="../weakref/index.html" />
+    <link rel="prev" title="sched – Generic event scheduler." href="../sched/index.html" />
+
+<meta name="verify-v1" content="5saTcOa2HLac4V85yUg3SARfun1PqT5Upu7IR/6fpv4="/>
+</head>
+<body>
+    
+<div id="container">
+    
+<div id="header">
+  <a href="/"><h1>PyMOTW</h1></a>
+  <p></p>
+</div>
+
+<div id="sidebar_left_wrapper">
+
+<div id="navigation"> 
+	<ul id="navlist">
+		<li><a href="../index.html">Home</a></li>
+		<li><a href="https://doughellmann.com/" target="_">Blog</a></li>
+		<li><a href="https://doughellmann.com/python-standard-library-by-example">The Book</a></li>
+		<li><a href="../about.html">About</a></li>
+		<li><a href="/2/genindex.html">Site Index</a></li>
+	</ul>
+</div>
+
+
+  <div id="sidebar_left">
+      <p>If you find this information useful, consider picking up a copy of my book,
+      <i><a href="http://doughellmann.com/python-standard-library-by-example">The Python Standard Library By
+      Example</a></i>.</p>
+  </div>
+
+</div>
+
+
+<div id="sidebar">
+  <h3>Page Contents</h3>
+  <ul>
+<li><a class="reference internal" href="#">Queue &#8211; A thread-safe FIFO implementation</a><ul>
+<li><a class="reference internal" href="#basic-fifo-queue">Basic FIFO Queue</a></li>
+<li><a class="reference internal" href="#lifo-queue">LIFO Queue</a></li>
+<li><a class="reference internal" href="#priority-queue">Priority Queue</a></li>
+<li><a class="reference internal" href="#using-queues-with-threads">Using Queues with Threads</a></li>
+</ul>
+</li>
+</ul>
+    <h3>Navigation</h3>
+      <p>
+    <a href="../contents.html"><strong>Table of Contents</strong></a><br/>
+    
+          <a href="../sched/index.html" title="previous chapter"><strong>Previous:</strong> sched &#8211; Generic event scheduler.</a><br/>
+          <a href="../weakref/index.html" title="next chapter"><strong>Next:</strong> weakref &#8211; Garbage-collectable references to objects</a><br/>
+      </p>
+    
+      <h3>This Page</h3>
+      <p>
+      <a href="../_sources/Queue/index.txt"
+               rel="nofollow">Show Source</a>
+      </p><h3>Examples</h3>
+
+<p>The output from all the example programs from PyMOTW has been
+generated with Python 2.7.8, unless otherwise noted. Some
+of the features described here may not be available in earlier
+versions of Python.</p>
+
+<p>If you are looking for examples that work under Python 3, please
+refer to the <a href="/3/">PyMOTW-3</a> section of the site.</p><p><a target="new" href="https://doughellmann.com/blog/the-python-3-standard-library-by-example/"><img src="../_static/images/py3-book-cover.jpg"><br>Now available for Python 3!</a></p>
+<p><a target="new" href="https://doughellmann.com/blog/the-python-standard-library-by-example/"><img src="../_static/images/py2-book-cover.jpg"><br>Buy the book!</a></p>
+</div>
+
+
+<div id="content">
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../weakref/index.html" title="weakref – Garbage-collectable references to objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../sched/index.html" title="sched – Generic event scheduler."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" accesskey="U">Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+  <div class="section" id="module-Queue">
+<span id="queue-a-thread-safe-fifo-implementation"></span><h1>Queue &#8211; A thread-safe FIFO implementation<a class="headerlink" href="#module-Queue" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Purpose:</th><td class="field-body">Provides a thread-safe FIFO implementation</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Available In:</th><td class="field-body">at least 1.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#module-Queue" title="Queue: Provides a thread-safe FIFO implementation"><tt class="xref py py-mod docutils literal"><span class="pre">Queue</span></tt></a> module provides a FIFO implementation suitable for
+multi-threaded programming. It can be used to pass messages or other
+data between producer and consumer threads safely. Locking is handled
+for the caller, so it is simple to have as many threads as you want
+working with the same Queue instance. A Queue&#8217;s size (number of
+elements) may be restricted to throttle memory usage or processing.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This discussion assumes you already understand the general nature
+of a queue. If you don&#8217;t, you may want to read some of the
+references before continuing.</p>
+</div>
+<div class="section" id="basic-fifo-queue">
+<h2>Basic FIFO Queue<a class="headerlink" href="#basic-fifo-queue" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Queue</span></tt> class implements a basic first-in, first-out container.
+Elements are added to one &#8220;end&#8221; of the sequence using <tt class="docutils literal"><span class="pre">put()</span></tt>, and
+removed from the other end using <tt class="docutils literal"><span class="pre">get()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">Queue</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example uses a single thread to illustrate that elements are
+removed from the queue in the same order they are inserted.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python Queue_fifo.py
+
+0
+1
+2
+3
+4
+</pre></div>
+</div>
+</div>
+<div class="section" id="lifo-queue">
+<h2>LIFO Queue<a class="headerlink" href="#lifo-queue" title="Permalink to this headline">¶</a></h2>
+<p>In contrast to the standard FIFO implementation of <tt class="docutils literal"><span class="pre">Queue</span></tt>, the
+<tt class="docutils literal"><span class="pre">LifoQueue</span></tt> uses last-in, first-out ordering (normally associated
+with a stack data structure).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">Queue</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">LifoQueue</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The item most recently <tt class="docutils literal"><span class="pre">put()</span></tt> into the queue is removed by
+<tt class="docutils literal"><span class="pre">get()</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python Queue_lifo.py
+
+4
+3
+2
+1
+0
+</pre></div>
+</div>
+</div>
+<div class="section" id="priority-queue">
+<span id="queue-priorityqueue"></span><h2>Priority Queue<a class="headerlink" href="#priority-queue" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the processing order of the items in a queue needs to be
+based on characteristics of those items, rather than just the order
+they are created or added to the queue.  For example, print jobs from
+the payroll department may take precedence over a code listing printed
+by a developer.  <tt class="docutils literal"><span class="pre">PriorityQueue</span></tt> uses the sort order of the contents
+of the queue to decide which to retrieve.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">Queue</span>
+
+<span class="k">class</span> <span class="nc">Job</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">priority</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">priority</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="k">print</span> <span class="s">&#39;New job:&#39;</span><span class="p">,</span> <span class="n">description</span>
+        <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priority</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">priority</span><span class="p">)</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">PriorityQueue</span><span class="p">()</span>
+
+<span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="n">Job</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;Mid-level job&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="n">Job</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;Low-level job&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="n">Job</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Important job&#39;</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+    <span class="n">next_job</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Processing job:&#39;</span><span class="p">,</span> <span class="n">next_job</span><span class="o">.</span><span class="n">description</span>
+    
+</pre></div>
+</div>
+<p>In this single-threaded example, the jobs are pulled out of the queue
+in strictly priority order.  If there were multiple threads consuming
+the jobs, they would be processed based on the priority of items in
+the queue at the time <tt class="docutils literal"><span class="pre">get()</span></tt> was called.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python Queue_priority.py
+
+New job: Mid-level job
+New job: Low-level job
+New job: Important job
+Processing job: Important job
+Processing job: Mid-level job
+Processing job: Low-level job
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-queues-with-threads">
+<h2>Using Queues with Threads<a class="headerlink" href="#using-queues-with-threads" title="Permalink to this headline">¶</a></h2>
+<p>As an example of how to use the Queue class with multiple threads, we
+can create a very simplistic podcasting client. This client reads one
+or more RSS feeds, queues up the enclosures for download, and
+processes several downloads in parallel using threads. It is
+simplistic and unsuitable for actual use, but the skeleton
+implementation gives us enough code to work with to provide an example
+of using the Queue module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># System modules</span>
+<span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c"># Local modules</span>
+<span class="kn">import</span> <span class="nn">feedparser</span>
+
+<span class="c"># Set up some global variables</span>
+<span class="n">num_fetch_threads</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">enclosure_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+
+<span class="c"># A real app wouldn&#39;t use hard-coded data...</span>
+<span class="n">feed_urls</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;http://www.castsampler.com/cast/feed/rss/guest&#39;</span><span class="p">,</span>
+             <span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">downloadEnclosures</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the worker thread function.</span>
+<span class="sd">    It processes items in the queue one after</span>
+<span class="sd">    another.  These daemon threads go into an</span>
+<span class="sd">    infinite loop, and only exit when</span>
+<span class="sd">    the main thread ends.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">: Looking for the next enclosure&#39;</span> <span class="o">%</span> <span class="n">i</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">: Downloading:&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">url</span>
+        <span class="c"># instead of really downloading the URL,</span>
+        <span class="c"># we just pretend and sleep</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+
+<span class="c"># Set up some threads to fetch the enclosures</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_fetch_threads</span><span class="p">):</span>
+    <span class="n">worker</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">downloadEnclosures</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">enclosure_queue</span><span class="p">,))</span>
+    <span class="n">worker</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">worker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="c"># Download the feed(s) and put the enclosure URLs into</span>
+<span class="c"># the queue.</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">feed_urls</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">feedparser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="s">&#39;fetch_podcasts.py&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s">&#39;entries&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">enclosure</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;enclosures&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="k">print</span> <span class="s">&#39;Queuing:&#39;</span><span class="p">,</span> <span class="n">enclosure</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span>
+            <span class="n">enclosure_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">enclosure</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">])</span>
+        
+<span class="c"># Now wait for the queue to be empty, indicating that we have</span>
+<span class="c"># processed all of the downloads.</span>
+<span class="k">print</span> <span class="s">&#39;*** Main thread waiting&#39;</span>
+<span class="n">enclosure_queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;*** Done&#39;</span>
+</pre></div>
+</div>
+<p>First, we establish some operating parameters. Normally these would
+come from user inputs (preferences, a database, whatever). For our
+example we hard code the number of threads to use and the list of URLs
+to fetch.</p>
+<p>Next, we need to define the function <tt class="docutils literal"><span class="pre">downloadEnclosures()</span></tt> that
+will run in the worker thread, processing the downloads. Again, for
+illustration purposes this only simulates the download. To actually
+download the enclosure, you might use <a class="reference internal" href="../urllib/index.html#module-urllib" title="urllib: Accessing remote resources that don't need authentication, cookies, etc."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a> or
+<a class="reference internal" href="../urllib2/index.html#module-urllib2" title="urllib2: Library for opening URLs."><tt class="xref py py-mod docutils literal"><span class="pre">urllib2</span></tt></a>. In this example, we simulate a download delay by
+sleeping a variable amount of time, depending on the thread id.</p>
+<p>Once the threads&#8217; target function is defined, we can start the worker
+threads. Notice that downloadEnclosures() will block on the statement
+<tt class="docutils literal"><span class="pre">url</span> <span class="pre">=</span> <span class="pre">q.get()</span></tt> until the queue has something to return, so it is
+safe to start the threads before there is anything in the queue.</p>
+<p>The next step is to retrieve the feed contents (using Mark Pilgrim&#8217;s
+<a class="reference external" href="http://www.feedparser.org/">feedparser</a> module) and enqueue the URLs of the enclosures. As soon
+as the first URL is added to the queue, one of the worker threads
+should pick it up and start downloading it. The loop below will
+continue to add items until the feed is exhausted, and the worker
+threads will take turns dequeuing URLs to download them.</p>
+<p>And the only thing left to do is wait for the queue to empty out
+again, using <tt class="docutils literal"><span class="pre">join()</span></tt>.</p>
+<p>If you run the sample script, you should see output something like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre>0: Looking for the next enclosure
+1: Looking for the next enclosure
+Queuing: http://http.earthcache.net/htc-01.media.globix.net/COMP009996MOD1/Danny_Meyer.mp3
+Queuing: http://feeds.feedburner.com/~r/drmoldawer/~5/104445110/moldawerinthemorning_show34_032607.mp3
+Queuing: http://www.podtrac.com/pts/redirect.mp3/twit.cachefly.net/MBW-036.mp3
+Queuing: http://media1.podtech.net/media/2007/04/PID_010848/Podtech_calacaniscast22_ipod.mp4
+Queuing: http://media1.podtech.net/media/2007/03/PID_010592/Podtech_SXSW_KentBrewster_ipod.mp4
+Queuing: http://media1.podtech.net/media/2007/02/PID_010171/Podtech_IDM_ChrisOBrien2.mp3
+Queuing: http://feeds.feedburner.com/~r/drmoldawer/~5/96188661/moldawerinthemorning_show30_022607.mp3
+*** Main thread waiting
+0: Downloading: http://http.earthcache.net/htc-01.media.globix.net/COMP009996MOD1/Danny_Meyer.mp3
+1: Downloading: http://feeds.feedburner.com/~r/drmoldawer/~5/104445110/moldawerinthemorning_show34_032607.mp3
+0: Looking for the next enclosure
+0: Downloading: http://www.podtrac.com/pts/redirect.mp3/twit.cachefly.net/MBW-036.mp3
+1: Looking for the next enclosure
+1: Downloading: http://media1.podtech.net/media/2007/04/PID_010848/Podtech_calacaniscast22_ipod.mp4
+0: Looking for the next enclosure
+0: Downloading: http://media1.podtech.net/media/2007/03/PID_010592/Podtech_SXSW_KentBrewster_ipod.mp4
+0: Looking for the next enclosure
+0: Downloading: http://media1.podtech.net/media/2007/02/PID_010171/Podtech_IDM_ChrisOBrien2.mp3
+1: Looking for the next enclosure
+1: Downloading: http://feeds.feedburner.com/~r/drmoldawer/~5/96188661/moldawerinthemorning_show30_022607.mp3
+0: Looking for the next enclosure
+1: Looking for the next enclosure
+*** Done
+</pre></div>
+</div>
+<p>The actual output will depend on whether anyone modifies the
+subscriptions in the guest account on <a class="reference external" href="http://www.CastSampler.com">http://www.CastSampler.com</a>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://docs.python.org/2/library/Queue.html">Queue</a></dt>
+<dd>Standard library documentation for this module.</dd>
+<dt><a class="reference internal" href="../collections/deque.html#deque"><em>Deque</em></a> from <a class="reference internal" href="../collections/index.html#module-collections" title="collections: Container data types."><tt class="xref py py-mod docutils literal"><span class="pre">collections</span></tt></a></dt>
+<dd>collections includes a deque (double-ended queue) class</dd>
+<dt><em>Wikipedia: Queue data structures</em></dt>
+<dd><a class="reference external" href="http://en.wikipedia.org/wiki/Queue_(data_structure">http://en.wikipedia.org/wiki/Queue_(data_structure</a>)</dd>
+<dt><em>Wikipedia: FIFO</em></dt>
+<dd><a class="reference external" href="http://en.wikipedia.org/wiki/FIFO">http://en.wikipedia.org/wiki/FIFO</a></dd>
+<dt><a class="reference external" href="http://www.feedparser.org/">feedparser</a></dt>
+<dd>Mark Pilgrim&#8217;s feedparser module (<a class="reference external" href="http://www.feedparser.org/">http://www.feedparser.org/</a>).</dd>
+<dt><a class="reference internal" href="../articles/data_structures.html#article-data-structures"><em>In-Memory Data Structures</em></a></dt>
+<dd>Other complex data structures in the standard library.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../weakref/index.html" title="weakref – Garbage-collectable references to objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../sched/index.html" title="sched – Generic event scheduler."
+             >previous</a> |</li>
+        <li><a href="../contents.html">PyMOTW</a> &raquo;</li>
+          <li><a href="../data_types.html" >Data Types</a> &raquo;</li> 
+      </ul>
+    </div>
+
+
+</div>
+
+<div id="footer">
+ 
+<p>
+    &copy; Copyright <a rel="author" href="../about.html">Doug Hellmann</a>.
+    | <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/" rel="license"><img alt="Creative Commons License" style="border-width:0; align: center;" width="80" height="15" src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"/></a>
+    | Last updated on Jul 11, 2020.
+   | Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+   | Design based on "Leaves" by <a href="http://smallpark.org">SmallPark</a>
+   | <a href="http://www.dreamhost.com/r.cgi?1246820/green.cgi?pymotw.com">
+<img border="0" alt="Green Web Hosting! This site hosted by DreamHost."
+src="https://secure.newdream.net/green4.gif" height="15" width="80" /></a></p>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-38546875-1', 'pymotw.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+</html>
