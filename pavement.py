@@ -2,27 +2,24 @@ import configparser
 import functools
 import http.server
 import os
+import pprint
 import subprocess
 import sys
-
-from paver.easy import options, Bunch, task, consume_args, sh, info, error, cmdopts, dry, needs
-from paver.path import path
-from paver.setuputils import setup
-
-import pyquery
-
-from sphinxcontrib import paverutils  # noqa
-from sphinxcontrib.paverutils import cog, run_script
-
-import wordpress_xmlrpc
-import wordpress_xmlrpc.exceptions
+import urllib.parse
 
 import pybitbucket.auth as pybb_auth
 import pybitbucket.bitbucket as pybb_bb
 import pybitbucket.repository as pybb_repo
+import pyquery
 import uritemplate
-import urllib.parse
-import pprint
+import wordpress_xmlrpc
+import wordpress_xmlrpc.exceptions
+from paver.easy import (Bunch, cmdopts, consume_args, dry, error, info, needs,
+                        options, sh, task)
+from paver.path import path
+from paver.setuputils import setup
+from sphinxcontrib import paverutils  # noqa
+from sphinxcontrib.paverutils import cog, run_script
 
 # Set PYTHONHASHSEED so ensure the "randomness" for mapping-related
 # items is always the same between runs to avoid unnecessary cog
