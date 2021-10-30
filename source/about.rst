@@ -21,8 +21,7 @@ Subscribe
 
 As new articles are written, they are posted to `my blog`_ as well as
 https://pymotw.com.  Updates are available by RSS from
-http://feeds.doughellmann.com/PyMOTW and `email
-<http://feedburner.google.com/fb/a/mailverify?uri=PyMOTW&amp;loc=en_US>`_. Follow
+https://feeds.feedburner.com/PyMOTW. Follow
 `@pymotw`_ or `@doughellmann`_ for updates as well.
 
 .. _my blog: https://doughellmann.com/
