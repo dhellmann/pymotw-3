@@ -1,6 +1,6 @@
 alabaster==0.7.12
 Babel==2.6.0
-certifi==2018.11.29
+certifi==2022.12.7
 chardet==3.0.4
 cogapp==2.5.1
 cssselect==1.0.3
