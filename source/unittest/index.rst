@@ -511,7 +511,8 @@ exception in the test. Compare these two tests:
     :start-after: #end_pymotw_header
 
 The results for both are the same, but the second test using
-``assertRaises()`` is more succinct.
+``assertRaises()`` is more succinct. ``assertRaises()`` can also be
+run as a context manager.
 
 .. {{{cog
 .. cog.out(run_script(cog.inFile, '-m unittest -v unittest_exception.py'))
@@ -522,6 +523,7 @@ The results for both are the same, but the second test using
 	$ python3 -m unittest -v unittest_exception.py
 	
 	testAssertRaises (unittest_exception.ExceptionTest) ... ok
+	testAssertRaisesContext (unittest_exception.ExceptionTest) ... ok
 	testTrapLocally (unittest_exception.ExceptionTest) ... ok
 	
 	----------------------------------------------------------------
