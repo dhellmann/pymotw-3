@@ -33,29 +33,25 @@ class DFProtocol(asyncio.SubprocessProtocol):
         print('process exited')
         return_code = self.transport.get_returncode()
         print('return code {}'.format(return_code))
-        if not return_code:
-            cmd_output = bytes(self.buffer).decode()
-            results = self._parse_results(cmd_output)
-        else:
-            results = []
-        self.done.set_result((return_code, results))
 
-    def _parse_results(self, output):
-        print('parsing results')
-        # Output has one row of headers, all single words.  The
-        # remaining rows are one per filesystem, with columns
-        # matching the headers (assuming that none of the
-        # mount points have whitespace in the names).
-        if not output:
-            return []
-        lines = output.splitlines()
-        headers = lines[0].split()
-        devices = lines[1:]
-        results = [
-            dict(zip(headers, line.split()))
-            for line in devices
-        ]
-        return results
+        self.done.set_result(return_code)
+
+def _parse_results(output):
+    print('parsing results')
+    # Output has one row of headers, all single words.  The
+    # remaining rows are one per filesystem, with columns
+    # matching the headers (assuming that none of the
+    # mount points have whitespace in the names).
+    if not output:
+        return []
+    lines = output.splitlines()
+    headers = lines[0].split()
+    devices = lines[1:]
+    results = [
+        dict(zip(headers, line.split()))
+        for line in devices
+    ]
+    return results
 
 
 async def run_df(loop):
@@ -77,7 +73,7 @@ async def run_df(loop):
     finally:
         transport.close()
 
-    return cmd_done.result()
+    return cmd_done.result(), _parse_results(bytes(protocol.buffer).decode())
 
 
 event_loop = asyncio.get_event_loop()
